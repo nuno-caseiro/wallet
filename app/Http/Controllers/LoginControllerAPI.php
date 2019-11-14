@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-define('YOUR_SERVER_URL', 'http://projeto.test');
+define('YOUR_SERVER_URL', env("APP_URL"));
 // Check "oauth_clients" table for next 2 values:
-define('CLIENT_ID', '8');
-define('CLIENT_SECRET','cqP8c0Yy3lIxtnyvC0rFLefoFUA18TFDkrlV74LK');
+define('CLIENT_ID', env("CT_ID"));
+define('CLIENT_SECRET',env("PASSPORT_SECRET"));
 
 class LoginControllerAPI extends Controller
 {

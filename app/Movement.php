@@ -10,5 +10,8 @@ class Movement extends Model
 
     protected $hidden = [];
 
+    public function Wallet(){
+        $this->belongsTo(Wallet::class);
+    }
     
 }
