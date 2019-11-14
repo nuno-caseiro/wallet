@@ -10,8 +10,16 @@ class Movement extends Model
 
     protected $hidden = [];
 
-    public function Wallet(){
-        $this->belongsTo(Wallet::class);
+    public function wallet(){
+        $this->belongsTo('App\Wallet');
+    }
+
+    public function category(){
+        $this->belongsTo('App\Category');
+    }
+
+    public function movement(){
+        $this->hasOne('App\Movement', 'transfer_movement_id', 'id');
     }
     
 }
