@@ -11,7 +11,7 @@
                     
                     <input type = "text" placeholder="E-mail" value="">
                     <input type = "text" placeholder="Senha" value="">
-                    <button type = "text" class="btn"> Entrar</button>
+                    <button type = "text" class="btn"> Login</button>
                 </div>
             </div>	    
         </div>
@@ -19,7 +19,7 @@
 </template>
 
 <script >
-    import LoginTemplate from '@/templates/Login'
+    
 	export default{
         name: "Login",
         data(){
@@ -29,7 +29,7 @@
         },
 
         components:{
-            LoginTemplate
+            
         }	
 	}
 </script>
