@@ -1,23 +1,41 @@
 <template>
-    <login-template>
-        <div>
-            <div class = "menuesquerdo">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Login Form</h1>
 
+        <form @submit.prevent="login(user)">
+          <div class="text-left">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" placeholder="Your email" v-model="user.email">
             </div>
-            <div class="principal">
 
-                <h2>Login</h2>
-                <div class="form-login"  v-if="!registo">
-                    
-                    <input type = "text" placeholder="E-mail" value="">
-                    <input type = "text" placeholder="Senha" value="">
-                    <button type = "text" class="btn"> Login</button>
-                </div>
-            </div>	    
-        </div>
-    </login-template>    
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" placeholder="Your password"
+                     v-model="user.password">
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button class="btn btn-primary">Login</button>
+
+            <br><br>
+
+            <router-link class="btn btn-default" :to="{ name: 'Index' }">
+              Index
+            </router-link>
+
+            <router-link class="btn btn-default" :to="{ name: 'Register' }">
+              Register
+            </router-link>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </template>
-
 <script >
     
 	export default{
