@@ -21,6 +21,17 @@ export default new Vuex.Store({
             localStorage.setItem('expiration_time', expiration);
             axios.defaults.headers.common.Authorization = "Bearer " + token;
         },
+
+        clearUserAndToken(state) {
+            state.user = null;
+            state.token = "";
+            state.expiration = 0;
+            localStorage.removeItem('user');
+            localStorage.removeItem('token_type')
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('expiration_time')
+            axios.defaults.headers.common.Authorization = undefined;
+        },
     },
 
     getters:{
@@ -72,6 +83,10 @@ export default new Vuex.Store({
             }
     
             return JSON.parse(user);
+        },
+
+        isAuthenticated(state) {
+            return state.token && state.tokenType ? true:false
         },
     }
 });
