@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class User extends JsonResource
+class Wallet extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,14 +14,14 @@ class User extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'id'=> $this->id,
-            'name'=> $this->name,
-            'email' => $this->email,
-            'type'=>$this->type,
-            'active'=>$this->active,
-            'photo' =>$this->photo,
-            'nif'=>$this->nif,
+       /* return ['id'=>$this->user->id,
+            'email'=>$this->user->email,
+            'balance'=>$this->balance
+            ];*/
+
+        return ['id'=>$this->id,
+            'email'=>$this->email,
+            'balance'=>$this->balance
         ];
     }
 }
