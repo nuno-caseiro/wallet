@@ -14,12 +14,14 @@ Vue.use(VueRouter);
 import store from './store.js';
 import NavbarComponent from './components/main/navbar.vue';
 import LoginComponent from './components/auth/login.vue';
+import LogoutComponent from './components/auth/logout.vue';
 import WellcomeComponent from './components/main/wellcome.vue';
 import NotFoundComponent from './components/notFound.vue';
 import RegisterComponent from './components/auth/register.vue';
 
 const navbar = Vue.component('navbar',NavbarComponent);
 const login = Vue.component('login', LoginComponent);
+const logout = Vue.component('logout', LogoutComponent);
 const wellcome = Vue.component('wellcome', WellcomeComponent);
 const notFound = Vue.component('notFound', NotFoundComponent);
 const register = Vue.component('register', RegisterComponent);
@@ -40,7 +42,10 @@ const routes = [
     component : wellcome},
 
     { path: "/login",
-     component : login}, 
+     component : login},
+     
+    { path: "/logout",
+     component : logout},
 
     { path: "/register",
      component : register}, 

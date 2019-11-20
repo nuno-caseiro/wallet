@@ -7,17 +7,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a><router-link class="nav-item nav-link" to="items"></router-link></a>
-                </li>
+
             </ul>
             <ul class="navbar-nav">
-                <!-- <li v-if="isAuthenticated" class="navbar-item">
-                    <a class="nav-item nav-link">{{loggedUser.name}}: {{shiftStatus}}</a>v-if="!isAuthenticated"
-                </li> -->
                 <li class="navbar-item">
-                    <router-link class="nav-item nav-link" to="login" >Login</router-link>
-                    <!-- <router-link class="nav-item nav-link" to="logout" v-else>Logout</router-link> -->
+                    <router-link class="nav-item nav-link" to="login" v-if="!isAuthenticated">Login</router-link>
+                    <router-link class="nav-item nav-link" to="logout" v-else>Logout</router-link>
                 </li>
             </ul>
           </div>
@@ -32,9 +27,18 @@
         }  
     },
     methods: {
+        // isAuthenticated() {
+        //     return this.$store.getters.isAuthenticated
+        // },
 
     },
+    computed: {
+        isAuthenticated() {
+            return this.$store.getters.isAuthenticated
+        },
     }
+    }
+    
           
 </script>
 
