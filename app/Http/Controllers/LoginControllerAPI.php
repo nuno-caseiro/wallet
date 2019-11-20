@@ -31,6 +31,25 @@ class LoginControllerAPI extends Controller
             return response()->json(
                 ['msg'=>'User credentials are invalid'], $errorCode);
         }
+
+        $validacao = $request->validate([
+            'username' => 'required|string|email|max:255',
+            'password' => 'required|string',
+        ]);
+    
+        if($validacao->fails()){
+            return $validacao->errors();
+        }
+
+        if(\Auth::attempt(['username'=>$data['username'], 
+                          'password'=>$data['password']])){
+    
+        $user = auth()->user();
+        $user->token = $user->createToken($user->email)->accessToken;
+        return $user;
+        }else{
+            return['status'=>false];
+        }
     }
 
     public function logout()
@@ -39,4 +58,9 @@ class LoginControllerAPI extends Controller
         \Auth::guard('api')->user()->token()->delete();
         return response()->json(['msg'=>'Token revoked'], 200);
     }
+
+
+
+
+    
 }
