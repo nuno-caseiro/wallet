@@ -21,12 +21,13 @@ Route::middleware('auth:api')->group(function () {
 
     //TODO proteger para apenas administrador
     Route::get('users','UserControllerAPI@index');
+    Route::post('users','UserControllerAPI@store');
+    Route::delete('users/{id}','UserControllerAPI@destroy');
     //
 
     Route::get('users/{id}', 'UserControllerAPI@show');
-    Route::post('users','UserControllerAPI@store');
     Route::put('users/{id}', 'UserControllerAPI@update');
-    Route::delete('users/{id}','UserControllerAPI@destroy');
+
 
 });
 
