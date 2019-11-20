@@ -13,9 +13,25 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+*/
+Route::middleware('auth:api')->group(function () {
+
+    //TODO proteger para apenas administrador
+    Route::get('users','UserControllerAPI@index');
+    //
+
+    Route::get('users/{id}', 'UserControllerAPI@show');
+    Route::post('users','UserControllerAPI@store');
+    Route::put('users/{id}', 'UserControllerAPI@update');
+    
+
+});
+
+
+
 Route::post('login', 'LoginControllerAPI@login')->name('login');
 Route::middleware('auth:api')->post('logout',
     'LoginControllerAPI@logout');
