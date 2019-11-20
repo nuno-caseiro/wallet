@@ -1,5 +1,5 @@
 <template>
- <div class="login-page">
+ <div class="register-page">
   <div class="form">
     <div class="alert" :class="messageType" v-if="showMessage">             
             <strong>{{ message }}</strong>
@@ -18,10 +18,11 @@
 <script type="text/javascript">
 import axios from 'axios';
 export default {
-    name : 'Login',
+    name : 'Register',
     data() {
       return {
-        user:{email: '', 
+        user:{name: '',
+              email: '', 
               password: ''
               },
         messageType: "alert-success",
@@ -29,24 +30,12 @@ export default {
         message: "", 
       }
     },
-
-    methods:{
+     methods:{
       login(){
          axios.post('/api/login',this.user)
                 .then(response=>{
                   console.log(response);   
-                  let tokenType = response.data.token_type
-                  let token = response.data.access_token
-                  let expiration = response.data.expires_in + Date.now()
-                  this.$store.commit('setToken', {token, tokenType, expiration})
-                  //this.$socket.emit('user_enter', this.$store.getters.getAuthUser);
-                  console.log(token);
-                  this.typeofmsg = "alert-success";
-                  this.message = "Login Successful";
-                  this.showMessage = true;
-                  setTimeout(() => {
-                        this.$router.push("/")
-                    }, 1000);
+                  
                 });
                       
       }

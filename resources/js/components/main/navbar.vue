@@ -1,6 +1,6 @@
 <template>
     <div>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark" id="navbar">
             <a class="navbar-brand" href="#">Virtual Wallet</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -14,6 +14,9 @@
                     <router-link class="nav-item nav-link" to="login" v-if="!isAuthenticated">Login</router-link>
                     <router-link class="nav-item nav-link" to="logout" v-else>Logout</router-link>
                 </li>
+                <li class="navbar-item">
+                    <router-link class="nav-item nav-link" to="register" v-if="!isAuthenticated">Register</router-link>
+                </li>
             </ul>
           </div>
         </nav>
@@ -23,14 +26,11 @@
     export default {
         data: function() {
         return{
-            name: "navbar",
+            name: "Navbar",
         }  
     },
     methods: {
-        // isAuthenticated() {
-        //     return this.$store.getters.isAuthenticated
-        // },
-
+        
     },
     computed: {
         isAuthenticated() {
@@ -43,5 +43,5 @@
 </script>
 
 <style scoped>
-
+  
 </style>
