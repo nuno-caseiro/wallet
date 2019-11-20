@@ -48,3 +48,9 @@
         }
     }
 </script>
+<style scoped>
+.btn-primary{
+    background-color: orange;
+    border-color: orange;
+}
+</style>
