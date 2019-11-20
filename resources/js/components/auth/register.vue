@@ -1,22 +1,12 @@
 <template>
  <div class="login-page">
   <div class="form">
-    <!-- <form class="register-form">
+    <form class="register-form">
       <input type="text" placeholder="name"/>
       <input type="password" placeholder="password"/>
       <input type="text" placeholder="email address"/>
       <button>create</button>
       <p class="message">Already registered? <a href="#">Sign In</a></p>
-    </form> -->
-    <div class="alert" :class="messageType" v-if="showMessage">             
-            <strong>{{ message }}</strong>
-        </div>
-    <form class="login-form">
-      <h2>Login</h2>
-      <input type="text" placeholder="email" v-model="user.email" >
-      <input type="password" placeholder="password" v-model="user.password">
-      <button v-on:click.prevent="login()">Login</button>
-      <p class="message">Not registered? <a href="#">Create an account</a></p>
     </form>
   </div>
 </div>
@@ -25,39 +15,7 @@
 <script type="text/javascript">
 import axios from 'axios';
 export default {
-    name : 'Login',
-    data() {
-      return {
-        user:{email: '', 
-              password: ''
-              },
-        messageType: "alert-success",
-        showMessage: false,
-        message: "", 
-      }
-    },
-
-    methods:{
-      login(){
-         axios.post('/api/login',this.user)
-                .then(response=>{
-                  console.log(response);   
-                  let tokenType = response.data.token_type
-                  let token = response.data.access_token
-                  let expiration = response.data.expires_in + Date.now()
-                  this.$store.commit('setToken', {token, tokenType, expiration})
-                  //this.$socket.emit('user_enter', this.$store.getters.getAuthUser);
-                  console.log(token);
-                  this.typeofmsg = "alert-success";
-                  this.message = "Login Successful";
-                  this.showMessage = true;
-                  setTimeout(() => {
-                        this.$router.push("/")
-                    }, 1000);
-                });
-                      
-      }
-      }
+  
 }
 </script>
 

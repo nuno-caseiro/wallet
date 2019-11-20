@@ -3,7 +3,7 @@
 
 <head>
 <meta name="csrf-token" content="{{ csrf_token() }}">
-        <script> window.Laravel = { csrfToken: "{{ csrf_token() }}" }</script>
+<script> window.Laravel = { csrfToken: "{{ csrf_token() }}" }</script>
 </head>
 
 <body>
@@ -17,7 +17,6 @@
 
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="js/app.js"></script>
 
 </body>

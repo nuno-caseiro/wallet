@@ -32,24 +32,25 @@ class LoginControllerAPI extends Controller
                 ['msg'=>'User credentials are invalid'], $errorCode);
         }
 
-        $validacao = $request->validate([
-            'username' => 'required|string|email|max:255',
-            'password' => 'required|string',
-        ]);
+        // $validacao = $request->validate([
+        //     'username' => 'required|string|email|max:255',
+        //     'password' => 'required|string',
+        // ]);
     
-        if($validacao->fails()){
-            return $validacao->errors();
-        }
+        // if($validacao->fails()){
+        //     return $validacao->errors();
+        // }
 
-        if(\Auth::attempt(['username'=>$data['username'], 
-                          'password'=>$data['password']])){
+        // if(\Auth::attempt(['username'=>$data['username'], 
+        //                   'password'=>$data['password']])){
     
-        $user = auth()->user();
-        $user->token = $user->createToken($user->email)->accessToken;
-        return $user;
-        }else{
-            return['status'=>false];
-        }
+        // $user = auth()->user();
+        // $user->token = $user->createToken($user->email)->accessToken;
+        // return $user;
+        // }else{
+        //     return['status'=>false];
+        // }
+        TODO xxxx
     }
 
     public function logout()
