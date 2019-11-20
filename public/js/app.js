@@ -1989,8 +1989,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'Register',
+  data: function data() {
+    return {
+      user: {
+        name: '',
+        email: '',
+        password: ''
+      },
+      messageType: "alert-success",
+      showMessage: false,
+      message: ""
+    };
+  },
+  methods: {
+    login: function login() {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/login', this.user).then(function (response) {
+        console.log(response);
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -2024,16 +2048,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       name: "Navbar"
     };
   },
-  methods: {// isAuthenticated() {
-    //     return this.$store.getters.isAuthenticated
-    // },
-  },
+  methods: {},
   computed: {
     isAuthenticated: function isAuthenticated() {
       return this.$store.getters.isAuthenticated;
@@ -67751,32 +67775,85 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "register-page" }, [
+    _c("div", { staticClass: "form" }, [
+      _vm.showMessage
+        ? _c("div", { staticClass: "alert", class: _vm.messageType }, [
+            _c("strong", [_vm._v(_vm._s(_vm.message))])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("form", { staticClass: "login-form" }, [
+        _c("h2", [_vm._v("Login")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.user.email,
+              expression: "user.email"
+            }
+          ],
+          attrs: { type: "text", placeholder: "email" },
+          domProps: { value: _vm.user.email },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.user, "email", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.user.password,
+              expression: "user.password"
+            }
+          ],
+          attrs: { type: "password", placeholder: "password" },
+          domProps: { value: _vm.user.password },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.user, "password", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.login()
+              }
+            }
+          },
+          [_vm._v("Login")]
+        ),
+        _vm._v(" "),
+        _vm._m(0)
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "login-page" }, [
-      _c("div", { staticClass: "form" }, [
-        _c("form", { staticClass: "register-form" }, [
-          _c("input", { attrs: { type: "text", placeholder: "name" } }),
-          _vm._v(" "),
-          _c("input", { attrs: { type: "password", placeholder: "password" } }),
-          _vm._v(" "),
-          _c("input", {
-            attrs: { type: "text", placeholder: "email address" }
-          }),
-          _vm._v(" "),
-          _c("button", [_vm._v("create")]),
-          _vm._v(" "),
-          _c("p", { staticClass: "message" }, [
-            _vm._v("Already registered? "),
-            _c("a", { attrs: { href: "#" } }, [_vm._v("Sign In")])
-          ])
-        ])
-      ])
+    return _c("p", { staticClass: "message" }, [
+      _vm._v("Not registered? "),
+      _c("a", { attrs: { href: "#" } }, [_vm._v("Create an account")])
     ])
   }
 ]
@@ -67846,6 +67923,24 @@ var render = function() {
                         },
                         [_vm._v("Logout")]
                       )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "navbar-item" },
+                [
+                  !_vm.isAuthenticated
+                    ? _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-item nav-link",
+                          attrs: { to: "register" }
+                        },
+                        [_vm._v("Register")]
+                      )
+                    : _vm._e()
                 ],
                 1
               )

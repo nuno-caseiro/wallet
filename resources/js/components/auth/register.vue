@@ -1,12 +1,15 @@
 <template>
- <div class="login-page">
+ <div class="register-page">
   <div class="form">
-    <form class="register-form">
-      <input type="text" placeholder="name"/>
-      <input type="password" placeholder="password"/>
-      <input type="text" placeholder="email address"/>
-      <button>create</button>
-      <p class="message">Already registered? <a href="#">Sign In</a></p>
+    <div class="alert" :class="messageType" v-if="showMessage">             
+            <strong>{{ message }}</strong>
+        </div>
+    <form class="login-form">
+      <h2>Login</h2>
+      <input type="text" placeholder="email" v-model="user.email" >
+      <input type="password" placeholder="password" v-model="user.password">
+      <button v-on:click.prevent="login()">Login</button>
+      <p class="message">Not registered? <a href="#">Create an account</a></p>
     </form>
   </div>
 </div>
@@ -15,7 +18,28 @@
 <script type="text/javascript">
 import axios from 'axios';
 export default {
-  
+    name : 'Register',
+    data() {
+      return {
+        user:{name: '',
+              email: '', 
+              password: ''
+              },
+        messageType: "alert-success",
+        showMessage: false,
+        message: "", 
+      }
+    },
+     methods:{
+      login(){
+         axios.post('/api/login',this.user)
+                .then(response=>{
+                  console.log(response);   
+                  
+                });
+                      
+      }
+      }
 }
 </script>
 

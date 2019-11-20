@@ -14,6 +14,9 @@
                     <router-link class="nav-item nav-link" to="login" v-if="!isAuthenticated">Login</router-link>
                     <router-link class="nav-item nav-link" to="logout" v-else>Logout</router-link>
                 </li>
+                <li class="navbar-item">
+                    <router-link class="nav-item nav-link" to="register" v-if="!isAuthenticated">Register</router-link>
+                </li>
             </ul>
           </div>
         </nav>
@@ -27,10 +30,7 @@
         }  
     },
     methods: {
-        // isAuthenticated() {
-        //     return this.$store.getters.isAuthenticated
-        // },
-
+        
     },
     computed: {
         isAuthenticated() {
