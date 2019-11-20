@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Http\Resources\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\User as UserResource;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserControllerApi extends Controller
 {
@@ -16,13 +17,15 @@ class UserControllerApi extends Controller
         }else{
             return UserResource::collection(User::all());
         }
+
+
     }
 
     public function show($id){
         return new UserResource(User::find($id));
     }
 
-    public function store(StoreUserRequest $request){
+    public function store(Request $request){
         //TODO validacoes
         $user= new User();
         $user->fill($request->all());
@@ -33,7 +36,7 @@ class UserControllerApi extends Controller
         return response()->json(new UserResource($user),201);
     }
 
-    public function update(UpdateUserRequest $request, $id){
+    public function update(Request $request, $id){
         //TODO validacoes
         $user= User::findOrFail($id);
         $user->update($request->all());
