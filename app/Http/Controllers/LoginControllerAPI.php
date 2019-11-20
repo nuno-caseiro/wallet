@@ -50,7 +50,7 @@ class LoginControllerAPI extends Controller
         // }else{
         //     return['status'=>false];
         // }
-        TODO xxxx
+        //TODO 
     }
 
     public function logout()

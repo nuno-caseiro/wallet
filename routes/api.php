@@ -35,5 +35,5 @@ Route::middleware('auth:api')->group(function () {
 
 
 Route::post('login', 'LoginControllerAPI@login')->name('login');
-Route::post('login', 'RegisterControllerAPI@register')->name('register'); TODO
+Route::post('register', 'RegisterControllerAPI@register')->name('register'); //TODO
 Route::middleware('auth:api')->post('logout', 'LoginControllerAPI@logout');
