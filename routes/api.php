@@ -23,14 +23,13 @@ Route::middleware('auth:api')->group(function () {
     //TODO proteger para apenas administrador
     Route::get('users','UserControllerAPI@index');
     Route::delete('users/{id}','UserControllerAPI@destroy');
-    
+
     //TODO apenas proprio user ou admin
     Route::get('users/{id}', 'UserControllerAPI@show');
 
     //TODO apenas o proprio user
     Route::put('users/{id}', 'UserControllerAPI@update');
 
-    Route::post('wallets', 'WalletControllerAPI@store');
     Route::put('wallets/{id}', 'WalletControllerAPI@update');
     Route::delete('wallets/{id}', 'WalletControllerAPI@delete');
 
@@ -48,3 +47,5 @@ Route::post('login', 'LoginControllerAPI@login')->name('login');
 Route::get('wallets', 'WalletControllerAPI@index');
 
 Route::post('users','UserControllerAPI@store');
+Route::post('wallets', 'WalletControllerAPI@store');
+

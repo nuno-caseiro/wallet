@@ -1,7 +1,7 @@
 <template>
  <div class="login-page">
   <div class="form">
-    <div class="alert" :class="messageType" v-if="showMessage">             
+    <div class="alert" :class="messageType" v-if="showMessage">
             <strong>{{ message }}</strong>
         </div>
     <form class="login-form">
@@ -25,21 +25,27 @@ export default {
     data() {
       return {
         user:{name: '',
-              email: '', 
+              email: '',
               nif: '',
               password: '',
               password_confirmation: '',
               selectedFile: '',
               },
+          wallet:{
+            id:'',
+            email:'',
+            balance:'',
+
+          },
         errors:{
           name:[],
           email: [],
           password: [],
           password_confirmation: [],
-        },      
+        },
         messageType: "alert-success",
         showMessage: false,
-        message: "", 
+        message: "",
       }
     },
      methods:{
@@ -51,10 +57,19 @@ export default {
       register(user){
         axios.post('/api/users', user)
         .then(response => {
-          console.log(response.data.data)
+          console.log(response.data.data);
+          //fazer pedido get para saber o id
+          console.log(user);
+            /*  console.log(this.wallet);
+              this.wallet.id=user.id;
+               this.wallet.email=user.email;
+               this.wallet.balance=0;
+               axios.post('/api/wallets',this.wallet).then(response=>{
+                   console.log("CRIOU WALLET");
+               });*/
         }).catch(error=>{
           console.log(error);
-        });           
+        });
       }
       }
 }
@@ -161,6 +176,6 @@ body {
   background: linear-gradient(to left, #ff9100, #ff9100);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;      
+  -moz-osx-font-smoothing: grayscale;
 }
 </style>

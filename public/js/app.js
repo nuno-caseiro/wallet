@@ -2013,6 +2013,11 @@ __webpack_require__.r(__webpack_exports__);
         password_confirmation: '',
         selectedFile: ''
       },
+      wallet: {
+        id: '',
+        email: '',
+        balance: ''
+      },
       errors: {
         name: [],
         email: [],
@@ -2032,7 +2037,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     register: function register(user) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/users', user).then(function (response) {
-        console.log(response.data.data);
+        console.log(response.data.data); //fazer pedido get para saber o id
+
+        console.log(user);
+        /*  console.log(this.wallet);
+          this.wallet.id=user.id;
+           this.wallet.email=user.email;
+           this.wallet.balance=0;
+           axios.post('/api/wallets',this.wallet).then(response=>{
+               console.log("CRIOU WALLET");
+           });*/
       })["catch"](function (error) {
         console.log(error);
       });
