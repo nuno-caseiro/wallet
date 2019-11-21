@@ -44,5 +44,7 @@
 </script>
 
 <style scoped>
-  
+#navbar{
+    font-family: "Roboto", sans-serif;
+}
 </style>

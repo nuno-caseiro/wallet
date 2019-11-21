@@ -41,5 +41,5 @@ Route::middleware('auth:api')->group(function () {
 });
 
 Route::post('login', 'LoginControllerAPI@login')->name('login');
-Route::post('register', 'RegisterControllerAPI@register')->name('register'); //TODO
+
 Route::get('wallets', 'WalletControllerAPI@index');

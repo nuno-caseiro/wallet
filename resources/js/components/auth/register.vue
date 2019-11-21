@@ -8,6 +8,8 @@
       <h2>Register</h2>
       <input type="text" placeholder="name" v-model="user.name" >
       <input type="text" placeholder="email" v-model="user.email" >
+      <input type="text" placeholder="NIF" v-model="user.nif">
+      <input type="file" @change="onFileSelected">
       <input type="password" placeholder="password" v-model="user.password">
       <input type="password" placeholder="confirm password" v-model="user.password_confirmation">
       <button v-on:click.prevent="register(user)">Register</button>
@@ -24,8 +26,10 @@ export default {
       return {
         user:{name: '',
               email: '', 
+              nif: '',
               password: '',
               password_confirmation: '',
+              selectedFile: '',
               },
         errors:{
           name:[],
@@ -39,9 +43,18 @@ export default {
       }
     },
      methods:{
+      onFileSelected(event){
+         this.selectedFile = event.target.files[0];
+         const fd=new FormData();
+         fd.append('image', this.selectedFile, this.selectedFile.name);
+      },
       register(user){
-         console.log('user', this.user);
-                      
+        axios.post('/api/users', user)
+        .then(response => {
+          console.log(response.data.data)
+        }).catch(error=>{
+          console.log(error);
+        });           
       }
       }
 }

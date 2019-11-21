@@ -15,7 +15,7 @@ export default {
   name: 'Home',
     data(){
       return{
-          numberWallets: 0
+          numberWallets: ''
       }
     },
     methods:{
@@ -32,14 +32,17 @@ export default {
 </script>
 <style scoped>
 .homeText{
+    font-family: "Roboto", sans-serif;
     font-size: 45px;
-    color: rgb(65, 64, 64);
+    color: rgb(90, 90, 90);
     text-align: center;
     position: relative;
     top:100px;
-    text-shadow: 2px 2px 2px rgb(221, 81, 0);
+    
 }
 #numberOfWallets{
+    font-family: "Roboto", sans-serif;
+    color: rgb(90, 90, 90);
     font-size: 20px;
     position: relative;
     left: 300px;
