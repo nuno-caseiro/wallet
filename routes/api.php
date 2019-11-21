@@ -20,13 +20,10 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->group(function () {
     Route::post('logout', 'LoginControllerAPI@logout');
 
-    
-
     //TODO proteger para apenas administrador
     Route::get('users','UserControllerAPI@index');
     Route::delete('users/{id}','UserControllerAPI@destroy');
-
-
+    
     //TODO apenas proprio user ou admin
     Route::get('users/{id}', 'UserControllerAPI@show');
 
@@ -36,6 +33,12 @@ Route::middleware('auth:api')->group(function () {
     Route::post('wallets', 'WalletControllerAPI@store');
     Route::put('wallets/{id}', 'WalletControllerAPI@update');
     Route::delete('wallets/{id}', 'WalletControllerAPI@delete');
+
+
+    Route::get('movements','MovementControllerAPI@index');
+    Route::get('movements/{id}','MovementControllerAPI@show');
+    Route::post('movements', 'MovementControllerAPI@store');
+    Route::delete('movements/{id}', 'MovementControllerAPI@delete');
 
 
 });

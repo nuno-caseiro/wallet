@@ -35405,7 +35405,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.btn-primary[data-v-4f544354]{\r\n    background-color: orange;\r\n    border-color: orange;\n}\r\n", ""]);
+exports.push([module.i, "\n.btn-primary[data-v-4f544354]{\n    background-color: orange;\n    border-color: orange;\n}\n", ""]);
 
 // exports
 
@@ -35424,7 +35424,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#navbar[data-v-68ec052b]{\r\n    font-family: \"Roboto\", sans-serif;\n}\r\n", ""]);
+exports.push([module.i, "\n#navbar[data-v-68ec052b]{\n    font-family: \"Roboto\", sans-serif;\n}\n", ""]);
 
 // exports
 
@@ -35443,7 +35443,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.homeText[data-v-52205c2d]{\r\n    font-family: \"Roboto\", sans-serif;\r\n    font-size: 45px;\r\n    color: rgb(90, 90, 90);\r\n    text-align: center;\r\n    position: relative;\r\n    top:100px;\n}\n#numberOfWallets[data-v-52205c2d]{\r\n    font-family: \"Roboto\", sans-serif;\r\n    color: rgb(90, 90, 90);\r\n    font-size: 20px;\r\n    position: relative;\r\n    left: 300px;\n}\r\n", ""]);
+exports.push([module.i, "\n.homeText[data-v-52205c2d]{\n    font-family: \"Roboto\", sans-serif;\n    font-size: 45px;\n    color: rgb(90, 90, 90);\n    text-align: center;\n    position: relative;\n    top:100px;\n}\n#numberOfWallets[data-v-52205c2d]{\n    font-family: \"Roboto\", sans-serif;\n    color: rgb(90, 90, 90);\n    font-size: 20px;\n    position: relative;\n    left: 300px;\n}\n", ""]);
 
 // exports
 
@@ -35462,7 +35462,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\np[data-v-2319ba3a] {\r\n    font-weight: bold;\r\n    font-size: 50px;\r\n    text-align: center;\r\n    color: #f10b0b;\n}\r\n", ""]);
+exports.push([module.i, "\np[data-v-2319ba3a] {\n    font-weight: bold;\n    font-size: 50px;\n    text-align: center;\n    color: #f10b0b;\n}\n", ""]);
 
 // exports
 
@@ -85127,8 +85127,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\ProjetoDAD\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\ProjetoDAD\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/nunocaseiro/DAD/projeto/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/nunocaseiro/DAD/projeto/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
