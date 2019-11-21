@@ -33,7 +33,6 @@ Route::middleware('auth:api')->group(function () {
     //TODO apenas o proprio user
     Route::put('users/{id}', 'UserControllerAPI@update');
 
-    Route::get('wallets', 'WalletControllerAPI@index');
     Route::post('wallets', 'WalletControllerAPI@store');
     Route::put('wallets/{id}', 'WalletControllerAPI@update');
     Route::delete('wallets/{id}', 'WalletControllerAPI@delete');
@@ -43,4 +42,4 @@ Route::middleware('auth:api')->group(function () {
 
 Route::post('login', 'LoginControllerAPI@login')->name('login');
 Route::post('register', 'RegisterControllerAPI@register')->name('register'); //TODO
-//Route::middleware('auth:api')->post('logout', 'LoginControllerAPI@logout');
+Route::get('wallets', 'WalletControllerAPI@index');

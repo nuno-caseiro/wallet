@@ -2085,8 +2085,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Home'
+  name: 'Home',
+  data: function data() {
+    return {
+      numberWallets: 0
+    };
+  },
+  methods: {
+    getNumber: function getNumber() {
+      var _this = this;
+
+      axios.get('api/wallets').then(function (response) {
+        _this.numberWallets = response.data.data.length;
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getNumber();
+  }
 });
 
 /***/ }),
@@ -35360,7 +35380,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.btn-primary[data-v-4f544354]{\r\n    background-color: orange;\r\n    border-color: orange;\n}\r\n", ""]);
+exports.push([module.i, "\n.btn-primary[data-v-4f544354]{\n    background-color: orange;\n    border-color: orange;\n}\n", ""]);
 
 // exports
 
@@ -35379,7 +35399,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.homeText[data-v-52205c2d]{\r\n    font-size: 45px;\r\n    color: rgb(65, 64, 64);\r\n    text-align: center;\r\n    position: relative;\r\n    top:100px;\r\n    text-shadow: 2px 2px 2px rgb(221, 81, 0);\n}\r\n", ""]);
+exports.push([module.i, "\n.homeText[data-v-52205c2d]{\n    font-size: 45px;\n    color: rgb(65, 64, 64);\n    text-align: center;\n    position: relative;\n    top:100px;\n    text-shadow: 2px 2px 2px rgb(221, 81, 0);\n}\n#numberOfWallets[data-v-52205c2d]{\n    font-size: 20px;\n    position: relative;\n    left: 300px;\n}\n", ""]);
 
 // exports
 
@@ -35398,7 +35418,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\np[data-v-2319ba3a] {\r\n    font-weight: bold;\r\n    font-size: 50px;\r\n    text-align: center;\r\n    color: #f10b0b;\n}\r\n", ""]);
+exports.push([module.i, "\np[data-v-2319ba3a] {\n    font-weight: bold;\n    font-size: 50px;\n    text-align: center;\n    color: #f10b0b;\n}\n", ""]);
 
 // exports
 
@@ -68052,7 +68072,13 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("p", { attrs: { id: "numberOfWallets" } }, [
+      _vm._v("There are " + _vm._s(_vm.numberWallets) + " number of wallets")
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -68060,7 +68086,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "homeText" }, [
-      _vm._v("\n  Welcome to Virtual Wallet\n  "),
+      _vm._v("\n        Welcome to Virtual Wallet\n        "),
       _c("img", {
         attrs: {
           src:
@@ -84959,8 +84985,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\ProjetoDAD\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\ProjetoDAD\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/nunocaseiro/DAD/projeto/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/nunocaseiro/DAD/projeto/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

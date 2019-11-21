@@ -10,9 +10,9 @@ class WalletControllerAPI extends Controller
 {
     public function index(Request $request){
         if($request->has('page')){
-            return WalletResource::collection(User::paginate(5));
+            return WalletResource::collection(Wallet::paginate(5));
         }else{
-            return WalletResource::collection(User::all());
+            return WalletResource::collection(Wallet::all());
         }
     }
 
