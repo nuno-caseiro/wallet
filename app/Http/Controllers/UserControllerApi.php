@@ -48,7 +48,7 @@ class UserControllerApi extends Controller
         // ]);
         //TODO validacoes
         $user= new User();
-        $user->fill($request->all()['remember_token' => str_random(10)]););
+        $user->fill($request->all());
         $user->password= Hash::make($user->password);
         $user->save();
 
