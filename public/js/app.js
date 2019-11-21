@@ -1959,6 +1959,10 @@ __webpack_require__.r(__webpack_exports__);
         _this.showMessage = true;
         console.log(error);
       });
+    },
+    cancelEdit: function cancelEdit() {
+      this.showSuccess = false;
+      this.$router.push("/");
     }
   }
 });
@@ -67885,6 +67889,7 @@ var render = function() {
             on: {
               click: function($event) {
                 $event.preventDefault()
+                return _vm.cancelEdit($event)
               }
             }
           },
@@ -85122,8 +85127,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\ProjetoDAD\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\ProjetoDAD\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! F:\laragon\www\ProjetoDAD\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! F:\laragon\www\ProjetoDAD\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

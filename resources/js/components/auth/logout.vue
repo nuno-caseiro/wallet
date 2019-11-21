@@ -8,7 +8,7 @@
             <h2>Do you really want to logout?</h2>
             <div class="form-group">
                 <a class="btn btn-primary" v-on:click.prevent="logout">Confirm</a>
-                <a class="btn btn-primary" v-on:click.prevent="">Go back</a>
+                <a class="btn btn-primary" v-on:click.prevent="cancelEdit">Go back</a>
             </div>
         </div>
     </div>
@@ -44,7 +44,12 @@
                         this.showMessage = true;
                         console.log(error);
                     })            
-                }
+                },
+
+            cancelEdit(){
+                this.showSuccess = false;
+                this.$router.push("/")
+        },
         }
     }
 </script>
