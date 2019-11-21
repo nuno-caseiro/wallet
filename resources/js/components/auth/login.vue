@@ -9,7 +9,8 @@
       <input type="text" placeholder="email" v-model="user.email" >
       <input type="password" placeholder="password" v-model="user.password">
       <button v-on:click.prevent="login()">Login</button>
-      <p class="message">Not registered? <a href="#">Create an account</a></p>
+      <p class="message">Not registered?<router-link href="#" to="register" class="button"> Create an account</router-link></p> 
+      <!-- //TODO -->
     </form>
   </div>
 </div>

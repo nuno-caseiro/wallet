@@ -1857,6 +1857,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Login',
@@ -1992,6 +1993,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Register',
@@ -2000,7 +2002,14 @@ __webpack_require__.r(__webpack_exports__);
       user: {
         name: '',
         email: '',
-        password: ''
+        password: '',
+        password_confirmation: ''
+      },
+      errors: {
+        name: [],
+        email: [],
+        password: [],
+        password_confirmation: []
       },
       messageType: "alert-success",
       showMessage: false,
@@ -2008,10 +2017,8 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    register: function register() {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/login' + this.user).then(function (response) {
-        console.log(response);
-      });
+    register: function register(user) {
+      console.log('user', this.user);
     }
   }
 });
@@ -2027,6 +2034,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -35380,7 +35388,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.btn-primary[data-v-4f544354]{\n    background-color: orange;\n    border-color: orange;\n}\n", ""]);
+exports.push([module.i, "\n.btn-primary[data-v-4f544354]{\r\n    background-color: orange;\r\n    border-color: orange;\n}\r\n", ""]);
 
 // exports
 
@@ -35399,7 +35407,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.homeText[data-v-52205c2d]{\n    font-size: 45px;\n    color: rgb(65, 64, 64);\n    text-align: center;\n    position: relative;\n    top:100px;\n    text-shadow: 2px 2px 2px rgb(221, 81, 0);\n}\n#numberOfWallets[data-v-52205c2d]{\n    font-size: 20px;\n    position: relative;\n    left: 300px;\n}\n", ""]);
+exports.push([module.i, "\n.homeText[data-v-52205c2d]{\r\n    font-size: 45px;\r\n    color: rgb(65, 64, 64);\r\n    text-align: center;\r\n    position: relative;\r\n    top:100px;\r\n    text-shadow: 2px 2px 2px rgb(221, 81, 0);\n}\n#numberOfWallets[data-v-52205c2d]{\r\n    font-size: 20px;\r\n    position: relative;\r\n    left: 300px;\n}\r\n", ""]);
 
 // exports
 
@@ -35418,7 +35426,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\np[data-v-2319ba3a] {\n    font-weight: bold;\n    font-size: 50px;\n    text-align: center;\n    color: #f10b0b;\n}\n", ""]);
+exports.push([module.i, "\np[data-v-2319ba3a] {\r\n    font-weight: bold;\r\n    font-size: 50px;\r\n    text-align: center;\r\n    color: #f10b0b;\n}\r\n", ""]);
 
 // exports
 
@@ -67742,22 +67750,24 @@ var render = function() {
           [_vm._v("Login")]
         ),
         _vm._v(" "),
-        _vm._m(0)
+        _c(
+          "p",
+          { staticClass: "message" },
+          [
+            _vm._v("Not registered?"),
+            _c(
+              "router-link",
+              { staticClass: "button", attrs: { href: "#", to: "register" } },
+              [_vm._v(" Create an account")]
+            )
+          ],
+          1
+        )
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "message" }, [
-      _vm._v("Not registered? "),
-      _c("a", { attrs: { href: "#" } }, [_vm._v("Create an account")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -67918,13 +67928,34 @@ var render = function() {
           }
         }),
         _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.user.password_confirmation,
+              expression: "user.password_confirmation"
+            }
+          ],
+          attrs: { type: "password", placeholder: "confirm password" },
+          domProps: { value: _vm.user.password_confirmation },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.user, "password_confirmation", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
         _c(
           "button",
           {
             on: {
               click: function($event) {
                 $event.preventDefault()
-                return _vm.register()
+                return _vm.register(_vm.user)
               }
             }
           },
@@ -67964,7 +67995,7 @@ var render = function() {
         attrs: { id: "navbar" }
       },
       [
-        _c("a", { staticClass: "navbar-brand", attrs: { href: "#" } }, [
+        _c("a", { staticClass: "navbar-brand", attrs: { href: "/" } }, [
           _vm._v("Virtual Wallet")
         ]),
         _vm._v(" "),
@@ -84985,8 +85016,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/nunocaseiro/DAD/projeto/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/nunocaseiro/DAD/projeto/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\ProjetoDAD\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\ProjetoDAD\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -9,7 +9,8 @@
       <input type="text" placeholder="name" v-model="user.name" >
       <input type="text" placeholder="email" v-model="user.email" >
       <input type="password" placeholder="password" v-model="user.password">
-      <button v-on:click.prevent="register()">Register</button>
+      <input type="password" placeholder="confirm password" v-model="user.password_confirmation">
+      <button v-on:click.prevent="register(user)">Register</button>
     </form>
   </div>
 </div>
@@ -23,20 +24,23 @@ export default {
       return {
         user:{name: '',
               email: '', 
-              password: ''
+              password: '',
+              password_confirmation: '',
               },
+        errors:{
+          name:[],
+          email: [],
+          password: [],
+          password_confirmation: [],
+        },      
         messageType: "alert-success",
         showMessage: false,
         message: "", 
       }
     },
      methods:{
-      register(){
-         axios.post('/api/login'+this.user)
-                .then(response=>{
-                  console.log(response);   
-                  
-                });
+      register(user){
+         console.log('user', this.user);
                       
       }
       }
