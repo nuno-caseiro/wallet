@@ -27,9 +27,10 @@ export default {
         user:{name: '',
               email: '',
               nif: '',
+              selectedFile: null,
               password: '',
               password_confirmation: '',
-              selectedFile: '',
+              
               },
           wallet:{
             id:'',
@@ -50,14 +51,21 @@ export default {
     },
      methods:{
       onFileSelected(event){
-         this.selectedFile = event.target.files[0];
-         const fd=new FormData();
-         fd.append('image', this.selectedFile, this.selectedFile.name);
+         let fileReader = new FileReader()
+            fileReader.readAsDataURL(event.target.files[0])
+            fileReader.onload = (event) => {
+                this.user.selectedFile = event.target.result
+            }
       },
       register(user){
-        axios.post('/api/users', user)
+        axios.post('/api/users', this.user)
         .then(response => {
-          console.log(response.data.data);
+          console.log(response);
+          Object.assign(this.user, response.data.data);
+          this.$emit('item-saved', this.user)
+          this.showSuccess = true;
+          this.successMessage = 'Item Created';
+          this.$router.push("/")
           //fazer pedido get para saber o id
           console.log(user);
             /*  console.log(this.wallet);
@@ -72,6 +80,8 @@ export default {
         });
       }
       }
+
+      
 }
 </script>
 
