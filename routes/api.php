@@ -39,6 +39,11 @@ Route::middleware('auth:api')->group(function () {
     Route::post('movements', 'MovementControllerAPI@store');
     Route::delete('movements/{id}', 'MovementControllerAPI@delete');
 
+    Route::get('categories','CategoryControllerAPI@index');
+    Route::get('categories/{id}','CategoryControllerAPI@show');
+    Route::post('categories', 'CategoryControllerAPI@store');
+    Route::delete('categories/{id}', 'CategoryControllerAPI@delete');
+
 
 });
 
