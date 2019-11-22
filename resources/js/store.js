@@ -32,6 +32,11 @@ export default new Vuex.Store({
             localStorage.removeItem('expiration_time')
             axios.defaults.headers.common.Authorization = undefined;
         },
+        setAuthUser(state, user) {
+            state.user =  user;
+            localStorage.setItem('user', JSON.stringify(user));
+        },
+        
     },
 
     getters:{

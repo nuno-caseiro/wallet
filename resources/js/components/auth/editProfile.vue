@@ -6,10 +6,10 @@
         </div>
     <form class="login-form">
       <h2>Edit Profile</h2>
-      <input type="text" placeholder="name" v-model="user.name" >
+      <input type="text" placeholder="name" v-model="userLogin.name" >
       <input type="text" placeholder="e-mail">
       <input type="text" placeholder="NIF" >
-      <input type="file" @change="onFileSelected">
+      <input type="file">
       <input type="password" placeholder="password">
       <input type="password" placeholder="confirm password">
       <button>Save Profile</button>
@@ -21,25 +21,18 @@
 import axios from 'axios';
 export default {
     name : 'Edit',
-    
     data() {
       return {
-        props: ['user'],
-        // user:{name: '',
-        //       email: '',
-        //       nif: '',
-        //       selectedFile: null,
-        //       new_password: '',
-        //       },
-        old_password: '',
         messageType: "alert-success",
         showMessage: false,
         message: "",
       }
       },
-      methods: {
-           
-      }
+      computed: {
+        userLogin() {
+            return this.$store.getters.getAuthUser
+        },
+       }
     
 }
 </script>

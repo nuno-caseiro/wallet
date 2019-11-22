@@ -7,9 +7,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
-                 <router-link class="nav-item nav-link" to="editProfile" v-if="isAuthenticated"  v-on:click.prevent="editProfile" >Edit Profile</router-link>
+                 <router-link class="nav-item nav-link" to="editProfile" v-if="isAuthenticated">Edit Profile</router-link>
             </ul>
             <ul class="navbar-nav">
+                
+                 <!-- <li v-if="isAuthenticated" class="navbar-item">
+                    <a class="nav-item nav-link"> {{userLogin.name}} </a>
+                </li> -->
+
                 <li class="navbar-item">
                     <router-link class="nav-item nav-link" to="login" v-if="!isAuthenticated">Login</router-link>
                     <router-link class="nav-item nav-link" to="logout" v-else>Logout</router-link>
@@ -32,14 +37,14 @@
         }  
     },
     methods: {
-        editProfile(user){
-            this.currentUser = user
-            this.showSuccess = false
-        },
     },
     computed: {
         isAuthenticated() {
             return this.$store.getters.isAuthenticated
+        },
+
+        userLogin() {
+            return this.$store.getters.getAuthUser
         },
     }
     }

@@ -1864,20 +1864,16 @@ __webpack_require__.r(__webpack_exports__);
   name: 'Edit',
   data: function data() {
     return {
-      props: ['user'],
-      // user:{name: '',
-      //       email: '',
-      //       nif: '',
-      //       selectedFile: null,
-      //       new_password: '',
-      //       },
-      old_password: '',
       messageType: "alert-success",
       showMessage: false,
       message: ""
     };
   },
-  methods: {}
+  computed: {
+    userLogin: function userLogin() {
+      return this.$store.getters.getAuthUser;
+    }
+  }
 });
 
 /***/ }),
@@ -1939,7 +1935,7 @@ __webpack_require__.r(__webpack_exports__);
           token: token,
           tokenType: tokenType,
           expiration: expiration
-        }); //this.$socket.emit('user_enter', this.$store.getters.getAuthUser);
+        }); // this.$socket.emit('user_enter', this.$store.getters.getAuthUser);
 
 
         console.log(token);
@@ -1949,6 +1945,12 @@ __webpack_require__.r(__webpack_exports__);
         setTimeout(function () {
           _this.$router.push("/");
         }, 1000);
+      }).then(function (response) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('api/users').then(function (response) {
+          var user = response.data;
+
+          _this.$store.dispatch('setAuthUser', user);
+        });
       });
     }
   }
@@ -2169,6 +2171,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2177,15 +2184,13 @@ __webpack_require__.r(__webpack_exports__);
       showSuccess: false
     };
   },
-  methods: {
-    editProfile: function editProfile(user) {
-      this.currentUser = user;
-      this.showSuccess = false;
-    }
-  },
+  methods: {},
   computed: {
     isAuthenticated: function isAuthenticated() {
       return this.$store.getters.isAuthenticated;
+    },
+    userLogin: function userLogin() {
+      return this.$store.getters.getAuthUser;
     }
   }
 });
@@ -67915,18 +67920,18 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.user.name,
-              expression: "user.name"
+              value: _vm.userLogin.name,
+              expression: "userLogin.name"
             }
           ],
           attrs: { type: "text", placeholder: "name" },
-          domProps: { value: _vm.user.name },
+          domProps: { value: _vm.userLogin.name },
           on: {
             input: function($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.$set(_vm.user, "name", $event.target.value)
+              _vm.$set(_vm.userLogin, "name", $event.target.value)
             }
           }
         }),
@@ -67935,10 +67940,7 @@ var render = function() {
         _vm._v(" "),
         _c("input", { attrs: { type: "text", placeholder: "NIF" } }),
         _vm._v(" "),
-        _c("input", {
-          attrs: { type: "file" },
-          on: { change: _vm.onFileSelected }
-        }),
+        _c("input", { attrs: { type: "file" } }),
         _vm._v(" "),
         _c("input", { attrs: { type: "password", placeholder: "password" } }),
         _vm._v(" "),
@@ -68333,13 +68335,7 @@ var render = function() {
                       "router-link",
                       {
                         staticClass: "nav-item nav-link",
-                        attrs: { to: "editProfile" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.editProfile($event)
-                          }
-                        }
+                        attrs: { to: "editProfile" }
                       },
                       [_vm._v("Edit Profile")]
                     )
@@ -85387,6 +85383,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       localStorage.removeItem('access_token');
       localStorage.removeItem('expiration_time');
       axios.defaults.headers.common.Authorization = undefined;
+    },
+    setAuthUser: function setAuthUser(state, user) {
+      state.user = user;
+      localStorage.setItem('user', JSON.stringify(user));
     }
   },
   getters: {

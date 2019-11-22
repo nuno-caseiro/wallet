@@ -40,7 +40,7 @@ export default {
                   let token = response.data.access_token
                   let expiration = response.data.expires_in + Date.now()
                   this.$store.commit('setToken', {token, tokenType, expiration})
-                  //this.$socket.emit('user_enter', this.$store.getters.getAuthUser);
+                  // this.$socket.emit('user_enter', this.$store.getters.getAuthUser);
                   console.log(token);
                   this.typeofmsg = "alert-success";
                   this.message = "Login Successful";
@@ -48,7 +48,14 @@ export default {
                   setTimeout(() => {
                         this.$router.push("/")
                     }, 1000);
-                });
+                })
+                .then(response => {
+                axios.get('api/users')
+                    .then(response => {
+                        let user = response.data
+                        this.$store.dispatch('setAuthUser', user)
+                    })
+                })
                       
       }
       }

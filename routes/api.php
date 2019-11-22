@@ -52,3 +52,7 @@ Route::post('/users','UserControllerAPI@store');
 
 Route::post('wallets', 'WalletControllerAPI@store');
 
+//para obter o user logado
+    Route::get('/users', function (Request $request) {
+        return $request->user();
+    });
