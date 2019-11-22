@@ -5,101 +5,44 @@
             <strong>{{ message }}</strong>
         </div>
     <form class="login-form">
-      <h2>Register</h2>
+      <h2>Edit Profile</h2>
       <input type="text" placeholder="name" v-model="user.name" >
-      <input type="text" placeholder="e-mail" v-model="user.email" >
-      <input type="text" placeholder="NIF" v-model="user.nif">
+      <input type="text" placeholder="e-mail">
+      <input type="text" placeholder="NIF" >
       <input type="file" @change="onFileSelected">
-      <input type="password" placeholder="password" v-model="user.password">
-      <input type="password" placeholder="confirm password" v-model="password_confirmation">
-      <button v-on:click.prevent="register(user)">Register</button>
+      <input type="password" placeholder="password">
+      <input type="password" placeholder="confirm password">
+      <button>Save Profile</button>
     </form>
   </div>
 </div>
 </template>
-
 <script type="text/javascript">
 import axios from 'axios';
 export default {
-    name : 'Register',
+    name : 'Edit',
+    
     data() {
       return {
-        user:{name: '',
-              email: '',
-              nif: '',
-              selectedFile: null,
-              password: '',   
-              },
-
-          password_confirmation: '',
-          
-          wallet:{
-            id:'',
-            email:'',
-            balance:'',
-
-          },
-        errors:{
-          name:[],
-          email: [],
-          nif: [],
-          password: [],
-          password_confirmation: [],
-        },
+        props: ['user'],
+        // user:{name: '',
+        //       email: '',
+        //       nif: '',
+        //       selectedFile: null,
+        //       new_password: '',
+        //       },
+        old_password: '',
         messageType: "alert-success",
         showMessage: false,
         message: "",
       }
-    },
-     methods:{
-      onFileSelected(event){
-         let fileReader = new FileReader()
-            fileReader.readAsDataURL(event.target.files[0])
-            fileReader.onload = (event) => {
-                this.user.selectedFile = event.target.result
-            }
       },
-      register(user){
-        axios.post('/api/register', this.user)
-        .then(response => {
-          console.log(response);
-          Object.assign(this.user, response.data.data);
-          this.$emit('user-saved', this.user)
-          this.showMessage = true;
-          this.message = 'Item Created';
-          this.$router.push("/")
-          //fazer pedido get para saber o id
-          console.log(user);
-            /*  console.log(this.wallet);
-              this.wallet.id=user.id;
-               this.wallet.email=user.email;
-               this.wallet.balance=0;
-               axios.post('/api/wallets',this.wallet).then(response=>{
-                   console.log("CRIOU WALLET");
-               });*/
-        }).catch(error=>{
-          console.log(error);
-
-        })
-      },
-
-      resetUser() {
-        this.user = {
-              name: null,
-              email: null,
-              nif: null,
-              selectedFile: null,
-              password: null,
-              password_confirmation: null,
-              
-        }
-      },
-
-    }  
+      methods: {
+           
+      }
+    
 }
 </script>
-
-
 
 <style scoped lang="scss">
  @import url(https://fonts.googleapis.com/css?family=Roboto:300);

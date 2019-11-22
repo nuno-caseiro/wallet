@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 use App\Http\Resources\User as UserResource;
 use App\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\VerifyController;
+use Illuminate\Contracts\Support\Jsonable;
+use Carbon\Carbon;
 
 class UserControllerApi extends Controller
 {
@@ -32,7 +34,7 @@ class UserControllerApi extends Controller
             'email' => 'required|email|unique:users,email,',
             'nif' => 'integer|between:9,12',
             'password' => 'required|min:3',
-            'password_confirmation' => 'required|min:3',
+
         ]);
         //TODO validacoes
         $user= new User();

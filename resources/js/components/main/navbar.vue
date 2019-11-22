@@ -2,13 +2,12 @@
     <div>
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark" id="navbar">
             <a class="navbar-brand" href="/">Virtual Wallet</a>
-            <!-- <a class="navbar-brand" href="/"><img src = https://www.pnc.com/content/dam/pnc-com/images/personal/Checking/VirtualWallet/overview/vw_overview_intro.svg > </a> -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
-
+                 <router-link class="nav-item nav-link" to="editProfile" v-if="isAuthenticated"  v-on:click.prevent="editProfile" >Edit Profile</router-link>
             </ul>
             <ul class="navbar-nav">
                 <li class="navbar-item">
@@ -25,13 +24,18 @@
 </template>
 <script type="text/javascript">
     export default {
-        data: function() {
+        data()  {
         return{
             name: "Navbar",
+            currentUser:null,
+            showSuccess:false,
         }  
     },
     methods: {
-        
+        editProfile(user){
+            this.currentUser = user
+            this.showSuccess = false
+        },
     },
     computed: {
         isAuthenticated() {
