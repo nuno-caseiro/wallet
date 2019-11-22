@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\User as UserResource;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class UserControllerApi extends Controller
 {
@@ -27,25 +28,13 @@ class UserControllerApi extends Controller
 
     public function store(Request $request){
         $request->validate([
-            // 'name' => ['required', 'string', 'max:255'],
-            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            // 'NIF'=> ['required', 'string', 'min:9', 'confirmed'],
-            // 'selectedFile'=> ['required', 'confirmed'],
-            // 'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
-            'email' => 'required|email|unique:users,email,',
-            'selectedFile' => 'nullable',
-            'password' => 'required|min:3|confirmed',
-            'password_confirmation' => 'required|min:3'
+            // 'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
+            // 'email' => 'required|email|unique:users,email,',
+            // 'NIF'=> 'required|min:8|unique',
+            // 'selectedFile' => 'nullable',
+            // 'password' => 'required|min:3|confirmed',
+            // 'password_confirmation' => 'required|min:3'
         ]);
-
-        // User::create([
-        //     'name' => $request['name'],
-        //     'email' => $request['email'],
-        //     'password' => Hash::make($request['password']),
-        //     'selectedFile' => $request['selectedFile'],
-        //     'NIF'=> $request['NIF']
-        // ]);
         //TODO validacoes
         $user= new User();
         $user->fill($request->all());
