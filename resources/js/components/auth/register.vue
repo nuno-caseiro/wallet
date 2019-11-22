@@ -7,7 +7,7 @@
     <form class="login-form">
       <h2>Register</h2>
       <input type="text" placeholder="name" v-model="user.name" >
-      <input type="text" placeholder="email" v-model="user.email" >
+      <input type="text" placeholder="e-mail" v-model="user.email" >
       <input type="text" placeholder="NIF" v-model="user.nif">
       <input type="file" @change="onFileSelected">
       <input type="password" placeholder="password" v-model="user.password">
@@ -41,6 +41,7 @@ export default {
         errors:{
           name:[],
           email: [],
+          nif: [],
           password: [],
           password_confirmation: [],
         },
@@ -62,9 +63,9 @@ export default {
         .then(response => {
           console.log(response);
           Object.assign(this.user, response.data.data);
-          this.$emit('item-saved', this.user)
-          this.showSuccess = true;
-          this.successMessage = 'Item Created';
+          this.$emit('user-saved', this.user)
+          this.showMessage = true;
+          this.message = 'Item Created';
           this.$router.push("/")
           //fazer pedido get para saber o id
           console.log(user);
@@ -77,11 +78,23 @@ export default {
                });*/
         }).catch(error=>{
           console.log(error);
-        });
-      }
-      }
 
-      
+        })
+      },
+
+      resetUser() {
+        this.user = {
+              name: null,
+              email: null,
+              nif: null,
+              selectedFile: null,
+              password: null,
+              password_confirmation: null,
+              
+        }
+      },
+
+    }  
 }
 </script>
 

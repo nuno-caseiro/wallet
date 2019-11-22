@@ -2021,6 +2021,7 @@ __webpack_require__.r(__webpack_exports__);
       errors: {
         name: [],
         email: [],
+        nif: [],
         password: [],
         password_confirmation: []
       },
@@ -2047,10 +2048,10 @@ __webpack_require__.r(__webpack_exports__);
         console.log(response);
         Object.assign(_this2.user, response.data.data);
 
-        _this2.$emit('item-saved', _this2.user);
+        _this2.$emit('user-saved', _this2.user);
 
-        _this2.showSuccess = true;
-        _this2.successMessage = 'Item Created';
+        _this2.showMessage = true;
+        _this2.message = 'Item Created';
 
         _this2.$router.push("/"); //fazer pedido get para saber o id
 
@@ -2066,6 +2067,16 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    resetUser: function resetUser() {
+      this.user = {
+        name: null,
+        email: null,
+        nif: null,
+        selectedFile: null,
+        password: null,
+        password_confirmation: null
+      };
     }
   }
 });
@@ -35454,7 +35465,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#navbar[data-v-68ec052b]{\r\n    font-family: \"Roboto\", sans-serif;\n}\r\n", ""]);
+exports.push([module.i, "\n.navbar-brand[data-v-68ec052b]{\r\n    font-size: 28px\n}\n#navbar[data-v-68ec052b]{\r\n    font-size: 20px;\r\n    font-family: \"Roboto\", sans-serif;\r\n    height:65px;\n}\r\n", ""]);
 
 // exports
 
@@ -67800,7 +67811,7 @@ var render = function() {
               expression: "user.email"
             }
           ],
-          attrs: { type: "text", placeholder: "email" },
+          attrs: { type: "text", placeholder: "e-mail" },
           domProps: { value: _vm.user.email },
           on: {
             input: function($event) {
@@ -67992,7 +68003,7 @@ var render = function() {
               expression: "user.email"
             }
           ],
-          attrs: { type: "text", placeholder: "email" },
+          attrs: { type: "text", placeholder: "e-mail" },
           domProps: { value: _vm.user.email },
           on: {
             input: function($event) {

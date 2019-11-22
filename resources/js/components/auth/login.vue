@@ -6,7 +6,7 @@
         </div>
     <form class="login-form">
       <h2>Login</h2>
-      <input type="text" placeholder="email" v-model="user.email" >
+      <input type="text" placeholder="e-mail" v-model="user.email" >
       <input type="password" placeholder="password" v-model="user.password">
       <button v-on:click.prevent="login()">Login</button>
       <p class="message">Not registered?<router-link href="#" to="register" class="button"> Create an account</router-link></p> 

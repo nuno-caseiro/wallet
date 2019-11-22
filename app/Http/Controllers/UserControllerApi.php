@@ -28,12 +28,11 @@ class UserControllerApi extends Controller
 
     public function store(Request $request){
         $request->validate([
-            // 'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
-            // 'email' => 'required|email|unique:users,email,',
-            // 'NIF'=> 'required|min:8|unique',
-            // 'selectedFile' => 'nullable',
-            // 'password' => 'required|min:3|confirmed',
-            // 'password_confirmation' => 'required|min:3'
+            'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
+            'email' => 'required|email|unique:users,email,',
+            'nif' => 'integer|between:9,12',
+            'password' => 'required|min:3',
+            'password_confirmation' => 'required|min:3',
         ]);
         //TODO validacoes
         $user= new User();

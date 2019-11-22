@@ -20,6 +20,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->group(function () {
     Route::post('logout', 'LoginControllerAPI@logout');
 
+    // Route::post('users','UserControllerAPI@store')->name('create');
+
     //TODO proteger para apenas administrador
     Route::get('users','UserControllerAPI@index');
     Route::delete('users/{id}','UserControllerAPI@destroy');

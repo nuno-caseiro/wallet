@@ -44,7 +44,13 @@
 </script>
 
 <style scoped>
+.navbar-brand{
+    font-size: 28px
+}
+
 #navbar{
+    font-size: 20px;
     font-family: "Roboto", sans-serif;
+    height:65px;
 }
 </style>
