@@ -6,7 +6,10 @@
             </div>
             <div class="jumbotron">
                 <h2>Movement</h2>
-                <v-select :wallets="wallets"></v-select>
+            <select class="form-control"  >
+                <option v-for="wallet in wallets" v-bind:value="wallet.id"></option>
+
+            </select>
 
             </div>
         </div>
@@ -36,11 +39,14 @@
                     start_balance:'',
                     end_balance:'',
                     value:'',
-                 }
+                 },
+                showMessage: false,
 
                 }
 
-            },
+            },mounted() {
+            console.log(this.wallets);
+        }
 
     }
 </script>
