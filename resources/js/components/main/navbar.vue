@@ -7,54 +7,58 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav mr-auto">
-
-            </ul>
-                <ul class="navbar-nav">
-                    <li v-if="isAuthenticated" class="navbar-item">
-                        <router-link class="nav-item nav-link" to="edit">{{getAutenticatedUser.name}}</router-link>
-                    </li>
+                <ul class="navbar-nav mr-auto">
+                    <!-- <li v-if="isAuthenticated">
+                        <img v-bind:src="itemImageURL(getAutenticatedUser.photo)">
+                    </li>-->
                 </ul>
-            <ul class="navbar-nav">
-                <li class="navbar-item">
-                    <router-link class="nav-item nav-link" to="login" v-if="!isAuthenticated">Login</router-link>
-                    <router-link class="nav-item nav-link" to="logout" v-else>Logout</router-link>
-                </li>
-                <li class="navbar-item">
-                    <router-link class="nav-item nav-link" to="register" v-if="!isAuthenticated">Register</router-link>
-                </li>
-            </ul>
-          </div>
-        </nav>
-    </div>
-</template>
-<script type="text/javascript">
-    export default {
-        data: function() {
-        return{
-            name: "Navbar",
+                     <ul class="navbar-nav">
+                         <li v-if="isAuthenticated" class="navbar-item">
+                             <router-link class="nav-item nav-link" to="edit">{{getAutenticatedUser.name}}</router-link>
+                         </li>
+                     </ul>
+                 <ul class="navbar-nav">
+                     <li class="navbar-item">
+                         <router-link class="nav-item nav-link" to="login" v-if="!isAuthenticated">Login</router-link>
+                         <router-link class="nav-item nav-link" to="logout" v-else>Logout</router-link>
+                     </li>
+                     <li class="navbar-item">
+                         <router-link class="nav-item nav-link" to="register" v-if="!isAuthenticated">Register</router-link>
+                     </li>
+                 </ul>
+               </div>
+             </nav>
+         </div>
+     </template>
+     <script type="text/javascript">
+         export default {
+             data: function() {
+             return{
+                 name: "Navbar",
 
-        }
-    },
-    methods: {
+             }
+         },
+         methods: {
+             itemImageURL(photo){
+                 return "storage/fotos/"+String(photo);
+             }
+         },
+         computed: {
+             isAuthenticated() {
+                 return this.$store.getters.isAuthenticated;
+             },
+             getAutenticatedUser(){
+                 return this.$store.getters.getAuthUser;
+             }
 
-    },
-    computed: {
-        isAuthenticated() {
-            return this.$store.getters.isAuthenticated;
-        },
-        getAutenticatedUser(){
-            return this.$store.getters.getAuthUser;
-        }
-
-        },
-    }
+             },
+         }
 
 
-</script>
+     </script>
 
-<style scoped>
-#navbar{
-    font-family: "Roboto", sans-serif;
-}
-</style>
+     <style scoped>
+     #navbar{
+         font-family: "Roboto", sans-serif;
+     }
+     </style>
