@@ -7,14 +7,14 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav mr-auto">
-                    <!-- <li v-if="isAuthenticated">
-                        <img v-bind:src="itemImageURL(getAutenticatedUser.photo)">
-                    </li>-->
+                <ul class="navbar-nav mr-auto">                  
                 </ul>
                      <ul class="navbar-nav">
+                         <a  v-if="isAuthenticated" class="navbar-brand" href="#">
+                            <img  v-bind:src="itemImageURL(getAutenticatedUser.photo)" width="30" height="30" alt="">
+                         </a>
                          <li v-if="isAuthenticated" class="navbar-item">
-                             <router-link class="nav-item nav-link" to="edit">{{getAutenticatedUser.name}}</router-link>
+                             <router-link class="nav-item nav-link" to="edit">User Name: {{getAutenticatedUser.name}}</router-link>
                          </li>
                      </ul>
                  <ul class="navbar-nav">
@@ -31,6 +31,7 @@
          </div>
      </template>
      <script type="text/javascript">
+
          export default {
              data: function() {
              return{
@@ -39,9 +40,10 @@
              }
          },
          methods: {
-             itemImageURL(photo){
-                 return "storage/fotos/"+String(photo);
-             }
+            itemImageURL(photo){
+                return "storage/fotos/"+String(photo);
+             
+             },
          },
          computed: {
              isAuthenticated() {

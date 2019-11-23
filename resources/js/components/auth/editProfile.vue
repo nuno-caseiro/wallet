@@ -4,14 +4,15 @@
     <div class="alert" :class="messageType" v-if="showMessage">
             <strong>{{ message }}</strong>
         </div>
+        
     <form class="login-form">
       <h2>Edit Profile</h2>
       <input type="text" placeholder="name" v-model="userLogin.name" >
-      <input type="text" placeholder="e-mail">
-      <input type="text" placeholder="NIF" >
-      <input type="file">
-      <input type="password" placeholder="password">
-      <input type="password" placeholder="confirm password">
+      <input type="text" placeholder="e-mail" v-model="userLogin.email">
+      <input type="text" placeholder="NIF" v-model="userLogin.nif" >
+      <input type="file" @change="userLogin.photo">
+      <input type="password" placeholder="password" >
+      <input type="password" placeholder="new password">
       <button>Save Profile</button>
     </form>
   </div>
@@ -23,11 +24,25 @@ export default {
     name : 'Edit',
     data() {
       return {
+
         messageType: "alert-success",
         showMessage: false,
         message: "",
       }
       },
+      methods:{
+         onFileSelected(event){
+                let fileReader = new FileReader();
+                fileReader.readAsDataURL(event.target.files[0]);
+                fileReader.onload=(event)=>{
+                    this.user.photo=event.target.result;
+                }
+
+            },
+
+
+      },
+
       computed: {
         userLogin() {
             return this.$store.getters.getAuthUser
