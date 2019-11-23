@@ -44,11 +44,21 @@ class UserControllerApi extends Controller
         //TODO validacoes
         $user= new User();
         $user->fill($request->all()+['remember_token'=> Str::random(10)]);
-        if($request->photo!=null){
-            $imageName= time().'.'.$request->photo->getClientOriginalExtension();
-            $request->image->move(public_path('fotos'),$imageName);
 
-            $user->photo=$imageName;
+        if(strpos($request->input('photo'),'data:image/')!==false){
+            $exploded=explode(',', $request->photo);
+            $decoded= base64_decode($exploded[1]);
+            if(Str::contains($exploded[0],'jpeg')|| Str::contains($exploded[0],'jpg')){
+                $extension='jpg';
+            }else{
+                $extension='png';
+            }
+            $fileName= Str::random().'.'.$extension;
+
+            $path=storage_path('app/public/fotos/').$fileName;
+            file_put_contents($path,$decoded);
+
+            $user->photo=$fileName;
         }else{
             $user->photo=null;
         }

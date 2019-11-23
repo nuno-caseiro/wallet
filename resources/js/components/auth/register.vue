@@ -9,7 +9,7 @@
                 <input type="text" placeholder="name" v-model="user.name" >
                 <input type="text" placeholder="email" v-model="user.email" >
                 <input type="text" placeholder="NIF" v-model="user.nif">
-                <input type="file" @change="onFileSelected">
+                <input class="form-data" name="photo" accept="image/*" type="file" @change="onFileSelected">
                 <input type="password" placeholder="password" v-model="user.password">
                 <input type="password" placeholder="confirm password" v-model="user.password_confirmation">
                 <button v-on:click.prevent="register">Register</button>
@@ -53,16 +53,18 @@
         },
         methods:{
             onFileSelected(event){
-                this.user.photo=event.target.files[0];
-                //this.user.photo = event.target.result;
-                //console.log(this.user.photo);
+                let fileReader = new FileReader();
+                fileReader.readAsDataURL(event.target.files[0]);
+                fileReader.onload=(event)=>{
+                    this.user.photo=event.target.result;
+                }
+
             },
             register(){
-//validar de outra forma
-
                 if(this.user.password===this.user.password_confirmation){
                     this.user.active=1;
                     this.user.type='u';
+                    console.log(this.user);
                     axios.post('/api/users', this.user)
                         .then(response => {
 
