@@ -6,6 +6,7 @@ import VueRouter from 'vue-router';
 
 window.Vue = require('vue');
 
+
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 import store from '../store/store.js';
@@ -15,6 +16,7 @@ import LogoutComponent from './components/auth/logout.vue';
 import WellcomeComponent from './components/main/wellcome.vue';
 import NotFoundComponent from './components/notFound.vue';
 import RegisterComponent from './components/auth/register.vue';
+import EditProfileComponent from "./components/auth/editProfile.vue";
 
 const navbar = Vue.component('navbar',NavbarComponent);
 const login = Vue.component('login', LoginComponent);
@@ -22,6 +24,7 @@ const logout = Vue.component('logout', LogoutComponent);
 const wellcome = Vue.component('wellcome', WellcomeComponent);
 const notFound = Vue.component('notFound', NotFoundComponent);
 const register = Vue.component('register', RegisterComponent);
+const editProfile= Vue.component('editProfile',EditProfileComponent);
 
 
 // // Para manter o utilizador logado depois de refrescar a pagina
@@ -48,7 +51,11 @@ const routes = [
      component : register},
 
     { path: "*",
-    component : notFound}
+    component : notFound},
+
+    {path:"/edit",
+        name:"edit",
+    component:editProfile},
 
 ];
 

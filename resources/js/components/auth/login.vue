@@ -1,7 +1,7 @@
 <template>
  <div class="login-page">
   <div class="form">
-    <div class="alert" :class="messageType" v-if="showMessage">             
+    <div class="alert" :class="messageType" v-if="showMessage">
             <strong>{{ message }}</strong>
         </div>
     <form class="login-form">
@@ -9,7 +9,7 @@
       <input type="text" placeholder="email" v-model="user.email" >
       <input type="password" placeholder="password" v-model="user.password">
       <button v-on:click.prevent="login()">Login</button>
-      <p class="message">Not registered?<router-link href="#" to="register" class="button"> Create an account</router-link></p> 
+      <p class="message">Not registered?<router-link href="#" to="register" class="button"> Create an account</router-link></p>
       <!-- //TODO -->
     </form>
   </div>
@@ -22,12 +22,12 @@ export default {
     name : 'Login',
     data() {
       return {
-        user:{email: '', 
+        user:{email: '',
               password: ''
               },
         messageType: "alert-success",
         showMessage: false,
-        message: "", 
+        message: "",
       }
     },
 
@@ -35,7 +35,7 @@ export default {
       login(){
          axios.post('/api/login',this.user)
                 .then(response=>{
-                  console.log(response);   
+                  console.log(response);
                   let tokenType = response.data.token_type
                   let token = response.data.access_token
                   let expiration = response.data.expires_in + Date.now()
@@ -48,10 +48,16 @@ export default {
                   setTimeout(() => {
                         this.$router.push("/")
                     }, 1000);
-                });
-                      
-      }
-      }
+                }).then(response=>{
+                    axios.get('api/user').then(response=>{
+                        let user=response.data;
+                        this.$store.dispatch('setAuthUser',user);
+                    })
+         });
+
+      },
+
+      },
 }
 </script>
 
@@ -156,6 +162,6 @@ body {
   background: linear-gradient(to left, #ff9100, #ff9100);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;      
+  -moz-osx-font-smoothing: grayscale;
 }
 </style>

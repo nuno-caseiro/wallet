@@ -11,6 +11,9 @@
 
             </ul>
             <ul class="navbar-nav">
+                <li v-if="isAuthenticated" class="navbar-item">
+                    <router-link class="nav-item nav-link" to="edit" v-if="isAuthenticated">{{getAutenticatedUser}}</router-link>
+                </li>
                 <li class="navbar-item">
                     <router-link class="nav-item nav-link" to="login" v-if="!isAuthenticated">Login</router-link>
                     <router-link class="nav-item nav-link" to="logout" v-else>Logout</router-link>
@@ -28,19 +31,24 @@
         data: function() {
         return{
             name: "Navbar",
-        }  
+
+        }
     },
     methods: {
-        
+
     },
     computed: {
         isAuthenticated() {
-            return this.$store.getters.isAuthenticated
+            return this.$store.getters.isAuthenticated;
+        },
+        getAutenticatedUser(){
+            return this.$store.getters.getAuthUser.name;
+        }
+
         },
     }
-    }
-    
-          
+
+
 </script>
 
 <style scoped>

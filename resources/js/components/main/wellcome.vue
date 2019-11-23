@@ -25,6 +25,9 @@ export default {
             })
         }
     },
+    computed:{
+      
+    },
     mounted(){
       this.getNumber();
     }
@@ -38,7 +41,7 @@ export default {
     text-align: center;
     position: relative;
     top:100px;
-    
+
 }
 #numberOfWallets{
     font-family: "Roboto", sans-serif;
