@@ -4,6 +4,11 @@
             <div class="alert" :class="messageType" v-if="showMessage">
                 <strong>{{ message }}</strong>
             </div>
+
+            <div class="alert-danger" :class="messageType" v-if="showMessageDanger">
+            <strong>{{ messageDanger }}</strong>
+        </div>
+
             <div class="login-form">
                 <h2>Register</h2>
                 <input type="text" placeholder="name" v-model="user.name" >
@@ -48,7 +53,9 @@
                 },
                 messageType: "alert-success",
                 showMessage: false,
+                showMessageDanger: false,
                 message: "",
+                messageDanger: "",
             }
         },
         methods:{
@@ -69,9 +76,9 @@
                         .then(response => {
 
                             Object.assign(this.user, response.data);
-                            this.$emit('item-saved', this.user);
+                            this.$emit('user-saved', this.user);
                             this.showMessage = true;
-                            this.message = 'Account created';
+                            this.message = 'Register completed with success';
                             console.log(this.user.id);
 
                         }).then(response=>{
@@ -82,7 +89,9 @@
                         axios.post('/api/wallets',this.wallet).then(response=>{
                             console.log(this.wallet.id);
                             Object.assign(this.wallet, response.data);
-                            this.$router.push("/");
+                             setTimeout(() => {
+                        this.$router.push("/login")
+                    }, 1000);
 
                         }).catch(error=>{
                             console.log(error);
@@ -92,8 +101,8 @@
                         console.log(error);
                     });
                 }else{
-                    this.showMessage=true;
-                    this.message="Your passwords don't match";
+                    this.showMessageDanger=true;
+                    this.messageDanger="Your passwords don't match";
                 }
 
 

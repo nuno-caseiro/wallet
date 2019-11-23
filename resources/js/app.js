@@ -44,19 +44,22 @@ const routes = [
     component : wellcome},
 
     { path: "/login",
+    name:"Login",
      component : login},
 
     { path: "/logout",
+    name:"Logout",
      component : logout},
 
     { path: "/register",
+    name:"Register",
      component : register},
 
     { path: "*",
     component : notFound},
 
     {path:"/edit",
-        name:"edit",
+        name:"Edit",
     component:editProfile},
 
     {
