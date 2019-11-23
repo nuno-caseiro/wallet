@@ -12,7 +12,7 @@
             </ul>
             <ul class="navbar-nav">
                 <li v-if="isAuthenticated" class="navbar-item">
-                    <router-link class="nav-item nav-link" to="edit" v-if="isAuthenticated">{{getAutenticatedUser}}</router-link>
+                    <router-link class="nav-item nav-link" to="edit" v-if="isAuthenticated">{{getAutenticatedUser.name}}</router-link>
                 </li>
                 <li class="navbar-item">
                     <router-link class="nav-item nav-link" to="login" v-if="!isAuthenticated">Login</router-link>
@@ -42,7 +42,7 @@
             return this.$store.getters.isAuthenticated;
         },
         getAutenticatedUser(){
-            return this.$store.getters.getAuthUser.name;
+            return this.$store.getters.getAuthUser;
         }
 
         },

@@ -36,10 +36,10 @@ export default {
          axios.post('/api/login',this.user)
                 .then(response=>{
                   console.log(response);
-                  let tokenType = response.data.token_type
-                  let token = response.data.access_token
-                  let expiration = response.data.expires_in + Date.now()
-                  this.$store.commit('setToken', {token, tokenType, expiration})
+                  let tokenType = response.data.token_type;
+                  let token = response.data.access_token;
+                  let expiration = response.data.expires_in + Date.now();
+                  this.$store.commit('setToken', {token, tokenType, expiration});
                   //this.$socket.emit('user_enter', this.$store.getters.getAuthUser);
                   console.log(token);
                   this.typeofmsg = "alert-success";
