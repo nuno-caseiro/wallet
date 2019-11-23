@@ -8,7 +8,7 @@ window.Vue = require('vue');
 
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
-import store from './store.js';
+import store from '../store/store.js';
 import NavbarComponent from './components/main/navbar.vue';
 import LoginComponent from './components/auth/login.vue';
 import LogoutComponent from './components/auth/logout.vue';
@@ -34,22 +34,22 @@ axios.defaults.headers.common['Authorization'] = 'Bearer ' + store.getters.getTo
 
 
 const routes = [
-    { path: "/", 
-    name:"Home", 
+    { path: "/",
+    name:"Home",
     component : wellcome},
 
     { path: "/login",
      component : login},
-     
+
     { path: "/logout",
      component : logout},
 
     { path: "/register",
-     component : register}, 
+     component : register},
 
-    { path: "*", 
+    { path: "*",
     component : notFound}
-    
+
 ];
 
 const router = new VueRouter({

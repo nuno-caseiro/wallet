@@ -51,6 +51,8 @@ Route::post('login', 'LoginControllerAPI@login')->name('login');
 
 Route::post('users','UserControllerAPI@store');
 
+Route::post('users/email','UserControllerAPI@showByEmail');
+
 Route::get('wallets', 'WalletControllerAPI@index');
 Route::post('wallets', 'WalletControllerAPI@store');
 

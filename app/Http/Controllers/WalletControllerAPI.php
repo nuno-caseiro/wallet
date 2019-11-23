@@ -23,15 +23,14 @@ class WalletControllerAPI extends Controller
     public function store(Request $request){
         //TODO validacoes && verificar se ja existe do lado do cliente aka vue?? depois de criar cliente enviar post para criar wallet??
 
-        if(Wallet::findOrFail($request->id)!=false ){
+
             $wallet= new Wallet();
             $wallet->fill($request->all());
-            $wallet->balance=0;
             $wallet->save();
 
             //TODO create wallet if type user...
             return response()->json(new WalletResource($wallet),201);
-        }
+
 
 
     }

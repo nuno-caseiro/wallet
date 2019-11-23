@@ -9,6 +9,8 @@ use App\Http\Resources\User as UserResource;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
 
 class UserControllerApi extends Controller
 {
@@ -26,22 +28,35 @@ class UserControllerApi extends Controller
         return new UserResource(User::find($id));
     }
 
+    public function showByEmail(Request $request){
+        return new UserResource(User::where('email',$request->email)->get());
+    }
+
     public function store(Request $request){
-        $request->validate([
+        /*$request->validate([
             // 'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
             // 'email' => 'required|email|unique:users,email,',
             // 'NIF'=> 'required|min:8|unique',
             // 'selectedFile' => 'nullable',
             // 'password' => 'required|min:3|confirmed',
             // 'password_confirmation' => 'required|min:3'
-        ]);
+        ]);*/
         //TODO validacoes
         $user= new User();
-        $user->fill($request->all());
+        $user->fill($request->all()+['remember_token'=> Str::random(10)]);
+        if($request->photo!=null){
+            $imageName= time().'.'.$request->photo->getClientOriginalExtension();
+            $request->image->move(public_path('fotos'),$imageName);
+
+            $user->photo=$imageName;
+        }else{
+            $user->photo=null;
+        }
+
+
         $user->password= Hash::make($user->password);
         $user->save();
 
-        //TODO create wallet if type user...
         return response()->json(new UserResource($user),201);
     }
 

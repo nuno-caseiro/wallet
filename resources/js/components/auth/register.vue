@@ -4,7 +4,7 @@
     <div class="alert" :class="messageType" v-if="showMessage">
             <strong>{{ message }}</strong>
         </div>
-    <form class="login-form">
+    <div class="login-form">
       <h2>Register</h2>
       <input type="text" placeholder="name" v-model="user.name" >
       <input type="text" placeholder="email" v-model="user.email" >
@@ -12,8 +12,8 @@
       <input type="file" @change="onFileSelected">
       <input type="password" placeholder="password" v-model="user.password">
       <input type="password" placeholder="confirm password" v-model="user.password_confirmation">
-      <button v-on:click.prevent="register(user)">Register</button>
-    </form>
+      <button v-on:click.prevent="register">Register</button>
+    </div>
   </div>
 </div>
 </template>
@@ -24,14 +24,16 @@ export default {
     name : 'Register',
     data() {
       return {
-        user:{name: '',
-              email: '',
-              nif: '',
-              selectedFile: null,
-              password: '',
-              password_confirmation: '',
-              
-              },
+        user:{
+            name: '',
+            email: '',
+            type:'',
+            active:'',
+            nif: '',
+            photo: null,
+            password: '',
+            password_confirmation: '',
+        },
           wallet:{
             id:'',
             email:'',
@@ -51,37 +53,52 @@ export default {
     },
      methods:{
       onFileSelected(event){
-         let fileReader = new FileReader()
-            fileReader.readAsDataURL(event.target.files[0])
-            fileReader.onload = (event) => {
-                this.user.selectedFile = event.target.result
-            }
+           this.user.photo=event.target.files[0];
+                //this.user.photo = event.target.result;
+                //console.log(this.user.photo);
       },
-      register(user){
-        axios.post('/api/users', this.user)
-        .then(response => {
-          console.log(response);
-          Object.assign(this.user, response.data.data);
-          this.$emit('item-saved', this.user)
-          this.showSuccess = true;
-          this.successMessage = 'Item Created';
-          this.$router.push("/")
-          //fazer pedido get para saber o id
-          console.log(user);
-            /*  console.log(this.wallet);
-              this.wallet.id=user.id;
-               this.wallet.email=user.email;
-               this.wallet.balance=0;
-               axios.post('/api/wallets',this.wallet).then(response=>{
-                   console.log("CRIOU WALLET");
-               });*/
-        }).catch(error=>{
-          console.log(error);
-        });
-      }
+      register(){
+//validar de outra forma
+
+          if(this.user.password===this.user.password_confirmation){
+              this.user.active=1;
+              this.user.type='u';
+              axios.post('/api/users', this.user)
+                  .then(response => {
+
+                      Object.assign(this.user, response.data);
+                      this.$emit('item-saved', this.user);
+                      this.showMessage = true;
+                      this.message = 'Account created';
+                      console.log(this.user.id);
+
+
+
+                  }).then(response=>{
+                  this.wallet.id=this.user.id;
+                  this.wallet.email=this.user.email;
+                  this.wallet.balance=0;
+
+                  axios.post('/api/wallets',this.wallet).then(response=>{
+                      console.log(this.wallet.id);
+                      Object.assign(this.wallet, response.data);
+                      this.$router.push("/");
+                  }).catch(error=>{
+                      console.log(error);
+                  });
+              }).catch(error=>{
+                  console.log(error);
+              });
+          }else{
+              this.showMessage=true;
+              this.message="Your passwords don't match";
+          }
+
+
+      },
       }
 
-      
+
 }
 </script>
 
