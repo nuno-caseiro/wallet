@@ -1,31 +1,28 @@
 <template>
 
+    <movement-add></movement-add>
+
 </template>
 
 <script>
+    import MovementAdd from "./movementAdd";
     export default {
+        components: {MovementAdd},
         data(){
             return{
-                movement:{
-                    wallet_id:'',
-                    type:['e','i'],
-                    transfer:'',
-                    transfer_movement_id:'',
-                    transfer_wallet_id:'',
-                    type_payment:'',
-                    category_id:'',
-                    iban:'',
-                    mb_entity_code:'',
-                    mb_payment_reference:'',
-                    description:'',
-                    source_description:'',
-                    date:'',
-                    start_balance:'',
-                    end_balance:'',
-                    value:'',
-                }
+                wallets:[],
 
             }
+        },
+        methods:{
+            getWallets: function () {
+                axios.get('api/wallets').then(response=>{
+                    this.wallets=response.data.data;
+                })
+            }
+        },
+        mounted() {
+
         }
     }
 </script>

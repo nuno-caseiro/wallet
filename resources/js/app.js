@@ -17,6 +17,7 @@ import WellcomeComponent from './components/main/wellcome.vue';
 import NotFoundComponent from './components/notFound.vue';
 import RegisterComponent from './components/auth/register.vue';
 import EditProfileComponent from "./components/auth/editProfile.vue";
+import MovementComponent from "./components/movement/movement.vue";
 
 const navbar = Vue.component('navbar',NavbarComponent);
 const login = Vue.component('login', LoginComponent);
@@ -25,6 +26,7 @@ const wellcome = Vue.component('wellcome', WellcomeComponent);
 const notFound = Vue.component('notFound', NotFoundComponent);
 const register = Vue.component('register', RegisterComponent);
 const editProfile= Vue.component('editProfile',EditProfileComponent);
+const movement=Vue.component('movement',MovementComponent);
 
 
 // // Para manter o utilizador logado depois de refrescar a pagina
@@ -56,6 +58,12 @@ const routes = [
     {path:"/edit",
         name:"edit",
     component:editProfile},
+
+    {
+        path:"/movement",
+        name: "movement",
+        component: movement
+    },
 
 ];
 

@@ -1,12 +1,19 @@
 
 <template>
   <div>
-      <p class="homeText">
-          Welcome to Virtual Wallet
-          <img src = https://www.pnc.com/content/dam/pnc-com/images/personal/Checking/VirtualWallet/overview/vw_overview_intro.svg>
-      </p>
-      <p id="numberOfWallets">There are {{numberWallets}} number of wallets</p>
+      <div>
+          <p class="homeText">
+              Welcome to Virtual Wallet
+              <img src = https://www.pnc.com/content/dam/pnc-com/images/personal/Checking/VirtualWallet/overview/vw_overview_intro.svg>
+          </p>
+          <p id="numberOfWallets">There are {{numberWallets}} number of wallets</p>
 
+      </div>
+
+      <!--//TODO para apagar apenas para testar o componente-->
+<div id="teste">
+    <button class="btn btn-dark"><router-link to="movement">Testar movimento operador</router-link></button>
+</div>
 
   </div>
 </template>
@@ -26,7 +33,7 @@ export default {
         }
     },
     computed:{
-      
+
     },
     mounted(){
       this.getNumber();
@@ -50,4 +57,8 @@ export default {
     position: relative;
     left: 300px;
 }
+    #teste{
+        top: 600px;
+        position: absolute;
+    }
 </style>

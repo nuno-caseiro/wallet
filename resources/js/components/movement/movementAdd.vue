@@ -4,15 +4,10 @@
             <div class="alert" :class="messageType" v-if="showMessage">
                 <strong>{{ message }}</strong>
             </div>
-            <div class="login-form">
-                <h2>Register</h2>
-                <input type="text" placeholder="name" v-model="user.name" >
-                <input type="text" placeholder="email" v-model="user.email" >
-                <input type="text" placeholder="NIF" v-model="user.nif">
+            <div class="jumbotron">
+                <h2>Movement</h2>
+                <v-select :wallets="wallets"></v-select>
 
-                <input type="password" placeholder="password" v-model="user.password">
-                <input type="password" placeholder="confirm password" v-model="user.password_confirmation">
-                <button v-on:click.prevent="register">Register</button>
             </div>
         </div>
     </div>
@@ -20,9 +15,28 @@
 
 <script>
     export default {
-        props:['movement'],
+        props:['wallets'],
         data(){
             return{
+                wallet_email:'',
+                movement:{
+                    wallet_id:'',
+                    type:'',
+                    transfer:'',
+                    transfer_movement_id:'',
+                    transfer_wallet_id:'',
+                    type_payment:'',
+                    category_id:'',
+                    iban:'',
+                    mb_entity_code:'',
+                    mb_payment_reference:'',
+                    description:'',
+                    source_description:'',
+                    date:'',
+                    start_balance:'',
+                    end_balance:'',
+                    value:'',
+                 }
 
                 }
 
