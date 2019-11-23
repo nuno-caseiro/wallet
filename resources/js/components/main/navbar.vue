@@ -10,10 +10,12 @@
             <ul class="navbar-nav mr-auto">
 
             </ul>
+                <ul class="navbar-nav">
+                    <li v-if="isAuthenticated" class="navbar-item">
+                        <router-link class="nav-item nav-link" to="edit">{{getAutenticatedUser.name}}</router-link>
+                    </li>
+                </ul>
             <ul class="navbar-nav">
-                <li v-if="isAuthenticated" class="navbar-item">
-                    <router-link class="nav-item nav-link" to="edit" v-if="isAuthenticated">{{getAutenticatedUser.name}}</router-link>
-                </li>
                 <li class="navbar-item">
                     <router-link class="nav-item nav-link" to="login" v-if="!isAuthenticated">Login</router-link>
                     <router-link class="nav-item nav-link" to="logout" v-else>Logout</router-link>
