@@ -13,7 +13,7 @@ import store from '../store/store.js';
 import NavbarComponent from './components/main/navbar.vue';
 import LoginComponent from './components/auth/login.vue';
 import LogoutComponent from './components/auth/logout.vue';
-import WellcomeComponent from './components/main/wellcome.vue';
+import WelcomeComponent from './components/main/welcome.vue';
 import NotFoundComponent from './components/notFound.vue';
 import RegisterComponent from './components/auth/register.vue';
 import EditProfileComponent from "./components/auth/editProfile.vue";
@@ -28,7 +28,7 @@ import MovementListComponent from "./components/movement/movementList.vue";
 const navbar = Vue.component('navbar',NavbarComponent);
 const login = Vue.component('login', LoginComponent);
 const logout = Vue.component('logout', LogoutComponent);
-const wellcome = Vue.component('wellcome', WellcomeComponent);
+const welcome = Vue.component('wellcome', WelcomeComponent);
 const notFound = Vue.component('notFound', NotFoundComponent);
 const register = Vue.component('register', RegisterComponent);
 const editProfile= Vue.component('editProfile',EditProfileComponent);
@@ -52,7 +52,7 @@ axios.defaults.headers.common['Authorization'] = 'Bearer ' + store.getters.getTo
 const routes = [
     { path: "/",
     name:"Home",
-    component : wellcome},
+    component : welcome},
 
     { path: "/login",
     name:"Login",
