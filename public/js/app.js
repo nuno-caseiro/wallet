@@ -1860,6 +1860,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Edit',
@@ -1880,6 +1881,9 @@ __webpack_require__.r(__webpack_exports__);
       fileReader.onload = function (event) {
         _this.user.photo = event.target.result;
       };
+    },
+    itemImageURL: function itemImageURL(photo) {
+      return "storage/fotos/" + String(photo);
     }
   },
   computed: {
@@ -2540,7 +2544,8 @@ __webpack_require__.r(__webpack_exports__);
     getMovements: function getMovements() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('api/movements/' + getAutenticatedUser.id).then(function (response) {
+      var url = this.getAutenticatedUser.id;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('api/movements/id/' + url).then(function (response) {
         console.log(response);
         _this.movements = response.data.data;
       })["catch"](function (err) {
@@ -35753,7 +35758,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Roboto:300);", ""]);
 
 // module
-exports.push([module.i, ".login-page[data-v-b453b6ba] {\n  width: 360px;\n  padding: 8% 0 0;\n  margin: auto;\n}\n.form[data-v-b453b6ba] {\n  position: relative;\n  z-index: 1;\n  background: #FFFFFF;\n  max-width: 360px;\n  margin: 0 auto 100px;\n  padding: 45px;\n  text-align: center;\n  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);\n}\n.form input[data-v-b453b6ba] {\n  font-family: \"Roboto\", sans-serif;\n  outline: 0;\n  background: #f2f2f2;\n  width: 100%;\n  border: 0;\n  margin: 0 0 15px;\n  padding: 15px;\n  box-sizing: border-box;\n  font-size: 14px;\n}\n.form button[data-v-b453b6ba] {\n  font-family: \"Roboto\", sans-serif;\n  text-transform: uppercase;\n  outline: 0;\n  background: #a7a7a7;\n  width: 100%;\n  border: 0;\n  padding: 15px;\n  color: #FFFFFF;\n  font-size: 14px;\n  -webkit-transition: all 0.3 ease;\n  transition: all 0.3 ease;\n  cursor: pointer;\n}\n.form button[data-v-b453b6ba]:hover, .form button[data-v-b453b6ba]:active, .form button[data-v-b453b6ba]:focus {\n  background: #ff9100;\n}\n.form .message[data-v-b453b6ba] {\n  margin: 15px 0 0;\n  color: #b3b3b3;\n  font-size: 12px;\n}\n.form .message a[data-v-b453b6ba] {\n  color: #ff9100;\n  text-decoration: none;\n}\n.form .register-form[data-v-b453b6ba] {\n  display: none;\n}\n.container[data-v-b453b6ba] {\n  position: relative;\n  z-index: 1;\n  max-width: 300px;\n  margin: 0 auto;\n}\n.container[data-v-b453b6ba]:before, .container[data-v-b453b6ba]:after {\n  content: \"\";\n  display: block;\n  clear: both;\n}\n.container .info[data-v-b453b6ba] {\n  margin: 50px auto;\n  text-align: center;\n}\n.container .info h1[data-v-b453b6ba] {\n  margin: 0 0 15px;\n  padding: 0;\n  font-size: 36px;\n  font-weight: 300;\n  color: #1a1a1a;\n}\n.container .info span[data-v-b453b6ba] {\n  color: #4d4d4d;\n  font-size: 12px;\n}\n.container .info span a[data-v-b453b6ba] {\n  color: #000000;\n  text-decoration: none;\n}\n.container .info span .fa[data-v-b453b6ba] {\n  color: #EF3B3A;\n}\nbody[data-v-b453b6ba] {\n  background: #ff9100;\n  /* fallback for old browsers */\n  background: -webkit-gradient(linear, right top, left top, from(#ff9100), to(#ff9100));\n  background: linear-gradient(to left, #ff9100, #ff9100);\n  font-family: \"Roboto\", sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}", ""]);
+exports.push([module.i, ".login-page[data-v-b453b6ba] {\n  width: 360px;\n  padding: 8% 0 0;\n  margin: auto;\n}\n.form[data-v-b453b6ba] {\n  position: relative;\n  z-index: 2;\n  background: #FFFFFF;\n  max-width: 700px;\n  margin: 0 auto 100px;\n  padding: 45px;\n  text-align: center;\n  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);\n  width: 450px;\n}\n.form input[data-v-b453b6ba] {\n  font-family: \"Roboto\", sans-serif;\n  outline: 0;\n  background: #f2f2f2;\n  width: 100%;\n  border: 0;\n  margin: 0 0 15px;\n  padding: 15px;\n  box-sizing: border-box;\n  font-size: 14px;\n}\n.form button[data-v-b453b6ba] {\n  font-family: \"Roboto\", sans-serif;\n  text-transform: uppercase;\n  outline: 0;\n  background: #a7a7a7;\n  width: 100%;\n  border: 0;\n  padding: 15px;\n  color: #FFFFFF;\n  font-size: 14px;\n  -webkit-transition: all 0.3 ease;\n  transition: all 0.3 ease;\n  cursor: pointer;\n}\n.form button[data-v-b453b6ba]:hover, .form button[data-v-b453b6ba]:active, .form button[data-v-b453b6ba]:focus {\n  background: #ff9100;\n}\n.form .message[data-v-b453b6ba] {\n  margin: 15px 0 0;\n  color: #b3b3b3;\n  font-size: 12px;\n}\n.form .message a[data-v-b453b6ba] {\n  color: #ff9100;\n  text-decoration: none;\n}\n.form .register-form[data-v-b453b6ba] {\n  display: none;\n}\n.container[data-v-b453b6ba] {\n  position: relative;\n  z-index: 1;\n  max-width: 300px;\n  margin: 0 auto;\n}\n.container[data-v-b453b6ba]:before, .container[data-v-b453b6ba]:after {\n  content: \"\";\n  display: block;\n  clear: both;\n}\n.container .info[data-v-b453b6ba] {\n  margin: 50px auto;\n  text-align: center;\n}\n.container .info h1[data-v-b453b6ba] {\n  margin: 0 0 15px;\n  padding: 2px;\n  font-size: 36px;\n  font-weight: 300;\n  color: #1a1a1a;\n}\n.container .info span[data-v-b453b6ba] {\n  color: #4d4d4d;\n  font-size: 12px;\n}\n.container .info span a[data-v-b453b6ba] {\n  color: #000000;\n  text-decoration: none;\n}\n.container .info span .fa[data-v-b453b6ba] {\n  color: #EF3B3A;\n}\nbody[data-v-b453b6ba] {\n  background: #ff9100;\n  /* fallback for old browsers */\n  background: -webkit-gradient(linear, right top, left top, from(#ff9100), to(#ff9100));\n  background: linear-gradient(to left, #ff9100, #ff9100);\n  font-family: \"Roboto\", sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}", ""]);
 
 // exports
 
@@ -68232,6 +68237,15 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _c("form", { staticClass: "login-form" }, [
+        _c("img", {
+          attrs: {
+            src: _vm.itemImageURL(_vm.userLogin.photo),
+            width: "110",
+            height: "110",
+            alt: ""
+          }
+        }),
+        _vm._v(" "),
         _c("h2", [_vm._v("Edit Profile")]),
         _vm._v(" "),
         _c("input", {
@@ -68297,10 +68311,7 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _c("input", {
-          attrs: { type: "file" },
-          on: { change: _vm.userLogin.photo }
-        }),
+        _c("input", { attrs: { type: "file" } }),
         _vm._v(" "),
         _c("input", { attrs: { type: "password", placeholder: "password" } }),
         _vm._v(" "),
@@ -69245,15 +69256,15 @@ var render = function() {
       [
         _vm._m(0),
         _vm._v(" "),
-        _vm._l(this.movements, function(movement) {
+        _vm._l(_vm.movements, function(movement) {
           return _c("tbody", { key: movement.id }, [
             _c("td", [_vm._v(_vm._s(movement.id))]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(movement.type))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s())]),
+            _c("td", [_vm._v(_vm._s(movement.category_id))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s())]),
+            _c("td", [_vm._v(_vm._s(movement.type_payment))]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(movement.category_id))]),
             _vm._v(" "),

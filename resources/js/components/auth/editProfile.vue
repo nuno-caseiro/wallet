@@ -6,11 +6,12 @@
         </div>
         
     <form class="login-form">
+      <img  v-bind:src="itemImageURL(userLogin.photo)" width="110" height="110" alt="" >
       <h2>Edit Profile</h2>
       <input type="text" placeholder="name" v-model="userLogin.name" >
       <input type="text" placeholder="e-mail" v-model="userLogin.email">
       <input type="text" placeholder="NIF" v-model="userLogin.nif" >
-      <input type="file" @change="userLogin.photo">
+      <input type="file" >
       <input type="password" placeholder="password" >
       <input type="password" placeholder="new password">
       <button>Save Profile</button>
@@ -39,6 +40,10 @@ export default {
                 }
 
             },
+        itemImageURL(photo){
+                return "storage/fotos/"+String(photo);
+             
+             },
 
 
       },
@@ -62,13 +67,14 @@ export default {
 }
 .form {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   background: #FFFFFF;
-  max-width: 360px;
+  max-width: 700px;
   margin: 0 auto 100px;
   padding: 45px;
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  width: 450px;
 }
 .form input {
   font-family: "Roboto", sans-serif;
@@ -127,7 +133,7 @@ export default {
 }
 .container .info h1 {
   margin: 0 0 15px;
-  padding: 0;
+  padding: 2px;
   font-size: 36px;
   font-weight: 300;
   color: #1a1a1a;

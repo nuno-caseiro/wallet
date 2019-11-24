@@ -22,11 +22,11 @@
                 <th>Value</th>
             </tr>
         </thead>
-        <tbody v-for="movement in this.movements" v-bind:key="movement.id">
+        <tbody v-for="movement in movements" v-bind:key="movement.id">
             <td>{{ movement.id }}</td>
             <td>{{ movement.type }}</td>
-            <td>{{  }}</td>
-            <td>{{  }}</td>
+            <td>{{ movement.category_id }}</td>
+            <td>{{ movement.type_payment }}</td>
             <td>{{ movement.category_id}}</td>
             <td>{{ movement.date }}</td>
             <td>{{ movement.start_balance}}</td>
@@ -51,7 +51,8 @@ export default {
     methods: {
 
        getMovements(){
-           axios.get('api/movements/' + getAutenticatedUser.id)
+           let url = this.getAutenticatedUser.id
+           axios.get('api/movements/id/' + url)
            .then(response=>{
                 console.log(response);
                 this.movements=response.data.data;
@@ -73,7 +74,7 @@ export default {
     },
 
     mounted() {
-        this.getMovements()
+        this.getMovements();
 
     },
 
