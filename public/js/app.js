@@ -68691,7 +68691,7 @@ var render = function() {
               "b-dropdown",
               {
                 staticClass: "m-2",
-                attrs: { text: "Movements", variant: "outline-warning" }
+                attrs: { text: "Movements", variant: "secondary" }
               },
               [
                 _c(
