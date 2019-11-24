@@ -22,7 +22,7 @@
                 <th>Value</th>
             </tr>
         </thead>
-        <tbody v-for="movement in movements" v-bind:key="movement.id">
+        <tbody v-for="movement in this.movements" v-bind:key="movement.id">
             <td>{{ movement.id }}</td>
             <td>{{ movement.type }}</td>
             <td>{{  }}</td>

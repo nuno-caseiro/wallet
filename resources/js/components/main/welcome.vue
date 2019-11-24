@@ -9,12 +9,6 @@
           <p id="numberOfWallets">There are {{numberWallets}} number of wallets</p>
 
       </div>
-
-      <!--//TODO para apagar apenas para testar o componente-->
-<div id="teste">
-    <button class="btn btn-dark"><router-link to="movement">Testar movimento operador</router-link></button>
-</div>
-
   </div>
 </template>
 <script>
@@ -57,8 +51,4 @@ export default {
     position: relative;
     left: 300px;
 }
-    #teste{
-        top: 600px;
-        position: absolute;
-    }
 </style>

@@ -7,7 +7,7 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <b-dropdown text="Movements" variant="outline-warning" class="m-2" v-if="isAuthenticated">
-                <b-dropdown-item>Add Movement</b-dropdown-item>
+                <b-dropdown-item><router-link class="nav-item nav-link" to="movement">Add Movement</router-link></b-dropdown-item>
                 <b-dropdown-item><router-link class="nav-item nav-link" to="movementList">Movement List</router-link></b-dropdown-item>
                 <b-dropdown-item>Third Action</b-dropdown-item>
                 <!-- <b-dropdown-divider></b-dropdown-divider> -->

@@ -2254,12 +2254,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Home',
   data: function data() {
@@ -35892,7 +35886,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.homeText[data-v-3deeded7]{\r\n    font-family: \"Roboto\", sans-serif;\r\n    font-size: 45px;\r\n    color: rgb(90, 90, 90);\r\n    text-align: center;\r\n    position: relative;\r\n    top:100px;\n}\n#numberOfWallets[data-v-3deeded7]{\r\n    font-family: \"Roboto\", sans-serif;\r\n    color: rgb(90, 90, 90);\r\n    font-size: 20px;\r\n    position: relative;\r\n    left: 300px;\n}\n#teste[data-v-3deeded7]{\r\n        top: 600px;\r\n        position: absolute;\n}\r\n", ""]);
+exports.push([module.i, "\n.homeText[data-v-3deeded7]{\r\n    font-family: \"Roboto\", sans-serif;\r\n    font-size: 45px;\r\n    color: rgb(90, 90, 90);\r\n    text-align: center;\r\n    position: relative;\r\n    top:100px;\n}\n#numberOfWallets[data-v-3deeded7]{\r\n    font-family: \"Roboto\", sans-serif;\r\n    color: rgb(90, 90, 90);\r\n    font-size: 20px;\r\n    position: relative;\r\n    left: 300px;\n}\r\n", ""]);
 
 // exports
 
@@ -68700,7 +68694,20 @@ var render = function() {
                 attrs: { text: "Movements", variant: "outline-warning" }
               },
               [
-                _c("b-dropdown-item", [_vm._v("Add Movement")]),
+                _c(
+                  "b-dropdown-item",
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "nav-item nav-link",
+                        attrs: { to: "movement" }
+                      },
+                      [_vm._v("Add Movement")]
+                    )
+                  ],
+                  1
+                ),
                 _vm._v(" "),
                 _c(
                   "b-dropdown-item",
@@ -68874,19 +68881,6 @@ var render = function() {
       _c("p", { attrs: { id: "numberOfWallets" } }, [
         _vm._v("There are " + _vm._s(_vm.numberWallets) + " number of wallets")
       ])
-    ]),
-    _vm._v(" "),
-    _c("div", { attrs: { id: "teste" } }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-dark" },
-        [
-          _c("router-link", { attrs: { to: "movement" } }, [
-            _vm._v("Testar movimento operador")
-          ])
-        ],
-        1
-      )
     ])
   ])
 }
@@ -68896,7 +68890,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "homeText" }, [
-      _vm._v("\n              Welcome to Virtual Wallet\n              "),
+      _vm._v("\n            Welcome to Virtual Wallet\n            "),
       _c("img", {
         attrs: {
           src:
@@ -69251,7 +69245,7 @@ var render = function() {
       [
         _vm._m(0),
         _vm._v(" "),
-        _vm._l(_vm.movements, function(movement) {
+        _vm._l(this.movements, function(movement) {
           return _c("tbody", { key: movement.id }, [
             _c("td", [_vm._v(_vm._s(movement.id))]),
             _vm._v(" "),
