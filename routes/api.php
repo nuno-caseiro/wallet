@@ -35,13 +35,15 @@ Route::middleware('auth:api')->group(function () {
     //TODO apenas o proprio user
     Route::put('users/{id}', 'UserControllerAPI@update');
 
-    Route::put('wallets/{id}', 'WalletControllerAPI@update');
     Route::delete('wallets/{id}', 'WalletControllerAPI@delete');
 
 
+    Route::put('wallets/{id}', 'WalletControllerAPI@update');
+
+    Route::post('movements', 'MovementControllerAPI@store');
+
     Route::get('movements','MovementControllerAPI@index');
     Route::get('movements/{id}','MovementControllerAPI@show');
-    Route::post('movements', 'MovementControllerAPI@store');
     Route::delete('movements/{id}', 'MovementControllerAPI@delete');
 
     Route::get('categories','CategoryControllerAPI@index');
@@ -49,8 +51,11 @@ Route::middleware('auth:api')->group(function () {
     Route::post('categories', 'CategoryControllerAPI@store');
     Route::delete('categories/{id}', 'CategoryControllerAPI@delete');
 
+    Route::get('categories/type/{type}','CategoryControllerAPI@getCategoriesByType');
+
 
 });
+
 
 Route::post('login', 'LoginControllerAPI@login')->name('login');
 

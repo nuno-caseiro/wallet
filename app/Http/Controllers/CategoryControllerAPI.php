@@ -12,12 +12,17 @@ class CategoryControllerAPI extends Controller
         if($request->has('page')){
             return CategoryResource::collection(Category::paginate(5));
         }else{
-            return CategoryResource::collection(Movement::all());
+            return CategoryResource::collection(Category::all());
         }
     }
 
     public function show($id){
         return new CategoryResource(Category::find($id));
+    }
+
+    public function getCategoriesByType($type){
+        return  (CategoryResource::collection(Category::where('type',$type)->get()))->response()->setStatusCode(200);
+
     }
 
     public function store(Request $request){

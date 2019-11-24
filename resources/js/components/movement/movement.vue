@@ -1,16 +1,15 @@
 <template>
-
+<div>
     <movement-add :wallets="wallets"></movement-add>
+
+
+</div>
 
 </template>
 
 <script>
-    import MovementAdd from "./movementAdd";
     export default {
-        components: {
 
-            'movement-add':MovementAdd
-        },
         data(){
             return{
                 wallets:[],

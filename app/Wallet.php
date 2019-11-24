@@ -8,7 +8,7 @@ class Wallet extends Model
 {
     //
 
-    protected $fillable = ['id','email','balance'];
+    protected $fillable = ['email','balance'];
 
     protected $hidden = [];
 

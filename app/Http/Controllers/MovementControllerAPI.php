@@ -23,11 +23,11 @@ class MovementControllerAPI extends Controller
     public function store(Request $request){
         //TODO validacoes e deve ser preciso fazer mais alguma coisa
 
-            $movement= new Wallet();
+            $movement= new Movement();
             $movement->fill($request->all());
             $movement->save();
 
-            return response()->json(new WalletResource($movement),201);
+            return response()->json(new MovementResource($movement),201);
     }
 
     public function update(Request $request, $id){
