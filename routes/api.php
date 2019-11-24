@@ -37,6 +37,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::delete('wallets/{id}', 'WalletControllerAPI@delete');
 
+    Route::get('wallets/{id}', 'WalletControllerAPI@show');
 
     Route::put('wallets/{id}', 'WalletControllerAPI@update');
 

@@ -93,6 +93,24 @@ export default new Vuex.Store({
         isAuthenticated(state) {
             return state.token && state.tokenType ? true:false
         },
+        isUser(state){
+            if(state.user){
+                return state.user.type =="u" ? true : false;
+            }
+            return false;
+        },
+        isOperator(state){
+            if(state.user){
+                return state.user.type =="o" ? true : false;
+            }
+            return false;
+        },
+        isAdmin(state){
+            if(state.user){
+                return state.user.type =="a" ? true : false;
+            }
+            return false;
+        }
     },
     actions:{
         setAuthUser({commit},data){
