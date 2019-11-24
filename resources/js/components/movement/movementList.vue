@@ -39,7 +39,7 @@
 </template>
 
 
-<scripttype="text/javascript">
+<script type="text/javascript">
 import axios from 'axios';
 export default {
     data() {
@@ -53,16 +53,23 @@ export default {
        getMovements(){
            axios.get('api/movements/' + getAutenticatedUser.id)
            .then(response=>{
+                console.log(response);
                 this.movements=response.data.data;
-           });
-       },
+            }).catch(function(err){
+                console.log(err);
+            })
+        },
+
+        
 
     },
 
     computed: {
          getAutenticatedUser(){
-                 return this.$store.getters.getAuthUser;
+                 return this.$store.getters.getAuthUser
              }
+
+        
     },
 
     mounted() {
