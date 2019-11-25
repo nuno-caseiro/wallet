@@ -4,13 +4,13 @@
     <div class="alert" :class="messageType" v-if="showMessage">
             <strong>{{ message }}</strong>
         </div>
-        
+
     <form class="login-form">
-      <img  v-bind:src="itemImageURL(userLogin.photo)" width="110" height="110" alt="" >
+      <img  v-bind:src="itemImageURL(this.$store.state.user.photo)" width="110" height="110" alt="" >
       <h2>Edit Profile</h2>
-      <input type="text" placeholder="name" v-model="userLogin.name" >
-      <input type="text" placeholder="e-mail" v-model="userLogin.email">
-      <input type="text" placeholder="NIF" v-model="userLogin.nif" >
+      <input type="text" placeholder="name" v-model="this.$store.state.user.name" >
+        <label v-text="this.$store.state.user.email"></label>
+      <input type="text" placeholder="NIF" v-model="this.$store.state.user.nif" >
       <input type="file" >
       <input type="password" placeholder="password" >
       <input type="password" placeholder="new password">
@@ -42,7 +42,7 @@ export default {
             },
         itemImageURL(photo){
                 return "storage/fotos/"+String(photo);
-             
+
              },
 
         saveUser(){
@@ -63,10 +63,10 @@ export default {
                              setTimeout(() => {
                         this.$router.push("/")
                     }, 1000);
-                   
+
 
              }
-            
+
         },
 
         // cancelEdit(){
@@ -77,7 +77,7 @@ export default {
         //             console.dir (this.currentUser);
         //             // Copies response.data.data properties to this.currentUser
         //             // without changing this.currentUser reference
-        //             Object.assign(this.currentUser, response.data.data); 
+        //             Object.assign(this.currentUser, response.data.data);
         //             console.dir (this.currentUser);
         //             this.currentUser = null;
         //         });
