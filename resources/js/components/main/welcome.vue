@@ -1,14 +1,16 @@
 
 <template>
   <div>
-      <div>
-          <p class="homeText">
+
+          <div class="homeText">
               Welcome to Virtual Wallet
               <img src = https://www.pnc.com/content/dam/pnc-com/images/personal/Checking/VirtualWallet/overview/vw_overview_intro.svg>
-          </p>
-          <p id="numberOfWallets">There are {{numberWallets}} number of wallets</p>
+              <p id="numberOfWallets">There are {{numberWallets}} number of wallets</p>
+          </div>
 
-      </div>
+
+
+
   </div>
 </template>
 <script>
@@ -49,6 +51,7 @@ export default {
     color: rgb(90, 90, 90);
     font-size: 20px;
     position: relative;
-    left: 300px;
+    right: 100px;
+    bottom: 75px;
 }
 </style>

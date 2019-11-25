@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Http\Resources\Wallet as WalletResource;
 class Movement extends JsonResource
 {
     /**
@@ -18,6 +18,9 @@ class Movement extends JsonResource
         return ['id'=>$this->id,
             //acho que é $this->wallet->id
             'wallet_id'=> $this->wallet_id,
+            'wallet_email'=>$this->wallet->email,
+            //'wallet'=>$this->wallet,
+            //'wallet'=>new WalletResource($this->wallet),
             'type'=>$this->type,
             'transfer'=>$this->transfer,
             'transfer_movement_id'=>$this->transfer_movement_id,
@@ -32,7 +35,8 @@ class Movement extends JsonResource
             'date'=>$this->date,
             'start_balance'=>$this->start_balance,
             'end_balance'=>$this->end_balance,
-            'value'=>$this->value
+            'value'=>$this->value,
+            'category_name'=>$this->category->name,
             ];
     }
 }

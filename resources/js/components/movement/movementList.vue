@@ -6,8 +6,8 @@
             <tr>
                 <th>ID</th>
                 <th>Type</th>
-                <th>Tranfer Email</th> 
-                <th>Payment Type</th> 
+                <th>Tranfer Email</th>
+                <th>Payment Type</th>
                 <th>Category</th>
                 <th>Date</th>
                 <th>Start Balance</th>
@@ -19,23 +19,26 @@
             <tr v-for="movement in movements" :key="movement.id" :class="{active: selectedMovement === movement}">
             <td>{{ movement.id }}</td>
             <td>{{ movement.type }}</td>
-            <td>{{ movement.email}}</td>
-            <td>{{ movement.type_payment }}</td>
-            <td>{{ movement.category_id}}</td>
+            <td>{{ movement.wallet_email}}</td>
+            <td v-if="movement.type_payment==='c'">{{movement.type_payment==='c'? 'Cash' : ''}}</td>
+            <td v-if="movement.type_payment==='mb'">{{movement.type_payment==='mb'? 'MB payment' : ''}}</td>
+            <td v-if="movement.type_payment==='bt'">{{movement.type_payment==='bt'? 'Bank Transfer' : ''}}</td>
+            <td v-if="movement.type_payment===null">{{movement.type_payment===null? '':''}}</td>
+            <td>{{ movement.category_name}}</td>
             <td>{{ movement.date }}</td>
             <td>{{ movement.start_balance}}</td>
             <td>{{ movement.end_balance }}</td>
             <td>{{ movement.value }}</td>
-			
+
 			<td>
                 <a class="btn btn-sm btn-info" v-on:click="editMovement(movement)">Edit</a>
             </td>
         </tr>
 
-		    
+
         </tbody>
     </table>
-      
+
    <div class="overflow-auto">
     <b-pagination-nav :link-gen="linkGen" :number-of-pages="10" use-router></b-pagination-nav>
   </div>
@@ -53,7 +56,7 @@ export default {
         return {
 			selectedMovement: null,
             userTransfer:"",
-            emailTransfer:"",	
+            emailTransfer:"",
 			pageNum:"",
 			numberP: "",
         }
@@ -73,7 +76,7 @@ export default {
         axios.get('/api/users?page=' + pageNum)
         .then(function(response){
             movements=response.data.data;
-            
+
         })
         .catch(function(error){
             console.log(error);
@@ -83,7 +86,7 @@ export default {
 			this.selectedMovement=movement;
             this.$emit('edit-movement', movement);
 		},
-   }	  
-    
+   }
+
 }
 </script>
