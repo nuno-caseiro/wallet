@@ -8,11 +8,17 @@ use App\Http\Resources\Movement as MovementResource;
 
 class MovementControllerAPI extends Controller
 {
+    // $comment = App\Movement::find(1);
+
+    // echo $comment->category->name;
+
+
     public function index(Request $request){
         if($request->has('page')){
             return MovementResource::collection(Movement::paginate(5));
         }else{
             return MovementResource::collection(Movement::all());
+
         }
     }
 
@@ -21,8 +27,10 @@ class MovementControllerAPI extends Controller
     }
 
     public function showMovementsOfWallet($wallet_id){
-        return (MovementResource::collection(Movement::where('wallet_id',$wallet_id)->get()))->response()->setStatusCode(200);
+        
+        return (MovementResource::collection(Movement::where('wallet_id',$wallet_id)->paginate(5)))->response()->setStatusCode(200);
     }
+    
 
 
     public function store(Request $request){
@@ -48,4 +56,6 @@ class MovementControllerAPI extends Controller
         return response()->json(null,204);
 
     }
+
+
 }

@@ -1,7 +1,7 @@
 <template>
 <div>
 
-    <table class="table table-bordered">
+    <table  class="table table-striped">
         <thead>
             <tr>
                 <th>ID</th>
@@ -16,34 +16,29 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="movement in movements" :key="movement.id">
+            <tr v-for="movement in movements" :key="movement.id" :class="{active: selectedMovement === movement}">
             <td>{{ movement.id }}</td>
             <td>{{ movement.type }}</td>
-            <td>{{ movement.transfer_wallet_id}}</td>
+            <td>{{ movement.email}}</td>
             <td>{{ movement.type_payment }}</td>
             <td>{{ movement.category_id}}</td>
             <td>{{ movement.date }}</td>
             <td>{{ movement.start_balance}}</td>
             <td>{{ movement.end_balance }}</td>
             <td>{{ movement.value }}</td>
+			
+			<td>
+                <a class="btn btn-sm btn-info" v-on:click="editMovement(movement)">Edit</a>
+            </td>
         </tr>
+
+		    
         </tbody>
     </table>
       
-  <nav aria-label="Page navigation example">
-			<ul class="pagination">
-				<li class="page-item">
-					<button type="button" class="page-link" v-if="page != 1" @click="page--"> Previous </button>
-				</li>
-				<li class="page-item">
-					<button type="button" class="page-link" v-for="pageNumber in pages.slice(page-1, page+5)" @click="page = pageNumber"> {{pageNumber}} </button>
-				</li>
-				<li class="page-item">
-					<button type="button" @click="page++" v-if="page < pages.length" class="page-link"> Next </button>
-				</li>
-			</ul>
-		</nav>	
-
+   <div class="overflow-auto">
+    <b-pagination-nav :link-gen="linkGen" :number-of-pages="10" use-router></b-pagination-nav>
+  </div>
 </div>
 </template>
 
@@ -56,54 +51,39 @@ export default {
     props: ['movements'],
     data() {
         return {
+			selectedMovement: null,
             userTransfer:"",
-            emailTransfer:"",
-            page: 1,
-			perPage: 9,
-			pages: [],	
-
+            emailTransfer:"",	
+			pageNum:"",
+			numberP: "",
         }
     },
-
-    // components: {
-    //     'pagination' : pagination,
-    // },
    methods:{
-    setPages () {
-			let numberOfPages = Math.ceil(movements.length / this.perPage);
-			for (let index = 1; index <= numberOfPages; index++) {
-				this.pages.push(index);
-			}
-		},
-		paginate (movements) {
-			let page = this.page;
-			let perPage = this.perPage;
-			let from = (page * perPage) - perPage;
-			let to = (page * perPage);
-			return  movements.slice(from, to);
-        }
-        
 
-	},
-	computed: {
-		displayedPosts () {
-			return this.paginate(movements);
-		}
-	},
-	watch: {
-		movements () {
-			this.setPages();
-		}
-	},
-	// created(){
-	// 	this.getPosts();
-	// },
-	filters: {
-		trimWords(value){
-			return value.split(" ").splice(0,20).join(" ") + '...';
-		}
-	}
-    
+	//    numberOfPages(movements){
+	// 	   this.numberP=(movements.data.data.length)/5;
+	// 	   return this.numberP;
+	//    },
+
+		linkGen(pageNum) {
+        return pageNum === 1 ? '?' : `?page=${pageNum}`
+	  },
+
+	  	paginate(pageNum){
+        axios.get('/api/users?page=' + pageNum)
+        .then(function(response){
+            movements=response.data.data;
+            
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+		   },
+		editMovement(movement){
+			this.selectedMovement=movement;
+            this.$emit('edit-movement', movement);
+		},
+   }	  
     
 }
 </script>

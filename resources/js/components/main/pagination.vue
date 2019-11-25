@@ -36,5 +36,7 @@
         mounted(){
             this.paginate();
         }
+
+        
     }
 </script>

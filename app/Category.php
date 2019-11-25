@@ -11,6 +11,6 @@ class Category extends Model
     protected $hidden = [];
 
     public function movement(){
-        return $this->hasMany('App\Movement', 'category_id');
+        return $this->hasMany('App\Movement');
     }
 }

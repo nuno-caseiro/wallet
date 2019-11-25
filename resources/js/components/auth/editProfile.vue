@@ -1,5 +1,5 @@
 <template>
- <div class="login-page">
+ <div class="regist-page">
   <div class="form">
     <div class="alert" :class="messageType" v-if="showMessage">
             <strong>{{ message }}</strong>
@@ -14,7 +14,7 @@
       <input type="file" >
       <input type="password" placeholder="password" >
       <input type="password" placeholder="new password">
-      <button>Save Profile</button>
+      <button @click.prevent="saveUser()">Save Profile</button>
     </form>
   </div>
 </div>
@@ -25,7 +25,7 @@ export default {
     name : 'Edit',
     data() {
       return {
-
+        currentUser:"",
         messageType: "alert-success",
         showMessage: false,
         message: "",
@@ -36,7 +36,7 @@ export default {
                 let fileReader = new FileReader();
                 fileReader.readAsDataURL(event.target.files[0]);
                 fileReader.onload=(event)=>{
-                    this.user.photo=event.target.result;
+                    this.userLogin.photo=event.target.result;
                 }
 
             },
@@ -45,6 +45,43 @@ export default {
              
              },
 
+        saveUser(){
+             if(this.userLogin.password===this.userLogin.password_confirmation){
+                    this.userLogin.active=1;
+                    this.userLogin.type='u';
+                    console.log(this.userLogin);
+                    axios.put('/api/users/' + this.userLogin.id, this.userLogin)
+                        .then(response => {
+
+                            Object.assign(this.userLogin, response.data);
+                            this.showMessage = true;
+                            this.message = 'Edit completed with success';
+
+                        }).catch(error=>{
+                            console.log(error);
+                        });
+                             setTimeout(() => {
+                        this.$router.push("/")
+                    }, 1000);
+                   
+
+             }
+            
+        },
+
+        // cancelEdit(){
+        //     this.showSuccess = false;
+        //     this.editingUser = false;
+        //     axios.get('api/users/'+this.currentUser.id)
+        //         .then(response=>{
+        //             console.dir (this.currentUser);
+        //             // Copies response.data.data properties to this.currentUser
+        //             // without changing this.currentUser reference
+        //             Object.assign(this.currentUser, response.data.data); 
+        //             console.dir (this.currentUser);
+        //             this.currentUser = null;
+        //         });
+        // },
 
       },
 
@@ -52,8 +89,7 @@ export default {
         userLogin() {
             return this.$store.getters.getAuthUser
         },
-       }
-    
+      }
 }
 </script>
 

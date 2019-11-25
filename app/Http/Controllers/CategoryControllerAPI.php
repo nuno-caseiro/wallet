@@ -8,6 +8,9 @@ use App\Http\Resources\Category as CategoryResource;
 
 class CategoryControllerAPI extends Controller
 {
+
+    // $comment = App\Category::find(1)->comments()->where('name')->first();
+
     public function index(Request $request){
         if($request->has('page')){
             return CategoryResource::collection(Category::paginate(5));

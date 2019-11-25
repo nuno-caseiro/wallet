@@ -25,8 +25,8 @@ import MovementComponent from "./components/movement/movement.vue";
 import MovementAddComponent from "./components/movement/movementAdd.vue";
 
 import MovementListComponent from "./components/movement/movementList.vue";
+import MovementEditComponent from "./components/movement/movementEdit.vue";
 
-import PaginationComponent from "./components/main/pagination.vue";
 
 
 
@@ -43,7 +43,7 @@ const movement=Vue.component('movement',MovementComponent);
 const movementAdd= Vue.component('movementAdd',MovementAddComponent);
 
 const movementList=Vue.component('movement',MovementListComponent);
-const pagination=Vue.component('movement',PaginationComponent);
+const movementEdit=Vue.component('movement',MovementEditComponent);
 
 
 
@@ -101,7 +101,14 @@ const routes = [
     {
         path:"/movementList",
         name:"MovementList",
-        component:movementList},
+        component:movementList
+    },
+        
+    {
+        path:"/movementEdit",
+        name:"MovementEdit",
+         component:movementEdit
+    },
 
 
 ];
