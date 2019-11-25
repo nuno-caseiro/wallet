@@ -34,7 +34,7 @@
                     <input type="number" class="form-control" v-model="movement.value" name="value" id="value" step="0.01" @input="setFinalBalance()">
                 </div>
 
-                <div v-if="movement.transfer==0" class="form-group">
+                <div v-if="movement.transfer===false" class="form-group">
                     <label for="typePayment">Payment type</label>
                     <select class="form-control" id="typePayment" name="typePayment" v-model="movement.type_payment">
                         <option value="c" v-if="isOperator">Cash</option>
@@ -48,7 +48,7 @@
                     <input type="text" class="form-control" id="description" name="description" v-model="movement.description" >
                 </div>
 
-                <div v-if="movement.transfer==1" class="form-group">
+                <div v-if="movement.transfer===true" class="form-group">
                     <label for="descriptionSource">Description</label>
                     <input type="text" class="form-control" id="descriptionSource" name="descriptionSource" v-model="movement.source_description" >
                 </div>
@@ -87,9 +87,9 @@
 
 <script>
     export default {
-        props:['wallets'],
         data(){
             return{
+                wallets:[],
                 wallet_source:{
                     id:'',
                     balance:'',
@@ -143,6 +143,11 @@
 
         },
         methods: {
+            getWallets(){
+                axios.get('api/wallets').then(response=>{
+                    this.wallets=response.data.data;
+                })
+            },
             getSourceWallet: function () {
                 axios.get('api/wallets/'+this.currentUser.id).then(response=>{
                         this.wallet_source=response.data.data;
@@ -271,6 +276,8 @@
             if(this.currentUser.type==='u'){
                 this.getSourceWallet();
             }
+            this.getWallets();
+
         },
         computed:{
             isUser(){
