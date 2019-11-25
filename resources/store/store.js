@@ -91,7 +91,10 @@ export default new Vuex.Store({
         },
 
         isAuthenticated(state) {
-            return state.token && state.tokenType ? true:false
+            if(state.user && state.token && state.tokenType ){
+               return true;
+            }
+            return false;
         },
         isUser(state){
             if(state.user){

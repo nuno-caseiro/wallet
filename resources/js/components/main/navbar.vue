@@ -1,24 +1,24 @@
 <template>
     <div>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark" id="navbar">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark" id="navbar" v-if="renderComponent">
             <a class="navbar-brand" href="/">Virtual Wallet</a>
             <!-- <a class="navbar-brand" href="/"><img src = https://www.pnc.com/content/dam/pnc-com/images/personal/Checking/VirtualWallet/overview/vw_overview_intro.svg > </a> -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <a><b-button size="lg" variant="success" to="movement"  v-if="isAuthenticated">Movements</b-button></a>
-            
+
             <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav mr-auto">    
-                    
+                <ul class="navbar-nav mr-auto">
+
 
                 </ul>
                      <ul class="navbar-nav">
                          <a  v-if="isAuthenticated" class="navbar-brand" href="#">
-                            <img  v-bind:src="itemImageURL(getAutenticatedUser.photo)" width="30" height="30" alt="">
+                            <img  v-bind:src="itemImageURL(this.$store.state.user.photo)" width="30" height="30" alt="">
                          </a>
                          <li v-if="isAuthenticated" class="navbar-item">
-                             <router-link class="nav-item nav-link" to="edit">User Name: {{getAutenticatedUser.name}}</router-link>
+                             <router-link class="nav-item nav-link" to="edit">{{this.$store.state.user.name}}</router-link>
                          </li>
                      </ul>
                  <ul class="navbar-nav">
@@ -40,22 +40,32 @@
              data: function() {
              return{
                  name: "Navbar",
+                 renderComponent:true,
 
              }
          },
          methods: {
             itemImageURL(photo){
                 return "storage/fotos/"+String(photo);
-             
+
              },
+             forceRerender(){
+                this.renderComponent=false;
+
+                this.nextTick(()=>{
+                    this.renderComponent=true;
+                });
+             },
+             getAutenticatedUser(){
+
+                 return this.$store.getters.getAuthUser;
+             }
          },
          computed: {
              isAuthenticated() {
                  return this.$store.getters.isAuthenticated;
              },
-             getAutenticatedUser(){
-                 return this.$store.getters.getAuthUser;
-             }
+
 
              },
          }
