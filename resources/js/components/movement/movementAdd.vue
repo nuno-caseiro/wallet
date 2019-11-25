@@ -31,7 +31,7 @@
 
                 <div class="form-group">
                     <label for="value">Value</label>
-                <input type="number" class="form-control" v-model="movement.value" name="value" id="value" step="0.01" @input="setFinalBalance()">
+                    <input type="number" class="form-control" v-model="movement.value" name="value" id="value" step="0.01" @input="setFinalBalance()">
                 </div>
 
                 <div v-if="movement.transfer==0" class="form-group">
@@ -91,14 +91,34 @@
         data(){
             return{
                 wallet_source:{
-                    'id':'',
-                    'balance':'',
+                    id:'',
+                    balance:'',
                 },
                 wallet_dest:{
-                    'id':'',
-                    'balance':''
+                    id:'',
+                    balance:''
                 },
                 movement:{
+                    id:'',
+                    wallet_id:'',
+                    type:'',
+                    transfer:false,
+                    transfer_movement_id:'',
+                    transfer_wallet_id:'',
+                    type_payment:null,
+                    category_id:'',
+                    iban:'',
+                    mb_entity_code:'',
+                    mb_payment_reference:'',
+                    description:'',
+                    source_description:'',
+                    date:'',
+                    start_balance:'',
+                    end_balance:'',
+                    value:'',
+                },
+                movement_dest:{
+                    id:'',
                     wallet_id:'',
                     type:'',
                     transfer:false,
@@ -124,12 +144,12 @@
         },
         methods: {
             getSourceWallet: function () {
-              axios.get('api/wallets/'+this.currentUser.id).then(response=>{
-                  this.wallet_source=response.data.data;
-                  this.movement.wallet_id=this.wallet_source.id;
-                  this.movement.start_balance=this.wallet_source.balance;
-                  }
-              )
+                axios.get('api/wallets/'+this.currentUser.id).then(response=>{
+                        this.wallet_source=response.data.data;
+                        this.movement.wallet_id=this.wallet_source.id;
+                        this.movement.start_balance=this.wallet_source.balance;
+                    }
+                )
             }
 
             ,getWalletInfo: function (event) {
@@ -137,15 +157,17 @@
                 for (let i = 0; i < this.wallets.length; i++) {
                     //TODO OTIMIZAR CODIGO REPETIDO
                     if(this.isOperator){
-                    if (this.wallets[i.toString()].id == event.target.value) {
-                        this.movement.wallet_id = this.wallets[i.toString()].id;
-                        this.movement.start_balance = this.wallets[i.toString()].balance;
-                        console.log(this.wallets[i.toString()].id);
+                        if (this.wallets[i.toString()].id == event.target.value) {
+                            this.movement.wallet_id = this.wallets[i.toString()].id;
+                            this.movement.start_balance = this.wallets[i.toString()].balance;
+                            console.log(this.wallets[i.toString()].id);
                         }
                     }
-                    if(this.isUser && this.movement.transfer==1 ){
+                    if(this.isUser && this.movement.transfer===true ){
                         if (this.wallets[i.toString()].id == event.target.value) {
                             this.movement.transfer_wallet_id = this.wallets[i.toString()].id;
+                            this.wallet_dest.id=this.wallets[i.toString()].id;
+                            this.wallet_dest.balance=this.wallets[i.toString()].balance;
                             console.log(this.wallets[i.toString()].id);
                         }
                     }
@@ -154,11 +176,11 @@
                 console.log(this.movement);
             },
             setTransfer: function(){
-              this.movement.transfer=1;
+                this.movement.transfer=1;
             },
 
             setFinalBalance: function () {
-                if(this.movement.type=='i'){
+                if(this.movement.type==='i'){
                     this.movement.end_balance = parseFloat(this.movement.start_balance) + parseFloat(this.movement.value);
                 }else{
                     this.movement.end_balance = parseFloat(this.movement.start_balance) - parseFloat(this.movement.value);
@@ -192,25 +214,58 @@
                         .catch(error => {
                             console.log(error);
                         });
-                    }
+                }
 
-                if(this.movement.type==='e' && this.isUser && this.movement.transfer===false){
+                if(this.movement.type==='e' && this.isUser){
                     axios.post('api/movements/', this.movement).then(response => {
                         console.log(response.data);
-                    }).then(response => {
+                        Object.assign(this.movement, response.data);
+                        console.log(this.movement.id);
                         this.wallet_source.balance = this.movement.end_balance;
-                        axios.put('api/wallets/' + this.wallet_source.id, this.wallet_source).then(response => {
-                              console.log(response.data);
-                        }).catch(error => {
-                            console.log(error);
-                        });
+                        return axios.put('api/wallets/' + this.wallet_source.id, this.wallet_source);
+                    }).then(response => {
+                        console.log(response.data);
+                        if(this.movement.transfer===true){
+                        this.saveMovimentPair();
+                        }
+                    }).catch(error=>{
+                        console.log(error);
                     })
-                        .catch(error => {
-                            console.log(error);
-                        });
-                    }
-
                 }
+            },
+            saveMovimentPair: function () {
+                    this.transfer=true;
+                    this.movement_dest.id = '';
+                    this.movement_dest.date = this.movement.date;
+                    this.movement_dest.type = 'i';
+                    this.movement_dest.description = '';
+                    this.movement_dest.category_id = '';
+                    this.movement_dest.wallet_id = this.wallet_dest.id;
+                    this.movement_dest.transfer_wallet_id = this.wallet_source.id;
+                    this.movement_dest.transfer_movement_id = this.movement.id;
+                    this.movement_dest.start_balance = this.wallet_dest.balance;
+                    this.movement_dest.source_description = this.movement.source_description;
+                    this.movement_dest.value=this.movement.value;
+                    this.movement_dest.end_balance = parseFloat(this.movement_dest.start_balance) + parseFloat(this.movement_dest.value);
+                    this.wallet_dest.balance = this.movement_dest.end_balance;
+                    console.log("so p ver");
+                    console.log(this.movement);
+                    console.log(this.movement_dest);
+                axios.post('api/movements/', this.movement_dest).then(response => {
+                    Object.assign(this.movement_dest, response.data);
+                    this.movement.transfer_movement_id=this.movement_dest.id;
+                    return axios.put('api/movements/'+this.movement.id,this.movement);
+                    }).then(response=>{
+                    console.log(response.data);
+                    return axios.put('api/wallets/'+this.wallet_dest.id,this.wallet_dest);
+                    }).then(response=>{
+                        console.log(response.data);
+                }).catch(error=>{
+                    console.log(error);
+                })
+
+            }
+
         },
         mounted() {
             if(this.currentUser.type==='u'){
@@ -228,11 +283,11 @@
                 return this.$store.getters.isAdmin;
             },
             isToShowDestination(){
-              if((this.movement.transfer==1 && this.isUser)|| this.isOperator){
-                  return true;
-              } else{
-                  return false;
-              }
+                if((this.movement.transfer===true && this.isUser)|| this.isOperator){
+                    return true;
+                } else{
+                    return false;
+                }
             },
             currentUser(){
                 return this.$store.getters.getAuthUser;

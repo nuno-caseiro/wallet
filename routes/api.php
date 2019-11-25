@@ -42,6 +42,8 @@ Route::middleware('auth:api')->group(function () {
     Route::put('wallets/{id}', 'WalletControllerAPI@update');
 
     Route::post('movements', 'MovementControllerAPI@store');
+    Route::put('movements/{id}', 'MovementControllerAPI@update');
+
 
     Route::get('movements','MovementControllerAPI@index');
    // Route::get('movements/{id}','MovementControllerAPI@show');
