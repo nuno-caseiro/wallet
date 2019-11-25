@@ -4,6 +4,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import VueRouter from 'vue-router';
 
+import vuetify from '../plugins/vuetify' // path to vuetify export
+
+
 window.Vue = require('vue');
 
 
@@ -23,6 +26,9 @@ import MovementAddComponent from "./components/movement/movementAdd.vue";
 
 import MovementListComponent from "./components/movement/movementList.vue";
 
+import PaginationComponent from "./components/main/pagination.vue";
+
+
 
 
 const navbar = Vue.component('navbar',NavbarComponent);
@@ -37,6 +43,13 @@ const movement=Vue.component('movement',MovementComponent);
 const movementAdd= Vue.component('movementAdd',MovementAddComponent);
 
 const movementList=Vue.component('movement',MovementListComponent);
+const pagination=Vue.component('movement',PaginationComponent);
+
+
+
+
+
+
 
 
 
@@ -80,6 +93,12 @@ const routes = [
     },
 
     {
+        path:"/movementAdd",
+        name: "movementAdd",
+        component: movementAdd
+    },
+
+    {
         path:"/movementList",
         name:"MovementList",
         component:movementList},
@@ -95,13 +114,12 @@ const router = new VueRouter({
 const app = new Vue({
     router,
     store,
+    vuetify,
     components:{
         navbar
     }
-
+    
 }).$mount('#app');
-
-
 
 
 
