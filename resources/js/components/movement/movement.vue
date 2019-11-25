@@ -1,25 +1,25 @@
 <template>
 <div>
-       
+
             <div class="jumbotron">
                <h1>{{title}}</h1>
                 <b-button size="lg" variant="success" to="movementAdd">Add Movement</b-button>
             </div>
 
-            <movement-list :movements="movements"></movement-list>
+            <movement-list :movements="movements" v-on:edit-movement="editMovement"></movement-list>
 
              <div class="alert alert-success" v-if="showSuccess">
                 <button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
                 <strong>@{{ successMessage }}</strong>
             </div>
 
-            <movement-edit :movement="currentMovement" v-if="currentMovement"></movement-edit>  
-    
+            <movement-edit :movement="currentMovement" v-if="currentMovement" ></movement-edit>
 
 
 
 
-     
+
+
 </div>
 
 </template>
@@ -43,7 +43,7 @@ import MovementEdit from './movementEdit.vue';
     },
     methods: {
          getMovements(){
-           let url = this.getAutenticatedUser.id
+           let url = this.$store.state.user.id;
            axios.get('api/movements/id/' + url)
            .then(response=>{
                 console.log(response);
@@ -55,16 +55,17 @@ import MovementEdit from './movementEdit.vue';
 
         editMovement: function(movement){
             this.currentMovement = movement;
-            this.editMovement = true;
+            this.editingMovement = true;
             this.showSuccess = false;
         },
+        getAutenticatedUser(){
+            return this.$store.getters.getAuthUser
+        }
     },
 
     computed: {
-         getAutenticatedUser(){
-                 return this.$store.getters.getAuthUser
-    }
-    },    
+
+    },
 
     components:{
        'movement-list' : MovementList,
