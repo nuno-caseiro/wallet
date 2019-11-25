@@ -6,14 +6,8 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <b-dropdown text="Movements" variant="secondary" class="m-2" v-if="isAuthenticated">
-                <b-dropdown-item><router-link class="nav-item nav-link" to="movement">Add Movement</router-link></b-dropdown-item>
-                <b-dropdown-item><router-link class="nav-item nav-link" to="movementList">Movement List</router-link></b-dropdown-item>
-                <b-dropdown-item>Third Action</b-dropdown-item>
-                <!-- <b-dropdown-divider></b-dropdown-divider> -->
-                <!-- <b-dropdown-item active>Active action</b-dropdown-item>
-                <b-dropdown-item disabled>Disabled action</b-dropdown-item> -->
-            </b-dropdown>
+            <a><b-button size="lg" variant="success" to="movement"  v-if="isAuthenticated">Movements</b-button></a>
+            
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">    
                     
