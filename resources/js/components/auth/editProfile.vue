@@ -6,15 +6,19 @@
         </div>
 
     <form class="login-form">
-      <img  v-bind:src="itemImageURL(this.$store.state.user.photo)" width="110" height="110" alt="" >
-      <h2>Edit Profile</h2>
-      <input type="text" placeholder="name" v-model="this.$store.state.user.name" >
-        <label v-text="this.$store.state.user.email"></label>
-      <input type="text" placeholder="NIF" v-model="this.$store.state.user.nif" >
-      <input type="file" >
-      <input type="password" placeholder="password" >
-      <input type="password" placeholder="new password">
+      <img  v-bind:src="itemImageURL(userLogin.photo)" width="110" height="110" alt="" >
+      <h3>Edit Profile</h3><label v-text="userLogin.email"></label>
+      <input type="text" placeholder="name" v-model="userLogin.name" >
+        
+      <input type="text" placeholder="NIF" v-model="userLogin.nif" >
+      <input type="file" accept="userLogin.photo" @change="onFileSelected">
+      
+      <input type="password" placeholder="old password" v-model="repeatPassword">
+      <input type="password" placeholder="new password" v-model="newPassword">
+      <input type="password" placeholder="confirm password" v-model="confirmPassword">
+
       <button @click.prevent="saveUser()">Save Profile</button>
+
     </form>
   </div>
 </div>
@@ -29,6 +33,10 @@ export default {
         messageType: "alert-success",
         showMessage: false,
         message: "",
+        repeatPassword:null,
+        newPassword:null,
+        confirmPassword:null,
+
       }
       },
       methods:{
@@ -46,48 +54,52 @@ export default {
              },
 
         saveUser(){
-             if(this.userLogin.password===this.userLogin.password_confirmation){
-                    this.userLogin.active=1;
-                    this.userLogin.type='u';
-                    console.log(this.userLogin);
-                    axios.put('/api/users/' + this.userLogin.id, this.userLogin)
-                        .then(response => {
+             if(this.userLogin.password===this.repeatPassword && this.newPassword===this.confirmPassword){
 
-                            Object.assign(this.userLogin, response.data);
-                            this.showMessage = true;
-                            this.message = 'Edit completed with success';
 
-                        }).catch(error=>{
-                            console.log(error);
-                        });
-                             setTimeout(() => {
-                        this.$router.push("/")
-                    }, 1000);
+                        this.newPassword = this.userLogin.password;
+                         
+                        this.userLogin.active=1;
+                        this.userLogin.type='u';
+                        console.log(this.currentUser);
+                        axios.put('/api/users/' + this.userLogin.id, this.userLogin)
+                            .then(response => {
 
+                                Object.assign(this.currentUser, response.data);
+                                this.showMessage = true;
+                                this.message = 'Edit completed with success';
+
+                            }).catch(error=>{
+                                console.log(error);
+                            });
+                                setTimeout(() => {
+                            this.$router.push("/")
+                        }, 1000);                
 
              }
 
         },
 
-        // cancelEdit(){
-        //     this.showSuccess = false;
-        //     this.editingUser = false;
-        //     axios.get('api/users/'+this.currentUser.id)
-        //         .then(response=>{
-        //             console.dir (this.currentUser);
-        //             // Copies response.data.data properties to this.currentUser
-        //             // without changing this.currentUser reference
-        //             Object.assign(this.currentUser, response.data.data);
-        //             console.dir (this.currentUser);
-        //             this.currentUser = null;
-        //         });
-        // },
+         cancelEdit(){
+             this.showSuccess = false;
+            this.editingUser = false;
+            axios.get('api/users/'+this.currentUser.id)
+                .then(response=>{
+                    console.dir (this.currentUser);
+                     // Copies response.data.data properties to this.currentUser
+                     // without changing this.currentUser reference
+                     Object.assign(this.currentUser, response.data.data);
+                     console.dir (this.currentUser);
+                     this.currentUser = null;
+                 });
+         },
+    
 
       },
-
+      
       computed: {
         userLogin() {
-            return this.$store.getters.getAuthUser
+            return this.$store.state.user;
         },
       }
 }

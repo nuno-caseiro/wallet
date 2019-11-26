@@ -27,8 +27,7 @@ class MovementControllerAPI extends Controller
     }
 
     public function showMovementsOfWallet($wallet_id){
-        
-        return (MovementResource::collection(Movement::where('wallet_id',$wallet_id)->paginate(5)))->response()->setStatusCode(200);
+        return (MovementResource::collection(Movement::where('wallet_id',$wallet_id)->orderBy('date', 'desc')->paginate(5)))->response()->setStatusCode(200);
     }
     
 

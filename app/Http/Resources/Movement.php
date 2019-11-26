@@ -14,6 +14,9 @@ class Movement extends JsonResource
      */
     public function toArray($request)
     {
+        // $movements = select('*')->
+        // order_by('date','desc')->
+        // get();
         //TODO retficar julgo que alguns estao mal
         return ['id'=>$this->id,
             //acho que é $this->wallet->id
@@ -37,6 +40,8 @@ class Movement extends JsonResource
             'end_balance'=>$this->end_balance,
             'value'=>$this->value,
             'category_name'=>$this->category->name,
+            // 'movements' => $movements,
+            
             ];
     }
 }
