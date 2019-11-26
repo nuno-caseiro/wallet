@@ -1,19 +1,13 @@
 <template>
 <div>
-
+        
             <div class="jumbotron">
                <h1>{{title}}</h1>
                 <b-button size="lg" variant="success" to="movementAdd">Add Movement</b-button>
             </div>
 
             <movement-list :movements="movements" v-on:edit-movement="editMovement"></movement-list>
-
-             <div class="alert alert-success" v-if="showSuccess">
-                <button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
-                <strong>@{{ successMessage }}</strong>
-            </div>
-
-            <movement-edit :movement="currentMovement" v-if="currentMovement" ></movement-edit>
+            <movement-edit :movement="currentMovement" v-on:edit-canceled="cancelEdit"  v-on:save-success="saveEdit" v-if="currentMovement" ></movement-edit>
 
 
 
@@ -36,9 +30,12 @@ import MovementEdit from './movementEdit.vue';
             title: 'Movements List',
             showSuccess: false,
             successMessage: '',
+            messageType: "alert-success",
             currentMovement: null,
+            currentCategory: null,
             movements: [],
             editingMovement: false,
+            
         }
     },
     methods: {
@@ -53,14 +50,26 @@ import MovementEdit from './movementEdit.vue';
             })
         },
 
-        editMovement: function(movement){
+        editMovement(movement){
             this.currentMovement = movement;
             this.editingMovement = true;
             this.showSuccess = false;
         },
         getAutenticatedUser(){
             return this.$store.getters.getAuthUser
-        }
+        },
+        
+        cancelEdit(){
+            this.currentMovement = false;
+            this.showSuccess=false;
+        },
+
+        saveEdit(){
+            this.currentMovement = false;
+            this.showSuccess=true;
+            this.successMessage='Movement Edited with Success';
+        },
+
     },
 
     computed: {
