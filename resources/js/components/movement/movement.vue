@@ -4,11 +4,13 @@
             <div class="jumbotron">
                <h1>{{title}}</h1>
                 <b-button size="lg" variant="success" to="movementAdd">Add Movement</b-button>
+
             </div>
 
-            <movement-list :movements="movements" v-on:edit-movement="editMovement"></movement-list>
+            <movement-list :movements="movements" v-on:edit-movement="editMovement" v-if="isUser" ></movement-list>
             <movement-edit :movement="currentMovement" v-on:edit-canceled="cancelEdit"  v-on:save-success="saveEdit" v-if="currentMovement" ></movement-edit>
-
+            
+            
 
 
 
@@ -73,7 +75,9 @@ import MovementEdit from './movementEdit.vue';
     },
 
     computed: {
-
+          isUser(){
+                return this.$store.getters.isUser;
+            },  
     },
 
     components:{
@@ -83,10 +87,18 @@ import MovementEdit from './movementEdit.vue';
 
     mounted() {
         this.getMovements();
+
+        if(!this.isUser){
+            setTimeout(() => {
+                        this.$router.push("/movementAdd")}, 1);  
+        }
+        
     },
     }
 </script>
 
 <style scoped>
-
+.h1{
+    text-align: center;
+}
 </style>
