@@ -214,6 +214,11 @@
                         this.wallet_dest.balance = this.movement.end_balance;
                         axios.put('api/wallets/' + this.wallet_dest.id, this.wallet_dest).then(response => {
                             console.log(response.data);
+                            this.successMessage = "Movement saved with success";
+                            this.showSuccess = true;
+                            ///redireciona para a pagina movements
+                            setTimeout(() => {
+                                this.$router.push("/movement")}, 1000);
                         }).catch(error => {
                             console.log(error);
                         });
@@ -235,15 +240,16 @@
                         if(this.movement.transfer===true){
                         this.saveMovimentPair();
                         }
+                        this.successMessage = "Movement saved with success";
+                        this.showSuccess = true;
+                        ///redireciona para a pagina movements
+                        setTimeout(() => {
+                            this.$router.push("/movement")}, 1000);
                     }).catch(error=>{
                         console.log(error);
                     })
                 }
-                this.successMessage = "Movement saved with success";
-                this.showSuccess = true;
-                ///redireciona para a pagina movements
-                setTimeout(() => {
-                        this.$router.push("/movement")}, 1000);  
+
 
             } ,
             saveMovimentPair: function () {
@@ -275,18 +281,18 @@
                         console.log(response.data);
                 }).catch(error=>{
                     console.log(error);
-                })
+                });
                 /////////////redireciona para a pagina movement
-                this.successMessage = "Movement saved with success";
+             /*   this.successMessage = "Movement saved with success";
                 this.showSuccess = true;
                 setTimeout(() => {
-                        this.$router.push("/")}, 1000);  
+                        this.$router.push("/")}, 1000);*/
 
             }
 
-            
 
-            
+
+
         },
         mounted() {
             if(this.$store.state.user.type==='u'){
