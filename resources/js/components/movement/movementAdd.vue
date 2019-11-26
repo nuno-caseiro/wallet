@@ -1,8 +1,8 @@
 <template>
     <div class="login-page">
         <div class="form">
-            <div class="alert" :class="messageType" v-if="showMessage">
-                <strong>{{ message }}</strong>
+            <div class="alert" :class="messageType" v-if="showSuccess">
+                <strong>{{ successMessage }}</strong>
             </div>
             <div class="jumbotron">
                 <h2>Movement</h2>
@@ -137,7 +137,9 @@
                     value:'',
                 },
                 categories:[],
-                showMessage: false,
+                showSuccess: false,
+                successMessage: '',
+                messageType: "alert-success",
 
             }
 
@@ -237,7 +239,13 @@
                         console.log(error);
                     })
                 }
-            },
+                this.successMessage = "Movement saved with success";
+                this.showSuccess = true;
+                ///redireciona para a pagina movements
+                setTimeout(() => {
+                        this.$router.push("/movement")}, 1000);  
+
+            } ,
             saveMovimentPair: function () {
                     this.movement_dest.transfer=true;
                     this.movement_dest.id = '';
@@ -268,9 +276,17 @@
                 }).catch(error=>{
                     console.log(error);
                 })
+                /////////////redireciona para a pagina movement
+                this.successMessage = "Movement saved with success";
+                this.showSuccess = true;
+                setTimeout(() => {
+                        this.$router.push("/")}, 1000);  
 
             }
 
+            
+
+            
         },
         mounted() {
             if(this.$store.state.user.type==='u'){
