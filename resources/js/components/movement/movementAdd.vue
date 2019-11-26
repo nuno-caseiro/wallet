@@ -106,7 +106,7 @@
                     transfer_movement_id:'',
                     transfer_wallet_id:'',
                     type_payment:null,
-                    category_id:'',
+                    category_id:null,
                     iban:'',
                     mb_entity_code:'',
                     mb_payment_reference:'',
@@ -125,7 +125,7 @@
                     transfer_movement_id:'',
                     transfer_wallet_id:'',
                     type_payment:null,
-                    category_id:'',
+                    category_id:null,
                     iban:'',
                     mb_entity_code:'',
                     mb_payment_reference:'',
@@ -149,7 +149,7 @@
                 })
             },
             getSourceWallet: function () {
-                axios.get('api/wallets/'+this.currentUser.id).then(response=>{
+                axios.get('api/wallets/'+this.$store.state.user.id).then(response=>{
                         this.wallet_source=response.data.data;
                         this.movement.wallet_id=this.wallet_source.id;
                         this.movement.start_balance=this.wallet_source.balance;
@@ -239,12 +239,12 @@
                 }
             },
             saveMovimentPair: function () {
-                    this.transfer=true;
+                    this.movement_dest.transfer=true;
                     this.movement_dest.id = '';
                     this.movement_dest.date = this.movement.date;
                     this.movement_dest.type = 'i';
                     this.movement_dest.description = '';
-                    this.movement_dest.category_id = '';
+                    this.movement_dest.category_id = null;
                     this.movement_dest.wallet_id = this.wallet_dest.id;
                     this.movement_dest.transfer_wallet_id = this.wallet_source.id;
                     this.movement_dest.transfer_movement_id = this.movement.id;
@@ -273,7 +273,7 @@
 
         },
         mounted() {
-            if(this.currentUser.type==='u'){
+            if(this.$store.state.user.type==='u'){
                 this.getSourceWallet();
             }
             this.getWallets();
@@ -296,9 +296,7 @@
                     return false;
                 }
             },
-            currentUser(){
-                return this.$store.getters.getAuthUser;
-            }
+
 
         }
 

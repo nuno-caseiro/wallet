@@ -39,9 +39,10 @@ class Movement extends JsonResource
             'start_balance'=>$this->start_balance,
             'end_balance'=>$this->end_balance,
             'value'=>$this->value,
-            'category_name'=>$this->category->name,
+//$this->when(! is_null($this->details), $this->details),
+            'category_name'=>$this->category_name ?: null,
             // 'movements' => $movements,
-            
+
             ];
     }
 }
