@@ -7,8 +7,10 @@
         <div class="jumbotron">
             <h2>Do you really want to logout?</h2>
             <div class="form-group">
-                <a class="btn btn-primary" v-on:click.prevent="logout">Confirm</a>
-                <a class="btn btn-primary" v-on:click.prevent="cancelEdit">Go back</a>
+                <b-button-group>
+                <b-button variant="outline-success" v-on:click.prevent="logout">Confirm</b-button>
+                <b-button variant="outline-danger" v-on:click.prevent="cancelEdit">Go back</b-button>
+                </b-button-group>
             </div>
         </div>
     </div>
@@ -55,7 +57,7 @@
 </script>
 <style scoped>
 .btn-primary{
-    background-color: orange;
-    border-color: orange;
+    background-color: rgb(37, 189, 82);
+    border-color: rgb(37, 189, 82);
 }
 </style>

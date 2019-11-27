@@ -4,14 +4,12 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import VueRouter from 'vue-router';
 
-import vuetify from '../plugins/vuetify' // path to vuetify export
-
-
 window.Vue = require('vue');
-
 
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
+
+
 import store from '../store/store.js';
 import NavbarComponent from './components/main/navbar.vue';
 import LoginComponent from './components/auth/login.vue';
@@ -21,12 +19,10 @@ import NotFoundComponent from './components/notFound.vue';
 import RegisterComponent from './components/auth/register.vue';
 import EditProfileComponent from "./components/auth/editProfile.vue";
 import MovementComponent from "./components/movement/movement.vue";
-
 import MovementAddComponent from "./components/movement/movementAdd.vue";
-
 import MovementListComponent from "./components/movement/movementList.vue";
 import MovementEditComponent from "./components/movement/movementEdit.vue";
-
+import TransferInfoComponent from "./components/movement/transferInfo.vue";
 
 
 
@@ -42,8 +38,12 @@ const movement=Vue.component('movement',MovementComponent);
 
 const movementAdd= Vue.component('movementAdd',MovementAddComponent);
 
-const movementList=Vue.component('movement',MovementListComponent);
-const movementEdit=Vue.component('movement',MovementEditComponent);
+const movementList=Vue.component('movementList',MovementListComponent);
+const movementEdit=Vue.component('movementEdit',MovementEditComponent);
+const transferInfo=Vue.component('transferInfo',TransferInfoComponent);
+
+
+
 
 
 
@@ -104,11 +104,7 @@ const routes = [
         component:movementList
     },
         
-    {
-        path:"/movementEdit",
-        name:"MovementEdit",
-         component:movementEdit
-    },
+
 
 
 ];
@@ -121,7 +117,6 @@ const router = new VueRouter({
 const app = new Vue({
     router,
     store,
-    vuetify,
     components:{
         navbar
     }

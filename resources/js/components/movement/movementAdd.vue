@@ -77,7 +77,7 @@
                 </div>
 
                 <div class="form-group">
-                    <a class="btn btn-success" @click.prevent="saveMovement()">Save</a>
+                    <b-button size="lg" variant="outline-success" @click.prevent="saveMovement()">Save</b-button>
                 </div>
 
             </div>
