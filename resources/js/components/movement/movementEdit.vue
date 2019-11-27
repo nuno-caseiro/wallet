@@ -13,7 +13,10 @@
                 </div>
 
                 <div class="form-group">
-                    <a class="btn btn-success" @click.prevent="saveEdit()">Save</a> <a class="btn btn-success" @click.prevent="cancelEdit()">Cancel</a>
+                    <b-button-group>
+                    <b-button  variant="outline-success" @click.prevent="saveEdit()">Save</b-button> 
+                    <b-button  variant="outline-danger" @click.prevent="cancelEdit()">Cancel</b-button>
+                    </b-button-group>
                 </div>
             </div>
         </div>
