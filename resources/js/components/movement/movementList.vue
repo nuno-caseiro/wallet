@@ -1,7 +1,6 @@
-<template>
+<template  >
 <div>
-
-    <table  class="table table-striped">
+    <table v-if="!view" class="table table-striped" >
         <thead>
             <tr>
                 <th>ID</th>
@@ -13,16 +12,19 @@
                 <th>Start Balance</th>
                 <th>End Balance</th>
                 <th>Value</th>
+                <th>Actions</th>
+
             </tr>
         </thead>
-        <tbody>
+        <tbody >
             <tr v-for="movement in movements" :key="movement.id" :class="{active: selectedMovement === movement}">
             <td>{{ movement.id }}</td>
-            <td>{{ movement.type }}</td>
-            <td>{{ movement.wallet_email}}</td>
-            <td v-if="movement.type_payment==='c'">{{movement.type_payment==='c'? 'Cash' : ''}}</td>
-            <td v-if="movement.type_payment==='mb'">{{movement.type_payment==='mb'? 'MB payment' : ''}}</td>
-            <td v-if="movement.type_payment==='bt'">{{movement.type_payment==='bt'? 'Bank Transfer' : ''}}</td>
+            <td v-if="movement.type ==='e'">{{ movement.type ==='e'? 'Expense': '' }}</td>
+            <td v-if="movement.type ==='i'">{{ movement.type ==='i'? 'Income': '' }}</td>
+            <td>{{ movement.transfer===1 ? movement.wallet_email : ''}}</td>
+            <td v-if="movement.type_payment==='c' && movement.transfer===0">{{movement.type_payment==='c'? 'Cash' : ''}}</td>
+            <td v-if="movement.type_payment==='mb'&& movement.transfer===0">{{movement.type_payment==='mb'? 'MB payment' : ''}}</td>
+            <td v-if="movement.type_payment==='bt'&& movement.transfer===0">{{movement.type_payment==='bt'? 'Bank Transfer' : ''}}</td>
             <td v-if="movement.type_payment===null">{{movement.type_payment===null? '':''}}</td>
             <td>{{ movement.category_name}}</td>
             <td>{{ movement.date }}</td>
@@ -31,12 +33,14 @@
             <td>{{ movement.value }}</td>
 
 			<td>
-                <a class="btn btn-sm btn-info" v-on:click="editMovement(movement)">Edit</a>
-            </td>
+                <b-button-group>
+                <b-button  variant="warning" @click.prevent="editMovement(movement)">Edit</b-button>
+                <b-button  variant="info" @click.prevent="transferInfo(movement)">Info</b-button>
+                </b-button-group>
+            </td> 
+
         </tr>
-
-
-        </tbody>
+      </tbody>
     </table>
 
    <div class="overflow-auto">
@@ -54,11 +58,9 @@ export default {
     props: ['movements'],
     data() {
         return {
-			selectedMovement: null,
-            userTransfer:"",
-            emailTransfer:"",
-			pageNum:"",
-			numberP: "",
+            selectedMovement: null,
+            selectedMovementTransfer:null,
+            view: false,
         }
     },
    methods:{
@@ -83,10 +85,24 @@ export default {
         });
 		   },
 		editMovement(movement){
-			this.selectedMovement=movement;
+			
             this.$emit('edit-movement', movement);
-		},
-   }
+        },
+        transferInfo(movement){
+			
+            this.$emit('transfer-info', movement);
+        },
+
+   },
+
+   computed:{
+            isUser(){
+                return this.$store.getters.isUser;
+            },
+}
 
 }
 </script>
+<style  scoped >
+
+</style>

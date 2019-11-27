@@ -6,7 +6,7 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <a><b-button size="lg" variant="success" to="movement"  v-if="isAuthenticated">Movements</b-button></a>
+            <a><b-button size="lg" variant="secondary" to="movement"  v-if="isAuthenticated && !isAdmin">Movements</b-button></a>
 
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
@@ -65,6 +65,9 @@
              isAuthenticated() {
                  return this.$store.getters.isAuthenticated;
              },
+              isAdmin(){
+                return this.$store.getters.isAdmin;
+            },
 
 
              },
