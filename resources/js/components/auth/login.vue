@@ -40,7 +40,7 @@ export default {
                   let token = response.data.access_token;
                   let expiration = response.data.expires_in + Date.now();
                   this.$store.commit('setToken', {token, tokenType, expiration});
-                  //this.$socket.emit('user_enter', this.$store.getters.getAuthUser);
+                  this.$socket.emit('user_enter', this.$store.state.user);
                   console.log(token);
                   this.typeofmsg = "alert-success";
                   this.message = "Login Successful";

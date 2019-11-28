@@ -1,7 +1,7 @@
 <template>
     <div>
         <br>
-        <div class="alert" :class="typeofmsg" v-if="showMessage">             
+        <div class="alert" :class="typeofmsg" v-if="showMessage">
             <strong>{{ message }}</strong>
         </div>
         <div class="jumbotron">
@@ -16,10 +16,10 @@
     </div>
 </template>
 
-<script type="text/javascript">    
+<script type="text/javascript">
     export default {
         data: function(){
-            return { 
+            return {
                 typeofmsg: "alert-success",
                 showMessage: false,
                 message: ""
@@ -30,7 +30,7 @@
                 this.showMessage = false;
                 axios.post('api/logout')
                     .then(response => {
-                        //this.$socket.emit('user_exit', this.$store.state.user);
+                        this.$socket.emit('user_exit', this.$store.state.user);
                         this.$store.commit('clearUserAndToken');
                         this.typeofmsg = "alert-success";
                         this.message = "User has logged out correctly";
@@ -45,7 +45,7 @@
                         this.message = "Logout incorrect. But local credentials were discarded";
                         this.showMessage = true;
                         console.log(error);
-                    })            
+                    })
                 },
 
             cancelEdit(){

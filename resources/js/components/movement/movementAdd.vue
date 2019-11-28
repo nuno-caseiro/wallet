@@ -201,6 +201,21 @@
                 });
 
             },
+            sendMessageTo:function(userID){
+                let userSource='';
+                axios.get('api/users/'+userID).then(response=>{
+                    console.log(response);
+                    userSource=response.data.data;
+                    Object.assign(userSource, response.data.data);
+                    console.log(userSource);
+
+                    let msg=window.prompt('What do you want to say to"'+userSource.name+'"');
+                    this.$socket.emit('message_from_operator_income',msg,this.$store.user,userSource);
+
+                });
+
+
+            },
             saveMovement: function () {
                 let newDate = new Date();
                 let dataFormatada= newDate.getFullYear()+'-'+newDate.getMonth()+'-'+newDate.getDate()+' '+newDate.getHours()+':'+newDate.getMinutes()+':'+newDate.getSeconds();
@@ -214,6 +229,7 @@
                         this.wallet_dest.balance = this.movement.end_balance;
                         axios.put('api/wallets/' + this.wallet_dest.id, this.wallet_dest).then(response => {
                             console.log(response.data);
+                            this.sendMessageTo(this.movement.wallet_id);
                             this.successMessage = "Movement saved with success";
                             this.showSuccess = true;
                             ///redireciona para a pagina movements

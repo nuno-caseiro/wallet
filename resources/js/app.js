@@ -2,12 +2,26 @@ require('./bootstrap');
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import VueSocketIO from "vue-socket.io";
 import VueRouter from 'vue-router';
+import Toasted from 'vue-toasted';
 
 window.Vue = require('vue');
 
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
+
+Vue.use(new VueSocketIO({
+    debug:true,
+    connection: 'http://127.0.0.1:8080'
+}));
+
+Vue.use(Toasted,{
+    theme: "bubble",
+    position: 'top-right', //pode ser top-right, top-center, top-left, bottom-right, bottom-center, bottom-left
+    duration: 5000,
+    type: 'info',
+})
 
 
 import store from '../store/store.js';
@@ -103,7 +117,7 @@ const routes = [
         name:"MovementList",
         component:movementList
     },
-        
+
 
 
 
@@ -117,10 +131,29 @@ const router = new VueRouter({
 const app = new Vue({
     router,
     store,
+    sockets:{
+      connect(){
+          console.log(`Socket connected with ID: ${this.$socket.id}`);
+          if(store.state.user){
+              this.$socket.emit('user_enter', store.state.user);
+          }
+      },
+        message_from_operator(dataFromServer){
+        console.log('Receiving this message from Server: "'+dataFromServer+'"');
+        let name=dataFromServer[1]===null? 'Unknown':dataFromServer[1].name;
+        this.$toasted.show('Message "'+dataFromServer[0]+ '"sent from"'+name+'"');
+        },
+        message_unavailable(destUser){
+          this.$toasted.error('User"'+destUser.name+ '"is not available');
+        },
+        message_sent(dataFromServer){
+          this.$toasted.success('Message"'+dataFromServer[0]+'"was sent to"'+dataFromServer[1].name+'"');
+        }
+    },
     components:{
         navbar
     }
-    
+
 }).$mount('#app');
 
 
