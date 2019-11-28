@@ -2,12 +2,18 @@ require('./bootstrap');
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import VueSocketIO from "vue-socket.io";
 import VueRouter from 'vue-router';
 
 window.Vue = require('vue');
 
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
+
+Vue.use(new VueSocketIO({
+    debug:true,
+    connection: 'http://127.0.0.1:8080'
+}));
 
 
 import store from '../store/store.js';
@@ -103,7 +109,7 @@ const routes = [
         name:"MovementList",
         component:movementList
     },
-        
+
 
 
 
@@ -117,10 +123,18 @@ const router = new VueRouter({
 const app = new Vue({
     router,
     store,
+    sockets:{
+      connect(){
+          console.log(`Socket connected with ID: ${this.$socket.id}`);
+          if(store.state.user){
+              this.$socket.emit('user_enter', store.state.user);
+          }
+      }
+    },
     components:{
         navbar
     }
-    
+
 }).$mount('#app');
 
 

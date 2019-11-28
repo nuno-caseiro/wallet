@@ -18,12 +18,14 @@
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
+        "vue-socket.io": "^3.0.7",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
         "bootstrap": "^4.3.1",
         "bootstrap-vue": "^2.1.0",
         "jquery": "^3.4.1",
+        "socket.io": "^2.3.0",
         "store.js": "^1.0.4",
         "vodal": "^2.4.0",
         "vue": "^2.6.10",
