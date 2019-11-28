@@ -1,6 +1,7 @@
+
 <template  >
 <div>
-    <table class="table table-striped" >
+    <table v-if="!view" class="table table-striped" >
         <thead>
             <tr>
                 <th>ID</th>
@@ -55,7 +56,6 @@ import axios from 'axios';
 import pagination from '../main/pagination.vue';
 import movementVue from './movement.vue';
 export default {
-    props: ['movements'],
     data() {
         return {
             selectedMovement: null,
@@ -64,7 +64,30 @@ export default {
         }
     },
    methods:{
+        getUsers(){
+           axios.get('api/users/' + url)
+           .then(response=>{
+                console.log(response);
+                this.movements=response.data.data;
+            }).catch(function(err){
+                console.log(err);
+            })
+        },
 
+		linkGen(pageNum) {
+        return pageNum === 1 ? '?' : `?page=${pageNum}`
+	  },
+
+	  	paginate(pageNum){
+        axios.get('/api/users?page=' + pageNum)
+        .then(function(response){
+            movements=response.data.data;
+
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+		   },
 		editMovement(movement){
 			
             this.$emit('edit-movement', movement);
@@ -87,3 +110,12 @@ export default {
 <style  scoped >
 
 </style>
+
+
+
+
+
+
+
+
+

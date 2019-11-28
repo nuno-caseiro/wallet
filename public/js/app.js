@@ -2994,20 +2994,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    //    numberOfPages(movements){
-    // 	   this.numberP=(movements.data.data.length)/5;
-    // 	   return this.numberP;
-    //    },
-    linkGen: function linkGen(pageNum) {
-      return pageNum === 1 ? '?' : "?page=".concat(pageNum);
-    },
-    paginate: function paginate(pageNum) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/users?page=' + pageNum).then(function (response) {
-        movements = response.data.data;
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
     editMovement: function editMovement(movement) {
       this.$emit('edit-movement', movement);
     },
@@ -36383,7 +36369,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.btn-primary[data-v-4f544354]{\n    background-color: rgb(37, 189, 82);\n    border-color: rgb(37, 189, 82);\n}\n", ""]);
+exports.push([module.i, "\n.btn-primary[data-v-4f544354]{\r\n    background-color: rgb(37, 189, 82);\r\n    border-color: rgb(37, 189, 82);\n}\r\n", ""]);
 
 // exports
 
@@ -36402,7 +36388,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.homeText[data-v-3deeded7]{\n    font-family: \"Roboto\", sans-serif;\n    font-size: 45px;\n    color: rgb(90, 90, 90);\n    text-align: center;\n    position: relative;\n    top:100px;\n}\n#numberOfWallets[data-v-3deeded7]{\n    font-family: \"Roboto\", sans-serif;\n    color: rgb(90, 90, 90);\n    font-size: 20px;\n    position: relative;\n    right: 100px;\n    bottom: 75px;\n}\n", ""]);
+exports.push([module.i, "\n.homeText[data-v-3deeded7]{\r\n    font-family: \"Roboto\", sans-serif;\r\n    font-size: 45px;\r\n    color: rgb(90, 90, 90);\r\n    text-align: center;\r\n    position: relative;\r\n    top:100px;\n}\n#numberOfWallets[data-v-3deeded7]{\r\n    font-family: \"Roboto\", sans-serif;\r\n    color: rgb(90, 90, 90);\r\n    font-size: 20px;\r\n    position: relative;\r\n    right: 100px;\r\n    bottom: 75px;\n}\r\n", ""]);
 
 // exports
 
@@ -36421,7 +36407,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#bt[data-v-7d5893d4]{\n    margin-right: 850px ;\n    margin-bottom: -20px;\n}\n\n\n", ""]);
+exports.push([module.i, "\n#bt[data-v-7d5893d4]{\r\n    margin-right: 850px ;\r\n    margin-bottom: -20px;\n}\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -36440,7 +36426,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\np[data-v-2319ba3a] {\n    font-weight: bold;\n    font-size: 50px;\n    text-align: center;\n    color: #f10b0b;\n}\n", ""]);
+exports.push([module.i, "\np[data-v-2319ba3a] {\r\n    font-weight: bold;\r\n    font-size: 50px;\r\n    text-align: center;\r\n    color: #f10b0b;\n}\r\n", ""]);
 
 // exports
 
@@ -70316,134 +70302,124 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    !_vm.view
-      ? _c("table", { staticClass: "table table-striped" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.movements, function(movement) {
-              return _c(
-                "tr",
-                {
-                  key: movement.id,
-                  class: { active: _vm.selectedMovement === movement }
-                },
-                [
-                  _c("td", [_vm._v(_vm._s(movement.id))]),
-                  _vm._v(" "),
-                  movement.type === "e"
-                    ? _c("td", [
-                        _vm._v(_vm._s(movement.type === "e" ? "Expense" : ""))
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  movement.type === "i"
-                    ? _c("td", [
-                        _vm._v(_vm._s(movement.type === "i" ? "Income" : ""))
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("td", [
+    _c("table", { staticClass: "table table-striped" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.movements, function(movement) {
+          return _c(
+            "tr",
+            {
+              key: movement.id,
+              class: { active: _vm.selectedMovement === movement }
+            },
+            [
+              _c("td", [_vm._v(_vm._s(movement.id))]),
+              _vm._v(" "),
+              movement.type === "e"
+                ? _c("td", [
+                    _vm._v(_vm._s(movement.type === "e" ? "Expense" : ""))
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              movement.type === "i"
+                ? _c("td", [
+                    _vm._v(_vm._s(movement.type === "i" ? "Income" : ""))
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("td", [
+                _vm._v(
+                  _vm._s(movement.transfer === 1 ? movement.wallet_email : "")
+                )
+              ]),
+              _vm._v(" "),
+              movement.type_payment === "c" && movement.transfer === 0
+                ? _c("td", [
+                    _vm._v(_vm._s(movement.type_payment === "c" ? "Cash" : ""))
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              movement.type_payment === "mb" && movement.transfer === 0
+                ? _c("td", [
+                    _vm._v(
+                      _vm._s(movement.type_payment === "mb" ? "MB payment" : "")
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              movement.type_payment === "bt" && movement.transfer === 0
+                ? _c("td", [
                     _vm._v(
                       _vm._s(
-                        movement.transfer === 1 ? movement.wallet_email : ""
+                        movement.type_payment === "bt" ? "Bank Transfer" : ""
                       )
                     )
-                  ]),
-                  _vm._v(" "),
-                  movement.type_payment === "c" && movement.transfer === 0
-                    ? _c("td", [
-                        _vm._v(
-                          _vm._s(movement.type_payment === "c" ? "Cash" : "")
-                        )
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  movement.type_payment === "mb" && movement.transfer === 0
-                    ? _c("td", [
-                        _vm._v(
-                          _vm._s(
-                            movement.type_payment === "mb" ? "MB payment" : ""
-                          )
-                        )
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  movement.type_payment === "bt" && movement.transfer === 0
-                    ? _c("td", [
-                        _vm._v(
-                          _vm._s(
-                            movement.type_payment === "bt"
-                              ? "Bank Transfer"
-                              : ""
-                          )
-                        )
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  movement.type_payment === null
-                    ? _c("td", [
-                        _vm._v(_vm._s(movement.type_payment === null ? "" : ""))
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(movement.category_name))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(movement.date))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(movement.start_balance))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(movement.end_balance))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(movement.value))]),
-                  _vm._v(" "),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              movement.type_payment === null
+                ? _c("td", [
+                    _vm._v(_vm._s(movement.type_payment === null ? "" : ""))
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(movement.category_name))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(movement.date))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(movement.start_balance))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(movement.end_balance))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(movement.value))]),
+              _vm._v(" "),
+              _c(
+                "td",
+                [
                   _c(
-                    "td",
+                    "b-button-group",
                     [
                       _c(
-                        "b-button-group",
-                        [
-                          _c(
-                            "b-button",
-                            {
-                              attrs: { variant: "warning" },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.editMovement(movement)
-                                }
-                              }
-                            },
-                            [_vm._v("Edit")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "b-button",
-                            {
-                              attrs: { variant: "info" },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.transferInfo(movement)
-                                }
-                              }
-                            },
-                            [_vm._v("Info")]
-                          )
-                        ],
-                        1
+                        "b-button",
+                        {
+                          attrs: { variant: "warning" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.editMovement(movement)
+                            }
+                          }
+                        },
+                        [_vm._v("Edit")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-button",
+                        {
+                          attrs: { variant: "info" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.transferInfo(movement)
+                            }
+                          }
+                        },
+                        [_vm._v("Info")]
                       )
                     ],
                     1
                   )
-                ]
+                ],
+                1
               )
-            }),
-            0
+            ]
           )
-        ])
-      : _vm._e(),
+        }),
+        0
+      )
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -86734,24 +86710,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var bootstrap_dist_css_bootstrap_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(bootstrap_dist_css_bootstrap_css__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var bootstrap_vue_dist_bootstrap_vue_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! bootstrap-vue/dist/bootstrap-vue.css */ "./node_modules/bootstrap-vue/dist/bootstrap-vue.css");
 /* harmony import */ var bootstrap_vue_dist_bootstrap_vue_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(bootstrap_vue_dist_bootstrap_vue_css__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vue_socket_io__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-socket.io */ "./node_modules/vue-socket.io/dist/vue-socketio.js");
-/* harmony import */ var vue_socket_io__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_socket_io__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vue_socket_io__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! vue-socket.io */ "./node_modules/vue-socket.io/dist/vue-socketio.js");
+/* harmony import */ var vue_socket_io__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(vue_socket_io__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var vue_toasted__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-toasted */ "./node_modules/vue-toasted/dist/vue-toasted.min.js");
-/* harmony import */ var vue_toasted__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_toasted__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _store_store_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../store/store.js */ "./resources/store/store.js");
-/* harmony import */ var _components_main_navbar_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/main/navbar.vue */ "./resources/js/components/main/navbar.vue");
-/* harmony import */ var _components_auth_login_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/auth/login.vue */ "./resources/js/components/auth/login.vue");
-/* harmony import */ var _components_auth_logout_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/auth/logout.vue */ "./resources/js/components/auth/logout.vue");
-/* harmony import */ var _components_main_welcome_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/main/welcome.vue */ "./resources/js/components/main/welcome.vue");
-/* harmony import */ var _components_notFound_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/notFound.vue */ "./resources/js/components/notFound.vue");
-/* harmony import */ var _components_auth_register_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/auth/register.vue */ "./resources/js/components/auth/register.vue");
-/* harmony import */ var _components_auth_editProfile_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/auth/editProfile.vue */ "./resources/js/components/auth/editProfile.vue");
-/* harmony import */ var _components_movement_movement_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/movement/movement.vue */ "./resources/js/components/movement/movement.vue");
-/* harmony import */ var _components_movement_movementAdd_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/movement/movementAdd.vue */ "./resources/js/components/movement/movementAdd.vue");
-/* harmony import */ var _components_movement_movementList_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/movement/movementList.vue */ "./resources/js/components/movement/movementList.vue");
-/* harmony import */ var _components_movement_movementEdit_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/movement/movementEdit.vue */ "./resources/js/components/movement/movementEdit.vue");
-/* harmony import */ var _components_movement_transferInfo_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/movement/transferInfo.vue */ "./resources/js/components/movement/transferInfo.vue");
+/* harmony import */ var vue_toasted__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! vue-toasted */ "./node_modules/vue-toasted/dist/vue-toasted.min.js");
+/* harmony import */ var vue_toasted__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(vue_toasted__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var _store_store_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../store/store.js */ "./resources/store/store.js");
+/* harmony import */ var _components_main_navbar_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/main/navbar.vue */ "./resources/js/components/main/navbar.vue");
+/* harmony import */ var _components_auth_login_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/auth/login.vue */ "./resources/js/components/auth/login.vue");
+/* harmony import */ var _components_auth_logout_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/auth/logout.vue */ "./resources/js/components/auth/logout.vue");
+/* harmony import */ var _components_main_welcome_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/main/welcome.vue */ "./resources/js/components/main/welcome.vue");
+/* harmony import */ var _components_notFound_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/notFound.vue */ "./resources/js/components/notFound.vue");
+/* harmony import */ var _components_auth_register_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/auth/register.vue */ "./resources/js/components/auth/register.vue");
+/* harmony import */ var _components_auth_editProfile_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/auth/editProfile.vue */ "./resources/js/components/auth/editProfile.vue");
+/* harmony import */ var _components_movement_movement_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/movement/movement.vue */ "./resources/js/components/movement/movement.vue");
+/* harmony import */ var _components_movement_movementAdd_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/movement/movementAdd.vue */ "./resources/js/components/movement/movementAdd.vue");
+/* harmony import */ var _components_movement_movementList_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/movement/movementList.vue */ "./resources/js/components/movement/movementList.vue");
+/* harmony import */ var _components_movement_movementEdit_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/movement/movementEdit.vue */ "./resources/js/components/movement/movementEdit.vue");
+/* harmony import */ var _components_movement_transferInfo_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/movement/transferInfo.vue */ "./resources/js/components/movement/transferInfo.vue");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
@@ -86763,11 +86739,11 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_0__["default"]);
 Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]);
-Vue.use(new vue_socket_io__WEBPACK_IMPORTED_MODULE_3___default.a({
+Vue.use(new vue_socket_io__WEBPACK_IMPORTED_MODULE_18___default.a({
   debug: true,
   connection: 'http://127.0.0.1:8080'
 }));
-Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_5___default.a, {
+Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_19___default.a, {
   theme: "bubble",
   position: 'top-right',
   //pode ser top-right, top-center, top-left, bottom-right, bottom-center, bottom-left
@@ -86787,24 +86763,24 @@ Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_5___default.a, {
 
 
 
-var navbar = Vue.component('navbar', _components_main_navbar_vue__WEBPACK_IMPORTED_MODULE_7__["default"]);
-var login = Vue.component('login', _components_auth_login_vue__WEBPACK_IMPORTED_MODULE_8__["default"]);
-var logout = Vue.component('logout', _components_auth_logout_vue__WEBPACK_IMPORTED_MODULE_9__["default"]);
-var welcome = Vue.component('wellcome', _components_main_welcome_vue__WEBPACK_IMPORTED_MODULE_10__["default"]);
-var notFound = Vue.component('notFound', _components_notFound_vue__WEBPACK_IMPORTED_MODULE_11__["default"]);
-var register = Vue.component('register', _components_auth_register_vue__WEBPACK_IMPORTED_MODULE_12__["default"]);
-var editProfile = Vue.component('editProfile', _components_auth_editProfile_vue__WEBPACK_IMPORTED_MODULE_13__["default"]);
-var movement = Vue.component('movement', _components_movement_movement_vue__WEBPACK_IMPORTED_MODULE_14__["default"]);
-var movementAdd = Vue.component('movementAdd', _components_movement_movementAdd_vue__WEBPACK_IMPORTED_MODULE_15__["default"]);
-var movementList = Vue.component('movementList', _components_movement_movementList_vue__WEBPACK_IMPORTED_MODULE_16__["default"]);
-var movementEdit = Vue.component('movementEdit', _components_movement_movementEdit_vue__WEBPACK_IMPORTED_MODULE_17__["default"]);
-var transferInfo = Vue.component('transferInfo', _components_movement_transferInfo_vue__WEBPACK_IMPORTED_MODULE_18__["default"]); // // Para manter o utilizador logado depois de refrescar a pagina
+var navbar = Vue.component('navbar', _components_main_navbar_vue__WEBPACK_IMPORTED_MODULE_6__["default"]);
+var login = Vue.component('login', _components_auth_login_vue__WEBPACK_IMPORTED_MODULE_7__["default"]);
+var logout = Vue.component('logout', _components_auth_logout_vue__WEBPACK_IMPORTED_MODULE_8__["default"]);
+var welcome = Vue.component('wellcome', _components_main_welcome_vue__WEBPACK_IMPORTED_MODULE_9__["default"]);
+var notFound = Vue.component('notFound', _components_notFound_vue__WEBPACK_IMPORTED_MODULE_10__["default"]);
+var register = Vue.component('register', _components_auth_register_vue__WEBPACK_IMPORTED_MODULE_11__["default"]);
+var editProfile = Vue.component('editProfile', _components_auth_editProfile_vue__WEBPACK_IMPORTED_MODULE_12__["default"]);
+var movement = Vue.component('movement', _components_movement_movement_vue__WEBPACK_IMPORTED_MODULE_13__["default"]);
+var movementAdd = Vue.component('movementAdd', _components_movement_movementAdd_vue__WEBPACK_IMPORTED_MODULE_14__["default"]);
+var movementList = Vue.component('movementList', _components_movement_movementList_vue__WEBPACK_IMPORTED_MODULE_15__["default"]);
+var movementEdit = Vue.component('movementEdit', _components_movement_movementEdit_vue__WEBPACK_IMPORTED_MODULE_16__["default"]);
+var transferInfo = Vue.component('transferInfo', _components_movement_transferInfo_vue__WEBPACK_IMPORTED_MODULE_17__["default"]); // // Para manter o utilizador logado depois de refrescar a pagina
 
-_store_store_js__WEBPACK_IMPORTED_MODULE_6__["default"].state.user = _store_store_js__WEBPACK_IMPORTED_MODULE_6__["default"].getters.getAuthUser;
-_store_store_js__WEBPACK_IMPORTED_MODULE_6__["default"].state.token = _store_store_js__WEBPACK_IMPORTED_MODULE_6__["default"].getters.getToken;
-_store_store_js__WEBPACK_IMPORTED_MODULE_6__["default"].state.tokenType = _store_store_js__WEBPACK_IMPORTED_MODULE_6__["default"].getters.getTokenType;
-_store_store_js__WEBPACK_IMPORTED_MODULE_6__["default"].state.getExpiration = _store_store_js__WEBPACK_IMPORTED_MODULE_6__["default"].getters.getExpiration;
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + _store_store_js__WEBPACK_IMPORTED_MODULE_6__["default"].getters.getToken;
+_store_store_js__WEBPACK_IMPORTED_MODULE_5__["default"].state.user = _store_store_js__WEBPACK_IMPORTED_MODULE_5__["default"].getters.getAuthUser;
+_store_store_js__WEBPACK_IMPORTED_MODULE_5__["default"].state.token = _store_store_js__WEBPACK_IMPORTED_MODULE_5__["default"].getters.getToken;
+_store_store_js__WEBPACK_IMPORTED_MODULE_5__["default"].state.tokenType = _store_store_js__WEBPACK_IMPORTED_MODULE_5__["default"].getters.getTokenType;
+_store_store_js__WEBPACK_IMPORTED_MODULE_5__["default"].state.getExpiration = _store_store_js__WEBPACK_IMPORTED_MODULE_5__["default"].getters.getExpiration;
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + _store_store_js__WEBPACK_IMPORTED_MODULE_5__["default"].getters.getToken;
 var routes = [{
   path: "/",
   name: "Home",
@@ -86846,13 +86822,13 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({
 });
 var app = new Vue({
   router: router,
-  store: _store_store_js__WEBPACK_IMPORTED_MODULE_6__["default"],
+  store: _store_store_js__WEBPACK_IMPORTED_MODULE_5__["default"],
   sockets: {
     connect: function connect() {
       console.log("Socket connected with ID: ".concat(this.$socket.id));
 
-      if (_store_store_js__WEBPACK_IMPORTED_MODULE_6__["default"].state.user) {
-        this.$socket.emit('user_enter', _store_store_js__WEBPACK_IMPORTED_MODULE_6__["default"].state.user);
+      if (_store_store_js__WEBPACK_IMPORTED_MODULE_5__["default"].state.user) {
+        this.$socket.emit('user_enter', _store_store_js__WEBPACK_IMPORTED_MODULE_5__["default"].state.user);
       }
     },
     message_from_operator: function message_from_operator(dataFromServer) {
@@ -88133,8 +88109,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/nunocaseiro/DAD/projeto/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/nunocaseiro/DAD/projeto/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\ProjetoDAD\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\ProjetoDAD\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
