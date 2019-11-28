@@ -37,6 +37,7 @@ import TransferInfo from './transferInfo.vue';
             currentMovement: null,
             movements: [],
             editingMovement: false,
+            id:"",
             
         }
     },

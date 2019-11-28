@@ -1,5 +1,16 @@
 <template  >
 <div>
+    <ul class="pagination">
+            <li v-bind:class="[{disabled: !pagination.prev_page_url}]" 
+            class="page-item"><a class="page-link" href="#"
+            @click="getMovements(pagination.prev_page_url)">Previous</a></li>
+            
+            <li class="page-item disabled"><a class="page-link" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
+
+            <li v-bind:class="[{disabled: !pagination.next_page_url}]" 
+            class="page-item"><a class="page-link" href="#"
+            @click="getMovements(pagination.next_page_url)">Next</a></li>
+        </ul>
     <table class="table table-striped" >
         <thead>
             <tr>
@@ -42,29 +53,25 @@
         </tr>
       </tbody>
     </table>
-
-   <div class="overflow-auto">
-    <b-pagination-nav :link-gen="linkGen" :number-of-pages="10" use-router></b-pagination-nav>
-  </div>
 </div>
 </template>
 
 
+
 <script type="text/javascript">
 import axios from 'axios';
-import pagination from '../main/pagination.vue';
-import movementVue from './movement.vue';
 export default {
-    props: ['movements'],
+   // props: ['movements'],
     data() {
         return {
             selectedMovement: null,
-            selectedMovementTransfer:null,
-            view: false,
+            currentMovement:{},
+            id:"",
+            pagination: {},
+            movements: [],
         }
     },
    methods:{
-
 		editMovement(movement){
 			
             this.$emit('edit-movement', movement);
@@ -74,13 +81,36 @@ export default {
             this.$emit('transfer-info', movement);
         },
 
+         getMovements(url) {
+             
+                var id=this.$store.state.user.id
+                let page_url = url || '/api/movements/id/' + id
+               axios.get(page_url)
+                .then(response => {
+                    this.movements = response.data.data
+                    this.makePagination(response.data.meta, response.data.links)
+                })
+        },
+        makePagination(meta, links) {
+            let pagination = {
+                current_page: meta.current_page,
+                last_page: meta.last_page,
+                next_page_url: links.next,
+                prev_page_url: links.prev,
+            }
+            this.pagination = pagination
+        },
    },
 
    computed:{
             isUser(){
                 return this.$store.getters.isUser;
             },
-}
+    },
+
+    mounted() {
+        this.getMovements();
+    }
 
 }
 </script>

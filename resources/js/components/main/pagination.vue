@@ -18,7 +18,7 @@
 
         data: function() {
             return {
-
+                pagination: {},
             }
         },
 

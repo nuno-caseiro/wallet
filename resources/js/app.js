@@ -6,11 +6,11 @@ import VueSocketIO from "vue-socket.io";
 import VueRouter from 'vue-router';
 import Toasted from 'vue-toasted';
 
+
 window.Vue = require('vue');
 
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
-
 Vue.use(new VueSocketIO({
     debug:true,
     connection: 'http://127.0.0.1:8080'
