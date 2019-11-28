@@ -4,12 +4,14 @@
                <h1 align="center" >{{title}}</h1>
                <b-button size="lg" variant="dark" to="movementAdd" id="bt">Add User</b-button>
             </div>
+            <users-list></users-list>
+
 </div>
 
 </template>
 
 <script>
-
+import UsersList from './usersList.vue';
 
     export default {
       data() {
@@ -20,6 +22,9 @@
             messageType: "alert-success",
             
         }
+    },
+    components:{
+        'users-list' : UsersList,
     },
     methods: {
          

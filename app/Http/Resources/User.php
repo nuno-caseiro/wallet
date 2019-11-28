@@ -14,7 +14,7 @@ class User extends JsonResource
      */
     public function toArray($request)
     {
-        /*return [
+        return [
             'id'=> $this->id,
             'name'=> $this->name,
             'email' => $this->email,
@@ -22,7 +22,8 @@ class User extends JsonResource
             'active'=>$this->active,
             'photo' =>$this->photo,
             'nif'=>$this->nif,
-        ];*/
-        return parent::toArray($request);
+            //'balance_status'=>$this->wallet->balance 
+        ];
+        //return parent::toArray($request);
     }
 }

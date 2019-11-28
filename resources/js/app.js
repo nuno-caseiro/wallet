@@ -37,6 +37,10 @@ import MovementAddComponent from "./components/movement/movementAdd.vue";
 import MovementListComponent from "./components/movement/movementList.vue";
 import MovementEditComponent from "./components/movement/movementEdit.vue";
 import TransferInfoComponent from "./components/movement/transferInfo.vue";
+import UsersComponent from "./components/users/users.vue";
+import UsersListComponent from "./components/users/usersList.vue";
+
+
 
 
 
@@ -49,14 +53,12 @@ const notFound = Vue.component('notFound', NotFoundComponent);
 const register = Vue.component('register', RegisterComponent);
 const editProfile= Vue.component('editProfile',EditProfileComponent);
 const movement=Vue.component('movement',MovementComponent);
-
 const movementAdd= Vue.component('movementAdd',MovementAddComponent);
-
 const movementList=Vue.component('movementList',MovementListComponent);
 const movementEdit=Vue.component('movementEdit',MovementEditComponent);
 const transferInfo=Vue.component('transferInfo',TransferInfoComponent);
-
-
+const users=Vue.component('users',UsersComponent);
+const usersList=Vue.component('usersList',UsersListComponent);
 
 
 
@@ -118,7 +120,11 @@ const routes = [
         component:movementList
     },
 
-
+    {
+        path:"/users",
+        name: "users",
+        component: users
+    },
 
 
 ];
