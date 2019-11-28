@@ -210,7 +210,8 @@
                     console.log(userSource);
 
                     let msg=window.prompt('What do you want to say to"'+userSource.name+'"');
-                    this.$socket.emit('message_from_operator_income',msg,this.$store.user,userSource);
+
+                    this.$socket.emit('message_from_operator_income',msg,this.$store.state.user,userSource);
 
                 });
 
