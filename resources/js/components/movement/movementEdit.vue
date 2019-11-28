@@ -4,7 +4,7 @@
                 <h2>Movement Edit</h2>
                 <div class="form-group">
                     <label for="categoryId">Change category</label>
-                    <select class="form-control" id="categoryId" name="categoryId" v-model="movement.category_id">
+                    <select class="form-control" id="categoryId" name="categoryId" v-model="movement.category_name">
                         <option></option>
                         <option v-for="category in this.categories"  v-bind:value="category.id" >{{category.name}}</option>
                     </select>

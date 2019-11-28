@@ -1,7 +1,7 @@
 <template>
     <div class="login-page">
             <div class="jumbotron">
-                    <th><b-button size="lg"  variant="outline-danger">Close</b-button></th>
+                    <th><b-button size="lg"  variant="outline-danger" @click="exitInfo">Close</b-button></th>
                     <th><label>{{movement.user_photo}}</label></th>
                     <table class="table table-striped" >
                     <thead>

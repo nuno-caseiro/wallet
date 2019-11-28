@@ -7,7 +7,7 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <a><b-button size="lg" variant="secondary" to="movement"  v-if="isAuthenticated && !isAdmin">Movements</b-button></a>
-
+            <a><b-button size="lg" variant="secondary" to="users"  v-if="isAuthenticated && isAdmin">Users</b-button></a>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
 

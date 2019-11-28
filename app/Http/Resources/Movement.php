@@ -40,7 +40,7 @@ class Movement extends JsonResource
             'end_balance'=>$this->end_balance,
             'value'=>$this->value,
 //$this->when(! is_null($this->details), $this->details),
-            'category_name'=>$this->category->name ?: null,
+            'category_name'=> $this->category ? $this->category->name : "-",
             // 'user_photo'=>$this->transfer_wallet_id->wallet->user->photo ?: null,
             // 'movements' => $movements,
 

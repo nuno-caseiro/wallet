@@ -1,109 +1,69 @@
 
 <template  >
 <div>
-    <table v-if="!view" class="table table-striped" >
+    <table class="table table-striped" >
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Type</th>
-                <th>Tranfer Email</th>
-                <th>Payment Type</th>
-                <th>Category</th>
-                <th>Date</th>
-                <th>Start Balance</th>
-                <th>End Balance</th>
-                <th>Value</th>
-                <th>Actions</th>
+                <th>Name</th>
+                <th>Photo</th>
+                <th>E-Mail</th>
+                <th>Account Status</th>
+                <th>Balance</th>
 
             </tr>
         </thead>
         <tbody >
-            <tr v-for="movement in movements" :key="movement.id" :class="{active: selectedMovement === movement}">
-            <td>{{ movement.id }}</td>
-            <td v-if="movement.type ==='e'">{{ movement.type ==='e'? 'Expense': '' }}</td>
-            <td v-if="movement.type ==='i'">{{ movement.type ==='i'? 'Income': '' }}</td>
-            <td>{{ movement.transfer===1 ? movement.wallet_email : ''}}</td>
-            <td v-if="movement.type_payment==='c' && movement.transfer===0">{{movement.type_payment==='c'? 'Cash' : ''}}</td>
-            <td v-if="movement.type_payment==='mb'&& movement.transfer===0">{{movement.type_payment==='mb'? 'MB payment' : ''}}</td>
-            <td v-if="movement.type_payment==='bt'&& movement.transfer===0">{{movement.type_payment==='bt'? 'Bank Transfer' : ''}}</td>
-            <td v-if="movement.type_payment===null">{{movement.type_payment===null? '':''}}</td>
-            <td>{{ movement.category_name}}</td>
-            <td>{{ movement.date }}</td>
-            <td>{{ movement.start_balance}}</td>
-            <td>{{ movement.end_balance }}</td>
-            <td>{{ movement.value }}</td>
+            <tr v-for="user in users" :key="user.id" >
+            <td>{{ user.name }}</td>
+            <td><img  v-bind:src="itemImageURL(user.photo)" width="30" height="30" alt=""></td>
+			<td>{{ user.email }}</td>
+            <td>{{ user.active === 1 ? 'Active' : 'Inactive' }}</td>
+            <td v-if="user.balance_status===0">{{ 'Empty' }}</td>
+            <td v-if="user.balance_status>0">{{ 'Has money' }}</td>
 
-			<td>
+            <!-- <td>
                 <b-button-group>
                 <b-button  variant="warning" @click.prevent="editMovement(movement)">Edit</b-button>
                 <b-button  variant="info" @click.prevent="transferInfo(movement)">Info</b-button>
                 </b-button-group>
-            </td> 
+            </td>  -->
 
         </tr>
       </tbody>
     </table>
-
-   <div class="overflow-auto">
-    <b-pagination-nav :link-gen="linkGen" :number-of-pages="10" use-router></b-pagination-nav>
-  </div>
 </div>
 </template>
 
 
 <script type="text/javascript">
 import axios from 'axios';
-import pagination from '../main/pagination.vue';
-import movementVue from './movement.vue';
 export default {
     data() {
         return {
             selectedMovement: null,
-            selectedMovementTransfer:null,
-            view: false,
-        }
+            users:[]
+        }      
     },
    methods:{
         getUsers(){
-           axios.get('api/users/' + url)
+           axios.get('api/users/')
            .then(response=>{
                 console.log(response);
-                this.movements=response.data.data;
+                this.users=response.data.data;
             }).catch(function(err){
                 console.log(err);
-            })
+            });
         },
+        itemImageURL(photo){
+                return "storage/fotos/"+String(photo);
 
-		linkGen(pageNum) {
-        return pageNum === 1 ? '?' : `?page=${pageNum}`
-	  },
-
-	  	paginate(pageNum){
-        axios.get('/api/users?page=' + pageNum)
-        .then(function(response){
-            movements=response.data.data;
-
-        })
-        .catch(function(error){
-            console.log(error);
-        });
-		   },
-		editMovement(movement){
-			
-            this.$emit('edit-movement', movement);
-        },
-        transferInfo(movement){
-			
-            this.$emit('transfer-info', movement);
-        },
-
+             },
    },
 
-   computed:{
-            isUser(){
-                return this.$store.getters.isUser;
-            },
-}
+   mounted(){
+       this.getUsers();
+   }
+    
 
 }
 </script>

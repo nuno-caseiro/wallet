@@ -42,10 +42,6 @@
         </tr>
       </tbody>
     </table>
-
-   <div class="overflow-auto">
-    <b-pagination-nav :link-gen="linkGen" :number-of-pages="10" use-router></b-pagination-nav>
-  </div>
 </div>
 </template>
 
@@ -75,12 +71,6 @@ export default {
         },
 
    },
-
-   computed:{
-            isUser(){
-                return this.$store.getters.isUser;
-            },
-}
 
 }
 </script>
