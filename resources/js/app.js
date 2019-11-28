@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import VueSocketIO from "vue-socket.io";
 import VueRouter from 'vue-router';
+import Toasted from 'vue-toasted';
 
 window.Vue = require('vue');
 
@@ -14,6 +15,13 @@ Vue.use(new VueSocketIO({
     debug:true,
     connection: 'http://127.0.0.1:8080'
 }));
+
+Vue.use(Toasted,{
+    theme: "bubble",
+    position: 'top-right', //pode ser top-right, top-center, top-left, bottom-right, bottom-center, bottom-left
+    duration: 5000,
+    type: 'info',
+})
 
 
 import store from '../store/store.js';
