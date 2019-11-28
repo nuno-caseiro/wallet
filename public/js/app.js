@@ -2701,8 +2701,22 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    saveMovement: function saveMovement() {
+    sendMessageTo: function sendMessageTo(userID) {
       var _this4 = this;
+
+      var userSource = '';
+      axios.get('api/users/' + userID).then(function (response) {
+        console.log(response);
+        userSource = response.data.data;
+        Object.assign(userSource, response.data.data);
+        console.log(userSource);
+        var msg = window.prompt('What do you want to say to"' + userSource.name + '"');
+
+        _this4.$socket.emit('message_from_operator_income', msg, _this4.$store.user, userSource);
+      });
+    },
+    saveMovement: function saveMovement() {
+      var _this5 = this;
 
       var newDate = new Date();
       var dataFormatada = newDate.getFullYear() + '-' + newDate.getMonth() + '-' + newDate.getDate() + ' ' + newDate.getHours() + ':' + newDate.getMinutes() + ':' + newDate.getSeconds();
@@ -2712,15 +2726,18 @@ __webpack_require__.r(__webpack_exports__);
         axios.post('api/movements/', this.movement).then(function (response) {
           console.log(response.data);
         }).then(function (response) {
-          _this4.wallet_dest.id = _this4.movement.wallet_id;
-          _this4.wallet_dest.balance = _this4.movement.end_balance;
-          axios.put('api/wallets/' + _this4.wallet_dest.id, _this4.wallet_dest).then(function (response) {
+          _this5.wallet_dest.id = _this5.movement.wallet_id;
+          _this5.wallet_dest.balance = _this5.movement.end_balance;
+          axios.put('api/wallets/' + _this5.wallet_dest.id, _this5.wallet_dest).then(function (response) {
             console.log(response.data);
-            _this4.successMessage = "Movement saved with success";
-            _this4.showSuccess = true; ///redireciona para a pagina movements
+
+            _this5.sendMessageTo(_this5.movement.wallet_id);
+
+            _this5.successMessage = "Movement saved with success";
+            _this5.showSuccess = true; ///redireciona para a pagina movements
 
             setTimeout(function () {
-              _this4.$router.push("/movement");
+              _this5.$router.push("/movement");
             }, 1000);
           })["catch"](function (error) {
             console.log(error);
@@ -2733,22 +2750,22 @@ __webpack_require__.r(__webpack_exports__);
       if (this.movement.type === 'e' && this.isUser) {
         axios.post('api/movements/', this.movement).then(function (response) {
           console.log(response.data);
-          Object.assign(_this4.movement, response.data);
-          console.log(_this4.movement.id);
-          _this4.wallet_source.balance = _this4.movement.end_balance;
-          return axios.put('api/wallets/' + _this4.wallet_source.id, _this4.wallet_source);
+          Object.assign(_this5.movement, response.data);
+          console.log(_this5.movement.id);
+          _this5.wallet_source.balance = _this5.movement.end_balance;
+          return axios.put('api/wallets/' + _this5.wallet_source.id, _this5.wallet_source);
         }).then(function (response) {
           console.log(response.data);
 
-          if (_this4.movement.transfer === true) {
-            _this4.saveMovimentPair();
+          if (_this5.movement.transfer === true) {
+            _this5.saveMovimentPair();
           }
 
-          _this4.successMessage = "Movement saved with success";
-          _this4.showSuccess = true; ///redireciona para a pagina movements
+          _this5.successMessage = "Movement saved with success";
+          _this5.showSuccess = true; ///redireciona para a pagina movements
 
           setTimeout(function () {
-            _this4.$router.push("/movement");
+            _this5.$router.push("/movement");
           }, 1000);
         })["catch"](function (error) {
           console.log(error);
@@ -2756,7 +2773,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     saveMovimentPair: function saveMovimentPair() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.movement_dest.transfer = true;
       this.movement_dest.id = '';
@@ -2776,12 +2793,12 @@ __webpack_require__.r(__webpack_exports__);
       console.log(this.movement);
       console.log(this.movement_dest);
       axios.post('api/movements/', this.movement_dest).then(function (response) {
-        Object.assign(_this5.movement_dest, response.data);
-        _this5.movement.transfer_movement_id = _this5.movement_dest.id;
-        return axios.put('api/movements/' + _this5.movement.id, _this5.movement);
+        Object.assign(_this6.movement_dest, response.data);
+        _this6.movement.transfer_movement_id = _this6.movement_dest.id;
+        return axios.put('api/movements/' + _this6.movement.id, _this6.movement);
       }).then(function (response) {
         console.log(response.data);
-        return axios.put('api/wallets/' + _this5.wallet_dest.id, _this5.wallet_dest);
+        return axios.put('api/wallets/' + _this6.wallet_dest.id, _this6.wallet_dest);
       }).then(function (response) {
         console.log(response.data);
       })["catch"](function (error) {
@@ -86720,8 +86737,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_socket_io__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-socket.io */ "./node_modules/vue-socket.io/dist/vue-socketio.js");
 /* harmony import */ var vue_socket_io__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_socket_io__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var vue_toasted__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! vue-toasted */ "./node_modules/vue-toasted/dist/vue-toasted.min.js");
-/* harmony import */ var vue_toasted__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(vue_toasted__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var vue_toasted__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-toasted */ "./node_modules/vue-toasted/dist/vue-toasted.min.js");
+/* harmony import */ var vue_toasted__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_toasted__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _store_store_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../store/store.js */ "./resources/store/store.js");
 /* harmony import */ var _components_main_navbar_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/main/navbar.vue */ "./resources/js/components/main/navbar.vue");
 /* harmony import */ var _components_auth_login_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/auth/login.vue */ "./resources/js/components/auth/login.vue");
@@ -86750,7 +86767,7 @@ Vue.use(new vue_socket_io__WEBPACK_IMPORTED_MODULE_3___default.a({
   debug: true,
   connection: 'http://127.0.0.1:8080'
 }));
-Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_19___default.a, {
+Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_5___default.a, {
   theme: "bubble",
   position: 'top-right',
   //pode ser top-right, top-center, top-left, bottom-right, bottom-center, bottom-left
@@ -86837,6 +86854,17 @@ var app = new Vue({
       if (_store_store_js__WEBPACK_IMPORTED_MODULE_6__["default"].state.user) {
         this.$socket.emit('user_enter', _store_store_js__WEBPACK_IMPORTED_MODULE_6__["default"].state.user);
       }
+    },
+    message_from_operator: function message_from_operator(dataFromServer) {
+      console.log('Receiving this message from Server: "' + dataFromServer + '"');
+      var name = dataFromServer[1] === null ? 'Unknown' : dataFromServer[1].name;
+      this.$toasted.show('Message "' + dataFromServer[0] + '"sent from"' + name + '"');
+    },
+    message_unavailable: function message_unavailable(destUser) {
+      this.$toasted.error('User"' + destUser.name + '"is not available');
+    },
+    message_sent: function message_sent(dataFromServer) {
+      this.$toasted.success('Message"' + dataFromServer[0] + '"was sent to"' + dataFromServer[1].name + '"');
     }
   },
   components: {

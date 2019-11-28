@@ -61,6 +61,21 @@ io.on('connection', function (socket) {
         }
 
         });
+
+    socket.on('message_from_operator_income',function (msg,sourceUser, destUser) {
+        console.log(destUser.id);
+        let userInfo=loggedUsers.userInfoByID(destUser.id);
+       console.log("AQUI");
+        let socket_id= userInfo!==undefined?userInfo.socketID:null;
+        if(socket_id===undefined){
+            socket.emit("message_unavailable",destUser);
+        }else{
+            io.sockets.to(socket_id).emit("message_from_operator",msg,sourceUser);
+            socket.emit("message_sent",msg,destUser);
+
+        }
+
+    })
     // Emit message to the same cliente
     //socket.emit('my_active_games_changed');
 

@@ -137,7 +137,18 @@ const app = new Vue({
           if(store.state.user){
               this.$socket.emit('user_enter', store.state.user);
           }
-      }
+      },
+        message_from_operator(dataFromServer){
+        console.log('Receiving this message from Server: "'+dataFromServer+'"');
+        let name=dataFromServer[1]===null? 'Unknown':dataFromServer[1].name;
+        this.$toasted.show('Message "'+dataFromServer[0]+ '"sent from"'+name+'"');
+        },
+        message_unavailable(destUser){
+          this.$toasted.error('User"'+destUser.name+ '"is not available');
+        },
+        message_sent(dataFromServer){
+          this.$toasted.success('Message"'+dataFromServer[0]+'"was sent to"'+dataFromServer[1].name+'"');
+        }
     },
     components:{
         navbar
