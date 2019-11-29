@@ -32,11 +32,11 @@ import WelcomeComponent from './components/main/welcome.vue';
 import NotFoundComponent from './components/notFound.vue';
 import RegisterComponent from './components/auth/register.vue';
 import EditProfileComponent from "./components/auth/editProfile.vue";
-import MovementComponent from "./components/movement/movement.vue";
-import MovementAddComponent from "./components/movement/movementAdd.vue";
-import MovementListComponent from "./components/movement/movementList.vue";
-import MovementEditComponent from "./components/movement/movementEdit.vue";
-import TransferInfoComponent from "./components/movement/transferInfo.vue";
+import VirtualWalletComponent from "./components/virtualWallet/virtualWallet.vue";
+import MovementAddComponent from "./components/virtualWallet/movementAdd.vue";
+import MovementListComponent from "./components/virtualWallet/movementList.vue";
+import MovementEditComponent from "./components/virtualWallet/movementEdit.vue";
+import TransferInfoComponent from "./components/virtualWallet/transferInfo.vue";
 import UsersComponent from "./components/users/users.vue";
 import UsersListComponent from "./components/users/usersList.vue";
 
@@ -52,7 +52,7 @@ const welcome = Vue.component('wellcome', WelcomeComponent);
 const notFound = Vue.component('notFound', NotFoundComponent);
 const register = Vue.component('register', RegisterComponent);
 const editProfile= Vue.component('editProfile',EditProfileComponent);
-const movement=Vue.component('movement',MovementComponent);
+const virtualWallet=Vue.component('virtualWallet',VirtualWalletComponent);
 const movementAdd= Vue.component('movementAdd',MovementAddComponent);
 const movementList=Vue.component('movementList',MovementListComponent);
 const movementEdit=Vue.component('movementEdit',MovementEditComponent);
@@ -103,9 +103,9 @@ const routes = [
     component:editProfile},
 
     {
-        path:"/movement",
-        name: "movement",
-        component: movement
+        path:"/virtualWallet",
+        name: "virtualWallet",
+        component: virtualWallet
     },
 
     {

@@ -6,8 +6,9 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <a><b-button size="lg" variant="secondary" to="movement"  v-if="isAuthenticated && !isAdmin">Movements</b-button></a>
+            <a><b-button size="lg" variant="secondary" to="virtualWallet"  v-if="isAuthenticated && isUser">Virtual Wallet</b-button></a>
             <a><b-button size="lg" variant="secondary" to="users"  v-if="isAuthenticated && isAdmin">Users</b-button></a>
+            <a><b-button size="lg" variant="secondary" to="movementAdd"  v-if="isAuthenticated && isOperator">Add Movements</b-button></a>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
 
@@ -62,10 +63,16 @@
              }
          },
          computed: {
-             isAuthenticated() {
+            isAuthenticated() {
                  return this.$store.getters.isAuthenticated;
-             },
-              isAdmin(){
+            },
+            isUser(){
+                return this.$store.getters.isUser;
+            },
+            isOperator(){
+                return this.$store.getters.isOperator;
+            },
+            isAdmin(){
                 return this.$store.getters.isAdmin;
             },
 

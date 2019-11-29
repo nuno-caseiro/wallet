@@ -6,7 +6,8 @@
                <b-button size="lg" variant="dark" to="movementAdd" id="bt">Add Movement</b-button>
             </div>
 
-            <movement-list :movements="movements" v-on:transfer-info="transferMovement" v-on:edit-movement="editMovement"></movement-list>
+            <!-- <movement-list :movements="movements" v-on:transfer-info="transferMovement" v-on:edit-movement="editMovement"></movement-list> -->
+            <movement-list v-on:transfer-info="transferMovement" v-on:edit-movement="editMovement"></movement-list>
             <movement-edit :movement="currentMovement" v-on:edit-canceled="cancelEdit"  v-on:save-success="saveEdit" v-if="currentMovement" ></movement-edit>
             <transfer-info :movement="currentTransfer" v-on:exit-info="exitInfo" v-if="currentTransfer"></transfer-info>
             
@@ -101,12 +102,6 @@ import TransferInfo from './transferInfo.vue';
 
     mounted() {
         this.getMovements();
-
-        if(!this.isUser){
-            setTimeout(() => {
-                        this.$router.push("/movementAdd")}, 1);  
-        }
-        
     },
     }
 </script>
