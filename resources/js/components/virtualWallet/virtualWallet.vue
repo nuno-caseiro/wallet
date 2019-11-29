@@ -6,6 +6,8 @@
                <b-button size="lg" variant="dark" to="movementAdd" id="bt">Add Movement</b-button>
             </div>
 
+
+            <!-- <movement-list :movements="movements" v-on:transfer-info="transferMovement" v-on:edit-movement="editMovement"></movement-list> -->
             <movement-list v-on:transfer-info="transferMovement" v-on:edit-movement="editMovement"></movement-list>
             <movement-edit :movement="currentMovement" v-on:edit-canceled="cancelEdit"  v-on:save-success="saveEdit" v-if="currentMovement" ></movement-edit>
             <transfer-info :movement="currentTransfer" v-on:exit-info="exitInfo" v-if="currentTransfer"></transfer-info>
@@ -100,6 +102,7 @@ import TransferInfo from './transferInfo.vue';
     },
 
     mounted() {
+<<<<<<< HEAD:resources/js/components/movement/movement.vue
       //  this.getMovements();
 
         if(!this.isUser){
@@ -107,6 +110,9 @@ import TransferInfo from './transferInfo.vue';
                         this.$router.push("/movementAdd")}, 1);
         }
 
+=======
+        this.getMovements();
+>>>>>>> ddf70802942164b022237ad708a5d41041b6d186:resources/js/components/virtualWallet/virtualWallet.vue
     },
     }
 </script>

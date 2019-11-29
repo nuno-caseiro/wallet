@@ -13,12 +13,14 @@
                     <tbody >
                         
                             <tr>Description: {{movement.description}}</tr>
-                            <!-- <tr>-</tr> -->
-                            <tr>Source Description: {{movement.sourceDescription}}</tr>
-                            <!-- <tr>-</tr> -->
+                            
+                            <tr>Source Description: {{movement.source_description}}</tr>
+                            
                             <tr>IBAN: {{movement.iban}}</tr>
-                            <!-- <tr>-</tr> -->
+                            
                             <tr>MB entity code: {{movement.mb_entity_code}}</tr>
+
+                            <tr>MB payment reference: {{movement.mb_payment_reference}}</tr>
                         
                     </tbody>
                     </table>
