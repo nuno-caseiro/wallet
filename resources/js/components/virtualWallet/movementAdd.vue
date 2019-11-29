@@ -86,6 +86,8 @@
 </template>
 
 <script>
+    import * as moment from "moment";
+
     export default {
         data(){
             return{
@@ -202,25 +204,27 @@
 
             },
             sendMessageTo:function(userID){
-                let userSource='';
+                let userDest='';
                 axios.get('api/users/'+userID).then(response=>{
                     console.log(response);
-                    userSource=response.data.data;
-                    Object.assign(userSource, response.data.data);
-                    console.log(userSource);
+                    userDest=response.data.data;
+                    Object.assign(userDest, response.data.data);
+                    console.log(userDest);
 
-                    let msg=window.prompt('What do you want to say to"'+userSource.name+'"');
+                    let msg=window.prompt('What do you want to say to"'+userDest.name+'"');
 
-                    this.$socket.emit('message_from_operator_income',msg,this.$store.state.user,userSource);
+                    this.$socket.emit('message_from_user_income',msg,this.$store.state.user,userDest);
 
                 });
 
 
             },
             saveMovement: function () {
-                let newDate = new Date();
-                let dataFormatada= newDate.getFullYear()+'-'+newDate.getMonth()+'-'+newDate.getDate()+' '+newDate.getHours()+':'+newDate.getMinutes()+':'+newDate.getSeconds();
-                this.movement.date = dataFormatada;
+              //  let newDate= new Date();
+               // let dataFormatada= newDate.getFullYear()+'-'+newDate.getMonth()+'-'+newDate.getDate()+' '+newDate.getHours()+':'+newDate.getMinutes()+':'+newDate.getSeconds();
+              //  this.movement.date = moment(dataFormatada,"YYYY-MM-DD HH:mm:ss");
+
+               // this.movement.date = moment.format("YYYY-MM-DD HH:mm:ss");
 
                 if(this.movement.type==='i' && this.isOperator){
                     axios.post('api/movements/', this.movement).then(response => {
@@ -235,7 +239,7 @@
                             this.showSuccess = true;
                             ///redireciona para a pagina movements
                             setTimeout(() => {
-                                this.$router.push("/movement")}, 1000);
+                                this.$router.push("/virtualWallet")}, 1000);
                         }).catch(error => {
                             console.log(error);
                         });
@@ -261,7 +265,7 @@
                         this.showSuccess = true;
                         ///redireciona para a pagina movements
                         setTimeout(() => {
-                            this.$router.push("/movement")}, 1000);
+                            this.$router.push("/virtualWallet")}, 1000);
                     }).catch(error=>{
                         console.log(error);
                     })
@@ -273,6 +277,8 @@
                     this.movement_dest.transfer=true;
                     this.movement_dest.id = '';
                     this.movement_dest.date = this.movement.date;
+                //console.log(this.movement.date);
+                //onsole.log(this.movement_dest.date);
                     this.movement_dest.type = 'i';
                     this.movement_dest.description = '';
                     this.movement_dest.category_id = null;
@@ -295,7 +301,8 @@
                     console.log(response.data);
                     return axios.put('api/wallets/'+this.wallet_dest.id,this.wallet_dest);
                     }).then(response=>{
-                        console.log(response.data);
+                    this.sendMessageTo(this.movement.transfer_wallet_id);
+                    console.log(response.data);
                 }).catch(error=>{
                     console.log(error);
                 });

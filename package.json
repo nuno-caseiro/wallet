@@ -27,6 +27,7 @@
         "bootstrap-vue": "^2.1.0",
         "jquery": "^3.4.1",
         "jw-vue-pagination": "^1.0.3",
+        "moment": "^2.24.0",
         "socket.io": "^2.3.0",
         "store.js": "^1.0.4",
         "vodal": "^2.4.0",

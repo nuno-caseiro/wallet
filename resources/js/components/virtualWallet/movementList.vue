@@ -1,13 +1,13 @@
 <template  >
 <div>
     <ul class="pagination">
-            <li v-bind:class="[{disabled: !pagination.prev_page_url}]" 
+            <li v-bind:class="[{disabled: !pagination.prev_page_url}]"
             class="page-item"><a class="page-link" href="#"
             @click="getMovements(pagination.prev_page_url)">Previous</a></li>
-            
+
             <li class="page-item disabled"><a class="page-link" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
 
-            <li v-bind:class="[{disabled: !pagination.next_page_url}]" 
+            <li v-bind:class="[{disabled: !pagination.next_page_url}]"
             class="page-item"><a class="page-link" href="#"
             @click="getMovements(pagination.next_page_url)">Next</a></li>
         </ul>
@@ -48,7 +48,7 @@
                 <b-button  variant="warning" @click.prevent="editMovement(movement)">Edit</b-button>
                 <b-button  variant="info" @click.prevent="transferInfo(movement)">Info</b-button>
                 </b-button-group>
-            </td> 
+            </td>
 
         </tr>
       </tbody>
@@ -71,23 +71,37 @@ export default {
             movements: [],
         }
     },
+    sockets:{
+        message_from_user(dataFromServer){
+            console.log("Update list");
+            console.log(dataFromServer);
+            axios.get('api/movements/id/' + dataFromServer[2].id)
+                .then(response=>{
+                    console.log(response);
+                    this.movements=response.data.data;
+                }).catch(function(err){
+                console.log(err);
+            })
+
+        }
+    },
    methods:{
 		editMovement(movement){
-			
+
             this.$emit('edit-movement', movement);
         },
         transferInfo(movement){
-			
+
             this.$emit('transfer-info', movement);
         },
 
          getMovements(url) {
-             
-                var id=this.$store.state.user.id
-                let page_url = url || '/api/movements/id/' + id
+
+                var id=this.$store.state.user.id;
+                let page_url = url || '/api/movements/id/' + id;
                axios.get(page_url)
                 .then(response => {
-                    this.movements = response.data.data
+                    this.movements = response.data.data;
                     this.makePagination(response.data.meta, response.data.links)
                 })
         },
@@ -97,7 +111,7 @@ export default {
                 last_page: meta.last_page,
                 next_page_url: links.next,
                 prev_page_url: links.prev,
-            }
+            };
             this.pagination = pagination
         },
    },
