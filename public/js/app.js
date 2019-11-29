@@ -2468,6 +2468,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2489,11 +2491,19 @@ __webpack_require__.r(__webpack_exports__);
     },
     itemImageURL: function itemImageURL(photo) {
       return "storage/fotos/" + String(photo);
+    },
+    isAuthUser: function isAuthUser(user) {
+      return user.email == this.$store.getters.getAuthUser.email ? true : false;
     }
   },
   mounted: function mounted() {
     this.getUsers();
-  }
+  } //    computed:{
+  //             isAuthenticated() {
+  //                  return this.$store.getters.isAuthenticated;
+  //             },
+  //    }
+
 });
 
 /***/ }),
@@ -2722,7 +2732,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(userSource);
         var msg = window.prompt('What do you want to say to"' + userSource.name + '"');
 
-        _this4.$socket.emit('message_from_operator_income', msg, _this4.$store.user, userSource);
+        _this4.$socket.emit('message_from_operator_income', msg, _this4.$store.state.user, userSource);
       });
     },
     saveMovement: function saveMovement() {
@@ -69851,7 +69861,91 @@ var render = function() {
               user.type === "a" ? _c("a", [_vm._v(_vm._s(" - "))]) : _vm._e(),
               _vm._v(" "),
               user.type === "o" ? _c("a", [_vm._v(_vm._s(" - "))]) : _vm._e()
-            ])
+            ]),
+            _vm._v(" "),
+            user.type === "u"
+              ? _c(
+                  "td",
+                  [
+                    _c(
+                      "b-button-group",
+                      [
+                        _c(
+                          "b-button",
+                          {
+                            attrs: { variant: "danger" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                              }
+                            }
+                          },
+                          [_vm._v("Block  ")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "b-button",
+                          {
+                            attrs: { variant: "success" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                              }
+                            }
+                          },
+                          [_vm._v("Unblock")]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            !_vm.isAuthUser(user) && user.type === "a"
+              ? _c(
+                  "td",
+                  [
+                    _c(
+                      "b-button",
+                      {
+                        attrs: { variant: "danger" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                          }
+                        }
+                      },
+                      [_vm._v("Delete  ")]
+                    )
+                  ],
+                  1
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            user.type === "o"
+              ? _c(
+                  "td",
+                  [
+                    _c(
+                      "b-button",
+                      {
+                        attrs: { variant: "danger" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                          }
+                        }
+                      },
+                      [_vm._v("Delete  ")]
+                    )
+                  ],
+                  1
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.isAuthUser(user) ? _c("td", [_vm._v("IS YOU")]) : _vm._e()
           ])
         }),
         0
@@ -69876,7 +69970,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Account Status")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Balance")])
+        _c("th", [_vm._v("Balance")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Admin Actions")])
       ])
     ])
   }

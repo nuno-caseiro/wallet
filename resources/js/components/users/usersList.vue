@@ -10,6 +10,7 @@
                 <th>E-Mail</th>
                 <th>Account Status</th>
                 <th>Balance</th>
+                <th>Admin Actions</th>
             </tr>
         </thead>
         <tbody >
@@ -35,15 +36,16 @@
             
            
 
-
-
-
-            <!-- <td>
+            <td v-if="user.type==='u'">
                 <b-button-group>
-                <b-button  variant="warning" @click.prevent="editMovement(movement)">Edit</b-button>
-                <b-button  variant="info" @click.prevent="transferInfo(movement)">Info</b-button>
+                <b-button  variant="danger" @click.prevent="">Block  </b-button>
+                <b-button  variant="success" @click.prevent="">Unblock</b-button>
                 </b-button-group>
-            </td>  -->
+            </td> 
+
+            <td v-if="!isAuthUser(user) && user.type==='a'   "><b-button  variant="danger" @click.prevent="">Delete  </b-button></td>
+            <td v-if="user.type==='o'"> <b-button  variant="danger" @click.prevent="">Delete  </b-button></td>
+            <td v-if="isAuthUser(user)">IS YOU</td>
 
         </tr>
       </tbody>
@@ -75,13 +77,26 @@ export default {
                 return "storage/fotos/"+String(photo);
 
              },
+
+        isAuthUser(user) {
+            return user.email == this.$store.getters.getAuthUser.email ? true : false
+        },
+
+
+             
    },
 
 
    mounted(){
        this.getUsers();
 
-   }
+   },
+
+//    computed:{
+//             isAuthenticated() {
+//                  return this.$store.getters.isAuthenticated;
+//             },
+//    }
     
 
 }

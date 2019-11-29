@@ -19,6 +19,7 @@ class UserControllerApi extends Controller
             return UserResource::collection(User::paginate(5));
         }else{
             return UserResource::collection(User::all());
+            // return UserResource::collection(User::paginate(5));
         }
 
 
