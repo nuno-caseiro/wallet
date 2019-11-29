@@ -6,9 +6,11 @@
                <b-button size="lg" variant="dark" to="movementAdd" id="bt">Add Movement</b-button>
             </div>
 
+    {{this.wallet.balance}}
+
 
             <!-- <movement-list :movements="movements" v-on:transfer-info="transferMovement" v-on:edit-movement="editMovement"></movement-list> -->
-            <movement-list v-on:transfer-info="transferMovement" v-on:edit-movement="editMovement"></movement-list>
+            <movement-list v-on:refresh-wallet="getWallet" v-on:transfer-info="transferMovement" v-on:edit-movement="editMovement"></movement-list>
             <movement-edit :movement="currentMovement" v-on:edit-canceled="cancelEdit"  v-on:save-success="saveEdit" v-if="currentMovement" ></movement-edit>
             <transfer-info :movement="currentTransfer" v-on:exit-info="exitInfo" v-if="currentTransfer"></transfer-info>
 
@@ -40,20 +42,22 @@ import TransferInfo from './transferInfo.vue';
             //movements: [],
             editingMovement: false,
             id:"",
+            wallet:''
 
         }
     },
     methods: {
-        /* getMovements(){
+         getWallet(){
            let url = this.$store.state.user.id;
-           axios.get('api/movements/id/' + url)
+           axios.get('api/wallets/' + url)
            .then(response=>{
                 console.log(response);
-                this.movements=response.data.data;
+                this.wallet=response.data.data;
+                Object.assign(this.wallet,response.data.data);
             }).catch(function(err){
                 console.log(err);
             })
-        },*/
+        },
 
         editMovement(movement){
             this.currentMovement = movement;
@@ -103,7 +107,7 @@ import TransferInfo from './transferInfo.vue';
 
     mounted() {
 
-      //  this.getMovements();
+       this.getWallet();
 
         if(!this.isUser){
             setTimeout(() => {

@@ -79,6 +79,7 @@ export default {
                 .then(response=>{
                     console.log(response);
                     this.movements=response.data.data;
+                    this.$emit('refresh-wallet');
                 }).catch(function(err){
                 console.log(err);
             })
