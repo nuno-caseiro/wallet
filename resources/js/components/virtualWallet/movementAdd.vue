@@ -239,7 +239,7 @@
                             this.showSuccess = true;
                             ///redireciona para a pagina movements
                             setTimeout(() => {
-                                this.$router.push("/movement")}, 1000);
+                                this.$router.push("/virtualWallet")}, 1000);
                         }).catch(error => {
                             console.log(error);
                         });
@@ -265,7 +265,7 @@
                         this.showSuccess = true;
                         ///redireciona para a pagina movements
                         setTimeout(() => {
-                            this.$router.push("/movement")}, 1000);
+                            this.$router.push("/virtualWallet")}, 1000);
                     }).catch(error=>{
                         console.log(error);
                     })
