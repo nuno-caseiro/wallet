@@ -62,7 +62,7 @@ io.on('connection', function (socket) {
 
         });
 
-    socket.on('message_from_operator_income',function (msg,sourceUser, destUser) {
+    socket.on('message_from_user_income',function (msg,sourceUser, destUser) {
         console.log(destUser.id);
         let userInfo=loggedUsers.userInfoByID(destUser.id);
        console.log("AQUI");
@@ -70,7 +70,7 @@ io.on('connection', function (socket) {
         if(socket_id===undefined){
             socket.emit("message_unavailable",destUser);
         }else{
-            io.sockets.to(socket_id).emit("message_from_operator",msg,sourceUser);
+            io.sockets.to(socket_id).emit("message_from_user",msg,sourceUser,destUser);
             socket.emit("message_sent",msg,destUser);
 
         }

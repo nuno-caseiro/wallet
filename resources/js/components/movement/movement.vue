@@ -1,15 +1,15 @@
 <template>
 <div>
-        
+
             <div class="jumbotron">
                <h1 align="center" >{{title}}</h1>
                <b-button size="lg" variant="dark" to="movementAdd" id="bt">Add Movement</b-button>
             </div>
 
-            <movement-list :movements="movements" v-on:transfer-info="transferMovement" v-on:edit-movement="editMovement"></movement-list>
+            <movement-list v-on:transfer-info="transferMovement" v-on:edit-movement="editMovement"></movement-list>
             <movement-edit :movement="currentMovement" v-on:edit-canceled="cancelEdit"  v-on:save-success="saveEdit" v-if="currentMovement" ></movement-edit>
             <transfer-info :movement="currentTransfer" v-on:exit-info="exitInfo" v-if="currentTransfer"></transfer-info>
-            
+
 
 
 
@@ -35,14 +35,14 @@ import TransferInfo from './transferInfo.vue';
             messageType: "alert-success",
             currentTransfer: null,
             currentMovement: null,
-            movements: [],
+            //movements: [],
             editingMovement: false,
             id:"",
-            
+
         }
     },
     methods: {
-         getMovements(){
+        /* getMovements(){
            let url = this.$store.state.user.id;
            axios.get('api/movements/id/' + url)
            .then(response=>{
@@ -51,7 +51,7 @@ import TransferInfo from './transferInfo.vue';
             }).catch(function(err){
                 console.log(err);
             })
-        },
+        },*/
 
         editMovement(movement){
             this.currentMovement = movement;
@@ -67,7 +67,7 @@ import TransferInfo from './transferInfo.vue';
         getAutenticatedUser(){
             return this.$store.getters.getAuthUser
         },
-        
+
         cancelEdit(){
             this.currentMovement = false;
             this.showSuccess=false;
@@ -78,19 +78,19 @@ import TransferInfo from './transferInfo.vue';
             this.showSuccess=true;
             this.successMessage='Movement Edited with Success';
         },
-        
+
         exitInfo(){
             this.currentTransfer = false;
             this.showSuccess=false;
         },
-        
+
 
     },
 
     computed: {
           isUser(){
                 return this.$store.getters.isUser;
-            },  
+            },
     },
 
     components:{
@@ -100,13 +100,13 @@ import TransferInfo from './transferInfo.vue';
     },
 
     mounted() {
-        this.getMovements();
+      //  this.getMovements();
 
         if(!this.isUser){
             setTimeout(() => {
-                        this.$router.push("/movementAdd")}, 1);  
+                        this.$router.push("/movementAdd")}, 1);
         }
-        
+
     },
     }
 </script>
