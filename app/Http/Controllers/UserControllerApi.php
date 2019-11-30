@@ -85,5 +85,19 @@ class UserControllerApi extends Controller
 
     }
 
+    public function unactivate(Request $request, $id){
+        $user= User::findOrFail($id);
+        $user->active = 0;
+        $user->save();
+        return (new UserResource($user))->response()->setStatusCode(200);
+    }
+
+    public function activate(Request $request, $id){
+        $user= User::findOrFail($id);
+        $user->active = 1;
+        $user->save();
+        return (new UserResource($user))->response()->setStatusCode(200);
+    }
+
 
 }

@@ -35,6 +35,12 @@ Route::middleware('auth:api')->group(function () {
     //TODO apenas o proprio user
     Route::put('users/{id}', 'UserControllerAPI@update');
 
+    //unactivate User
+    Route::patch('user/unactivate/{id}', 'UserControllerAPI@unactivate');
+    //activate User
+    Route::patch('user/activate/{id}', 'UserControllerAPI@activate');
+
+
     Route::delete('wallets/{id}', 'WalletControllerAPI@delete');
 
     Route::get('wallets/{id}', 'WalletControllerAPI@show');

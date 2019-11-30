@@ -38,8 +38,8 @@
 
             <td v-if="user.type==='u'">
                 <b-button-group>
-                <b-button  variant="danger" @click.prevent="">Block  </b-button>
-                <b-button  variant="success" @click.prevent="">Unblock</b-button>
+                <b-button  variant="danger" @click.prevent="unactivateUser(user)">Unactivate  </b-button>
+                <b-button  variant="success" @click.prevent="activateUser(user)">Activate</b-button>
                 </b-button-group>
             </td> 
 
@@ -80,6 +80,22 @@ export default {
 
         isAuthUser(user) {
             return user.email == this.$store.getters.getAuthUser.email ? true : false
+        },
+
+        unactivateUser(user) {
+            axios.patch('api/user/unactivate/' + user.id )
+            .then(response => {
+                console.log(response);
+                this.getUsers()
+            })
+        },
+
+        activateUser(user) {
+            axios.patch('api/user/activate/' + user.id )
+            .then(response => {
+                console.log(response);
+                this.getUsers()
+            })
         },
 
 

@@ -22,7 +22,7 @@ class User extends JsonResource
             'active'=>$this->active,
             'photo' =>$this->photo,
             'nif'=>$this->nif,
-            'balance_status'=>$this->wallet ? $this->wallet->balance : " - "
+            'balance_status'=>$this->wallet ? $this->wallet->balance : " - ",
         ];
         //return parent::toArray($request);
     }

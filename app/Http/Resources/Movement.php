@@ -14,9 +14,6 @@ class Movement extends JsonResource
      */
     public function toArray($request)
     {
-        // $movements = select('*')->
-        // order_by('date','desc')->
-        // get();
         //TODO retficar julgo que alguns estao mal
         return ['id'=>$this->id,
             //acho que é $this->wallet->id
@@ -30,11 +27,11 @@ class Movement extends JsonResource
             'transfer_wallet_id'=>$this->transfer_wallet_id,
             'type_payment'=>$this->type_payment,
             'category_id'=>$this->category_id,
-            'iban'=>$this->iban ?: ' - ',
-            'mb_entity_code'=>$this->mb_entity_code ?: ' - ',
-            'mb_payment_reference'=>$this->mb_payment_reference ?: ' - ',
-            'description'=>$this->description ?: ' - ',
-            'source_description'=>$this->source_description ?:' - ',
+            'iban'=>$this->iban,
+            'mb_entity_code'=>$this->mb_entity_code,
+            'mb_payment_reference'=>$this->mb_payment_reference,
+            'description'=>$this->description,
+            'source_description'=>$this->source_description,
             'date'=>$this->date,
             'start_balance'=>$this->start_balance,
             'end_balance'=>$this->end_balance,

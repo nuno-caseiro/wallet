@@ -2494,6 +2494,24 @@ __webpack_require__.r(__webpack_exports__);
     },
     isAuthUser: function isAuthUser(user) {
       return user.email == this.$store.getters.getAuthUser.email ? true : false;
+    },
+    unactivateUser: function unactivateUser(user) {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.patch('api/user/unactivate/' + user.id).then(function (response) {
+        console.log(response);
+
+        _this2.getUsers();
+      });
+    },
+    activateUser: function activateUser(user) {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.patch('api/user/activate/' + user.id).then(function (response) {
+        console.log(response);
+
+        _this3.getUsers();
+      });
     }
   },
   mounted: function mounted() {
@@ -36544,7 +36562,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.btn-primary[data-v-4f544354]{\n    background-color: rgb(37, 189, 82);\n    border-color: rgb(37, 189, 82);\n}\n", ""]);
+exports.push([module.i, "\n.btn-primary[data-v-4f544354]{\r\n    background-color: rgb(37, 189, 82);\r\n    border-color: rgb(37, 189, 82);\n}\r\n", ""]);
 
 // exports
 
@@ -36563,7 +36581,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.homeText[data-v-3deeded7]{\n    font-family: \"Roboto\", sans-serif;\n    font-size: 45px;\n    color: rgb(90, 90, 90);\n    text-align: center;\n    position: relative;\n    top:100px;\n}\n#numberOfWallets[data-v-3deeded7]{\n    font-family: \"Roboto\", sans-serif;\n    color: rgb(90, 90, 90);\n    font-size: 20px;\n    position: relative;\n    right: 100px;\n    bottom: 75px;\n}\n", ""]);
+exports.push([module.i, "\n.homeText[data-v-3deeded7]{\r\n    font-family: \"Roboto\", sans-serif;\r\n    font-size: 45px;\r\n    color: rgb(90, 90, 90);\r\n    text-align: center;\r\n    position: relative;\r\n    top:100px;\n}\n#numberOfWallets[data-v-3deeded7]{\r\n    font-family: \"Roboto\", sans-serif;\r\n    color: rgb(90, 90, 90);\r\n    font-size: 20px;\r\n    position: relative;\r\n    right: 100px;\r\n    bottom: 75px;\n}\r\n", ""]);
 
 // exports
 
@@ -36582,7 +36600,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\np[data-v-2319ba3a] {\n    font-weight: bold;\n    font-size: 50px;\n    text-align: center;\n    color: #f10b0b;\n}\n", ""]);
+exports.push([module.i, "\np[data-v-2319ba3a] {\r\n    font-weight: bold;\r\n    font-size: 50px;\r\n    text-align: center;\r\n    color: #f10b0b;\n}\r\n", ""]);
 
 // exports
 
@@ -36601,7 +36619,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#bt[data-v-063ef5c6]{\n    margin-right: 850px ;\n    margin-bottom: -20px;\n}\n\n\n", ""]);
+exports.push([module.i, "\n#bt[data-v-063ef5c6]{\r\n    margin-right: 850px ;\r\n    margin-bottom: -20px;\n}\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -36620,7 +36638,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#bt[data-v-24701f7e]{\n    margin-right: 850px ;\n    margin-bottom: -20px;\n}\n\n\n", ""]);
+exports.push([module.i, "\n#bt[data-v-24701f7e]{\r\n    margin-right: 850px ;\r\n    margin-bottom: -20px;\n}\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -87518,10 +87536,11 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
+                                return _vm.unactivateUser(user)
                               }
                             }
                           },
-                          [_vm._v("Block  ")]
+                          [_vm._v("Unactivate  ")]
                         ),
                         _vm._v(" "),
                         _c(
@@ -87531,10 +87550,11 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
+                                return _vm.activateUser(user)
                               }
                             }
                           },
-                          [_vm._v("Unblock")]
+                          [_vm._v("Activate")]
                         )
                       ],
                       1
@@ -88611,7 +88631,11 @@ var render = function() {
         ],
         1
       ),
-      _vm._v("\n\n    " + _vm._s(this.wallet.balance) + "\n\n\n            "),
+      _vm._v(
+        "\r\n\r\n    " +
+          _vm._s(this.wallet.balance) +
+          "\r\n\r\n\r\n            "
+      ),
       _vm._v(" "),
       _c("movement-list", {
         on: {
@@ -106287,8 +106311,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/nunocaseiro/DAD/projeto/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/nunocaseiro/DAD/projeto/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\ProjetoDAD\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\ProjetoDAD\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
