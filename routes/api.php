@@ -69,6 +69,7 @@ Route::middleware('auth:api')->group(function () {
 
 });
 
+Route::get('movements/1/filter','MovementControllerAPI@filter'); //TODO para mudar de local e de rota
 
 Route::post('login', 'LoginControllerAPI@login')->name('login');
 

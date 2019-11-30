@@ -32,6 +32,40 @@ class MovementControllerAPI extends Controller
         return (MovementResource::collection(Movement::where('wallet_id',$wallet_id)->orderBy('date', 'desc')->paginate(5)))->response()->setStatusCode(200);
     }
 
+    public function filter(Request $request){
+            $query=null;
+
+        $query= MovementResource::collection(Movement::where('wallet_id', '>',0)->orderBy('date','desc')->get());
+
+       if($request->has('wallet_id')){
+            $query=$query->where('wallet_id','=',$request->wallet_id); //todo paginate
+        }
+
+        if($request->has('type')){
+            $query=  $query->where('type','=', $request->type);
+        }
+
+        if($request->has('date1')){
+            $query=  $query->where('date','>', Carbon::parse($request->date1));
+        }
+
+        if($request->has('date2')){
+            $query=  $query->where('date','<=', Carbon::parse($request->date2));
+        }
+
+        if($request->has('category_id')){
+            $query=  $query->where('category_id','=', $request->category_id);
+        }
+
+        if($request-> has('type_payment')){
+            $query=  $query->where('type_payment','=', $request->type_payment);
+
+        }
+        //falta dos transfer-email
+        return   $query->paginate(5);
+
+    }
+
 
 
     public function store(Request $request){
