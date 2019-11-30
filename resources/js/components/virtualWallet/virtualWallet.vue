@@ -8,7 +8,6 @@
 
     {{this.wallet.balance}}
 
-
             <!-- <movement-list :movements="movements" v-on:transfer-info="transferMovement" v-on:edit-movement="editMovement"></movement-list> -->
             <movement-list v-on:refresh-wallet="getWallet" v-on:transfer-info="transferMovement" v-on:edit-movement="editMovement"></movement-list>
             <movement-edit :movement="currentMovement" v-on:edit-canceled="cancelEdit"  v-on:save-success="saveEdit" v-if="currentMovement" ></movement-edit>
@@ -29,6 +28,7 @@
 import MovementList from './movementList.vue';
 import MovementEdit from './movementEdit.vue';
 import TransferInfo from './transferInfo.vue';
+import MovementFilter from './movementsFilter.vue';
 
     export default {
       data() {

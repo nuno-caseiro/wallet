@@ -40,7 +40,7 @@ import MovementEditComponent from "./components/virtualWallet/movementEdit.vue";
 import TransferInfoComponent from "./components/virtualWallet/transferInfo.vue";
 import UsersComponent from "./components/users/users.vue";
 import UsersListComponent from "./components/users/usersList.vue";
-
+import MovementFilterComponent from "./components/virtualWallet/movementsFilter"
 
 
 
@@ -60,6 +60,8 @@ const movementEdit=Vue.component('movementEdit',MovementEditComponent);
 const transferInfo=Vue.component('transferInfo',TransferInfoComponent);
 const users=Vue.component('users',UsersComponent);
 const usersList=Vue.component('usersList',UsersListComponent);
+const movementFilter= Vue.component('movementsFilter',MovementFilterComponent);
+
 
 
 
@@ -126,6 +128,11 @@ const routes = [
         name: "users",
         component: users
     },
+    {
+        path:"/filter",
+        name: "movementFilter",
+        component: movementFilter
+    }
 
 
 ];

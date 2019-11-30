@@ -2972,6 +2972,7 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _movementsFilter_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./movementsFilter.vue */ "./resources/js/components/virtualWallet/movementsFilter.vue");
 //
 //
 //
@@ -3032,6 +3033,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // props: ['movements'],
@@ -3095,6 +3103,47 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getMovements();
+  },
+  components: {
+    'filter-view': _movementsFilter_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/virtualWallet/movementsFilter.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/virtualWallet/movementsFilter.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      id: ''
+    };
+  },
+  methods: {
+    applyFilter: function applyFilter() {
+      this.$emit('apply-Filter');
+    }
   }
 });
 
@@ -3166,6 +3215,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _movementList_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./movementList.vue */ "./resources/js/components/virtualWallet/movementList.vue");
 /* harmony import */ var _movementEdit_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./movementEdit.vue */ "./resources/js/components/virtualWallet/movementEdit.vue");
 /* harmony import */ var _transferInfo_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./transferInfo.vue */ "./resources/js/components/virtualWallet/transferInfo.vue");
+/* harmony import */ var _movementsFilter_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./movementsFilter.vue */ "./resources/js/components/virtualWallet/movementsFilter.vue");
 //
 //
 //
@@ -3192,7 +3242,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
+
 
 
 
@@ -36562,7 +36612,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.btn-primary[data-v-4f544354]{\r\n    background-color: rgb(37, 189, 82);\r\n    border-color: rgb(37, 189, 82);\n}\r\n", ""]);
+exports.push([module.i, "\n.btn-primary[data-v-4f544354]{\n    background-color: rgb(37, 189, 82);\n    border-color: rgb(37, 189, 82);\n}\n", ""]);
 
 // exports
 
@@ -36581,7 +36631,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.homeText[data-v-3deeded7]{\r\n    font-family: \"Roboto\", sans-serif;\r\n    font-size: 45px;\r\n    color: rgb(90, 90, 90);\r\n    text-align: center;\r\n    position: relative;\r\n    top:100px;\n}\n#numberOfWallets[data-v-3deeded7]{\r\n    font-family: \"Roboto\", sans-serif;\r\n    color: rgb(90, 90, 90);\r\n    font-size: 20px;\r\n    position: relative;\r\n    right: 100px;\r\n    bottom: 75px;\n}\r\n", ""]);
+exports.push([module.i, "\n.homeText[data-v-3deeded7]{\n    font-family: \"Roboto\", sans-serif;\n    font-size: 45px;\n    color: rgb(90, 90, 90);\n    text-align: center;\n    position: relative;\n    top:100px;\n}\n#numberOfWallets[data-v-3deeded7]{\n    font-family: \"Roboto\", sans-serif;\n    color: rgb(90, 90, 90);\n    font-size: 20px;\n    position: relative;\n    right: 100px;\n    bottom: 75px;\n}\n", ""]);
 
 // exports
 
@@ -36600,7 +36650,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\np[data-v-2319ba3a] {\r\n    font-weight: bold;\r\n    font-size: 50px;\r\n    text-align: center;\r\n    color: #f10b0b;\n}\r\n", ""]);
+exports.push([module.i, "\np[data-v-2319ba3a] {\n    font-weight: bold;\n    font-size: 50px;\n    text-align: center;\n    color: #f10b0b;\n}\n", ""]);
 
 // exports
 
@@ -36619,7 +36669,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#bt[data-v-063ef5c6]{\r\n    margin-right: 850px ;\r\n    margin-bottom: -20px;\n}\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\n#bt[data-v-063ef5c6]{\n    margin-right: 850px ;\n    margin-bottom: -20px;\n}\n\n\n", ""]);
 
 // exports
 
@@ -36638,7 +36688,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#bt[data-v-24701f7e]{\r\n    margin-right: 850px ;\r\n    margin-bottom: -20px;\n}\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\n#bt[data-v-24701f7e]{\n    margin-right: 850px ;\n    margin-bottom: -20px;\n}\n\n\n", ""]);
 
 // exports
 
@@ -88298,182 +88348,190 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("ul", { staticClass: "pagination" }, [
-      _c(
-        "li",
-        {
-          staticClass: "page-item",
-          class: [{ disabled: !_vm.pagination.prev_page_url }]
-        },
-        [
-          _c(
-            "a",
-            {
-              staticClass: "page-link",
-              attrs: { href: "#" },
-              on: {
-                click: function($event) {
-                  return _vm.getMovements(_vm.pagination.prev_page_url)
+    _c("div", [_c("filter-view")], 1),
+    _vm._v(" "),
+    _c("div", [
+      _c("ul", { staticClass: "pagination" }, [
+        _c(
+          "li",
+          {
+            staticClass: "page-item",
+            class: [{ disabled: !_vm.pagination.prev_page_url }]
+          },
+          [
+            _c(
+              "a",
+              {
+                staticClass: "page-link",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.getMovements(_vm.pagination.prev_page_url)
+                  }
                 }
-              }
-            },
-            [_vm._v("Previous")]
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("li", { staticClass: "page-item disabled" }, [
-        _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-          _vm._v(
-            "Page " +
-              _vm._s(_vm.pagination.current_page) +
-              " of " +
-              _vm._s(_vm.pagination.last_page)
-          )
-        ])
+              },
+              [_vm._v("Previous")]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("li", { staticClass: "page-item disabled" }, [
+          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
+            _vm._v(
+              "Page " +
+                _vm._s(_vm.pagination.current_page) +
+                " of " +
+                _vm._s(_vm.pagination.last_page)
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "li",
+          {
+            staticClass: "page-item",
+            class: [{ disabled: !_vm.pagination.next_page_url }]
+          },
+          [
+            _c(
+              "a",
+              {
+                staticClass: "page-link",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.getMovements(_vm.pagination.next_page_url)
+                  }
+                }
+              },
+              [_vm._v("Next")]
+            )
+          ]
+        )
       ]),
       _vm._v(" "),
-      _c(
-        "li",
-        {
-          staticClass: "page-item",
-          class: [{ disabled: !_vm.pagination.next_page_url }]
-        },
-        [
-          _c(
-            "a",
-            {
-              staticClass: "page-link",
-              attrs: { href: "#" },
-              on: {
-                click: function($event) {
-                  return _vm.getMovements(_vm.pagination.next_page_url)
-                }
-              }
-            },
-            [_vm._v("Next")]
-          )
-        ]
-      )
-    ]),
-    _vm._v(" "),
-    _c("table", { staticClass: "table table-striped" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.movements, function(movement) {
-          return _c(
-            "tr",
-            {
-              key: movement.id,
-              class: { active: _vm.selectedMovement === movement }
-            },
-            [
-              _c("td", [_vm._v(_vm._s(movement.id))]),
-              _vm._v(" "),
-              movement.type === "e"
-                ? _c("td", [
-                    _vm._v(_vm._s(movement.type === "e" ? "Expense" : ""))
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              movement.type === "i"
-                ? _c("td", [
-                    _vm._v(_vm._s(movement.type === "i" ? "Income" : ""))
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  _vm._s(movement.transfer === 1 ? movement.wallet_email : "")
-                )
-              ]),
-              _vm._v(" "),
-              movement.type_payment === "c" && movement.transfer === 0
-                ? _c("td", [
-                    _vm._v(_vm._s(movement.type_payment === "c" ? "Cash" : ""))
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              movement.type_payment === "mb" && movement.transfer === 0
-                ? _c("td", [
-                    _vm._v(
-                      _vm._s(movement.type_payment === "mb" ? "MB payment" : "")
-                    )
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              movement.type_payment === "bt" && movement.transfer === 0
-                ? _c("td", [
-                    _vm._v(
-                      _vm._s(
-                        movement.type_payment === "bt" ? "Bank Transfer" : ""
-                      )
-                    )
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              movement.type_payment === null
-                ? _c("td", [
-                    _vm._v(_vm._s(movement.type_payment === null ? "" : ""))
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(movement.category_name))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(movement.date))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(movement.start_balance))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(movement.end_balance))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(movement.value))]),
-              _vm._v(" "),
-              _c(
-                "td",
-                [
-                  _c(
-                    "b-button-group",
-                    [
-                      _c(
-                        "b-button",
-                        {
-                          attrs: { variant: "warning" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.editMovement(movement)
-                            }
-                          }
-                        },
-                        [_vm._v("Edit")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "b-button",
-                        {
-                          attrs: { variant: "info" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.transferInfo(movement)
-                            }
-                          }
-                        },
-                        [_vm._v("Info")]
-                      )
-                    ],
-                    1
+      _c("table", { staticClass: "table table-striped" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.movements, function(movement) {
+            return _c(
+              "tr",
+              {
+                key: movement.id,
+                class: { active: _vm.selectedMovement === movement }
+              },
+              [
+                _c("td", [_vm._v(_vm._s(movement.id))]),
+                _vm._v(" "),
+                movement.type === "e"
+                  ? _c("td", [
+                      _vm._v(_vm._s(movement.type === "e" ? "Expense" : ""))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                movement.type === "i"
+                  ? _c("td", [
+                      _vm._v(_vm._s(movement.type === "i" ? "Income" : ""))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("td", [
+                  _vm._v(
+                    _vm._s(movement.transfer === 1 ? movement.wallet_email : "")
                   )
-                ],
-                1
-              )
-            ]
-          )
-        }),
-        0
-      )
+                ]),
+                _vm._v(" "),
+                movement.type_payment === "c" && movement.transfer === 0
+                  ? _c("td", [
+                      _vm._v(
+                        _vm._s(movement.type_payment === "c" ? "Cash" : "")
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                movement.type_payment === "mb" && movement.transfer === 0
+                  ? _c("td", [
+                      _vm._v(
+                        _vm._s(
+                          movement.type_payment === "mb" ? "MB payment" : ""
+                        )
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                movement.type_payment === "bt" && movement.transfer === 0
+                  ? _c("td", [
+                      _vm._v(
+                        _vm._s(
+                          movement.type_payment === "bt" ? "Bank Transfer" : ""
+                        )
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                movement.type_payment === null
+                  ? _c("td", [
+                      _vm._v(_vm._s(movement.type_payment === null ? "" : ""))
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(movement.category_name))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(movement.date))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(movement.start_balance))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(movement.end_balance))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(movement.value))]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  [
+                    _c(
+                      "b-button-group",
+                      [
+                        _c(
+                          "b-button",
+                          {
+                            attrs: { variant: "warning" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.editMovement(movement)
+                              }
+                            }
+                          },
+                          [_vm._v("Edit")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "b-button",
+                          {
+                            attrs: { variant: "info" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.transferInfo(movement)
+                              }
+                            }
+                          },
+                          [_vm._v("Info")]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ]
+            )
+          }),
+          0
+        )
+      ])
     ])
   ])
 }
@@ -88507,6 +88565,59 @@ var staticRenderFns = [
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/virtualWallet/movementsFilter.vue?vue&type=template&id=563c1256&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/virtualWallet/movementsFilter.vue?vue&type=template&id=563c1256&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "panel" }, [
+      _c("div", { staticClass: "panel-body" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: this.id,
+              expression: "this.id"
+            }
+          ],
+          attrs: { type: "number" },
+          domProps: { value: this.id },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(this, "id", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "panel-footer" }, [
+        _c("button", { on: { click: _vm.applyFilter } })
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -88631,11 +88742,7 @@ var render = function() {
         ],
         1
       ),
-      _vm._v(
-        "\r\n\r\n    " +
-          _vm._s(this.wallet.balance) +
-          "\r\n\r\n\r\n            "
-      ),
+      _vm._v("\n\n    " + _vm._s(this.wallet.balance) + "\n\n            "),
       _vm._v(" "),
       _c("movement-list", {
         on: {
@@ -104838,6 +104945,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_virtualWallet_transferInfo_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/virtualWallet/transferInfo.vue */ "./resources/js/components/virtualWallet/transferInfo.vue");
 /* harmony import */ var _components_users_users_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/users/users.vue */ "./resources/js/components/users/users.vue");
 /* harmony import */ var _components_users_usersList_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/users/usersList.vue */ "./resources/js/components/users/usersList.vue");
+/* harmony import */ var _components_virtualWallet_movementsFilter__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/virtualWallet/movementsFilter */ "./resources/js/components/virtualWallet/movementsFilter.vue");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
@@ -104875,6 +104983,7 @@ Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_5___default.a, {
 
 
 
+
 var navbar = Vue.component('navbar', _components_main_navbar_vue__WEBPACK_IMPORTED_MODULE_7__["default"]);
 var login = Vue.component('login', _components_auth_login_vue__WEBPACK_IMPORTED_MODULE_8__["default"]);
 var logout = Vue.component('logout', _components_auth_logout_vue__WEBPACK_IMPORTED_MODULE_9__["default"]);
@@ -104888,7 +104997,8 @@ var movementList = Vue.component('movementList', _components_virtualWallet_movem
 var movementEdit = Vue.component('movementEdit', _components_virtualWallet_movementEdit_vue__WEBPACK_IMPORTED_MODULE_17__["default"]);
 var transferInfo = Vue.component('transferInfo', _components_virtualWallet_transferInfo_vue__WEBPACK_IMPORTED_MODULE_18__["default"]);
 var users = Vue.component('users', _components_users_users_vue__WEBPACK_IMPORTED_MODULE_19__["default"]);
-var usersList = Vue.component('usersList', _components_users_usersList_vue__WEBPACK_IMPORTED_MODULE_20__["default"]); // // Para manter o utilizador logado depois de refrescar a pagina
+var usersList = Vue.component('usersList', _components_users_usersList_vue__WEBPACK_IMPORTED_MODULE_20__["default"]);
+var movementFilter = Vue.component('movementsFilter', _components_virtualWallet_movementsFilter__WEBPACK_IMPORTED_MODULE_21__["default"]); // // Para manter o utilizador logado depois de refrescar a pagina
 
 _store_store_js__WEBPACK_IMPORTED_MODULE_6__["default"].state.user = _store_store_js__WEBPACK_IMPORTED_MODULE_6__["default"].getters.getAuthUser;
 _store_store_js__WEBPACK_IMPORTED_MODULE_6__["default"].state.token = _store_store_js__WEBPACK_IMPORTED_MODULE_6__["default"].getters.getToken;
@@ -104934,6 +105044,10 @@ var routes = [{
   path: "/users",
   name: "users",
   component: users
+}, {
+  path: "/filter",
+  name: "movementFilter",
+  component: movementFilter
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({
   routes: routes
@@ -105995,6 +106109,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/virtualWallet/movementsFilter.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/virtualWallet/movementsFilter.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _movementsFilter_vue_vue_type_template_id_563c1256_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./movementsFilter.vue?vue&type=template&id=563c1256&scoped=true& */ "./resources/js/components/virtualWallet/movementsFilter.vue?vue&type=template&id=563c1256&scoped=true&");
+/* harmony import */ var _movementsFilter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./movementsFilter.vue?vue&type=script&lang=js& */ "./resources/js/components/virtualWallet/movementsFilter.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _movementsFilter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _movementsFilter_vue_vue_type_template_id_563c1256_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _movementsFilter_vue_vue_type_template_id_563c1256_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "563c1256",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/virtualWallet/movementsFilter.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/virtualWallet/movementsFilter.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/virtualWallet/movementsFilter.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_movementsFilter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./movementsFilter.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/virtualWallet/movementsFilter.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_movementsFilter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/virtualWallet/movementsFilter.vue?vue&type=template&id=563c1256&scoped=true&":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/virtualWallet/movementsFilter.vue?vue&type=template&id=563c1256&scoped=true& ***!
+  \**************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_movementsFilter_vue_vue_type_template_id_563c1256_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./movementsFilter.vue?vue&type=template&id=563c1256&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/virtualWallet/movementsFilter.vue?vue&type=template&id=563c1256&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_movementsFilter_vue_vue_type_template_id_563c1256_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_movementsFilter_vue_vue_type_template_id_563c1256_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/virtualWallet/transferInfo.vue":
 /*!****************************************************************!*\
   !*** ./resources/js/components/virtualWallet/transferInfo.vue ***!
@@ -106311,8 +106494,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\ProjetoDAD\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\ProjetoDAD\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/nunocaseiro/DAD/projeto/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/nunocaseiro/DAD/projeto/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
