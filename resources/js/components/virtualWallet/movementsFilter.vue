@@ -2,10 +2,10 @@
 <div>
    <div class="panel">
        <div class="panel-body">
-        <input v-model="this.id" type="number">
+        <input v-model="filters.id" type="number">
        </div>
        <div class="panel-footer">
-           <button v-on:click="applyFilter"></button>
+           <button v-on:click="applyFilter()">Hello World</button>
        </div>
    </div>
 </div>
@@ -16,13 +16,16 @@
     export default {
     data(){
         return {
-            id:'',
+            filters:{
+                id:'',
+
+            }
         }
     },
         methods: {
 
         applyFilter: function () {
-            this.$emit('apply-Filter');
+            this.$emit('apply-Filter', this.filters);
             }
         }
 

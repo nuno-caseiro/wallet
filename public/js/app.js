@@ -3069,6 +3069,24 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    applyFilter: function applyFilter(filters) {
+      var _this2 = this;
+
+      //string builder
+      var stringFilter = '?';
+
+      if (filters.id != null) {
+        stringFilter += 'wallet_id=' + filters.id;
+      }
+
+      console.log(stringFilter);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('api/movements/1/filter/' + stringFilter).then(function (response) {
+        console.log(response);
+        _this2.movements = response.data.data;
+
+        _this2.makePagination(response.data.meta, response.data.links);
+      });
+    },
     editMovement: function editMovement(movement) {
       this.$emit('edit-movement', movement);
     },
@@ -3076,14 +3094,14 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('transfer-info', movement);
     },
     getMovements: function getMovements(url) {
-      var _this2 = this;
+      var _this3 = this;
 
       var id = this.$store.state.user.id;
       var page_url = url || '/api/movements/id/' + id;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(page_url).then(function (response) {
-        _this2.movements = response.data.data;
+        _this3.movements = response.data.data;
 
-        _this2.makePagination(response.data.meta, response.data.links);
+        _this3.makePagination(response.data.meta, response.data.links);
       });
     },
     makePagination: function makePagination(meta, links) {
@@ -3137,12 +3155,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      id: ''
+      filters: {
+        id: ''
+      }
     };
   },
   methods: {
     applyFilter: function applyFilter() {
-      this.$emit('apply-Filter');
+      this.$emit('apply-Filter', this.filters);
     }
   }
 });
@@ -88348,7 +88368,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", [_c("filter-view")], 1),
+    _c(
+      "div",
+      [_c("filter-view", { on: { "apply-Filter": _vm.applyFilter } })],
+      1
+    ),
     _vm._v(" "),
     _c("div", [
       _c("ul", { staticClass: "pagination" }, [
@@ -88594,25 +88618,35 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model",
-              value: this.id,
-              expression: "this.id"
+              value: _vm.filters.id,
+              expression: "filters.id"
             }
           ],
           attrs: { type: "number" },
-          domProps: { value: this.id },
+          domProps: { value: _vm.filters.id },
           on: {
             input: function($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.$set(this, "id", $event.target.value)
+              _vm.$set(_vm.filters, "id", $event.target.value)
             }
           }
         })
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "panel-footer" }, [
-        _c("button", { on: { click: _vm.applyFilter } })
+        _c(
+          "button",
+          {
+            on: {
+              click: function($event) {
+                return _vm.applyFilter()
+              }
+            }
+          },
+          [_vm._v("Hello World")]
+        )
       ])
     ])
   ])

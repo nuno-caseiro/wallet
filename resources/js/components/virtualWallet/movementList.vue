@@ -1,7 +1,7 @@
 <template  >
 <div>
     <div>
-        <filter-view></filter-view>
+        <filter-view @apply-Filter="applyFilter"></filter-view>
     </div>
     <div>
         <ul class="pagination">
@@ -95,6 +95,26 @@ export default {
         }
     },
    methods:{
+        applyFilter(filters){
+            //string builder
+            let stringFilter='?';
+            if(filters.id !=null){
+                stringFilter+='wallet_id='+filters.id;
+            }
+console.log(stringFilter);
+            axios.get('api/movements/1/filter/'+stringFilter)
+                .then(response => {
+                    console.log(response);
+                    this.movements = response.data.data;
+
+                    this.makePagination(response.data.meta, response.data.links);
+
+                })
+
+
+
+
+        },
 		editMovement(movement){
 
             this.$emit('edit-movement', movement);
