@@ -39,7 +39,7 @@ import MovementFilter from './movementsFilter.vue';
             messageType: "alert-success",
             currentTransfer: null,
             currentMovement: null,
-            //movements: [],
+            movements: [],
             editingMovement: false,
             id:"",
             wallet:''
@@ -58,6 +58,17 @@ import MovementFilter from './movementsFilter.vue';
                 console.log(err);
             })
         },
+
+        // getMovements(){
+        //    let url = this.$store.state.user.id;
+        //    axios.get('api/movements/id/' + url)
+        //    .then(response=>{
+        //         console.log(response);
+        //         Object.assign(this.movements,response.data.data);
+        //     }).catch(function(err){
+        //         console.log(err);
+        //     })
+        // },
 
         editMovement(movement){
             this.currentMovement = movement;

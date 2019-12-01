@@ -29,23 +29,25 @@
             </td>
 
             <td>
-            <a v-if="user.type==='u'" >{{ user.balance_user === 0 ? 'Empty' : ' Has Money ' }}</a>
+            <a v-if="user.type==='u'" >{{ user.balance_status == '0.00' ? 'Empty' : 'Has Money' }}</a>
             <a v-if="user.type==='a' ">{{ ' - ' }}</a>
             <a v-if="user.type==='o' ">{{ ' - ' }}</a>
             </td>
             
            
-
-            <td v-if="user.type==='u'">
-                <b-button-group>
-                <b-button  variant="danger" @click.prevent="unactivateUser(user)">Unactivate  </b-button>
-                <b-button  variant="success" @click.prevent="activateUser(user)">Activate</b-button>
+            <td v-if="user.type==='u' ">
+                <b-button-group >
+                <b-button v-if="user.active==1 && user.balance_status === '0.00' " variant="danger" @click.prevent="unactivateUser(user)" >Unactivate  </b-button>
+                <b-button v-if="user.active == 0 && user.balance_status === '0.00' " variant="success" @click.prevent="activateUser(user)" >Activate</b-button>
+                <b-button v-if="user.type==='u' && !(user.balance_status == '0.00') " variant="danger" disabled >Unactivate  </b-button>
                 </b-button-group>
-            </td> 
+            </td>  
+
+
 
             <td v-if="!isAuthUser(user) && user.type==='a'   "><b-button  variant="danger" @click.prevent="">Delete  </b-button></td>
             <td v-if="user.type==='o'"> <b-button  variant="danger" @click.prevent="">Delete  </b-button></td>
-            <td v-if="isAuthUser(user)">IS YOU</td>
+            <td v-if="isAuthUser(user)">Your Account</td>
 
         </tr>
       </tbody>
@@ -60,7 +62,7 @@ export default {
     data() {
         return {
             selectedMovement: null,
-            users:[]
+            users:[],
         }      
     },
    methods:{
@@ -83,10 +85,10 @@ export default {
         },
 
         unactivateUser(user) {
+            // console.log(user.balance_status);
             axios.patch('api/user/unactivate/' + user.id )
             .then(response => {
-                console.log(response);
-                this.getUsers()
+                this.getUsers();
             })
         },
 
@@ -94,7 +96,7 @@ export default {
             axios.patch('api/user/activate/' + user.id )
             .then(response => {
                 console.log(response);
-                this.getUsers()
+                this.getUsers();
             })
         },
 
@@ -118,7 +120,6 @@ export default {
 }
 </script>
 <style  scoped >
-
 </style>
 
 
