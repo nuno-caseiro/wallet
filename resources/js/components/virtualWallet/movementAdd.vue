@@ -220,12 +220,6 @@
 
             },
             saveMovement: function () {
-              //  let newDate= new Date();
-               // let dataFormatada= newDate.getFullYear()+'-'+newDate.getMonth()+'-'+newDate.getDate()+' '+newDate.getHours()+':'+newDate.getMinutes()+':'+newDate.getSeconds();
-              //  this.movement.date = moment(dataFormatada,"YYYY-MM-DD HH:mm:ss");
-
-               // this.movement.date = moment.format("YYYY-MM-DD HH:mm:ss");
-
                 if(this.movement.type==='i' && this.isOperator){
                     axios.post('api/movements/', this.movement).then(response => {
                         console.log(response.data);

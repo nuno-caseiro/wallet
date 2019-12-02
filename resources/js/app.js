@@ -41,8 +41,8 @@ import TransferInfoComponent from "./components/virtualWallet/transferInfo.vue";
 import UsersComponent from "./components/users/users.vue";
 import UsersListComponent from "./components/users/usersList.vue";
 import UserAddComponent from "./components/users/userAdd.vue";
-import MovementFilterComponent from "./components/virtualWallet/movementsFilter"
-
+import MovementFilterComponent from "./components/virtualWallet/movementsFilter.vue"
+import StatisticsComponent from "./components/statistics/statistics.vue"
 
 
 
@@ -63,7 +63,7 @@ const users=Vue.component('users',UsersComponent);
 const usersList=Vue.component('usersList',UsersListComponent);
 const movementFilter= Vue.component('movementsFilter',MovementFilterComponent);
 const userAdd= Vue.component('movementsFilter',UserAddComponent);
-
+const statistics = Vue.component('statistics',StatisticsComponent);
 
 
 
@@ -139,7 +139,14 @@ const routes = [
         path:"/userAdd",
         name: "userAdd",
         component: userAdd
+    },
+
+    {
+        path:"/statistics",
+        name: "statistics",
+        component: statistics
     }
+
 
 
 

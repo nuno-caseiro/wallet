@@ -9,6 +9,7 @@
             <a><b-button size="lg" variant="secondary" to="virtualWallet"  v-if="isAuthenticated && isUser">Virtual Wallet</b-button></a>
             <a><b-button size="lg" variant="secondary" to="users"  v-if="isAuthenticated && isAdmin">Users</b-button></a>
             <a><b-button size="lg" variant="secondary" to="movementAdd"  v-if="isAuthenticated && isOperator">Add Movements</b-button></a>
+            <a id="statistics"><b-button size="lg" variant="secondary" to="statistics"  v-if="isAuthenticated ">Statistics</b-button></a>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
 
@@ -89,4 +90,8 @@
      #navbar{
          font-family: "Roboto", sans-serif;
      }
+
+         #statistics{
+             margin-left: 10px;
+         }
      </style>
