@@ -6,14 +6,20 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <a><b-button size="lg" variant="secondary" to="virtualWallet"  v-if="isAuthenticated && isUser">Virtual Wallet</b-button></a>
+            <a><b-button size="lg" variant="secondary" to="virtualWallet"  v-if="isAuthenticated && isUser && (this.$store.state.user.active)===1">
+                Virtual Wallet</b-button></a>
             <a><b-button size="lg" variant="secondary" to="users"  v-if="isAuthenticated && isAdmin">Users</b-button></a>
             <a><b-button size="lg" variant="secondary" to="movementAdd"  v-if="isAuthenticated && isOperator">Add Movements</b-button></a>
-            <a id="statistics"><b-button size="lg" variant="secondary" to="statistics"  v-if="isAuthenticated ">Statistics</b-button></a>
+            <a id="statistics"><b-button size="lg" variant="secondary" to="statistics"  v-if="isAuthenticated &&(this.$store.state.user.active)===1">
+                Statistics</b-button></a>
+           
+           
+           <!-- users with deactive accounts -->
+           <b-button size="lg" variant="danger" id="info" v-if="isAuthenticated && this.$store.state.user.active===0" disabled>YOUR VIRTUAL WALLET ARE DEACTIVATED</b-button>
+            
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
-
-
+                
                 </ul>
                      <ul class="navbar-nav">
                          <a  v-if="isAuthenticated" class="navbar-brand" href="#">
@@ -87,11 +93,17 @@
      <style  scoped lang="scss">
       @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
-     #navbar{
+    #navbar{
          font-family: "Roboto", sans-serif;
-     }
+    }
 
-         #statistics{
-             margin-left: 10px;
-         }
+    #statistics{
+        margin-left: 10px;
+    }
+
+    #info{
+        color: white;
+
+        
+    }
      </style>

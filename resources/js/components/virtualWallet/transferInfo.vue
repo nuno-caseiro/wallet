@@ -2,7 +2,6 @@
     <div class="login-page">
             <div class="jumbotron">
                     <th><b-button size="lg"  variant="outline-danger" @click="exitInfo">Close</b-button></th>
-                    <th><label>{{movement.user_photo}}</label></th>
                     <table class="table table-striped" >
                     <thead>
                         <tr>
@@ -11,7 +10,8 @@
                         </tr>
                     </thead>
                     <tbody >
-                        
+                            <tr v-if="movement.transfer === 1 ">Transfer User Photo:<img  v-bind:src="itemImageURL(movement.user_photo)" width="50" height="50" alt=""></tr>
+
                             <tr>Description: {{movement.description}}</tr>
                             
                             <tr>Source Description: {{movement.source_description}}</tr>
@@ -43,6 +43,10 @@
         exitInfo(){
                     this.$emit('exit-info', this.movement);
         },
+        itemImageURL(photo){
+                return "storage/fotos/"+String(photo);
+
+             },
         
         
     },
