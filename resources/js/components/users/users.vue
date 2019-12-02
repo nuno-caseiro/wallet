@@ -2,7 +2,7 @@
 <div>
             <div class="jumbotron">
                <h1 align="center" >{{title}}</h1>
-               <b-button size="lg" variant="dark" to="movementAdd" id="bt">Add User</b-button>
+               <b-button size="lg" variant="dark" to="userAdd" id="bt">Add User</b-button>
             </div>
             <users-list></users-list>
 
