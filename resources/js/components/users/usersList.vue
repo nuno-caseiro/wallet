@@ -45,8 +45,8 @@
 
 
 
-            <td v-if="!isAuthUser(user) && user.type==='a'   "><b-button  variant="danger" @click.prevent="">Delete  </b-button></td>
-            <td v-if="user.type==='o'"> <b-button  variant="danger" @click.prevent="">Delete  </b-button></td>
+            <td v-if="!isAuthUser(user) && user.type==='a'   "><b-button  variant="danger" @click.prevent="deleteUser(user)">Delete  </b-button></td>
+            <td v-if="user.type==='o'"> <b-button  variant="danger" @click.prevent="deleteUser(user)">Delete  </b-button></td>
             <td v-if="isAuthUser(user)">Your Account</td>
 
         </tr>
@@ -99,6 +99,14 @@ export default {
                 this.getUsers();
             })
         },
+
+        deleteUser(user){
+            axios.delete('api/users/' + user.id)
+            .then(response => {
+                console.log(response);
+                this.getUsers();
+            })
+        }
 
 
              

@@ -2624,6 +2624,15 @@ __webpack_require__.r(__webpack_exports__);
 
         _this3.getUsers();
       });
+    },
+    deleteUser: function deleteUser(user) {
+      var _this4 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('api/users/' + user.id).then(function (response) {
+        console.log(response);
+
+        _this4.getUsers();
+      });
     }
   },
   mounted: function mounted() {
@@ -87993,6 +88002,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
+                            return _vm.deleteUser(user)
                           }
                         }
                       },
@@ -88014,6 +88024,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
+                            return _vm.deleteUser(user)
                           }
                         }
                       },
