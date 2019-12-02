@@ -1,5 +1,5 @@
 <?php
-
+/*
 
 namespace App\Support;
 
@@ -24,4 +24,4 @@ class Collection extends BaseCollection
             ]
         );
     }
-}
+}*/

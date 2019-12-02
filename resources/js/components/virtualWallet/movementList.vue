@@ -74,9 +74,18 @@ export default {
         return {
             selectedMovement: null,
             currentMovement:{},
-            id:"",
+            id:'',
             pagination: {},
             movements: [],
+            meta:{
+                current_page: '',
+                last_page: '',
+
+            },
+            links:{
+                next:'',
+                prev:'',
+            }
         }
     },
     sockets:{
@@ -98,16 +107,60 @@ export default {
         applyFilter(filters){
             //string builder
             let stringFilter='?';
-            if(filters.id !=null){
-                stringFilter+='wallet_id='+filters.id;
+            if(filters.id !=''){
+                stringFilter+='id='+filters.id;
             }
-console.log(stringFilter);
+            if(filters.type!=''){
+                if(stringFilter!='?'){
+                    stringFilter+='&';
+                }
+                stringFilter+='type='+filters.type;
+            }
+
+            if(filters.date1!=''){
+                if(stringFilter!='?'){
+                    stringFilter+='&';
+                }
+                stringFilter+='date1='+filters.date1;
+            }
+
+            if(filters.date2!=''){
+                if(stringFilter!='?'){
+                    stringFilter+='&';
+                }
+                stringFilter+='date1='+filters.date2;
+            }
+
+            if(filters.category_id!=''){
+                if(stringFilter!='?'){
+                    stringFilter+='&';
+                }
+                stringFilter+='category_id='+filters.category_id;
+            }
+
+            if(filters.source_email!=''){
+                if(stringFilter!='?'){
+                    stringFilter+='&';
+                }
+                stringFilter+='wallet_id='+filters.source_email+'&transfer=1';
+            }
+
+
+            if(filters.dest_email!=''){
+                if(stringFilter!='?'){
+                    stringFilter+='&';
+                }
+                stringFilter+='transfer_wallet_id='+filters.dest_email+'&transfer=1';
+            }
+
+            console.log(stringFilter);
             axios.get('api/movements/1/filter/'+stringFilter)
                 .then(response => {
                     console.log(response);
                     this.movements = response.data.data;
 
-                    this.makePagination(response.data.meta, response.data.links);
+console.log(this.movements);
+                    this.makePagination(this.meta, this.links);
 
                 })
 
@@ -130,8 +183,9 @@ console.log(stringFilter);
                 let page_url = url || '/api/movements/id/' + id;
                axios.get(page_url)
                 .then(response => {
+                    console.log(response);
                     this.movements = response.data.data;
-                    this.makePagination(response.data.meta, response.data.links)
+                        this.makePagination(this.meta, this.links);
                 })
         },
         makePagination(meta, links) {

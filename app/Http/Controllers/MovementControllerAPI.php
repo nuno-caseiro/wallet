@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\CollectionHelper;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
@@ -35,9 +36,13 @@ class MovementControllerAPI extends Controller
     public function filter(Request $request){
             $query=null;
 
-        $query= MovementResource::collection(Movement::where('wallet_id', '>',0)->orderBy('date','desc')->get());
+        $query= Movement::where('id', '>',0)->orderBy('date','desc')->get();
 
-       if($request->has('wallet_id')){
+       if($request->has('id')){
+            $query=$query->where('id','=',$request->id); //todo paginate
+        }
+
+        if($request->has('wallet_id')){
             $query=$query->where('wallet_id','=',$request->wallet_id); //todo paginate
         }
 
@@ -46,7 +51,7 @@ class MovementControllerAPI extends Controller
         }
 
         if($request->has('date1')){
-            $query=  $query->where('date','>', Carbon::parse($request->date1));
+            $query=  $query->where('date','>=', Carbon::parse($request->date1));
         }
 
         if($request->has('date2')){
@@ -61,8 +66,18 @@ class MovementControllerAPI extends Controller
             $query=  $query->where('type_payment','=', $request->type_payment);
 
         }
+        if($request-> has('transfer')){
+            $query=  $query->where('transfer','=', $request->transfer);
+
+        }
+
+
+        /*$total = $query->count();
+        $pageSize = 20;
         //falta dos transfer-email
-        return   $query->paginate(5);
+        return   CollectionHelper::paginate($query,$total,$pageSize);*/
+
+        return MovementResource::collection($query);
 
     }
 

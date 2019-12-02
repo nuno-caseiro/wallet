@@ -3047,9 +3047,17 @@ __webpack_require__.r(__webpack_exports__);
     return {
       selectedMovement: null,
       currentMovement: {},
-      id: "",
+      id: '',
       pagination: {},
-      movements: []
+      movements: [],
+      meta: {
+        current_page: '',
+        last_page: ''
+      },
+      links: {
+        next: '',
+        prev: ''
+      }
     };
   },
   sockets: {
@@ -3075,16 +3083,65 @@ __webpack_require__.r(__webpack_exports__);
       //string builder
       var stringFilter = '?';
 
-      if (filters.id != null) {
-        stringFilter += 'wallet_id=' + filters.id;
+      if (filters.id != '') {
+        stringFilter += 'id=' + filters.id;
+      }
+
+      if (filters.type != '') {
+        if (stringFilter != '?') {
+          stringFilter += '&';
+        }
+
+        stringFilter += 'type=' + filters.type;
+      }
+
+      if (filters.date1 != '') {
+        if (stringFilter != '?') {
+          stringFilter += '&';
+        }
+
+        stringFilter += 'date1=' + filters.date1;
+      }
+
+      if (filters.date2 != '') {
+        if (stringFilter != '?') {
+          stringFilter += '&';
+        }
+
+        stringFilter += 'date1=' + filters.date2;
+      }
+
+      if (filters.category_id != '') {
+        if (stringFilter != '?') {
+          stringFilter += '&';
+        }
+
+        stringFilter += 'category_id=' + filters.category_id;
+      }
+
+      if (filters.source_email != '') {
+        if (stringFilter != '?') {
+          stringFilter += '&';
+        }
+
+        stringFilter += 'wallet_id=' + filters.source_email + '&transfer=1';
+      }
+
+      if (filters.dest_email != '') {
+        if (stringFilter != '?') {
+          stringFilter += '&';
+        }
+
+        stringFilter += 'transfer_wallet_id=' + filters.dest_email + '&transfer=1';
       }
 
       console.log(stringFilter);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('api/movements/1/filter/' + stringFilter).then(function (response) {
         console.log(response);
         _this2.movements = response.data.data;
+        console.log(_this2.movements);
 
-        _this2.makePagination(response.data.meta, response.data.links);
+        _this2.makePagination(_this2.meta, _this2.links);
       });
     },
     editMovement: function editMovement(movement) {
@@ -3099,9 +3156,10 @@ __webpack_require__.r(__webpack_exports__);
       var id = this.$store.state.user.id;
       var page_url = url || '/api/movements/id/' + id;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(page_url).then(function (response) {
+        console.log(response);
         _this3.movements = response.data.data;
 
-        _this3.makePagination(response.data.meta, response.data.links);
+        _this3.makePagination(_this3.meta, _this3.links);
       });
     },
     makePagination: function makePagination(meta, links) {
@@ -3152,18 +3210,98 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       filters: {
-        id: ''
-      }
+        id: '',
+        type: '',
+        date1: '',
+        date2: '',
+        category_id: '',
+        source_email: '',
+        dest_email: ''
+      },
+      categories: [],
+      wallets: []
     };
   },
   methods: {
     applyFilter: function applyFilter() {
       this.$emit('apply-Filter', this.filters);
+    },
+    getCategories: function getCategories() {
+      var _this = this;
+
+      axios.get('api/categories').then(function (response) {
+        _this.categories = response.data.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    getWallets: function getWallets() {
+      var _this2 = this;
+
+      axios.get('api/wallets').then(function (response) {
+        _this2.wallets = response.data.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
+  },
+  mounted: function mounted() {
+    this.getCategories();
+    this.getWallets();
   }
 });
 
@@ -88612,27 +88750,271 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "panel" }, [
+      _vm._m(0),
+      _vm._v(" "),
       _c("div", { staticClass: "panel-body" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.filters.id,
-              expression: "filters.id"
-            }
-          ],
-          attrs: { type: "number" },
-          domProps: { value: _vm.filters.id },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+        _c("div", [
+          _c("label", [_vm._v("Movement id:")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.filters.id,
+                expression: "filters.id"
               }
-              _vm.$set(_vm.filters, "id", $event.target.value)
+            ],
+            attrs: { id: "id", type: "number" },
+            domProps: { value: _vm.filters.id },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.filters, "id", $event.target.value)
+              }
             }
-          }
-        })
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _c("label", [_vm._v("Type: ")]),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.filters.type,
+                  expression: "filters.type"
+                }
+              ],
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.filters,
+                    "type",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
+              }
+            },
+            [
+              _c("option", { attrs: { value: "e" } }, [_vm._v("Expense")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "i" } }, [_vm._v("Income")])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _c("label", [_vm._v("Date1 :")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.filters.date1,
+                expression: "filters.date1"
+              }
+            ],
+            attrs: { id: "date1", type: "date" },
+            domProps: { value: _vm.filters.date1 },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.filters, "date1", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _c("label", [_vm._v("Date2 :")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.filters.date2,
+                expression: "filters.date2"
+              }
+            ],
+            attrs: { id: "date2", type: "date" },
+            domProps: { value: _vm.filters.date2 },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.filters, "date2", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _c("label", { attrs: { for: "categoryId" } }, [
+            _vm._v("Choose category")
+          ]),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.filters.category_id,
+                  expression: "filters.category_id"
+                }
+              ],
+              attrs: { id: "categoryId", name: "categoryId" },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.filters,
+                    "category_id",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
+              }
+            },
+            [
+              _c("option"),
+              _vm._v(" "),
+              _vm._l(this.categories, function(category) {
+                return _c("option", { domProps: { value: category.id } }, [
+                  _vm._v(_vm._s(category.name))
+                ])
+              })
+            ],
+            2
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _c("h6", [_vm._v("Transfer")]),
+          _vm._v(" "),
+          _c("div", [
+            _c("label", { attrs: { for: "sourceEmail" } }, [
+              _vm._v("Choose source email")
+            ]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filters.source_email,
+                    expression: "filters.source_email"
+                  }
+                ],
+                attrs: { id: "sourceEmail", name: "sourceEmail" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.filters,
+                      "source_email",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              [
+                _c("option"),
+                _vm._v(" "),
+                _vm._l(this.wallets, function(wallet) {
+                  return _c("option", { domProps: { value: wallet.id } }, [
+                    _vm._v(_vm._s(wallet.email))
+                  ])
+                })
+              ],
+              2
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _c("label", { attrs: { for: "destEmail" } }, [
+              _vm._v("Choose destination email")
+            ]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filters.dest_email,
+                    expression: "filters.dest_email"
+                  }
+                ],
+                attrs: { id: "destEmail", name: "destEmail" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.filters,
+                      "dest_email",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              [
+                _c("option"),
+                _vm._v(" "),
+                _vm._l(this.wallets, function(wallet) {
+                  return _c("option", { domProps: { value: wallet.id } }, [
+                    _vm._v(_vm._s(wallet.email))
+                  ])
+                })
+              ],
+              2
+            )
+          ])
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "panel-footer" }, [
@@ -88645,13 +89027,22 @@ var render = function() {
               }
             }
           },
-          [_vm._v("Hello World")]
+          [_vm._v("Apply filters")]
         )
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-header" }, [
+      _c("h3", [_vm._v("Filters")])
+    ])
+  }
+]
 render._withStripped = true
 
 
