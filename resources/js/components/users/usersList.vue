@@ -1,6 +1,9 @@
 
 <template  >
 <div>
+     <div class="form-group">
+        <filter-view @apply-Filter="applyFilter"  v-on:clean-filter="cleanFilter"></filter-view>
+    </div>
     <table class="table table-striped" >
         <thead>
             <tr>
@@ -58,11 +61,13 @@
 
 <script type="text/javascript">
 import axios from 'axios';
+import UsersFilter from './usersFilter.vue';
 export default {
     data() {
         return {
             selectedMovement: null,
             users:[],
+            filters:null,
         }      
     },
    methods:{
@@ -106,6 +111,51 @@ export default {
                 console.log(response);
                 this.getUsers();
             })
+        },
+
+        applyFilter(filters){
+            this.filters=filters;
+            //string builder
+            let stringFilter='?';
+            if(filters.type!=''){
+                if(stringFilter!='?'){
+                    stringFilter+='&';
+                }
+                stringFilter+='type='+filters.type;
+            }
+            if(filters.name!=''){
+                if(stringFilter!='?'){
+                    stringFilter+='&';
+                }
+                stringFilter+='name='+filters.name;
+            }
+
+            if(filters.email!=''){
+                if(stringFilter!='?'){
+                    stringFilter+='&';
+                }
+                stringFilter+='email='+filters.email;
+            }
+
+            if(filters.active!=''){
+                if(stringFilter!='?'){
+                    stringFilter+='&';
+                }
+                stringFilter+='active='+filters.active;
+            }
+        console.log(stringFilter);
+            axios.get('api/users/1/filter/'+stringFilter)
+                .then(response => {
+                    console.log(response);
+                    this.users = response.data.data;
+
+                })
+
+
+        },
+
+        cleanFilter(){
+            this.getUsers();
         }
 
 
@@ -118,11 +168,9 @@ export default {
 
    },
 
-//    computed:{
-//             isAuthenticated() {
-//                  return this.$store.getters.isAuthenticated;
-//             },
-//    }
+   components:{
+        'filter-view' :UsersFilter
+    }
     
 
 }

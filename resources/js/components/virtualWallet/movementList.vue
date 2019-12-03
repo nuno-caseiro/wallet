@@ -1,7 +1,7 @@
 <template  >
 <div>
     <div>
-        <filter-view @apply-Filter="applyFilter"></filter-view>
+        <filter-view @apply-Filter="applyFilter" v-on:clean-filter="cleanFilter"></filter-view>
     </div>
     <div>
         <ul class="pagination">
@@ -223,6 +223,9 @@ this.applyFilter(this.filters,'next');
             };
             this.pagination = pagination
         },
+         cleanFilter(){
+            this.getMovements();
+        }
    },
 
    computed:{
