@@ -141,12 +141,13 @@ const routes = [
         name: "userAdd",
         component: userAdd
     },
-
     {
         path:"/statistics",
         name: "statistics",
         component: statistics
-    }
+    },
+
+
 
 
 
