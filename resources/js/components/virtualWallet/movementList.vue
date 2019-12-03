@@ -122,7 +122,7 @@ export default {
                 if(stringFilter!='?'){
                     stringFilter+='&';
                 }
-                stringFilter+='date1='+filters.date2;
+                stringFilter+='date2='+filters.date2;
             }
 
             if(filters.category_id!=''){
