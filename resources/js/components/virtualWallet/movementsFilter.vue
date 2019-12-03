@@ -85,7 +85,7 @@
         applyFilter: function () {
             this.$emit('apply-Filter', this.filters);
             },
-
+//TODO v-if type income mostra categorias, else expense categories
             getCategories: function () {
                 axios.get('api/categories').then(response => {
                     this.categories = response.data.data;
