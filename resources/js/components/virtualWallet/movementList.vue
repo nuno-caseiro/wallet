@@ -7,13 +7,13 @@
         <ul class="pagination">
             <li v-bind:class="[{disabled: !pagination.prev_page_url}]"
                 class="page-item"><a class="page-link" href="#"
-                                     @click="getMovements(pagination.prev_page_url)">Previous</a></li>
+                                     @click="getMovements(pagination.prev_page_url,'previous')">Previous</a></li>
 
             <li class="page-item disabled"><a class="page-link" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
 
             <li v-bind:class="[{disabled: !pagination.next_page_url}]"
                 class="page-item"><a class="page-link" href="#"
-                                     @click="getMovements(pagination.next_page_url)">Next</a></li>
+                                     @click="getMovements(pagination.next_page_url,'next')">Next</a></li>
         </ul>
         <table class="table table-striped" >
             <thead>
@@ -77,15 +77,8 @@ export default {
             id:'',
             pagination: {},
             movements: [],
-            meta:{
-                current_page: '',
-                last_page: '',
+            filters:null,
 
-            },
-            links:{
-                next:'',
-                prev:'',
-            }
         }
     },
     sockets:{
@@ -104,7 +97,8 @@ export default {
         }
     },
    methods:{
-        applyFilter(filters){
+        applyFilter(filters,move){
+            this.filters=filters;
             //string builder
             let stringFilter='?';
             if(filters.id !=''){
@@ -153,19 +147,36 @@ export default {
                 stringFilter+='transfer_wallet_id='+filters.dest_email+'&transfer=1';
             }
 
+            if(move==="next"){
+//                console.log(this.pagination.next_page_url);
+                if(this.pagination.next_page_url.includes("page") ){
+                    let substring =this.pagination.next_page_url.split("?");
+                    console.log(substring);
+                    stringFilter+='&'+substring[1];
+                    console.log(stringFilter);
+                }
+            }
+            if(move==="previous"){
+              //  console.log(this.pagination.prev_page_url);
+                if(this.pagination.prev_page_url.includes("page") ){
+                    let substring =this.pagination.prev_page_url.split("?");
+                    console.log(substring[1]);
+                    stringFilter+='&'+substring[1];
+                    console.log(stringFilter);
+                }
+            }
+
+
+
+
             console.log(stringFilter);
             axios.get('api/movements/1/filter/'+stringFilter)
                 .then(response => {
                     console.log(response);
                     this.movements = response.data.data;
-
-console.log(this.movements);
-                    this.makePagination(this.meta, this.links);
+                    this.makePagination(response.data.meta, response.data.links);
 
                 })
-
-
-
 
         },
 		editMovement(movement){
@@ -177,7 +188,21 @@ console.log(this.movements);
             this.$emit('transfer-info', movement);
         },
 
-         getMovements(url) {
+         getMovements(url,move) {
+//if move e tal apply filter
+             if(move==="next"){
+                 console.log(this.pagination.next_page_url);
+                 if(this.pagination.next_page_url.includes("filter")){
+this.applyFilter(this.filters,'next');
+                 }
+
+             }else if(move==="previous"){
+                 console.log(this.pagination.prev_page_url);
+                 if(this.pagination.prev_page_url.includes("filter")){
+                     this.applyFilter(this.filters,'previous');
+                 }
+
+             } else{
 
                 var id=this.$store.state.user.id;
                 let page_url = url || '/api/movements/id/' + id;
@@ -185,8 +210,9 @@ console.log(this.movements);
                 .then(response => {
                     console.log(response);
                     this.movements = response.data.data;
-                        this.makePagination(this.meta, this.links);
+                        this.makePagination(response.data.meta, response.data.links);
                 })
+             }
         },
         makePagination(meta, links) {
             let pagination = {

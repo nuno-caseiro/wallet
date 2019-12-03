@@ -174,6 +174,7 @@ const app = new Vue({
 
         },
         message_unavailable(destUser){
+          //TODO enviar mail
           this.$toasted.error('User"'+destUser.name+ '"is not available');
         },
         message_sent(dataFromServer){
