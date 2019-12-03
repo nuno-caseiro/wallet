@@ -170,7 +170,7 @@ export default {
 
 
             console.log(stringFilter);
-            axios.get('api/movements/1/filter/'+stringFilter)
+            axios.get('api/movements/1/filter/'+stringFilter +'&wallet_id='+ this.$store.state.user.id)
                 .then(response => {
                     console.log(response);
                     this.movements = response.data.data;
