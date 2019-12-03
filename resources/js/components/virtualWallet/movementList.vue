@@ -170,7 +170,7 @@ export default {
 
 
             console.log(stringFilter);
-            axios.get('api/movements/1/filter/'+stringFilter)
+            axios.get('api/movements/1/filter/'+stringFilter +'&wallet_id='+ this.$store.state.user.id)
                 .then(response => {
                     console.log(response);
                     this.movements = response.data.data;
@@ -202,7 +202,9 @@ this.applyFilter(this.filters,'next');
                      this.applyFilter(this.filters,'previous');
                  }
 
-             } else{
+             }
+
+             if(this.filters===null){
 
                 var id=this.$store.state.user.id;
                 let page_url = url || '/api/movements/id/' + id;
@@ -224,7 +226,9 @@ this.applyFilter(this.filters,'next');
             this.pagination = pagination
         },
          cleanFilter(){
+            this.filters=null;
             this.getMovements();
+
         }
    },
 

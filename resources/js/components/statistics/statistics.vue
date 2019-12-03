@@ -32,7 +32,7 @@
         },
         methods: {
             getIncomesByMonth(month){
-//just for testing 
+//just for testing
                 axios.get('api/movements/1/filter/?wallet_id='+
                     this.$store.state.user.id+'&date1=1-10-2019&date2=30-10-2019')
                     .then(response => {
