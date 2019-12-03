@@ -12,11 +12,7 @@
         
 	    <div class="form-group">
 	        <label for="inputEmail">Email</label>
-	        <input
-	            type="email" class="form-control" id="inputEmail" placeholder="Email"
-	            name="email"
-                v-model="user.email"
-                />
+	        <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" v-model="user.email"/>
 	    </div>
         <div class="form-group">
             <label for="photo">Photo</label>
@@ -33,11 +29,7 @@
                 </div>	    
         <div class="form-group">
 	        <label for="inputNIF">Password</label>
-	        <input
-	            type="text" class="form-control" id="inputPassword"
-	            name="nif"
-                v-model="user.password"
-                />
+	        <input type="password" class="form-control" id="inputPassword" name="nif" v-model="user.password"/>
 	    </div>
         <b-button-group>
 	        <b-button variant="outline-success" @click.prevent="saveUser()">Save</b-button>

@@ -35,11 +35,23 @@ export default new Vuex.Store({
         setAuthUser(state,user){
             state.user=user;
             localStorage.setItem('user', JSON.stringify(user));
-        }
+        },
+
+        
+    
+        //--------------------Items setters-------------------------------
+        setItems(state, users){
+            state.users = users;
+        },
 
     },
 
     getters:{
+        
+        users(state){
+            return state.users;
+        },
+
         getToken(state) {
             let token = localStorage.getItem('access_token')
             let tokenType = localStorage.getItem('token_type')
@@ -118,6 +130,13 @@ export default new Vuex.Store({
     actions:{
         setAuthUser({commit},data){
             commit('setAuthUser',data);
-        }
+        },
+        loadUsers(context){
+            axios.get('api/users/')
+            .then(response=>{
+                 context.commit('setUser',response.data.data);
+             
+        })
+    },
     }
 });

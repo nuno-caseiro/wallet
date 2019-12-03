@@ -11,12 +11,7 @@
             <a><b-button size="lg" variant="secondary" to="users"  v-if="isAuthenticated && isAdmin">Users</b-button></a>
             <a><b-button size="lg" variant="secondary" to="movementAdd"  v-if="isAuthenticated && isOperator">Add Movements</b-button></a>
             <a id="statistics"><b-button size="lg" variant="secondary" to="statistics"  v-if="isAuthenticated &&(this.$store.state.user.active)===1">
-                Statistics</b-button></a>
-           
-           
-           <!-- users with deactive accounts -->
-           <b-button size="lg" variant="danger" id="info" v-if="isAuthenticated && this.$store.state.user.active===0" disabled>YOUR VIRTUAL WALLET ARE DEACTIVATED</b-button>
-            
+                Statistics</b-button></a> 
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
                 
@@ -99,11 +94,5 @@
 
     #statistics{
         margin-left: 10px;
-    }
-
-    #info{
-        color: white;
-
-        
     }
      </style>

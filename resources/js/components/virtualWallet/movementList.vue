@@ -20,7 +20,7 @@
             <tr>
                 <th>ID</th>
                 <th>Type</th>
-                <th>Tranfer Email</th>
+                <th>Source Email</th>
                 <th>Payment Type</th>
                 <th>Category</th>
                 <th>Date</th>
