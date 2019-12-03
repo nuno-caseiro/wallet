@@ -1,6 +1,6 @@
 <template>
 <div>
-   <div class="panel">
+   <div class="panel" id="panelBody">
        <div class="panel-header">
        </div>
        <div class="panel-body">
@@ -142,5 +142,9 @@
 
 #b{
     margin-left: 20px ;
+}
+
+#panelBody{
+    background-color: rgb(241, 241, 241);
 }
 </style>

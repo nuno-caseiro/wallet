@@ -1,8 +1,6 @@
 <template>
 <div>
-   <div class="panel">
-       <div class="panel-header">
-       </div>
+   <div class="panel" id="panelBody">
        <div class="panel-body">
            <th >
                <label>  User Type: </label>
@@ -97,6 +95,10 @@
 
 #b{
     margin-left: 60px ;
+}
+
+#panelBody{
+    background-color: rgb(241, 241, 241);
 }
 
 
