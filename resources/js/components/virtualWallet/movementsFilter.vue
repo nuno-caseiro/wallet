@@ -4,7 +4,7 @@
        <div class="panel-header">
        </div>
        <div class="panel-body">
-            <div>
+            <div id= "row1">
                 <th>
                     <label>Movement id:</label>
                     <input id="id" v-model="filters.id" type="number">
@@ -34,9 +34,7 @@
                     </select>
                 </th>
             </div>
-            <div id="d">
-                
-                    <h6>Transfer</h6>
+            <div id="row2">
                     <th>
                         <label for="sourceEmail">Choose source email</label>
                         <select id="sourceEmail" name="sourceEmail" v-model="filters.source_email">
@@ -46,7 +44,7 @@
                     </th>
 
                     <th>
-                        <label for="destEmail">Choose destination email</label>
+                        <label id = "e" for="destEmail">Choose destination email</label>
                         <select id="destEmail" name="destEmail" v-model="filters.dest_email">
                             <option></option>
                             <option v-for="wallet in this.wallets"  v-bind:value="wallet.id" >{{wallet.email}}</option>
@@ -129,21 +127,20 @@
 </script>
 
 <style scoped>
-#n{
-    margin-left: 15px ;
+#row1{
+    margin-top:20px;
 }
-
 #e{
     margin-left: 15px ;
 }
 
 
-#d{
+#row2{
     margin-top: 15px ;
+    margin-bottom: 15px;
 }
 
 #b{
-    margin-top: 0px;
     margin-left: 20px ;
 }
 </style>

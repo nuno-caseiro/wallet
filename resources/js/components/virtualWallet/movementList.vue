@@ -3,7 +3,7 @@
     <div>
         <filter-view @apply-Filter="applyFilter" v-on:clean-filter="cleanFilter"></filter-view>
     </div>
-    <div>
+    <div >
         <ul class="pagination">
             <li v-bind:class="[{disabled: !pagination.prev_page_url}]"
                 class="page-item"><a class="page-link" href="#"
