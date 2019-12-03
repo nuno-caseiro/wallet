@@ -24,10 +24,12 @@ class Movement extends Model
 
     public function category(){
         return $this->belongsTo('App\Category');
-    }/*
+    }
 
-    public function movement(){
-        $this->hasOne('App\Movement', 'transfer_movement_id', 'id');
-    }*/
+    public function transfer_wallet(){
+        return $this->belongsTo('App\Wallet', 'transfer_wallet_id');
+    }
+   
+
 
 }

@@ -50,6 +50,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('movements', 'MovementControllerAPI@store');
     Route::put('movements/{id}', 'MovementControllerAPI@update');
 
+    Route::put('movements/id/{id}', 'MovementControllerAPI@updateEdit');
 
     Route::get('movements','MovementControllerAPI@index');
     Route::get('movements/{id}','MovementControllerAPI@show');
@@ -78,6 +79,7 @@ Route::post('users','UserControllerAPI@store');
 Route::post('users/email','UserControllerAPI@showByEmail');
 
 Route::get('wallets', 'WalletControllerAPI@index');
+
 Route::post('wallets', 'WalletControllerAPI@store');
 
 

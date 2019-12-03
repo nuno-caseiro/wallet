@@ -111,5 +111,12 @@ class MovementControllerAPI extends Controller
 
     }
 
+    public function updateEdit(Request $request, $id){
+        //TODO validacoes
+        $movement= Movement::findOrFail($id);
+        $movement->update($request->all());
+        return new MovementResource($movement);
+    }
+
 
 }

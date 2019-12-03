@@ -99,5 +99,9 @@ class UserControllerApi extends Controller
         return (new UserResource($user))->response()->setStatusCode(200);
     }
 
+    public function showUserWithEmail($email){
+        return new UserResource(User::find($email));
+    }
+    
 
 }
