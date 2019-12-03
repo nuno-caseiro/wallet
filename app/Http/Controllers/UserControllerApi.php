@@ -103,5 +103,29 @@ class UserControllerApi extends Controller
         return new UserResource(User::find($email));
     }
     
+    public function filter(Request $request){
+        $query=null;
+        $query= User::where('id', '>',0);
+
+        if($request->has('type')){
+            $query=$query->where('type','=',$request->type);
+        }
+
+        if($request->has('name')){
+            $query=$query->where('name','=',$request->name); 
+        }
+
+        if($request->has('email')){
+            $query=  $query->where('email','=', $request->email);
+        }
+
+        if($request->has('active')){
+            $query=  $query->where('active','=', $request->active);
+        }
+
+
+        return UserResource::collection($query->get());
+
+    }
 
 }

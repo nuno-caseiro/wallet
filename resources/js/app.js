@@ -41,10 +41,9 @@ import TransferInfoComponent from "./components/virtualWallet/transferInfo.vue";
 import UsersComponent from "./components/users/users.vue";
 import UsersListComponent from "./components/users/usersList.vue";
 import UserAddComponent from "./components/users/userAdd.vue";
-import MovementFilterComponent from "./components/virtualWallet/movementsFilter.vue";
-import LineChartComponent from "./components/statistics/lineChart.vue";
-import StatisticsComponent from "./components/statistics/statistics.vue";
-
+import MovementFilterComponent from "./components/virtualWallet/movementsFilter.vue"
+import StatisticsComponent from "./components/statistics/statistics.vue"
+import UsersFilterComponent from "./components/users/usersFilter.vue"
 
 
 
@@ -64,8 +63,8 @@ const users=Vue.component('users',UsersComponent);
 const usersList=Vue.component('usersList',UsersListComponent);
 const movementFilter= Vue.component('movementsFilter',MovementFilterComponent);
 const userAdd= Vue.component('movementsFilter',UserAddComponent);
-const lineChart = Vue.component('lineChart',LineChartComponent);
-const statistics= Vue.component('statistics',StatisticsComponent)
+const statistics = Vue.component('statistics',StatisticsComponent);
+const usersFilter = Vue.component('usersFilter',UsersFilterComponent);
 
 
 
