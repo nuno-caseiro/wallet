@@ -226,7 +226,9 @@ this.applyFilter(this.filters,'next');
             this.pagination = pagination
         },
          cleanFilter(){
+            this.filters=null;
             this.getMovements();
+
         }
    },
 
