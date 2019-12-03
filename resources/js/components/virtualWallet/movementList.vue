@@ -202,7 +202,9 @@ this.applyFilter(this.filters,'next');
                      this.applyFilter(this.filters,'previous');
                  }
 
-             } else{
+             }
+
+             if(this.filters===null){
 
                 var id=this.$store.state.user.id;
                 let page_url = url || '/api/movements/id/' + id;
