@@ -4,9 +4,6 @@
     <div class="alert" :class="typeOfMessage" v-if="showMessage">
             <strong>{{ message }}</strong>
         </div>
-    <div class="alert" :class="messageType" v-if="showMessage">
-            <strong>{{ message }}</strong>
-        </div>
     <form class="login-form">
       <h2>Login</h2>
       <input type="text" placeholder="email" v-model="user.email" >

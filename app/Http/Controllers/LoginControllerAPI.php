@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\User;
 use Illuminate\Http\Request;
 define('YOUR_SERVER_URL', env('APP_URL'));
 // Check "oauth_clients" table for next 2 values:
@@ -13,17 +13,20 @@ class LoginControllerAPI extends Controller
     public function login(Request $request)
     {
         $http = new \GuzzleHttp\Client;
-        $response = $http->post(YOUR_SERVER_URL.'/oauth/token', [
-            'form_params' => [
-                'grant_type' => 'password',
-                'client_id' => CLIENT_ID,
-                'client_secret' => CLIENT_SECRET,
-                'username' => $request->email,
-                'password' => $request->password,
-                'scope' => ''
-            ],
-            'exceptions' => false,
-        ]);
+        $user = User::where('email', '=', $request->email)->firstOrFail();
+        if($user->active===1){
+            // try {
+                $response = $http->post(YOUR_SERVER_URL.'/oauth/token', [
+                    'form_params' => [
+                        'grant_type' => 'password',
+                        'client_id' => CLIENT_ID,
+                        'client_secret' => CLIENT_SECRET,
+                        'username' => $request->email,
+                        'password' => $request->password,
+                        'scope' => ''
+                    ],
+                    'exceptions' => false,
+                ]);     
         $errorCode= $response->getStatusCode();
         if ($errorCode=='200') {
             return json_decode((string) $response->getBody(), true);
@@ -31,7 +34,18 @@ class LoginControllerAPI extends Controller
             return response()->json(
                 ['msg'=>'User credentials are invalid'], $errorCode);
         }
-
+        // return response($response->getBody(), 200);
+    // } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+    //     if ($e->getCode() === 400) {
+    //         return response()->json(['error' => 'Invalid Request. Please enter a username or a password.'], $e->getCode());
+    //     } else if ($e->getCode() === 401) {
+    //         return response()->json(['error' => 'Your credentials are incorrect. Please try again.'], $e->getCode());
+    //     }
+    //     return response()->json(['error' => 'Something went wrong on the server.'], $e->getCode());
+    // }
+    }else{
+        return response()->json(['error' => 'You are currently deactivated.'], 401);
+    }
     }
 
     public function logout()

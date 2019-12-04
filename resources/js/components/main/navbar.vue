@@ -18,7 +18,7 @@
                 </ul>
                      <ul class="navbar-nav">
                          <a  v-if="isAuthenticated" class="navbar-brand" href="#">
-                            <img  v-bind:src="itemImageURL(this.$store.state.user.photo)" width="30" height="30" alt="">
+                            <img  v-bind:src="itemImageURL(!this.$store.state.user.photo == '' ? this.$store.state.user.photo : 'unknown.png')" width="30" height="30" alt="">
                          </a>
                          <li v-if="isAuthenticated" class="navbar-item">
                              <router-link class="nav-item nav-link" to="edit">{{this.$store.state.user.name}}</router-link>

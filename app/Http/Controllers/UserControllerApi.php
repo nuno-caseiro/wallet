@@ -18,8 +18,8 @@ class UserControllerApi extends Controller
         if($request->has('page')){
             return UserResource::collection(User::paginate(5));
         }else{
-            return UserResource::collection(User::all());
-            // return UserResource::collection(User::paginate(5));
+            //return Resource::collection(User::all());
+            return UserResource::collection(User::paginate(5));
         }
 
 
@@ -124,7 +124,7 @@ class UserControllerApi extends Controller
         }
 
 
-        return UserResource::collection($query->get());
+        return UserResource::collection($query->paginate(5));
 
     }
 

@@ -128,6 +128,7 @@
 
 <style scoped>
 #row1{
+    margin-left: 5px;
     margin-top:20px;
 }
 #e{
@@ -136,6 +137,7 @@
 
 
 #row2{
+    margin-left: 5px;
     margin-top: 15px ;
     margin-bottom: 15px;
 }

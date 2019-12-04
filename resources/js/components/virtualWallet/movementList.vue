@@ -189,11 +189,11 @@ export default {
         },
 
          getMovements(url,move) {
-//if move e tal apply filter
+            //if move e tal apply filter
              if(move==="next"){
                  console.log(this.pagination.next_page_url);
                  if(this.pagination.next_page_url.includes("filter")){
-this.applyFilter(this.filters,'next');
+                    this.applyFilter(this.filters,'next');
                  }
 
              }else if(move==="previous"){
@@ -212,7 +212,7 @@ this.applyFilter(this.filters,'next');
                 .then(response => {
                     console.log(response);
                     this.movements = response.data.data;
-                        this.makePagination(response.data.meta, response.data.links);
+                    this.makePagination(response.data.meta, response.data.links);
                 })
              }
         },
