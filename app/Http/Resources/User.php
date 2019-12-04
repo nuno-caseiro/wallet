@@ -20,7 +20,7 @@ class User extends JsonResource
             'email' => $this->email,
             'type'=>$this->type,
             'active'=>$this->active,
-            'photo' =>$this->photo,
+            'photo' =>$this->photo  ?: ' ',
             'nif'=>$this->nif,
             'balance_status'=>$this->wallet ? $this->wallet->balance : " - ",
         ];

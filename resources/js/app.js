@@ -43,7 +43,7 @@ import UsersListComponent from "./components/users/usersList.vue";
 import UserAddComponent from "./components/users/userAdd.vue";
 import MovementFilterComponent from "./components/virtualWallet/movementsFilter.vue"
 import StatisticsComponent from "./components/statistics/statistics.vue"
-
+import UsersFilterComponent from "./components/users/usersFilter.vue"
 
 
 
@@ -64,6 +64,7 @@ const usersList=Vue.component('usersList',UsersListComponent);
 const movementFilter= Vue.component('movementsFilter',MovementFilterComponent);
 const userAdd= Vue.component('movementsFilter',UserAddComponent);
 const statistics = Vue.component('statistics',StatisticsComponent);
+const usersFilter = Vue.component('usersFilter',UsersFilterComponent);
 
 
 
@@ -140,12 +141,13 @@ const routes = [
         name: "userAdd",
         component: userAdd
     },
-
     {
         path:"/statistics",
         name: "statistics",
         component: statistics
-    }
+    },
+
+
 
 
 
@@ -174,6 +176,7 @@ const app = new Vue({
 
         },
         message_unavailable(destUser){
+          //TODO enviar mail
           this.$toasted.error('User"'+destUser.name+ '"is not available');
         },
         message_sent(dataFromServer){

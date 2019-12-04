@@ -14,12 +14,6 @@ class Movement extends JsonResource
      */
     public function toArray($request)
     {
-        // $wallet_transfer = Order::join('wallets', 'movements.wallet_id', '=', 'wallets.id')
-        //             ->select(DB::raw('wallets.id'))
-        //             ->where('movements.wallet_id', $this->wallet->id)
-        //             ->groupBy('wallets.id')
-        //             ->get();
-                    
         //TODO retficar julgo que alguns estao mal
         return ['id'=>$this->id,
             //acho que é $this->wallet->id
@@ -42,10 +36,8 @@ class Movement extends JsonResource
             'start_balance'=>$this->start_balance,
             'end_balance'=>$this->end_balance,
             'value'=>$this->value,
-            //$this->when(! is_null($this->details), $this->details),
             'category_name'=> $this->category ? $this->category->name : " - ",
-            // 'user_photo'=>$wallet_transfer->user->photo,
-            // 'movements' => $movements,
+            'photo_transfer'=>$this->transfer_wallet ? $this->transfer_wallet->user->photo : " "
 
             ];
     }

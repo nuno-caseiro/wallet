@@ -6,7 +6,7 @@
                <b-button size="lg" variant="dark" to="movementAdd" id="bt">Add Movement</b-button>
             </div>
 
-    {{this.wallet.balance}}
+            <h5 align="center"> Virtual Wallet Balance: {{this.wallet.balance}} </h5>
 
             <!-- <movement-list :movements="movements" v-on:transfer-info="transferMovement" v-on:edit-movement="editMovement"></movement-list> -->
             <movement-list v-on:refresh-wallet="getWallet" v-on:transfer-info="transferMovement" v-on:edit-movement="editMovement"></movement-list>

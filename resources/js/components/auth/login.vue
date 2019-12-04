@@ -1,6 +1,9 @@
 <template>
  <div class="login-page">
   <div class="form">
+    <div class="alert" :class="typeOfMessage" v-if="showMessage">
+            <strong>{{ message }}</strong>
+        </div>
     <div class="alert" :class="messageType" v-if="showMessage">
             <strong>{{ message }}</strong>
         </div>
@@ -25,7 +28,7 @@ export default {
         user:{email: '',
               password: ''
               },
-        messageType: "alert-success",
+        typeOfMessage: "",
         showMessage: false,
         message: "",
       }
@@ -33,7 +36,7 @@ export default {
 
     methods:{
       login(){
-         axios.post('/api/login',this.user)
+        axios.post('/api/login',this.user)
                 .then(response=>{
                   console.log(response);
                   let tokenType = response.data.token_type;
@@ -42,7 +45,7 @@ export default {
                   this.$store.commit('setToken', {token, tokenType, expiration});
                   this.$socket.emit('user_enter', this.$store.state.user);
                   console.log(token);
-                  this.typeofmsg = "alert-success";
+                  this.typeOfMessage = "alert-success";
                   this.message = "Login Successful";
                   this.showMessage = true;
                   setTimeout(() => {
@@ -55,9 +58,8 @@ export default {
                     })
          });
 
-      },
-
-      },
+      }
+  }
 }
 </script>
 

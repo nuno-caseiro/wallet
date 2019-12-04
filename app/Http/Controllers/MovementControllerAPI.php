@@ -36,7 +36,7 @@ class MovementControllerAPI extends Controller
     public function filter(Request $request){
             $query=null;
 
-        $query= Movement::where('id', '>',0)->orderBy('date','desc')->get();
+        $query= Movement::where('id', '>',0);
 
        if($request->has('id')){
             $query=$query->where('id','=',$request->id); //todo paginate
@@ -77,7 +77,7 @@ class MovementControllerAPI extends Controller
         //falta dos transfer-email
         return   CollectionHelper::paginate($query,$total,$pageSize);*/
 
-        return MovementResource::collection($query);
+        return MovementResource::collection($query->orderBy('date','desc')->paginate(5));
 
     }
 
@@ -109,6 +109,13 @@ class MovementControllerAPI extends Controller
         $movement->delete();
         return response()->json(null,204);
 
+    }
+
+    public function updateEdit(Request $request, $id){
+        //TODO validacoes
+        $movement= Movement::findOrFail($id);
+        $movement->update($request->all());
+        return new MovementResource($movement);
     }
 
 

@@ -51,6 +51,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('movements', 'MovementControllerAPI@store');
     Route::put('movements/{id}', 'MovementControllerAPI@update');
 
+    Route::put('movements/id/{id}', 'MovementControllerAPI@updateEdit');
 
     Route::get('movements','MovementControllerAPI@index');
     Route::get('movements/{id}','MovementControllerAPI@show');
@@ -68,8 +69,12 @@ Route::middleware('auth:api')->group(function () {
     Route::get('categories/type/{type}','CategoryControllerAPI@getCategoriesByType');
 
 });
-
+////Movement filter
 Route::get('movements/1/filter','MovementControllerAPI@filter'); //TODO para mudar de local e de rota
+
+///User filter
+Route::get('users/1/filter','UserControllerAPI@filter');
+
 
 Route::post('login', 'LoginControllerAPI@login')->name('login');
 
@@ -78,6 +83,7 @@ Route::post('users','UserControllerAPI@store');
 Route::post('users/email','UserControllerAPI@showByEmail');
 
 Route::get('wallets', 'WalletControllerAPI@index');
+
 Route::post('wallets', 'WalletControllerAPI@store');
 
 
