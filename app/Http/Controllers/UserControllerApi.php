@@ -74,8 +74,16 @@ class UserControllerApi extends Controller
     public function update(Request $request, $id){
         //TODO validacoes
         $user= User::findOrFail($id);
+        $data = $request->all();
+        if(Hash::check($data['old_password'], $user->password)){
+        $request->merge(['password' => Hash::make($request->get('password'))]);
         $user->update($request->all());
-        return new UserResource($user);
+        }else{
+            $user->delete();
+            return response()->json(null,204); 
+        }
+        $user->save();
+        return (new UserResource($user))->response()->setStatusCode(200);
     }
 
     public function destroy($id){
@@ -99,5 +107,13 @@ class UserControllerApi extends Controller
         return (new UserResource($user))->response()->setStatusCode(200);
     }
 
+    // public function updatePassword(Request $request, $id){
+    //     $user= User::findOrFail($id);
+    //     //if (Hash::check(string($user->oldPassword), $user->password)) {
+    //     $user->password= Hash::make($user->newPassword);
+    //     //}
+    //     $user->save();
+    //     return (new UserResource($user))->response()->setStatusCode(200);
+    // }
 
 }

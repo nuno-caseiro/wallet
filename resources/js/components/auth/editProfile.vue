@@ -13,9 +13,9 @@
       <input type="text" placeholder="NIF" v-model="userLogin.nif" >
       <input type="file" accept="userLogin.photo" @change="onFileSelected">
       
-      <input type="password" placeholder="old password" v-model="repeatPassword">
-      <input type="password" placeholder="new password" v-model="newPassword">
-      <input type="password" placeholder="confirm password" v-model="confirmPassword">
+      <input type="password" name="old_password"  placeholder="current password" v-model="user.old_password">
+      <input type="password" name="password" ref="password" placeholder="password" v-model="user.password" >
+      <input type="password" name="password_confirmation" placeholder="password confirmation" v-model="userLogin.password_confirmation">
 
       <button @click.prevent="saveUser()">Save Profile</button>
 
@@ -29,13 +29,17 @@ export default {
     name : 'Edit',
     data() {
       return {
+        user: {
+          password: '',
+          password_confirmation: '',
+          old_password: '',
+          password_check:'',
+        },
         currentUser:"",
         messageType: "alert-success",
         showMessage: false,
         message: "",
-        repeatPassword:null,
-        newPassword:null,
-        confirmPassword:null,
+        
 
       }
       },
@@ -52,34 +56,10 @@ export default {
                 return "storage/fotos/"+String(photo);
 
              },
-
         saveUser(){
-             if(this.userLogin.password===this.repeatPassword && this.newPassword===this.confirmPassword){
-
-
-                        this.newPassword = this.userLogin.password;
-                         
-                        this.userLogin.active=1;
-                        this.userLogin.type='u';
-                        console.log(this.currentUser);
-                        axios.put('/api/users/' + this.userLogin.id, this.userLogin)
-                            .then(response => {
-
-                                Object.assign(this.currentUser, response.data);
-                                this.showMessage = true;
-                                this.message = 'Edit completed with success';
-
-                            }).catch(error=>{
-                                console.log(error);
-                            });
-                                setTimeout(() => {
-                            this.$router.push("/")
-                        }, 1000);                
-
-             }
-
+                    axios.patch('/api/users/'+this.userLogin.id, this.user)
+                    console.log(this.user)
         },
-
          cancelEdit(){
              this.showSuccess = false;
             this.editingUser = false;
@@ -93,13 +73,13 @@ export default {
                      this.currentUser = null;
                  });
          },
-    
-
-      },
-      
+},
       computed: {
         userLogin() {
             return this.$store.state.user;
+        },
+        autenticatedUser() {
+            return this.$store.getters.getAuthUser
         },
       }
 }
