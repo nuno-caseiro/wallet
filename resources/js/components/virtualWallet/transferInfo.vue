@@ -5,7 +5,7 @@
                     <table class="table table-striped" >
                     <thead>
                         <tr>
-                        <th>Movements Info</th>
+                        <th>Information about movement [{{movement.id}}] : </th>
                         
                         </tr>
                     </thead>
