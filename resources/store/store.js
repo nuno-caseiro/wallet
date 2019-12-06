@@ -131,12 +131,12 @@ export default new Vuex.Store({
         setAuthUser({commit},data){
             commit('setAuthUser',data);
         },
-        loadUsers(context){
-            axios.get('api/users/')
-            .then(response=>{
-                 context.commit('setUser',response.data.data);
+    //     loadUsers(context){
+    //         axios.get('api/users/')
+    //         .then(response=>{
+    //              context.commit('setUser',response.data.data);
              
-        })
-    },
+    //     })
+    // },
     }
 });

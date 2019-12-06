@@ -49,6 +49,7 @@
                     Object.assign(this.movement, response.data.data);
                     this.$emit('edit-canceled', this.movement);
                 });
+                this.getCategories();
         },
         
         saveEdit(){
@@ -58,16 +59,21 @@
                 Object.assign(this.movement, response.data.data);
                 this.$emit('save-success', this.movement);
             })
+            this.getCategories();
+        },
+
+        getCategories(){
+            axios.get('api/categories/type/' + this.movement.type).then(response => {
+                    this.categories = response.data.data;
+                }).catch(error => {
+                    console.log(error);
+                });
         }
         
     },
 
     mounted(){
-        axios.get('api/categories/type/' + this.movement.type).then(response => {
-                    this.categories = response.data.data;
-                }).catch(error => {
-                    console.log(error);
-                });
+       this.getCategories();
     }
 
     }

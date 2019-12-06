@@ -18,6 +18,11 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
+    protected $policies = [
+        'App\Model' => 'App\Policies\ModelPolicy',
+        Post::class => PostPolicy::class,
+    ];
+    
     /**
      * Bootstrap any application services.
      *
