@@ -153,6 +153,7 @@
                 })
             },
             getSourceWallet: function () {
+
                 axios.get('api/wallets/'+this.$store.state.user.id).then(response=>{
                         this.wallet_source=response.data.data;
                         this.movement.wallet_id=this.wallet_source.id;
@@ -233,7 +234,7 @@
                             this.showSuccess = true;
                             ///redireciona para a pagina movements
                             setTimeout(() => {
-                                this.$router.push("/virtualWallet")}, 1000);
+                                this.$router.push("/")}, 1000);
                         }).catch(error => {
                             console.log(error);
                         });
