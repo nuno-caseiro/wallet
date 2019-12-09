@@ -84,6 +84,7 @@
 
                 <div class="form-group">
                     <b-button size="lg" variant="outline-success" @click.prevent="saveMovement()">Save</b-button>
+                    <b-button size="lg" variant="outline-danger" @click.prevent="cancelAdd()">Cancel</b-button>
                 </div>
 
             </div>
@@ -289,7 +290,7 @@
                         this.showSuccess = true;
                         ///redireciona para a pagina movements
                         setTimeout(() => {
-                            this.$router.push("/virtualWallet")}, 1000);
+                            this.$router.push("/virtualWallet")}, 400);
                     }).catch(error=>{
                         console.log(error);
                     })
@@ -336,6 +337,55 @@
                 setTimeout(() => {
                         this.$router.push("/")}, 1000);*/
 
+            },
+            cancelAdd(){
+                this.wallets=null;
+
+                this.wallet_source.id='';
+                this.wallet_source.balance='';
+
+                this.wallet_dest.id='';
+                this.wallet_dest.balance='';
+
+                this.movement.id='';
+                this.movement.wallet_id='';
+                this.movement.type='';
+                this.movement.transfer=false,
+                this.movement.transfer_movement_id='';
+                this.movement.transfer_wallet_id='';
+                this.movement.type_payment=null;
+                this.movement.category_id=null;
+                this.movement.iban='';
+                this.movement.mb_entity_code='';
+                this.movement.mb_payment_reference='';
+                this.movement.description='';
+                this.movement.source_description='';
+                this.movement.date='';
+                this.movement.start_balance='';
+                this.movement.end_balance='';
+                this.movement.value='';
+
+                this.movement_dest.id='';
+                this.movement_dest.wallet_id='';
+                this.movement_dest.type='';
+                this.movement_dest.transfer=false,
+                this.movement_dest.transfer_movement_id='';
+                this.movement_dest.transfer_wallet_id='';
+                this.movement_dest.type_payment=null,
+                this.movement_dest.category_id=null;
+                this.movement_dest.iban='';
+                this.movement_dest.mb_entity_code='';
+                this.movement_dest. mb_payment_reference='';
+                this.movement_dest.description='';
+                this.movement_dest.source_description='';
+                this.movement_dest.date='';
+                this.movement_dest.start_balance='';
+                this.movement_dest.end_balance='';
+                this.movement_dest.value="";
+                this.categories = null;
+
+                setTimeout(() => {
+                    this.$router.push("/virtualWallet")}, 10);
             }
 
 
