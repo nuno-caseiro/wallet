@@ -7,12 +7,16 @@
 	    <h2>Add User</h2>
 	    <div class="form-group">
 	        <label for="inputName">Name</label>
-	        <input type="text" class="form-control"  id="inputName" placeholder="Name" name="name" v-model="user.name"/>
+	        <input type="text" class="form-control"  id="inputName" placeholder="Name" name="name" v-model="$v.user.name.$model"/>
+            <div class="error" v-if="!$v.user.name.required">Field is required</div>
+            <div class="error" v-if="!$v.user.name.minLength">Name must have at least {{$v.user.name.$params.minLength.min}} letters.</div> 
 	    </div>
         
 	    <div class="form-group">
 	        <label for="inputEmail">Email</label>
-	        <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" v-model="user.email"/>
+	        <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" v-model="$v.user.email.$model"/>
+            <div class="error" v-if="!$v.user.email.required">Field is required</div>
+            <div class="error" v-if="!$v.user.email.email">E-mail must be valid</div>
 	    </div>
         <div class="form-group">
             <label for="photo">Photo</label>
@@ -22,14 +26,17 @@
         </div>
         <div class="form-group">
                     <label for="userType">Choose user type</label>
-                    <select class="form-control" id="userType" name="userType" v-model="user.type">
+                    <select class="form-control" id="userType" name="userType" v-model="$v.user.type.$model">
                         <option value="a">Administrator</option>
                         <option value="o">Operator</option>
                     </select>
+                    <div class="error" v-if="!$v.user.type.required">Field is required</div>
                 </div>	    
         <div class="form-group">
 	        <label for="inputNIF">Password</label>
-	        <input type="password" class="form-control" id="inputPassword" name="nif" v-model="user.password"/>
+	        <input type="password" class="form-control" id="inputPassword" name="nif" v-model="$v.user.password.$model"/>
+            <div class="error" v-if="!$v.user.password.required">Field is required</div>
+            <div class="error" v-if="!$v.user.password.minLength">Name must have at least {{$v.user.password.$params.minLength.min}} letters.</div> 
 	    </div>
         <b-button-group>
 	        <b-button variant="outline-success" @click.prevent="saveUser()">Save</b-button>
@@ -40,6 +47,7 @@
 </template>
 
 <script>
+import { email, required, minLength, between } from 'vuelidate/lib/validators'
 export default {
     data() {
         return {
@@ -82,7 +90,39 @@ export default {
             this.user = {}
             this.showSuccess = false
             this.$router.push("/users")
+        },
+       
+    }, 
+    validations: {
+        user:{
+            name: {
+            required,
+            minLength: minLength(4)
+            },
+
+            email: {
+                required,
+                email,
+
+
+            },
+
+            type: {
+                required,
+            },
+
+            password: {
+                required,
+                minLength: minLength(3)
+            }
         }
-    },
+    }
+
 }
 </script>
+<style scoped>
+.error {
+    display: block;
+    color: #f57f6c;
+}
+</style>
