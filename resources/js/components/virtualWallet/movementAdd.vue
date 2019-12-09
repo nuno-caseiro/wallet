@@ -9,11 +9,12 @@
 
                 <div class="form-group">
                     <label for="movementType">Movement type</label>
-                    <select class="form-control" id="movementType" name="movementType" v-model="movement.type" @change="getCategories()"  >
-                        <option></option>
+                    <select class="form-control" id="movementType" name="movementType" v-model="$v.movement.type.$model" @change="getCategories()"  >
                         <option v-if="isOperator"  value="i">Income</option>
                         <option v-if="isUser" value="e">Expense</option>
                     </select>
+                    <div class="error" v-if="!$v.movement.type.required">Field is required</div>
+
                 </div>
 
                 <div class="form-group" v-if="isUser">
@@ -31,8 +32,10 @@
 
                 <div class="form-group">
                     <label for="value">Value</label>
-                    <input type="number" class="form-control" v-model="movement.value" name="value" id="value" step="0.01" @input="setFinalBalance()">
+                    <input type="number" class="form-control" v-model="$v.movement.value.$model" name="value" id="value" step="0.01" @input="setFinalBalance()">
+                <div class="error" v-if="!$v.movement.value.required">Field is required</div>
                 </div>
+
 
                 <div v-if="movement.transfer===false" class="form-group">
                     <label for="typePayment">Payment type</label>
@@ -55,7 +58,10 @@
 
                 <div v-if="movement.type_payment==='bt'" class="form-group">
                     <label for="iban">IBAN</label>
-                    <input type="number" class="form-control" v-model="movement.iban" name="iban" id="iban">
+                    <input type="number" class="form-control" v-model="$v.movement.iban.$model" name="iban" id="iban">
+                    <div class="error" v-if="!$v.movement.iban.required">Field is required</div>
+                    <div class="error" v-if="!$v.movement.iban.ibanValid">xxxx</div>
+
                 </div>
 
                 <div v-if="movement.type_payment==='mb'" class="form-group">
@@ -86,11 +92,12 @@
 </template>
 
 <script>
-    import * as moment from "moment";
+    import { helpers,required, minLength, between, requiredIf } from 'vuelidate/lib/validators'
 
     export default {
         data(){
             return{
+
                 wallets:[],
                 wallet_source:{
                     id:'',
@@ -145,6 +152,28 @@
 
             }
 
+        },
+        validations:{
+
+            movement:{
+                value:{
+                    required,
+                },
+                type:{
+                    required,
+                },
+                iban:{
+                    required: requiredIf(function(movement){
+                        return this.movement.type_payment==='bt';
+                    }),
+                    ibanValid:(movement)=>{
+                        return helpers.regex('[A-Z]{2}[0-9]{23}')
+
+                            }
+
+                }
+
+            }
         },
         methods: {
             getWallets(){
@@ -346,5 +375,8 @@
 </script>
 
 <style scoped>
-
+    .error {
+        display: block;
+        color: #f57f6c;
+    }
 </style>
