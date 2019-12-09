@@ -5,6 +5,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import VueSocketIO from "vue-socket.io";
 import VueRouter from 'vue-router';
 import Toasted from 'vue-toasted';
+import Vuelidate from 'vuelidate'
 
 
 
@@ -22,7 +23,10 @@ Vue.use(Toasted,{
     position: 'top-right', //pode ser top-right, top-center, top-left, bottom-right, bottom-center, bottom-left
     duration: 5000,
     type: 'info',
-})
+});
+
+Vue.use(Vuelidate);
+
 
 
 import store from '../store/store.js';
@@ -85,31 +89,31 @@ axios.defaults.headers.common['Authorization'] = 'Bearer ' + store.getters.getTo
 
 
 const routes = [
-    { 
+    {
         path: "/",
         name:"Home",
         component : welcome
     },
 
-    {   
+    {
         path: "/login",
         name:"Login",
         component : login
     },
 
-    {   
+    {
         path: "/logout",
         name:"Logout",
         component : logout
     },
 
-    {   
+    {
         path: "/register",
         name:"Register",
         component : register
     },
 
-    { 
+    {
         path: "*",
         component : notFound
     },
