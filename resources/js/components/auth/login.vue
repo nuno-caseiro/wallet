@@ -11,7 +11,7 @@
       <input type="text" placeholder="email" v-model="$v.user.email.$model" >
 
       <div class="error" v-if="!$v.user.password.required">Field is required</div>
-      <div class="error" v-if="!$v.user.password.minLength">Name must have at least {{$v.user.password.$params.minLength.min}} letters.</div> 
+      <div class="error" v-if="!$v.user.password.minLength">Password must have at least {{$v.user.password.$params.minLength.min}} letters.</div> 
       <input type="password" placeholder="password" v-model="$v.user.password.$model">
       <button v-on:click.prevent="login()">Login</button>
       <p class="message">Not registered?<router-link to="register" class="button"> Create an account</router-link></p>
@@ -22,7 +22,7 @@
 </template>
 
 <script type="text/javascript">
-import { email, required, minLength, between } from 'vuelidate/lib/validators'
+import { email, required, minLength } from 'vuelidate/lib/validators'
 import axios from 'axios';
 export default {
     name : 'Login',
@@ -84,8 +84,8 @@ export default {
  @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 .login-page {
-  width: 360px;
-  padding: 8% 0 0;
+  max-width: 360px;
+  padding: 1% 0 0;
   margin: auto;
 }
 .form {

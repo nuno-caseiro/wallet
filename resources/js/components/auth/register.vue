@@ -11,13 +11,51 @@
 
             <div class="login-form">
                 <h2>Register</h2>
-                <input type="text" placeholder="name" v-model="user.name" >
-                <input type="text" placeholder="email" v-model="user.email" >
-                <input type="text" placeholder="NIF" v-model="user.nif">
-                <input class="form-data" name="photo" accept="image/*" type="file" @change="onFileSelected">
-                <input type="password" placeholder="password" v-model="user.password">
-                <input type="password" placeholder="confirm password" v-model="user.password_confirmation">
-                <button v-on:click.prevent="register">Register</button>
+
+                
+                <div id="div">
+                    <label>Name</label>
+                    <input type="text" placeholder="name" v-model="$v.user.name.$model" >
+                    <div class="error" v-if="!$v.user.name.required">Field is required</div>
+                    <div class="error" v-if="!$v.user.name.minLength">Name must have at least {{$v.user.name.$params.minLength.min}} letters.</div>
+                </div>
+
+                <div  id="div">
+                    <label>E-mail</label>
+                    <input type="text" placeholder="email" v-model="$v.user.email.$model" >
+                    <div class="error" v-if="!$v.user.email.required">Field is required</div>
+                    <div class="error" v-if="!$v.user.email.email">E-mail must be valid</div>
+                </div>
+
+                <div  id="div">
+                    <label>NIF</label>
+                    <input type="number" placeholder="NIF" v-model="$v.user.nif.$model"> 
+                    <div class="error" v-if="!$v.user.nif.required">Field is required</div>
+                    <!-- <div class="error" v-if="!$v.user.nif.numeric">Nif has only numbers.</div> -->
+                    <div class="error" v-if="!$v.user.nif.minLength">NIF must have at least {{$v.user.nif.$params.minLength.min}} numbers.</div> 
+                </div>
+
+                <div id="div">
+                    <label>Select a photo from your computer storage</label>                   
+                    <input class="form-data" name="photo" accept="image/*" type="file" @change="onFileSelected">
+                </div>
+
+                <div id="div">
+                    <label>Password</label>
+                    <input type="password" placeholder="password" v-model.trim="$v.user.password.$model">
+                    <div class="error" v-if="!$v.user.password.required">Field is required</div>
+                    <div class="error" v-if="!$v.user.password.minLength">Password must have at least {{$v.user.password.$params.minLength.min}} digits.</div> 
+                </div>
+                
+                <div id="div">
+                    <label>Password Confirmation</label>
+                    <input type="password" placeholder="confirm password" v-model.trim="$v.user.password_confirmation.$model">
+                    <div class="error" v-if="!$v.user.password_confirmation.sameAsPassword">Don´t match with password you entered before.</div>
+                </div>
+
+                <div id= "div">
+                   <button v-on:click.prevent="register">Register</button>
+                </div>
             </div>
         </div>
     </div>
@@ -25,6 +63,7 @@
 
 <script type="text/javascript">
     import axios from 'axios';
+    import { numeric,email, required, minLength, sameAs } from 'vuelidate/lib/validators';
     export default {
         name : 'Register',
         data() {
@@ -58,6 +97,35 @@
                 messageDanger: "",
             }
         },
+        validations:{
+            user:{
+                name: {
+                    required,
+                    minLength: minLength(4)
+                },
+
+                email: {
+                    required,
+                    email,
+                },
+
+                nif: {
+                    required,
+                    numeric,
+                    minLength: minLength(9)
+                },
+
+
+                password: {
+                    required,
+                    minLength: minLength(3)
+                },
+                
+                password_confirmation: {
+                    sameAsPassword: sameAs('password')
+                }
+            }
+    },
         methods:{
             onFileSelected(event){
                 let fileReader = new FileReader();
@@ -90,7 +158,7 @@
                             console.log(this.wallet.id);
                             Object.assign(this.wallet, response.data);
                              setTimeout(() => {
-                        this.$router.push("/login")
+                        this.$router.push("/")
                     }, 1000);
 
                         }).catch(error=>{
@@ -100,10 +168,11 @@
                     }).catch(error=>{
                         console.log(error);
                     });
-                }else{
-                    this.showMessageDanger=true;
-                    this.messageDanger="Your passwords don't match";
                 }
+                // else{
+                //     this.showMessageDanger=true;
+                //     this.messageDanger="Your passwords don't match";
+                // }
 
 
             },
@@ -119,16 +188,16 @@
     @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
     .login-page {
-        width: 360px;
-        padding: 8% 0 0;
+        width: 500px;
+        padding: 1% 0 0;
         margin: auto;
     }
     .form {
         position: relative;
         z-index: 1;
         background: #FFFFFF;
-        max-width: 360px;
-        margin: 0 auto 100px;
+        max-width: 500px;
+        // margin: 0 auto 100px;
         padding: 45px;
         text-align: center;
         box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
@@ -139,7 +208,7 @@
         background: #f2f2f2;
         width: 100%;
         border: 0;
-        margin: 0 0 15px;
+        margin: 0 0 0px;
         padding: 15px;
         box-sizing: border-box;
         font-size: 14px;
@@ -185,7 +254,7 @@
         clear: both;
     }
     .container .info {
-        margin: 50px auto;
+        margin:auto;
         text-align: center;
     }
     .container .info h1 {
@@ -216,4 +285,16 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
+    .error {
+    display: block;
+    color: #f57f6c;
+    }
+
+    #div{
+        margin-top: 23px;
+    }
+
+
+    
+
 </style>
