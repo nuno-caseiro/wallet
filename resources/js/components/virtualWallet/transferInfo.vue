@@ -5,12 +5,12 @@
                     <table class="table table-striped" >
                     <thead>
                         <tr>
-                        <th>Movements Info</th>
+                        <th>Information about movement [{{movement.id}}] : </th>
                         
                         </tr>
                     </thead>
                     <tbody >
-                            <tr v-if="movement.transfer === 1 ">Destination Transfer User Photo:<img  v-bind:src="itemImageURL(!movement.photo_transfer==='' ? movement.photo_transfer : 'unknown.png')" width="50" height="50" alt=""></tr>
+                            <tr v-if="movement.transfer === 1 ">Destination Transfer User Photo:<img  v-bind:src="itemImageURL(!movement.photo_transfer=='' ? movement.photo_transfer : 'unknown.png')" width="50" height="50" alt=""></tr>
 
                             <tr>Description: {{movement.description}}</tr>
                             

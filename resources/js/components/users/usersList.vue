@@ -23,7 +23,7 @@
             <td v-if="user.type==='o'">{{"Operator"}}</td>
             <td v-if="user.type==='u'">{{"User"}}</td> 
             <td>{{ user.name }}</td>
-            <td><img  v-bind:src="itemImageURL(user.photo)" width="30" height="30" alt=""></td>
+            <td><img  v-bind:src="itemImageURL(!user.photo == '' ? user.photo : 'unknown.png')" width="30" height="30" alt=""></td>
 			<td>{{ user.email }}</td>
             <td>
             <a v-if="user.type==='u'" >{{ user.active === 1 ? 'Active' : ' Inactive ' }}</a>
@@ -52,10 +52,25 @@
             <td v-if="user.type==='o'"> <b-button  variant="danger" @click.prevent="deleteUser(user)">Delete  </b-button></td>
             <td v-if="isAuthUser(user)">Your Account</td>
 
-        </tr>
-      </tbody>
-    </table>
-</div>
+            </tr>
+        </tbody>
+        </table>
+
+
+        <ul class="pagination">
+                <li v-bind:class="[{disabled: !pagination.prev_page_url}]"
+                    class="page-item"><a class="page-link" href="#"
+                                        @click="getUsers(pagination.prev_page_url,'previous')">Previous</a></li>
+
+                <li class="page-item disabled"><a class="page-link" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
+
+                <li v-bind:class="[{disabled: !pagination.next_page_url}]"
+                    class="page-item"><a class="page-link" href="#"
+                                        @click="getUsers(pagination.next_page_url,'next')">Next</a></li>
+        </ul>
+
+
+    </div>
 </template>
 
 
@@ -65,20 +80,35 @@ import UsersFilter from './usersFilter.vue';
 export default {
     data() {
         return {
-            selectedMovement: null,
             users:[],
             filters:null,
+            pagination:{},
+            filters:'',
         }      
     },
    methods:{
-        getUsers(){
-           axios.get('api/users/')
-           .then(response=>{
+        getUsers(url, action){
+        if(action==="next"){
+            if(this.pagination.next_page_url.includes("filter")){
+                    this.applyFilter(this.filters,'next');
+            }
+        }else if(action==="previous"){
+            if(this.pagination.prev_page_url.includes("filter")){
+                     this.applyFilter(this.filters,'previous');
+                 }
+        }
+
+        if(this.filters===''){
+            let page_url = url || 'api/users/';
+            axios.get(page_url)
+            .then(response=>{
                 console.log(response);
                 this.users=response.data.data;
+                this.makePagination(response.data.meta, response.data.links);
             }).catch(function(err){
                 console.log(err);
             });
+        }
         },
         itemImageURL(photo){
                 return "storage/fotos/"+String(photo);
@@ -113,7 +143,7 @@ export default {
             })
         },
 
-        applyFilter(filters){
+        applyFilter(filters, action){
             this.filters=filters;
             //string builder
             let stringFilter='?';
@@ -143,20 +173,49 @@ export default {
                 }
                 stringFilter+='active='+filters.active;
             }
+         
+            if(action==="next"){
+                if(this.pagination.next_page_url.includes("page") ){
+                    let substring = this.pagination.next_page_url.split("?");
+                    console.log(substring);
+                    stringFilter+='&'+substring[1];
+                    console.log(stringFilter);
+                }
+            }
+            if(action==="previous"){
+                if(this.pagination.prev_page_url.includes("page") ){
+                    let substring = this.pagination.prev_page_url.split("?");
+                    //console.log(substring[0]);
+                    stringFilter+='&'+substring[1];
+                    console.log(stringFilter);
+                }
+            }
+
         console.log(stringFilter);
             axios.get('api/users/1/filter/'+stringFilter)
                 .then(response => {
                     console.log(response);
                     this.users = response.data.data;
-
+                    this.makePagination(response.data.meta, response.data.links);
                 })
 
 
         },
 
         cleanFilter(){
+            this.filters='';
             this.getUsers();
-        }
+        },
+
+        makePagination(meta, links) {
+            let pagination = {
+                current_page: meta.current_page,
+                last_page: meta.last_page,
+                next_page_url: links.next,
+                prev_page_url: links.prev,
+            };
+            this.pagination = pagination
+        },
 
 
              

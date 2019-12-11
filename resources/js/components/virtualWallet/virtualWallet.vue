@@ -6,10 +6,14 @@
                <b-button size="lg" variant="dark" to="movementAdd" id="bt">Add Movement</b-button>
             </div>
 
-            <h5 align="center"> Virtual Wallet Balance: {{this.wallet.balance}} </h5>
+            <div v-if="!editingMovement" id="wallet">
+               <!-- <h5 align="center"> Virtual Wallet Balance: {{this.wallet.balance}} </h5> -->
+               <b-button size="lg" align="center" disabled variant="dark"> Virtual Wallet Balance: {{this.wallet.balance}}</b-button>
+            </div>
+            
 
             <!-- <movement-list :movements="movements" v-on:transfer-info="transferMovement" v-on:edit-movement="editMovement"></movement-list> -->
-            <movement-list v-on:refresh-wallet="getWallet" v-on:transfer-info="transferMovement" v-on:edit-movement="editMovement"></movement-list>
+            <movement-list v-if="!editingMovement"  v-on:refresh-wallet="getWallet" v-on:transfer-info="transferMovement" v-on:edit-movement="editMovement"></movement-list>
             <movement-edit :movement="currentMovement" v-on:edit-canceled="cancelEdit"  v-on:save-success="saveEdit" v-if="currentMovement" ></movement-edit>
             <transfer-info :movement="currentTransfer" v-on:exit-info="exitInfo" v-if="currentTransfer"></transfer-info>
 
@@ -88,12 +92,14 @@ import MovementFilter from './movementsFilter.vue';
         cancelEdit(){
             this.currentMovement = false;
             this.showSuccess=false;
+            this.editingMovement = false;
         },
 
         saveEdit(){
             this.currentMovement = false;
             this.showSuccess=true;
             this.successMessage='Movement Edited with Success';
+            this.editingMovement = false;
         },
 
         exitInfo(){
@@ -137,5 +143,14 @@ import MovementFilter from './movementsFilter.vue';
     margin-bottom: -20px;
 }
 
+/* h5 {
+ background-color: rgb(241, 241, 241);
+ } */
+
+#wallet{
+
+     text-align:center;
+   
+}
 
 </style>

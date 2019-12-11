@@ -9,11 +9,12 @@
 
                 <div class="form-group">
                     <label for="movementType">Movement type</label>
-                    <select class="form-control" id="movementType" name="movementType" v-model="movement.type" @change="getCategories()"  >
-                        <option></option>
+                    <select class="form-control" id="movementType" name="movementType" v-model="$v.movement.type.$model" @change="getCategories()"  >
                         <option v-if="isOperator"  value="i">Income</option>
                         <option v-if="isUser" value="e">Expense</option>
                     </select>
+                    <div class="error" v-if="!$v.movement.type.required">Field is required</div>
+
                 </div>
 
                 <div class="form-group" v-if="isUser">
@@ -31,8 +32,10 @@
 
                 <div class="form-group">
                     <label for="value">Value</label>
-                    <input type="number" class="form-control" v-model="movement.value" name="value" id="value" step="0.01" @input="setFinalBalance()">
+                    <input type="number" class="form-control" v-model="$v.movement.value.$model" name="value" id="value" step="0.01" @input="setFinalBalance()">
+                <div class="error" v-if="!$v.movement.value.required">Field is required</div>
                 </div>
+
 
                 <div v-if="movement.transfer===false" class="form-group">
                     <label for="typePayment">Payment type</label>
@@ -55,7 +58,10 @@
 
                 <div v-if="movement.type_payment==='bt'" class="form-group">
                     <label for="iban">IBAN</label>
-                    <input type="number" class="form-control" v-model="movement.iban" name="iban" id="iban">
+                    <input type="number" class="form-control" v-model="$v.movement.iban.$model" name="iban" id="iban">
+                    <div class="error" v-if="!$v.movement.iban.required">Field is required</div>
+                    <div class="error" v-if="!$v.movement.iban.ibanValid">xxxx</div>
+
                 </div>
 
                 <div v-if="movement.type_payment==='mb'" class="form-group">
@@ -78,6 +84,7 @@
 
                 <div class="form-group">
                     <b-button size="lg" variant="outline-success" @click.prevent="saveMovement()">Save</b-button>
+                    <b-button size="lg" variant="outline-danger" @click.prevent="cancelAdd()">Cancel</b-button>
                 </div>
 
             </div>
@@ -86,11 +93,12 @@
 </template>
 
 <script>
-    //import * as moment from "moment";
+    import { helpers,required, minLength, between, requiredIf } from 'vuelidate/lib/validators'
 
     export default {
         data(){
             return{
+
                 wallets:[],
                 wallet_source:{
                     id:'',
@@ -146,6 +154,28 @@
             }
 
         },
+        validations:{
+
+            movement:{
+                value:{
+                    required,
+                },
+                type:{
+                    required,
+                },
+                iban:{
+                    required: requiredIf(function(movement){
+                        return this.movement.type_payment==='bt';
+                    }),
+                    ibanValid:(movement)=>{
+                        return helpers.regex('[A-Z]{2}[0-9]{23}')
+
+                            }
+
+                }
+
+            }
+        },
         methods: {
             getWallets(){
                 axios.get('api/wallets').then(response=>{
@@ -153,6 +183,7 @@
                 })
             },
             getSourceWallet: function () {
+
                 axios.get('api/wallets/'+this.$store.state.user.id).then(response=>{
                         this.wallet_source=response.data.data;
                         this.movement.wallet_id=this.wallet_source.id;
@@ -233,7 +264,7 @@
                             this.showSuccess = true;
                             ///redireciona para a pagina movements
                             setTimeout(() => {
-                                this.$router.push("/virtualWallet")}, 1000);
+                                this.$router.push("/")}, 1000);
                         }).catch(error => {
                             console.log(error);
                         });
@@ -259,7 +290,7 @@
                         this.showSuccess = true;
                         ///redireciona para a pagina movements
                         setTimeout(() => {
-                            this.$router.push("/virtualWallet")}, 1000);
+                            this.$router.push("/virtualWallet")}, 400);
                     }).catch(error=>{
                         console.log(error);
                     })
@@ -306,6 +337,55 @@
                 setTimeout(() => {
                         this.$router.push("/")}, 1000);*/
 
+            },
+            cancelAdd(){
+                this.wallets=null;
+
+                this.wallet_source.id='';
+                this.wallet_source.balance='';
+
+                this.wallet_dest.id='';
+                this.wallet_dest.balance='';
+
+                this.movement.id='';
+                this.movement.wallet_id='';
+                this.movement.type='';
+                this.movement.transfer=false,
+                this.movement.transfer_movement_id='';
+                this.movement.transfer_wallet_id='';
+                this.movement.type_payment=null;
+                this.movement.category_id=null;
+                this.movement.iban='';
+                this.movement.mb_entity_code='';
+                this.movement.mb_payment_reference='';
+                this.movement.description='';
+                this.movement.source_description='';
+                this.movement.date='';
+                this.movement.start_balance='';
+                this.movement.end_balance='';
+                this.movement.value='';
+
+                this.movement_dest.id='';
+                this.movement_dest.wallet_id='';
+                this.movement_dest.type='';
+                this.movement_dest.transfer=false,
+                this.movement_dest.transfer_movement_id='';
+                this.movement_dest.transfer_wallet_id='';
+                this.movement_dest.type_payment=null,
+                this.movement_dest.category_id=null;
+                this.movement_dest.iban='';
+                this.movement_dest.mb_entity_code='';
+                this.movement_dest. mb_payment_reference='';
+                this.movement_dest.description='';
+                this.movement_dest.source_description='';
+                this.movement_dest.date='';
+                this.movement_dest.start_balance='';
+                this.movement_dest.end_balance='';
+                this.movement_dest.value="";
+                this.categories = null;
+
+                setTimeout(() => {
+                    this.$router.push("/virtualWallet")}, 10);
             }
 
 
@@ -345,5 +425,8 @@
 </script>
 
 <style scoped>
-
+    .error {
+        display: block;
+        color: #f57f6c;
+    }
 </style>

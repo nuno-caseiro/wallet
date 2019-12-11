@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,7 +17,7 @@ use Illuminate\Http\Request;
 });
 */
 Route::middleware('auth:api')->group(function () {
-
+    // get auth user
     Route::get('/user',function (Request $request){
         return $request->user();
     });
@@ -41,6 +40,7 @@ Route::middleware('auth:api')->group(function () {
     //activate User
     Route::patch('user/activate/{id}', 'UserControllerAPI@activate');
 
+    Route::get('oauth_access_tokens','UserControllerAPI@show');
 
     Route::delete('wallets/{id}', 'WalletControllerAPI@delete');
 

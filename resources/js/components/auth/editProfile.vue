@@ -8,16 +8,61 @@
     <form class="login-form">
       <img  v-bind:src="itemImageURL(userLogin.photo)" width="110" height="110" alt="" >
       <h3>Edit Profile</h3><label v-text="userLogin.email"></label>
-      <input type="text" placeholder="name" v-model="userLogin.name" >
-        
-      <input type="text" placeholder="NIF" v-model="userLogin.nif" >
-      <input type="file" accept="userLogin.photo" @change="onFileSelected">
-      
-      <input type="password" name="old_password"  placeholder="current password" v-model="user.old_password">
-      <input type="password" name="password" ref="password" placeholder="password" v-model="user.password" >
-      <input type="password" name="password_confirmation" placeholder="password confirmation" v-model="userLogin.password_confirmation">
+                
+                <div id="div">
+                    <label>Name</label>
+                    <input type="text" placeholder="name" v-model="$v.userLogin.name.$model" >
+                    <div class="error" v-if="!$v.userLogin.name.required">Field is required</div>
+                    <div class="error" v-if="!$v.userLogin.name.minLength">Name must have at least {{$v.user.name.$params.minLength.min}} letters.</div>
+                </div>
 
-      <button @click.prevent="saveUser()">Save Profile</button>
+                <div  id="div">
+                    <label>E-mail</label>
+                    <input type="text" placeholder="email" v-model="$v.userLogin.email.$model" >
+                    <div class="error" v-if="!$v.userLogin.email.required">Field is required</div>
+                    <div class="error" v-if="!$v.userLogin.email.email">E-mail must be valid</div>
+                </div>
+
+                <div  id="div" v-if="userLogin.type =='u'">
+                    <label>NIF</label>
+                    <input type="number" placeholder="NIF" v-model="$v.userLogin.nif.$model"> 
+                    <div class="error" v-if="!$v.userLogin.nif.required">Field is required</div>
+                    <!-- <div class="error" v-if="!$v.user.nif.numeric">Nif has only numbers.</div> -->
+                    <div class="error" v-if="!$v.userLogin.nif.minLength">NIF must have at least {{$v.userLogin.nif.$params.minLength.min}} numbers.</div> 
+                </div>
+
+                <div  id="div" v-if="userLogin.type =='a' || userLogin.type =='o'">
+                    <label>NIF</label>
+                    <input type="number" placeholder="NIF" v-model="$v.userLogin.nif.$model"> 
+                    <div class="error" v-if="!$v.userLogin.nif.minLength">NIF must have at least {{$v.userLogin.nif.$params.minLength.min}} numbers.</div> 
+                </div>
+
+                <div id="div">
+                    <label>Select a photo from your computer storage</label>                   
+                    <input class="form-data" name="photo" accept="image/*" type="file" @change="onFileSelected">
+                </div>
+
+                <div id="div">
+                    <label>Old pasword</label>
+                    <input type="password" placeholder="old password" v-model="$v.repeatPassword.$model">
+                    <div class="error" v-if="!$v.repeatPassword.required && !userLogin.type === 'u'">Field is required</div>
+                    <div class="error" v-if="!$v.repeatPassword.minLength">Password must have at least {{$v.repeatPassword.$params.minLength.min}} digits.</div> 
+                </div>
+                <div id="div">
+                    <label>New password</label>
+                    <input type="password" placeholder="new password" v-model="$v.newPassword.$model">
+                    <div class="error" v-if="!$v.newPassword.required">Field is required</div>
+                    <div class="error" v-if="!$v.newPassword.minLength">Password must have at least {{$v.newPassword.$params.minLength.min}} digits.</div> 
+                </div>
+                <div id="div">
+                    <label>Confirm new password</label>
+                    <input type="password" placeholder="confirm password" v-model="$v.confirmPassword.$model">
+                    <div class="error" v-if="!$v.confirmPassword.sameAsnewPassword">Don´t match with password you entered before.</div>
+                </div>
+
+              <div id="div">
+              <button @click.prevent="saveUser()">Save Profile</button>
+              </div>
 
     </form>
   </div>
@@ -25,6 +70,7 @@
 </template>
 <script type="text/javascript">
 import axios from 'axios';
+import { numeric,email, required, minLength, sameAs } from 'vuelidate/lib/validators'
 export default {
     name : 'Edit',
     data() {
@@ -42,6 +88,38 @@ export default {
         
 
       }
+      },
+      validations:{
+            userLogin:{
+                name: {
+                    required,
+                    minLength: minLength(4)
+                },
+
+                email: {
+                    required,
+                    email,
+                },
+
+                nif: {
+                    required,
+                    numeric,
+                    minLength: minLength(9)
+                },
+            },
+            repeatPassword: {
+                   required,
+                  minLength: minLength(3)
+            },
+
+           newPassword: {
+                    required,
+                    minLength: minLength(3)
+                },
+                
+          confirmPassword: {
+                    sameAsnewPassword: sameAs('newPassword')
+                }
       },
       methods:{
          onFileSelected(event){
@@ -89,7 +167,7 @@ export default {
  @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 .login-page {
-  width: 360px;
+  width: 500px;
   padding: 8% 0 0;
   margin: auto;
 }
@@ -97,7 +175,7 @@ export default {
   position: relative;
   z-index: 2;
   background: #FFFFFF;
-  max-width: 700px;
+  max-width: 500px;
   margin: 0 auto 100px;
   padding: 45px;
   text-align: center;
@@ -110,7 +188,7 @@ export default {
   background: #f2f2f2;
   width: 100%;
   border: 0;
-  margin: 0 0 15px;
+  margin: 0 0 0px;
   padding: 15px;
   box-sizing: border-box;
   font-size: 14px;
@@ -187,4 +265,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+ .error {
+    display: block;
+    color: #f57f6c;
+    }
+
+    #div{
+        margin-top: 23px;
+    }
+
 </style>

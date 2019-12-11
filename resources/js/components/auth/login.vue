@@ -4,13 +4,15 @@
     <div class="alert" :class="typeOfMessage" v-if="showMessage">
             <strong>{{ message }}</strong>
         </div>
-    <div class="alert" :class="messageType" v-if="showMessage">
-            <strong>{{ message }}</strong>
-        </div>
     <form class="login-form">
       <h2>Login</h2>
-      <input type="text" placeholder="email" v-model="user.email" >
-      <input type="password" placeholder="password" v-model="user.password">
+      <div class="error" v-if="!$v.user.email.required">Field is required</div>
+      <div class="error" v-if="!$v.user.email.email">E-mail must be valid</div>
+      <input type="text" placeholder="email" v-model="$v.user.email.$model" >
+
+      <div class="error" v-if="!$v.user.password.required">Field is required</div>
+      <div class="error" v-if="!$v.user.password.minLength">Password must have at least {{$v.user.password.$params.minLength.min}} letters.</div> 
+      <input type="password" placeholder="password" v-model="$v.user.password.$model">
       <button v-on:click.prevent="login()">Login</button>
       <p class="message">Not registered?<router-link to="register" class="button"> Create an account</router-link></p>
       <!-- //TODO -->
@@ -20,6 +22,7 @@
 </template>
 
 <script type="text/javascript">
+import { email, required, minLength } from 'vuelidate/lib/validators'
 import axios from 'axios';
 export default {
     name : 'Login',
@@ -31,6 +34,18 @@ export default {
         typeOfMessage: "",
         showMessage: false,
         message: "",
+      }
+    },
+    validations:{
+      user:{
+        email:{
+           required,
+           email,
+        },
+        password:{
+          required,
+          minLength: minLength(3)
+        }
       }
     },
 
@@ -69,8 +84,8 @@ export default {
  @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 .login-page {
-  width: 360px;
-  padding: 8% 0 0;
+  max-width: 360px;
+  padding: 1% 0 0;
   margin: auto;
 }
 .form {
@@ -165,5 +180,10 @@ body {
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.error {
+    display: block;
+    color: #f57f6c;
 }
 </style>

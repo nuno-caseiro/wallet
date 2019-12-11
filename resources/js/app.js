@@ -5,6 +5,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import VueSocketIO from "vue-socket.io";
 import VueRouter from 'vue-router';
 import Toasted from 'vue-toasted';
+import Vuelidate from 'vuelidate'
 
 
 
@@ -22,7 +23,10 @@ Vue.use(Toasted,{
     position: 'top-right', //pode ser top-right, top-center, top-left, bottom-right, bottom-center, bottom-left
     duration: 5000,
     type: 'info',
-})
+});
+
+Vue.use(Vuelidate);
+
 
 
 import store from '../store/store.js';
@@ -43,6 +47,7 @@ import UsersListComponent from "./components/users/usersList.vue";
 import UserAddComponent from "./components/users/userAdd.vue";
 import MovementFilterComponent from "./components/virtualWallet/movementsFilter.vue"
 import StatisticsComponent from "./components/statistics/statistics.vue"
+import AdminStatisticsComponent from "./components/statistics/adminStats.vue"
 import UsersFilterComponent from "./components/users/usersFilter.vue"
 
 
@@ -65,7 +70,7 @@ const movementFilter= Vue.component('movementsFilter',MovementFilterComponent);
 const userAdd= Vue.component('movementsFilter',UserAddComponent);
 const statistics = Vue.component('statistics',StatisticsComponent);
 const usersFilter = Vue.component('usersFilter',UsersFilterComponent);
-
+const adminStatistics = Vue.component('statistics',AdminStatisticsComponent);
 
 
 
@@ -84,28 +89,40 @@ axios.defaults.headers.common['Authorization'] = 'Bearer ' + store.getters.getTo
 
 
 const routes = [
-    { path: "/",
-    name:"Home",
-    component : welcome},
+    {
+        path: "/",
+        name:"Home",
+        component : welcome
+    },
 
-    { path: "/login",
-    name:"Login",
-     component : login},
+    {
+        path: "/login",
+        name:"Login",
+        component : login
+    },
 
-    { path: "/logout",
-    name:"Logout",
-     component : logout},
+    {
+        path: "/logout",
+        name:"Logout",
+        component : logout
+    },
 
-    { path: "/register",
-    name:"Register",
-     component : register},
+    {
+        path: "/register",
+        name:"Register",
+        component : register
+    },
 
-    { path: "*",
-    component : notFound},
+    {
+        path: "*",
+        component : notFound
+    },
 
-    {path:"/edit",
+    {
+        path:"/edit",
         name:"Edit",
-    component:editProfile},
+        component:editProfile
+    },
 
     {
         path:"/virtualWallet",
@@ -145,6 +162,12 @@ const routes = [
         path:"/statistics",
         name: "statistics",
         component: statistics
+    },
+
+    {
+        path:"/adminStatistics",
+        name: "adminStatistics",
+        component: adminStatistics
     },
 
 
