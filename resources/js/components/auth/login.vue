@@ -39,7 +39,7 @@ export default {
     validations:{
       user:{
         email:{
-           required,
+           required ,
            email,
         },
         password:{

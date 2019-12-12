@@ -27,7 +27,6 @@
                     <label>NIF</label>
                     <input type="number" placeholder="NIF" v-model="$v.userLogin.nif.$model"> 
                     <div class="error" v-if="!$v.userLogin.nif.required">Field is required</div>
-                    <!-- <div class="error" v-if="!$v.user.nif.numeric">Nif has only numbers.</div> -->
                     <div class="error" v-if="!$v.userLogin.nif.minLength">NIF must have at least {{$v.userLogin.nif.$params.minLength.min}} numbers.</div> 
                 </div>
 
@@ -45,19 +44,19 @@
                 <div id="div">
                     <label>Old pasword</label>
                     <input type="password" placeholder="old password" v-model="$v.repeatPassword.$model">
-                    <div class="error" v-if="!$v.repeatPassword.required && !userLogin.type === 'u'">Field is required</div>
+                    <!-- <div class="error" v-if="!$v.repeatPassword.required">Field is required</div> -->
                     <div class="error" v-if="!$v.repeatPassword.minLength">Password must have at least {{$v.repeatPassword.$params.minLength.min}} digits.</div> 
                 </div>
                 <div id="div">
                     <label>New password</label>
                     <input type="password" placeholder="new password" v-model="$v.newPassword.$model">
-                    <div class="error" v-if="!$v.newPassword.required">Field is required</div>
+                    <!-- <div class="error" v-if="!$v.newPassword.required ">Field is required</div> -->
                     <div class="error" v-if="!$v.newPassword.minLength">Password must have at least {{$v.newPassword.$params.minLength.min}} digits.</div> 
                 </div>
                 <div id="div">
                     <label>Confirm new password</label>
                     <input type="password" placeholder="confirm password" v-model="$v.confirmPassword.$model">
-                    <div class="error" v-if="!$v.confirmPassword.sameAsnewPassword">Don´t match with password you entered before.</div>
+                    <div class="error" v-if="!$v.confirmPassword.sameAsPassword">Don´t match with password you entered before.</div>
                 </div>
 
               <div id="div">
@@ -70,7 +69,7 @@
 </template>
 <script type="text/javascript">
 import axios from 'axios';
-import { numeric,email, required, minLength, sameAs } from 'vuelidate/lib/validators'
+import { email, required, minLength, sameAs } from 'vuelidate/lib/validators'
 export default {
     name : 'Edit',
     data() {
@@ -103,23 +102,21 @@ export default {
 
                 nif: {
                     required,
-                    numeric,
                     minLength: minLength(9)
                 },
-            },
-            repeatPassword: {
-                   required,
+          },
+          repeatPassword: {
                   minLength: minLength(3)
-            },
+          },
 
-           newPassword: {
+          newPassword: {
                     required,
                     minLength: minLength(3)
-                },
+          },
                 
           confirmPassword: {
-                    sameAsnewPassword: sameAs('newPassword')
-                }
+                    sameAsPassword: sameAs('newPassword')
+          }
       },
       methods:{
          onFileSelected(event){
@@ -137,6 +134,29 @@ export default {
         saveUser(){
                     axios.patch('/api/users/'+this.userLogin.id, this.user)
                     console.log(this.user)
+             if(this.userLogin.password===this.repeatPassword && this.newPassword===this.confirmPassword){
+
+
+                        this.newPassword = this.userLogin.password;
+                         
+                        this.userLogin.active=1;
+                        console.log(this.currentUser);
+                        axios.put('/api/users/' + this.userLogin.id, this.userLogin)
+                            .then(response => {
+                                
+                                Object.assign(this.currentUser, response.data);
+                                this.showMessage = true;
+                                this.message = 'Edit completed with success';
+
+                            }).catch(error=>{
+                                console.log(error);
+                            });
+                                setTimeout(() => {
+                            this.$router.push("/")
+                        }, 1000);                
+
+             }
+
         },
          cancelEdit(){
              this.showSuccess = false;
