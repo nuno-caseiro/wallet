@@ -43,20 +43,20 @@
 
                 <div id="div">
                     <label>Old pasword</label>
-                    <input type="password" placeholder="old password" v-model="$v.repeatPassword.$model">
+                    <input type="password" placeholder="old password" v-model="$v.user.repeatPassword.$model">
                     <!-- <div class="error" v-if="!$v.repeatPassword.required">Field is required</div> -->
-                    <div class="error" v-if="!$v.repeatPassword.minLength">Password must have at least {{$v.repeatPassword.$params.minLength.min}} digits.</div> 
+                    <div class="error" v-if="!$v.user.repeatPassword.minLength">Password must have at least {{$v.user.repeatPassword.$params.minLength.min}} digits.</div> 
                 </div>
                 <div id="div">
                     <label>New password</label>
                     <input type="password" placeholder="new password" v-model="$v.newPassword.$model">
                     <!-- <div class="error" v-if="!$v.newPassword.required ">Field is required</div> -->
-                    <div class="error" v-if="!$v.newPassword.minLength">Password must have at least {{$v.newPassword.$params.minLength.min}} digits.</div> 
+                    <div class="error" v-if="!$v.user.newPassword.minLength">Password must have at least {{$v.user.newPassword.$params.minLength.min}} digits.</div> 
                 </div>
                 <div id="div">
                     <label>Confirm new password</label>
-                    <input type="password" placeholder="confirm password" v-model="$v.confirmPassword.$model">
-                    <div class="error" v-if="!$v.confirmPassword.sameAsPassword">Don´t match with password you entered before.</div>
+                    <input type="password" placeholder="confirm password" v-model="$v.user.confirmPassword.$model">
+                    <div class="error" v-if="!$v.user.confirmPassword.sameAsPassword">Don´t match with password you entered before.</div>
                 </div>
 
               <div id="div">
