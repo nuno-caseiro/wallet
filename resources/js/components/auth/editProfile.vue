@@ -43,20 +43,20 @@
 
                 <div id="div">
                     <label>Old pasword</label>
-                    <input type="password" placeholder="old password" v-model="$v.user.repeatPassword.$model">
+                    <input type="password" placeholder="old password" v-model="$v.user.old_password.$model">
                     <!-- <div class="error" v-if="!$v.repeatPassword.required">Field is required</div> -->
-                    <div class="error" v-if="!$v.user.repeatPassword.minLength">Password must have at least {{$v.user.repeatPassword.$params.minLength.min}} digits.</div> 
+                    <div class="error" v-if="!$v.user.old_password.minLength">Password must have at least {{$v.user.old_password.$params.minLength.min}} digits.</div> 
                 </div>
                 <div id="div">
                     <label>New password</label>
-                    <input type="password" placeholder="new password" v-model="$v.newPassword.$model">
+                    <input type="password" placeholder="new password" v-model="$v.user.password.$model">
                     <!-- <div class="error" v-if="!$v.newPassword.required ">Field is required</div> -->
-                    <div class="error" v-if="!$v.user.newPassword.minLength">Password must have at least {{$v.user.newPassword.$params.minLength.min}} digits.</div> 
+                    <div class="error" v-if="!$v.user.password.minLength">Password must have at least {{$v.user.password.$params.minLength.min}} digits.</div> 
                 </div>
                 <div id="div">
                     <label>Confirm new password</label>
-                    <input type="password" placeholder="confirm password" v-model="$v.user.confirmPassword.$model">
-                    <div class="error" v-if="!$v.user.confirmPassword.sameAsPassword">Don´t match with password you entered before.</div>
+                    <input type="password" placeholder="confirm password" v-model="$v.user.password_confirmation.$model">
+                    <div class="error" v-if="!$v.user.password_confirmation.sameAsPassword">Don´t match with password you entered before.</div>
                 </div>
 
               <div id="div">
@@ -106,17 +106,17 @@ export default {
           },
 
           user:{
-          repeatPassword: {
+          old_password: {
                   minLength: minLength(3)
           },
 
-          newPassword: {
+          password: {
                     required,
                     minLength: minLength(3)
           },
                 
-          confirmPassword: {
-                    sameAsPassword: sameAs('newPassword')
+          password_confirmation: {
+                    sameAsPassword: sameAs('password')
           }
           },
       },
