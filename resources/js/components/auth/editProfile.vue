@@ -134,28 +134,28 @@ export default {
         saveUser(){
                     axios.patch('/api/users/'+this.userLogin.id, this.user)
                     console.log(this.user)
-             if(this.userLogin.password===this.repeatPassword && this.newPassword===this.confirmPassword){
+            //  if(this.userLogin.password===this.repeatPassword && this.newPassword===this.confirmPassword){
 
 
-                        this.newPassword = this.userLogin.password;
+            //             this.newPassword = this.userLogin.password;
                          
-                        this.userLogin.active=1;
-                        console.log(this.currentUser);
-                        axios.put('/api/users/' + this.userLogin.id, this.userLogin)
-                            .then(response => {
+            //             this.userLogin.active=1;
+            //             console.log(this.currentUser);
+            //             axios.put('/api/users/' + this.userLogin.id, this.userLogin)
+            //                 .then(response => {
                                 
-                                Object.assign(this.currentUser, response.data);
-                                this.showMessage = true;
-                                this.message = 'Edit completed with success';
+            //                     Object.assign(this.currentUser, response.data);
+            //                     this.showMessage = true;
+            //                     this.message = 'Edit completed with success';
 
-                            }).catch(error=>{
-                                console.log(error);
-                            });
-                                setTimeout(() => {
-                            this.$router.push("/")
-                        }, 1000);                
+            //                 }).catch(error=>{
+            //                     console.log(error);
+            //                 });
+            //                     setTimeout(() => {
+            //                 this.$router.push("/")
+            //             }, 1000);                
 
-             }
+            //  }
 
         },
          cancelEdit(){
