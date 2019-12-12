@@ -78,7 +78,6 @@ export default {
           password: '',
           password_confirmation: '',
           old_password: '',
-          password_check:'',
         },
         currentUser:"",
         messageType: "alert-success",
@@ -105,6 +104,8 @@ export default {
                     minLength: minLength(9)
                 },
           },
+
+          user:{
           repeatPassword: {
                   minLength: minLength(3)
           },
@@ -117,6 +118,7 @@ export default {
           confirmPassword: {
                     sameAsPassword: sameAs('newPassword')
           }
+          },
       },
       methods:{
          onFileSelected(event){
