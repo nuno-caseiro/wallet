@@ -12,48 +12,48 @@
             <div class="login-form">
                 <h2>Register</h2>
 
-                
-                <div id="div">
+
+                <div class="div">
                     <label>Name</label>
                     <input type="text" placeholder="name" v-model="$v.user.name.$model" >
                     <div class="error" v-if="!$v.user.name.required">Field is required</div>
                     <div class="error" v-if="!$v.user.name.minLength">Name must have at least {{$v.user.name.$params.minLength.min}} letters.</div>
                 </div>
 
-                <div  id="div">
+                <div  class="div">
                     <label>E-mail</label>
                     <input type="text" placeholder="email" v-model="$v.user.email.$model" >
                     <div class="error" v-if="!$v.user.email.required">Field is required</div>
                     <div class="error" v-if="!$v.user.email.email">E-mail must be valid</div>
                 </div>
 
-                <div  id="div">
+                <div  class="div">
                     <label>NIF</label>
-                    <input type="number" placeholder="NIF" v-model="$v.user.nif.$model"> 
+                    <input type="number" placeholder="NIF" v-model="$v.user.nif.$model">
                     <div class="error" v-if="!$v.user.nif.required">Field is required</div>
                     <!-- <div class="error" v-if="!$v.user.nif.numeric">Nif has only numbers.</div> -->
-                    <div class="error" v-if="!$v.user.nif.minLength">NIF must have at least {{$v.user.nif.$params.minLength.min}} numbers.</div> 
+                    <div class="error" v-if="!$v.user.nif.minLength">NIF must have at least {{$v.user.nif.$params.minLength.min}} numbers.</div>
                 </div>
 
-                <div id="div">
-                    <label>Select a photo from your computer storage</label>                   
+                <div class="div">
+                    <label>Select a photo from your computer storage</label>
                     <input class="form-data" name="photo" accept="image/*" type="file" @change="onFileSelected">
                 </div>
 
-                <div id="div">
+                <div class="div">
                     <label>Password</label>
                     <input type="password" placeholder="password" v-model.trim="$v.user.password.$model">
                     <div class="error" v-if="!$v.user.password.required">Field is required</div>
-                    <div class="error" v-if="!$v.user.password.minLength">Password must have at least {{$v.user.password.$params.minLength.min}} digits.</div> 
+                    <div class="error" v-if="!$v.user.password.minLength">Password must have at least {{$v.user.password.$params.minLength.min}} digits.</div>
                 </div>
-                
-                <div id="div">
+
+                <div class="div">
                     <label>Password Confirmation</label>
                     <input type="password" placeholder="confirm password" v-model.trim="$v.user.password_confirmation.$model">
                     <div class="error" v-if="!$v.user.password_confirmation.sameAsPassword">Don´t match with password you entered before.</div>
                 </div>
 
-                <div id= "div">
+                <div class= "div">
                    <button v-on:click.prevent="register">Register</button>
                 </div>
             </div>
@@ -120,7 +120,7 @@
                     required,
                     minLength: minLength(3)
                 },
-                
+
                 password_confirmation: {
                     sameAsPassword: sameAs('password')
                 }
@@ -290,11 +290,11 @@
     color: #f57f6c;
     }
 
-    #div{
+    .div{
         margin-top: 23px;
     }
 
 
-    
+
 
 </style>

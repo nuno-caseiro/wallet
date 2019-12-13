@@ -8,10 +8,11 @@ class Wallet extends Model
 {
     //
 
-    protected $fillable = ['email','balance'];
+    protected $fillable = ['id','email','balance'];
 
     protected $hidden = [];
 
+    public $incrementing = false;
 
     public function user()
     {
@@ -20,8 +21,8 @@ class Wallet extends Model
 
     public function movement(){
         return $this->hasMany('App\Movement', 'id');
-        
+
     }
 
-    
+
 }
