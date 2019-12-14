@@ -12,8 +12,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 
+
+
 class UserControllerApi extends Controller
 {
+
     public function index(Request $request){
         if($request->has('page')){
             return UserResource::collection(User::paginate(5));
@@ -34,14 +37,15 @@ class UserControllerApi extends Controller
     }
 
     public function store(Request $request){
-        /*$request->validate([
-            // 'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
-            // 'email' => 'required|email|unique:users,email,',
-            // 'NIF'=> 'required|min:8|unique',
-            // 'selectedFile' => 'nullable',
-            // 'password' => 'required|min:3|confirmed',
-            // 'password_confirmation' => 'required|min:3'
-        ]);*/
+        // $request->validate([
+        //     'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
+        //     'email' => 'required|email|unique:users,email,',
+        //     'nif'=> 'required|min:9|unique|regex:/^[0-9]+$/',
+        //     'password' => 'required|min:3|confirmed',
+        // ]);
+
+      
+
         //TODO validacoes
         $user= new User();
         $user->fill($request->all()+['remember_token'=> Str::random(10)]);
@@ -78,10 +82,12 @@ class UserControllerApi extends Controller
         if(Hash::check($data['old_password'], $user->password)){
         $request->merge(['password' => Hash::make($request->get('password'))]);
         $user->update($request->all());
-        }else{
-            $user->delete();
-            return response()->json(null,204); 
+         
         }
+        //else{
+        //     $user->delete();
+        //     return response()->json(null,204); 
+        // }
         $user->save();
         return (new UserResource($user))->response()->setStatusCode(200);
     }
