@@ -185,6 +185,8 @@ const router = new VueRouter({
 const app = new Vue({
     router,
     store,
+
+    //global messages - To listen to the message (on the client - Vue.js application) from the server (message sent from the server to the client)
     sockets:{
       connect(){
           console.log(`Socket connected with ID: ${this.$socket.id}`);

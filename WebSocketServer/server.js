@@ -40,6 +40,7 @@ app.listen(8080, function(){
 // loggedUsers = the list (map) of logged users.
 // Each list element has the information about the user and the socket id
 // Check loggedusers.js file
+//connection private messages
 
 let loggedUsers = new LoggedUsers();
 

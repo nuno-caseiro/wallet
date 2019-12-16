@@ -29,7 +29,6 @@
 
                 <div  class="div">
                     <label>NIF</label>
-                    <input type="number" placeholder="NIF" v-model="$v.user.nif.$model">
                     <input type="number" placeholder="NIF" v-model="user.nif"> 
                     <div class="error" v-if="!$v.user.nif.required">Field is required</div>
                     <!-- <div class="error" v-if="!$v.user.nif.numeric">Nif has only numbers.</div> -->
@@ -125,6 +124,7 @@
                     sameAsPassword: sameAs('password')
                 
                 
+            }
             },
             password_confirmation: {
                      sameAsPassword: sameAs(function(password){

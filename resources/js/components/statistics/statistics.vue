@@ -1,6 +1,10 @@
 <template>
     <div>
-        <a @click.prevent="getIncomesByMonth('1')" class="btn btn-info"></a>
+        <div>
+            <label for="Date">Date (yyyy-mm-dd,yyyy-mm-dd)</label>
+            <input class="form-control" type="text" v-model="data.dates">
+        </div>
+        <a @click.prevent="getTotalMovsFromGivenMonth(data.dates)" class="btn btn-info"></a>
         <line-chart v-if="this.show===true" :chartdata="linedata" :options="options" ></line-chart>
     </div>
 </template>
@@ -9,25 +13,24 @@
     import lineChart from "./lineChart.vue";
     export default {
         components:{
-            lineChart
+            lineChart,
+           
         },
         name: "statistics",
         data() {
             return {
                 show: false,
                 linedata:{
-                    labels:[/*'Monday', 'Tuesday', 'Wednesday','Thursday', 'Friday'*/],
-                    datasets:[/*{
-                        fill:false,
-                        label:'John Doe',
-                        borderColor: '#f87979',
-                        data: [12,24,23,34,31]
-                    }*/]
+                    labels:[],
+                    datasets:[]
                 },
                 options:{
                     responsive: true,
                     maintainAspectRation: false,
-                }
+                },
+                data: {
+                    dates: ""
+                },
             }
         },
         methods: {
@@ -53,7 +56,17 @@
 
                         this.show=true;
                     })
-            }
+            },
+            getTotalMovsFromGivenMonth(dates) {
+            axios.get('/api/movements/totalMovements/' + dates)
+            .then(response => {
+                console.log(response.data);
+                this.linedata.labels = ['date', 'Total Movs'];
+                this.linedata.datasets = response.data;
+                this.show=true;
+
+            })
+        },
         }
 
     }

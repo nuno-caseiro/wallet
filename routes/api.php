@@ -67,6 +67,10 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('categories/{id}', 'CategoryControllerAPI@delete');
 
     Route::get('categories/type/{type}','CategoryControllerAPI@getCategoriesByType');
+    
+    
+    ///////////////////////////////////STATISTICS//////////////////////////////////////////////////////////
+    Route::get('/movements/totalMovements/{dates}', 'Statistics@getTotalMovsFromGivenMonth');
 
 });
 ////Movement filter

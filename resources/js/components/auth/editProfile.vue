@@ -210,6 +210,7 @@ export default {
       mounted(){
           this.user.name = this.$store.state.user.name;
           this.user.nif= this.$store.state.user.nif;
+          this.user.password = this.$store.state.user.password;
         }
 }
 </script>
