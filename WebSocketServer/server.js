@@ -45,17 +45,19 @@ app.listen(8080, function(){
 let loggedUsers = new LoggedUsers();
 
 io.on('connection', function (socket) {
-    console.log('client has connected (socket ID = '+socket.id+')' );
 
     socket.on('user_enter', function (user) {
        if(user!==undefined && user !==null){
            socket.join('type_'+ user.type);
            loggedUsers.addUserInfo(user,socket.id);
+           console.log('client has connected (socket ID = '+socket.id+')' );
+
        }
     });
 
     socket.on('user_exit',function (user) {
         if(user!==undefined && user !==null) {
+            console.log('client has disconnected (socket ID = '+socket.id+')' );
         socket.leave('type'+user.type);
         loggedUsers.removeUserInfoByID(user.id);
 
