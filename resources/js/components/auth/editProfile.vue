@@ -165,10 +165,11 @@ export default {
                   this.submitStatus = 'ERROR';
               } else {
 
-                    this.user.name = this.userLogin.name;
-                    this.user.email = this.userLogin.email;
-                    this.user.nif = this.userLogin.nif;
                     console.log(this.user)
+                    this.$store.state.user.name = this.user.name;
+                    this.$store.state.user.nif=this.user.nif;
+                    this.$store.state.user.email = this.user.email;
+                    
                     axios.patch('/api/users/'+this.userLogin.id, this.user)
                     .then(response => {               
                         console.log(response)
@@ -236,7 +237,7 @@ export default {
       mounted(){
           this.user.name = this.$store.state.user.name;
           this.user.nif= this.$store.state.user.nif;
-          this.user.password = this.$store.state.user.password;
+          this.user.email = this.$store.state.user.email;
         }
 }
 </script>
