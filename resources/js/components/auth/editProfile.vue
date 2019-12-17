@@ -94,7 +94,7 @@ export default {
                
         },
         currentUser:"",
-        messageType: "alert-success",
+        messageType: "",
         showMessage: false,
         message: "",
         submitStatus: null,
@@ -175,12 +175,16 @@ export default {
                         console.log(response)
                         this.showMessage = true;
                         this.message = 'Edit completed with success';
-                        }).catch(error=>{
-                                    console.log(error);
-                                });
-                                    setTimeout(() => {
+                        setTimeout(() => {
                                 this.$router.push("/")
                         }, 1000);
+                        }).catch(error=>{
+                          this.messageType = "alert-danger";
+                            this.message = "";
+                            this.showMessage = true;
+                                    console.log(error);
+                                });
+                                    
 
                         this.submitStatus = 'PENDING';
                     setTimeout(() => {
