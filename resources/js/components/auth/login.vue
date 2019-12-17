@@ -39,7 +39,8 @@
         name : 'Login',
         data() {
             return {
-                user:{email: '',
+                user:{
+                    email: '',
                     password: '',
                 },
                 submitStatus: null,

@@ -8,16 +8,20 @@
 	    <div class="form-group">
 	        <label for="inputName">Name</label>
 	        <input type="text" class="form-control"  id="inputName" placeholder="Name" name="name" v-model="$v.user.name.$model"/>
-            <div class="error" v-if="!$v.user.name.required">Field is required</div>
-            <div class="error" v-if="!$v.user.name.minLength">Name must have at least {{$v.user.name.$params.minLength.min}} letters.</div> 
-	    </div>
+            <div v-if="$v.user.name.$error">
+                <div class="error" v-if="!$v.user.name.required">Field is required</div>
+                <div class="error" v-if="!$v.user.name.minLength">Name must have at least {{$v.user.name.$params.minLength.min}} letters.</div> 
+            </div>
+        </div>
         
 	    <div class="form-group">
 	        <label for="inputEmail">Email</label>
 	        <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" v-model="$v.user.email.$model"/>
-            <div class="error" v-if="!$v.user.email.required">Field is required</div>
-            <div class="error" v-if="!$v.user.email.email">E-mail must be valid</div>
-	    </div>
+            <div v-if="$v.user.name.$error">
+                <div class="error" v-if="!$v.user.email.required">Field is required</div>
+                <div class="error" v-if="!$v.user.email.email">E-mail must be valid</div>
+            </div>
+        </div>
         <div class="form-group">
             <label for="photo">Photo</label>
             <div>
@@ -30,14 +34,18 @@
                         <option value="a">Administrator</option>
                         <option value="o">Operator</option>
                     </select>
-                    <div class="error" v-if="!$v.user.type.required">Field is required</div>
+                    <div v-if="$v.user.type.$error">
+                        <div class="error" v-if="!$v.user.type.required">Field is required</div>
+                    </div>
                 </div>	    
         <div class="form-group">
 	        <label for="inputNIF">Password</label>
 	        <input type="password" class="form-control" id="inputPassword" name="nif" v-model="$v.user.password.$model"/>
-            <div class="error" v-if="!$v.user.password.required">Field is required</div>
-            <div class="error" v-if="!$v.user.password.minLength">Name must have at least {{$v.user.password.$params.minLength.min}} letters.</div> 
-	    </div>
+            <div v-if="$v.user.password.$error">
+                <div class="error" v-if="!$v.user.password.required">Field is required</div>
+                <div class="error" v-if="!$v.user.password.minLength">Name must have at least {{$v.user.password.$params.minLength.min}} letters.</div> 
+            </div>
+        </div>
         <b-button-group>
 	        <b-button variant="outline-success" @click.prevent="saveUser()">Save</b-button>
 	        <b-button variant="outline-danger" @click.prevent="cancelEdit()">Cancel</b-button>
@@ -51,6 +59,7 @@ import { email, required, minLength, between } from 'vuelidate/lib/validators'
 export default {
     data() {
         return {
+            submitStatus: null,
             showSuccess: false,
             successMessage: '',
             user:{
@@ -74,17 +83,27 @@ export default {
 
         },
         saveUser() {
-            this.user.active=1;
-            axios.post('api/users', this.user)
-                    .then(response => {
-                        Object.assign(this.user, response.data.data);
-                        this.$emit('user-created', this.user)
-                        this.showSuccess = true;
-                        this.successMessage = 'User created with success';
+             console.log('submit!');
+                this.$v.$touch();
+                if (this.$v.$invalid) {
+                    this.submitStatus = 'ERROR';
+                } else {
+                    this.user.active=1;
+                    axios.post('api/users', this.user)
+                        .then(response => {
+                            Object.assign(this.user, response.data.data);
+                            this.$emit('user-created', this.user)
+                            this.showSuccess = true;
+                            this.successMessage = 'User created with success';
+                            setTimeout(() => {
+                                this.$router.push("/users")
+                            }, 1000);
+                        });
+                        this.submitStatus = 'PENDING';
                         setTimeout(() => {
-                            this.$router.push("/users")
-                        }, 1000);
-                    })
+                            this.submitStatus = 'OK'
+                            }, 500)
+                }
         },
         cancelEdit() {
             this.user = {}
@@ -103,12 +122,10 @@ export default {
             email: {
                 required,
                 email,
-
-
             },
 
             type: {
-                required,
+                required
             },
 
             password: {

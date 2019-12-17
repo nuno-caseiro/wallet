@@ -48,7 +48,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::put('wallets/{id}', 'WalletControllerAPI@update');
 
-    //Route::post('movements', 'MovementControllerAPI@store');
+    Route::post('movements', 'MovementControllerAPI@store');
+    
     Route::put('movements/{id}', 'MovementControllerAPI@update');
 
     Route::put('movements/id/{id}', 'MovementControllerAPI@updateEdit');
@@ -57,7 +58,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('movements/{id}','MovementControllerAPI@show');
 
     Route::get('movements/id/{wallet_id}','MovementControllerAPI@showMovementsOfWallet');
-    Route::post('movements', 'MovementControllerAPI@store');
 
     Route::delete('movements/{id}', 'MovementControllerAPI@delete');
 
@@ -90,4 +90,4 @@ Route::get('wallets', 'WalletControllerAPI@index');
 
 Route::post('wallets', 'WalletControllerAPI@store');
 
-
+Route::post('movements', 'MovementControllerAPI@store');

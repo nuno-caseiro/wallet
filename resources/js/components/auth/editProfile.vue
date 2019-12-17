@@ -9,56 +9,69 @@
       <img  v-bind:src="itemImageURL(userLogin.photo)" width="110" height="110" alt="" >
       <h3>Edit Profile</h3><label v-text="userLogin.email"></label>
                 
-                <div id="div">
+                <div class="div">
                     <label>Name</label>
                     <input type="text" placeholder="name" v-model="$v.user.name.$model" >
-                    <div class="error" v-if="!$v.user.name.required">Field is required</div>
-                    <div class="error" v-if="!$v.user.name.minLength">Name must have at least {{$v.user.name.$params.minLength.min}} letters.</div>
+                    <div v-if="$v.user.name.$error">                   
+                      <div class="error" v-if="!$v.user.name.required">Field is required</div>
+                      <div class="error" v-if="!$v.user.name.minLength">Name must have at least {{$v.user.name.$params.minLength.min}} letters.</div>
+                    </div>
                 </div>
 
-                <div  id="div" v-if="userLogin.type =='u'">
+                <div  class="div" v-if="userLogin.type =='u'">
                     <label>NIF</label>
                     <input type="number" placeholder="NIF" v-model="$v.user.nif.$model"> 
-                    <div class="error" v-if="!$v.user.nif.required">Field is required</div>
-                    <div class="error" v-if="!$v.user.nif.minLength">NIF must have at least {{$v.user.nif.$params.minLength.min}} numbers.</div> 
+                    <div v-if="$v.user.type.$error">
+                      <div class="error" v-if="!$v.user.nif.required">Field is required</div>
+                      <div class="error" v-if="!$v.user.nif.minLength">NIF must have at least {{$v.user.nif.$params.minLength.min}} numbers.</div> 
+                    </div>
                 </div>
 
-                <div  id="div" v-if="userLogin.type =='a' || userLogin.type =='o'">
+                <div  class="div" v-if="userLogin.type =='a' || userLogin.type =='o'">
                     <label>NIF</label>
                     <input type="number" placeholder="NIF" v-model="$v.user.nif.$model"> 
-                    <div class="error" v-if="!$v.user.nif.minLength">NIF must have at least {{$v.user.nif.$params.minLength.min}} numbers.</div> 
+                    <div v-if="$v.user.nif.$error">
+                      <div class="error" v-if="!$v.user.nif.minLength">NIF must have at least {{$v.user.nif.$params.minLength.min}} numbers.</div> 
+                    </div>
                 </div>
 
-                <div id="div">
+                <div class="div">
                     <label>Select a photo from your computer storage</label>                   
                     <input class="form-data" name="photo" accept="image/*" type="file" @change="onFileSelected">
                 </div>
 
-                <div id="div" >
+                <div class="div" >
                     <label>Old pasword</label>
                     <input type="password" placeholder="old password" v-model="$v.user.old_password.$model">
-                    
-                    <div class="error" v-if="!$v.user.old_password.required ">Field is required</div>
-                    <!-- <div class="error" v-if="!$v.user.old_password.sameAsPass">Don´t match with your old password.</div> -->
-                    <div class="error" v-if="!$v.user.old_password.minLength">Password must have at least {{$v.user.old_password.$params.minLength.min}} digits.</div> 
-
+                    <div v-if="$v.user.old_password.$error">
+                      <div class="error" v-if="!$v.user.old_password.required ">Field is required</div>
+                      <!-- <div class="error" v-if="!$v.user.old_password.sameAsPass">Don´t match with your old password.</div> -->
+                      <div class="error" v-if="!$v.user.old_password.minLength">Password must have at least {{$v.user.old_password.$params.minLength.min}} digits.</div> 
+                    </div>
                 </div>
-                <div id="div">
+                <div class="div">
                     <label>New password</label>
                     <input type="password" placeholder="new password" v-model="$v.user.password.$model">
-                    <div class="error" v-if="!$v.user.password.required ">Field is required</div>
-                    <div class="error" v-if="!$v.user.password.minLength">Password must have at least {{$v.user.password.$params.minLength.min}} digits.</div> 
+                    <div v-if="$v.user.password.$error">
+                      <div class="error" v-if="!$v.user.password.required ">Field is required</div>
+                      <div class="error" v-if="!$v.user.password.minLength">Password must have at least {{$v.user.password.$params.minLength.min}} digits.</div> 
+                    </div>
                 </div>
-                <div id="div">
+                <div class="div">
                     <label>Confirm new password</label>
                     <input type="password" placeholder="confirm password" v-model="$v.user.password_confirmation.$model">
-                    
-                    <div class="error" v-if="!$v.user.password_confirmation.required ">Field is required</div>
-                    <div class="error" v-if="!$v.user.password_confirmation.sameAsPassword">Don´t match with password you entered before.</div>
+                    <div v-if="$v.user.password_confirmation.$error">
+                      <div class="error" v-if="!$v.user.password_confirmation.required ">Field is required</div>
+                      <div class="error" v-if="!$v.user.password_confirmation.sameAsPassword">Don´t match with password you entered before.</div>
+                    </div>
                 </div>
 
-              <div id="div">
+              <div class="div">
               <button @click.prevent="saveUser()">Save Profile</button>
+              </div>
+
+              <div class="div">
+              <button @click.prevent="cancelEdit()">Cancel</button>
               </div>
 
     </form>
@@ -84,6 +97,7 @@ export default {
         messageType: "alert-success",
         showMessage: false,
         message: "",
+        submitStatus: null,
       }
       },
       validations:{
@@ -98,20 +112,22 @@ export default {
                     minLength: minLength(9),
                 },
                 old_password: {                       
-                        minLength: minLength(3),
+                        
 
-                        required: requiredIf(function(user){
-                      return this.user.password != '' && this.user.password_confirmation != '';
+                    required: requiredIf(function(user){
+                    return this.user.password != '' || this.user.password_confirmation != '';
                     }),
 
-                        sameAsPass: sameAs(function(userLogin){
-                      return this.userLogin.password;
-                    }),
+                    //     sameAsPass: sameAs(function(userLogin){
+                    //   return this.userLogin.password;
+                    // }),
+
+                    minLength: minLength(3),
                 },
 
                 password: {
                     required: requiredIf(function(user){
-                      return this.user.old_password != '' && this.user.password_confirmation != '';
+                      return this.user.old_password != '' || this.user.password_confirmation != '';
                     }),
 
                     minLength: minLength(3)
@@ -119,7 +135,7 @@ export default {
                 
                 password_confirmation: {
                     required: requiredIf(function(user){
-                      return this.user.old_password != '' && this.user.password != '';
+                      return this.user.password != '';
                     }),
                     
                     sameAsPassword: sameAs('password')
@@ -143,22 +159,30 @@ export default {
 
              },
         saveUser(){
-              this.user.name = this.userLogin.name;
-              this.user.email = this.userLogin.email;
-              this.user.nif = this.userLogin.nif;
-              console.log(this.user)
-              axios.patch('/api/users/'+this.userLogin.id, this.user)
-                .then(response => {
-                                    
-                    console.log(response)
-                    this.showMessage = true;
-                    this.message = 'Edit completed with success';
-                    }).catch(error=>{
-                                console.log(error);
-                            });
-                                setTimeout(() => {
-                            this.$router.push("/")
-                        }, 1000);                
+              console.log('submit!');
+              this.$v.$touch();
+              if (this.$v.$invalid) {
+                  this.submitStatus = 'ERROR';
+              } else {
+
+                    console.log(this.user)
+                    axios.patch('/api/users/'+this.userLogin.id, this.user)
+                    .then(response => {               
+                        console.log(response)
+                        this.showMessage = true;
+                        this.message = 'Edit completed with success';
+                        }).catch(error=>{
+                                    console.log(error);
+                                });
+                                    setTimeout(() => {
+                                this.$router.push("/")
+                        }, 1000);
+
+                        this.submitStatus = 'PENDING';
+                    setTimeout(() => {
+                        this.submitStatus = 'OK'
+                    }, 500)
+                }
             //  if(this.userLogin.password===this.repeatPassword && this.newPassword===this.confirmPassword){
 
 
@@ -184,17 +208,16 @@ export default {
 
         },
          cancelEdit(){
-             this.showSuccess = false;
-            this.editingUser = false;
-            axios.get('api/users/'+this.currentUser.id)
+          this.user = null; 
+          axios.get('api/users/'+this.userLogin.id)
                 .then(response=>{
-                    console.dir (this.currentUser);
-                     // Copies response.data.data properties to this.currentUser
-                     // without changing this.currentUser reference
-                     Object.assign(this.currentUser, response.data.data);
-                     console.dir (this.currentUser);
-                     this.currentUser = null;
+                     Object.assign(this.user, response.data.data);
+                     console.dir (this.user);
+                     this.user = null;
                  });
+                  setTimeout(() => {
+                             this.$router.push("/")
+                  }, 100); 
          },
 },
       computed: {
@@ -323,8 +346,8 @@ body {
     color: #f57f6c;
     }
 
-    #div{
-        margin-top: 23px;
+  .div{
+    margin-top: 23px;
     }
 
 </style>

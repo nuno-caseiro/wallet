@@ -15,24 +15,29 @@
 
                 <div class="div">
                     <label>Name</label>
-                    <input type="text" placeholder="name" v-model="user.name" >
-                    <div class="error" v-if="!$v.user.name.required">Field is required</div>
-                    <div class="error" v-if="!$v.user.name.minLength">Name must have at least {{$v.user.name.$params.minLength.min}} letters.</div>
+                    <input type="text" placeholder="name" v-model="$v.user.name.$model" >
+                    <div v-if="$v.user.name.$error">
+                        <div class="error" v-if="!$v.user.name.required">Field is required</div>
+                        <div class="error" v-if="!$v.user.name.minLength">Name must have at least {{$v.user.name.$params.minLength.min}} letters.</div>
+                    </div>
                 </div>
 
                 <div  class="div">
                     <label>E-mail</label>
-                    <input type="text" placeholder="email" v-model="user.email" >
-                    <div class="error" v-if="!$v.user.email.required">Field is required</div>
-                    <div class="error" v-if="!$v.user.email.email">E-mail must be valid</div>
+                    <input type="text" placeholder="email" v-model="$v.user.email.$model" >
+                    <div v-if="$v.user.email.$error">
+                        <div class="error" v-if="!$v.user.email.required">Field is required</div>
+                        <div class="error" v-if="!$v.user.email.email">E-mail must be valid</div>
+                    </div>
                 </div>
 
                 <div  class="div">
                     <label>NIF</label>
-                    <input type="number" placeholder="NIF" v-model="user.nif"> 
-                    <div class="error" v-if="!$v.user.nif.required">Field is required</div>
-                    <!-- <div class="error" v-if="!$v.user.nif.numeric">Nif has only numbers.</div> -->
-                    <div class="error" v-if="!$v.user.nif.minLength">NIF must have at least {{$v.user.nif.$params.minLength.min}} numbers.</div>
+                    <input type="number" placeholder="NIF" v-model="$v.user.nif.$model"> 
+                    <div v-if="$v.user.nif.$error">
+                        <div class="error" v-if="!$v.user.nif.required">Field is required</div>
+                        <div class="error" v-if="!$v.user.nif.minLength">NIF must have at least {{$v.user.nif.$params.minLength.min}} numbers.</div>
+                    </div>
                 </div>
 
                 <div class="div">
@@ -42,15 +47,20 @@
 
                 <div class="div">
                     <label>Password</label>
-                    <input type="password" placeholder="password" v-model="user.password">
+                    <input type="password" placeholder="password" v-model="$v.user.password.$model">
+                    <div v-if="$v.user.password.$error">
                     <div class="error" v-if="!$v.user.password.required">Field is required</div>
                     <div class="error" v-if="!$v.user.password.minLength">Password must have at least {{$v.user.password.$params.minLength.min}} digits.</div>
+                    </div>
                 </div>
 
-                <div class="div">
+                <div class="div"> 
                     <label>Password Confirmation</label>
-                    <input type="password" placeholder="confirm password" v-model="password_confirmation">
-                    <div class="error" v-if="!$v.password_confirmation.sameAsPassword">Don´t match with password you entered before.</div>
+                    <input type="password" placeholder="confirm password" v-model="$v.password_confirmation.$model">
+                    <div v-if="$v.password_confirmation.$error">
+                        <div class="error" v-if="!$v.password_confirmation.required">Field is required</div>
+                        <div class="error" v-if="!$v.password_confirmation.sameAsPassword">Don´t match with password you entered before.</div>
+                    </div>
                 </div>
 
                 <div class= "div">
@@ -88,7 +98,7 @@
                     balance:'',
 
                 },
-                
+                submitStatus: null,
                 messageType: "alert-success",
                 showMessage: false,
                 showMessageDanger: false,
@@ -120,14 +130,10 @@
                     minLength: minLength(3)
                 },
 
-                password_confirmation: {
-                    sameAsPassword: sameAs('password')
-                
-                
-            }
             },
-            password_confirmation: {
-                     sameAsPassword: sameAs(function(password){
+            password_confirmation: { 
+                    required,
+                    sameAsPassword: sameAs(function(password){
                       return this.user.password;
                     }),
                 }
@@ -142,40 +148,50 @@
 
             },
             register(){
-                if(this.user.password===this.password_confirmation){
-                    this.user.active=1;
-                    this.user.type='u';
-                    console.log(this.user);
-                    axios.post('/api/users', this.user)
-                        .then(response => {
+                console.log('submit!');
+                this.$v.$touch();
+                if (this.$v.$invalid) {
+                    this.submitStatus = 'ERROR';
+                } else {
+                        if(this.user.password===this.password_confirmation){
+                            this.user.active=1;
+                            this.user.type='u';
+                            console.log(this.user);
+                            axios.post('/api/users', this.user)
+                                .then(response => {
 
-                            Object.assign(this.user, response.data);
-                            this.$emit('user-saved', this.user);
-                            this.showMessage = true;
-                            this.message = 'Register completed with success';
-                            console.log(this.user.id);
+                                    Object.assign(this.user, response.data);
+                                    this.$emit('user-saved', this.user);
+                                    this.showMessage = true;
+                                    this.message = 'Register completed with success';
+                                    console.log(this.user.id);
 
-                        }).then(response=>{
-                        console.log(this.user.id);
-                        this.wallet.id=this.user.id;
-                        this.wallet.email=this.user.email;
-                        this.wallet.balance=0;
+                                }).then(response=>{
+                                console.log(this.user.id);
+                                this.wallet.id=this.user.id;
+                                this.wallet.email=this.user.email;
+                                this.wallet.balance=0;
 
-                        axios.post('/api/wallets',this.wallet).then(response=>{
-                            console.log(this.wallet.id);
-                            Object.assign(this.wallet, response.data);
-                             setTimeout(() => {
-                        this.$router.push("/")
-                    }, 1000);
+                                axios.post('/api/wallets',this.wallet).then(response=>{
+                                    console.log(this.wallet.id);
+                                    Object.assign(this.wallet, response.data);
+                                    setTimeout(() => {
+                                this.$router.push("/")
+                            }, 1000);
 
-                        }).catch(error=>{
-                            console.log(error);
-                        });
+                                }).catch(error=>{
+                                    console.log(error);
+                                });
 
-                    }).catch(error=>{
-                        console.log(error);
-                    });
+                            }).catch(error=>{
+                                console.log(error);
+                            });
+                            this.submitStatus = 'PENDING';
+                    setTimeout(() => {
+                        this.submitStatus = 'OK'
+                    }, 500)
                 }
+                        }
                 // else{
                 //     this.showMessageDanger=true;
                 //     this.messageDanger="Your passwords don't match";

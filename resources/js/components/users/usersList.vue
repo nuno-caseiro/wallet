@@ -109,6 +109,11 @@ export default {
                 console.log(err);
             });
         }
+        /// quando se apaga ou reativa um user, para atualizar o estado ou a lista, faz um get filtrado outra vez
+        if(this.filter!=''){
+            this.applyFilter(this.filters);
+        }
+
         },
         itemImageURL(photo){
                 return "storage/fotos/"+String(photo);
@@ -190,6 +195,7 @@ export default {
                     console.log(stringFilter);
                 }
             }
+            
 
         console.log(stringFilter);
             axios.get('api/users/1/filter/'+stringFilter)
