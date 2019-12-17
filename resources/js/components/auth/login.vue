@@ -47,6 +47,9 @@
                 typeOfMessage: "",
                 showMessage: false,
                 message: "",
+                users:[],
+                userEmail:'',
+
             }
         },
         validations:{
@@ -58,45 +61,60 @@
                 password:{
                     required,
                     minLength: minLength(3)
-                }
+                },
             }
         },
 
         methods:{
             login(){
-                console.log('submit!');
-                this.$v.$touch();
-                if (this.$v.$invalid) {
-                    this.submitStatus = 'ERROR';
-                } else {
-                axios.post('/api/login',this.user)
-                    .then(response=>{
-                        console.log(response);
-                        let tokenType = response.data.token_type;
-                        let token = response.data.access_token;
-                        let expiration = response.data.expires_in + Date.now();
-                        this.$store.commit('setToken', {token, tokenType, expiration});
-                        this.typeOfMessage = "alert-success";
-                        this.message = "Login Successful";
-                        this.showMessage = true;
+                // this.getUser();
+                // if(this.userEmail.active===1){
+                    console.log('submit!');
+                    this.$v.$touch();
+                    if (this.$v.$invalid) {
+                        this.submitStatus = 'ERROR';
+                    } else {
+                    axios.post('/api/login',this.user)
+                        .then(response=>{
+                            console.log(response);
+                            let tokenType = response.data.token_type;
+                            let token = response.data.access_token;
+                            let expiration = response.data.expires_in + Date.now();
+                            this.$store.commit('setToken', {token, tokenType, expiration});
+                            this.typeOfMessage = "alert-success";
+                            this.message = "Login Successful";
+                            this.showMessage = true;
+                            setTimeout(() => {
+                                this.$router.push("/")
+                            }, 1000);
+                        }).then(response=>{
+                        axios.get('api/user').then(response=>{
+                            let user=response.data;
+                            this.$store.dispatch('setAuthUser',user);
+                            this.$socket.emit('user_enter', this.$store.state.user);
+                            console.log(this.$store.state.user);
+                        })
+                    });
+                        this.submitStatus = 'PENDING';
                         setTimeout(() => {
-                            this.$router.push("/")
-                        }, 1000);
-                    }).then(response=>{
-                    axios.get('api/user').then(response=>{
-                        let user=response.data;
-                        this.$store.dispatch('setAuthUser',user);
-                        this.$socket.emit('user_enter', this.$store.state.user);
-                        console.log(this.$store.state.user);
-                    })
-                });
-                    this.submitStatus = 'PENDING';
-                    setTimeout(() => {
-                        this.submitStatus = 'OK'
-                    }, 500)
-                }
+                            this.submitStatus = 'OK'
+                        }, 500)
+                    }
+                
+                // }else{
+                //     this.typeOfMessage = "alert-success";
+                //     this.message = "Login Blocked";
+                //     this.showMessage = true;
+                // }
+            },
+
+            getUser(){
+                axios.get('api/user/email/' + this.user.email)
+                .then(response=>{
+                    this.userEmail = response.data.data;
+                })
             }
-        }
+        },
     }
 </script>
 

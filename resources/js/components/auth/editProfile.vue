@@ -21,7 +21,7 @@
                 <div  class="div" v-if="userLogin.type =='u'">
                     <label>NIF</label>
                     <input type="number" placeholder="NIF" v-model="$v.user.nif.$model"> 
-                    <div v-if="$v.user.type.$error">
+                    <div v-if="$v.user.nif.$error">
                       <div class="error" v-if="!$v.user.nif.required">Field is required</div>
                       <div class="error" v-if="!$v.user.nif.minLength">NIF must have at least {{$v.user.nif.$params.minLength.min}} numbers.</div> 
                     </div>
@@ -45,8 +45,7 @@
                     <input type="password" placeholder="old password" v-model="$v.user.old_password.$model">
                     <div v-if="$v.user.old_password.$error">
                       <div class="error" v-if="!$v.user.old_password.required ">Field is required</div>
-                      <!-- <div class="error" v-if="!$v.user.old_password.sameAsPass">Don´t match with your old password.</div> -->
-                      <div class="error" v-if="!$v.user.old_password.minLength">Password must have at least {{$v.user.old_password.$params.minLength.min}} digits.</div> 
+                      <div class="error" v-if="!$v.user.old_password.minLength">Password must have at least {{$v.user.password.$params.minLength.min}} digits.</div> 
                     </div>
                 </div>
                 <div class="div">
@@ -89,9 +88,10 @@ export default {
           name: '',
           email:'',
           nif:'',
+          old_password: '',   
           password: '',
           password_confirmation: '',
-          old_password: '',        
+               
         },
         currentUser:"",
         messageType: "alert-success",
@@ -165,6 +165,9 @@ export default {
                   this.submitStatus = 'ERROR';
               } else {
 
+                    this.user.name = this.userLogin.name;
+                    this.user.email = this.userLogin.email;
+                    this.user.nif = this.userLogin.nif;
                     console.log(this.user)
                     axios.patch('/api/users/'+this.userLogin.id, this.user)
                     .then(response => {               
