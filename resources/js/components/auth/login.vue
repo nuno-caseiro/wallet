@@ -87,13 +87,21 @@
                             setTimeout(() => {
                                 this.$router.push("/")
                             }, 1000);
-                        })
+                        //}
+                        //,response=>{
+                        // if(response.status==400){
+                        //     this.typeOfMessage = "alert-danger";
+                        //     this.message = "Error in your credentials or you are deactivated.";
+                        //     this.showMessage = true;
+                        //     console.log(console.status)
+                        // }
+                    })
                         .catch(error=>{
                             this.typeOfMessage = "alert-danger";
-                            this.message = "Wrong email or password";
+                            this.message = "Error in your credentials or you are deactivated.";
                             this.showMessage = true;
                                     console.log(error);
-                                })
+                        })
                         .then(response=>{
                         axios.get('api/user').then(response=>{
                             let user=response.data;
@@ -102,7 +110,7 @@
                             console.log(this.$store.state.user);
                         })
                         
-                    });
+                    })
                         this.submitStatus = 'PENDING';
                         setTimeout(() => {
                             this.submitStatus = 'OK'

@@ -110,7 +110,7 @@ export default {
             });
         }
         /// quando se apaga ou reativa um user, para atualizar o estado ou a lista, faz um get filtrado outra vez
-        if(this.filter!=''){
+        if(this.filters!=''){
             this.applyFilter(this.filters);
         }
 

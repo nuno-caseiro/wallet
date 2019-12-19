@@ -40,7 +40,12 @@
                     <input class="form-data" name="photo" accept="image/*" type="file" @change="onFileSelected">
                 </div>
 
-                <div class="div" >
+                <div class="div">
+                    <label for="transfer">Change Password</label>
+                    <input type="checkbox" id="transfer" v-model="change">
+                </div>
+
+                <div class="div" v-if='change === true'>
                     <label>Old pasword</label>
                     <input type="password" placeholder="old password" v-model="$v.user.old_password.$model">
                     <div v-if="$v.user.old_password.$error">
@@ -48,7 +53,7 @@
                       <div class="error" v-if="!$v.user.old_password.minLength">Password must have at least {{$v.user.password.$params.minLength.min}} digits.</div> 
                     </div>
                 </div>
-                <div class="div">
+                <div class="div" v-if='change === true'>
                     <label>New password</label>
                     <input type="password" placeholder="new password" v-model="$v.user.password.$model">
                     <div v-if="$v.user.password.$error">
@@ -56,7 +61,7 @@
                       <div class="error" v-if="!$v.user.password.minLength">Password must have at least {{$v.user.password.$params.minLength.min}} digits.</div> 
                     </div>
                 </div>
-                <div class="div">
+                <div class="div" v-if='change === true'>
                     <label>Confirm new password</label>
                     <input type="password" placeholder="confirm password" v-model="$v.user.password_confirmation.$model">
                     <div v-if="$v.user.password_confirmation.$error">
@@ -84,6 +89,7 @@ export default {
     name : 'Edit',
     data() {
       return {
+        change: false,
         user: {
           name: '',
           email:'',
@@ -114,8 +120,8 @@ export default {
                 old_password: {                       
                         
 
-                    required: requiredIf(function(user){
-                    return this.user.password != '' || this.user.password_confirmation != '';
+                    required: requiredIf(function(change){
+                    return this.change === true;
                     }),
 
                     //     sameAsPass: sameAs(function(userLogin){
@@ -126,16 +132,16 @@ export default {
                 },
 
                 password: {
-                    required: requiredIf(function(user){
-                      return this.user.old_password != '' || this.user.password_confirmation != '';
+                    required: requiredIf(function(change){
+                      return this.change === true;
                     }),
 
                     minLength: minLength(3)
                 },
                 
                 password_confirmation: {
-                    required: requiredIf(function(user){
-                      return this.user.password != '';
+                    required: requiredIf(function(change){
+                      return this.change === true;
                     }),
                     
                     sameAsPassword: sameAs('password')
@@ -166,12 +172,12 @@ export default {
               } else {
 
                     console.log(this.user)
-                    this.$store.state.user.name = this.user.name;
-                    this.$store.state.user.nif=this.user.nif;
-                    this.$store.state.user.email = this.user.email;
+                    // this.$store.state.user.name = this.user.name;
+                    // this.$store.state.user.nif=this.user.nif;
+                    // this.$store.state.user.email = this.user.email;
                     
                     axios.patch('/api/users/'+this.userLogin.id, this.user)
-                    .then(response => {               
+                    .then(response => {   
                         console.log(response)
                         this.showMessage = true;
                         this.message = 'Edit completed with success';
