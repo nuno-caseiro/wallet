@@ -87,13 +87,21 @@
                             setTimeout(() => {
                                 this.$router.push("/")
                             }, 1000);
-                        }).then(response=>{
+                        })
+                        .catch(error=>{
+                            this.typeOfMessage = "alert-danger";
+                            this.message = "Wrong email or password";
+                            this.showMessage = true;
+                                    console.log(error);
+                                })
+                        .then(response=>{
                         axios.get('api/user').then(response=>{
                             let user=response.data;
                             this.$store.dispatch('setAuthUser',user);
                             this.$socket.emit('user_enter', this.$store.state.user);
                             console.log(this.$store.state.user);
                         })
+                        
                     });
                         this.submitStatus = 'PENDING';
                         setTimeout(() => {
