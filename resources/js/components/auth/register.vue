@@ -176,7 +176,7 @@
                                     console.log(this.wallet.id);
                                     Object.assign(this.wallet, response.data);
                                     setTimeout(() => {
-                                this.$router.push("/")
+                                this.$router.push("login")
                             }, 1000);
 
                                 }).catch(error=>{

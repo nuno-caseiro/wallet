@@ -79,14 +79,12 @@ class UserControllerApi extends Controller
         //TODO validacoes
         $user= User::findOrFail($id);
         $data = $request->all();
-        if(strlen($request->password) != 0){
+        
         if(Hash::check($data['old_password'], $user->password)){
         $request->merge(['password' => Hash::make($request->get('password'))]);
-        $user->update($request->all());
+        $user->fill($request->all());
         }
-        }else{
-            $user->update($request->all()->except('password'));
-        }
+        
         //else{
         //     $user->delete();
         //     return response()->json(null,204); 
