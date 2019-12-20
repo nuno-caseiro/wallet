@@ -172,54 +172,65 @@ export default {
               } else {
 
                     console.log(this.user)
-                    // this.$store.state.user.name = this.user.name;
-                    // this.$store.state.user.nif=this.user.nif;
-                    // this.$store.state.user.email = this.user.email;
+                    this.$store.state.user.name = this.user.name;
+                    this.$store.state.user.nif=this.user.nif;
+                    //this.$store.state.user.email = this.user.email;
                     
+                    ///////////////////Pedido com Alteracao da Pass/////////////////////////////////
+                    if(this.change === true){
                     axios.patch('/api/users/'+this.userLogin.id, this.user)
                     .then(response => {   
+                        let tokenType = response.data.token_type;
+                        let token = response.data.access_token;
+                        let expiration = response.data.expires_in + Date.now();
+                        this.$store.commit('setToken', {token, tokenType, expiration});
                         console.log(response)
+                        this.messageType = "alert-success"
                         this.showMessage = true;
-                        this.message = 'Edit completed with success';
+                        this.message = 'Success, please login again!!';
                         setTimeout(() => {
-                                this.$router.push("/")
-                        }, 1000);
+                                this.$router.push("login")
+                        }, 1500);
                         }).catch(error=>{
                           this.messageType = "alert-danger";
                             this.message = "";
                             this.showMessage = true;
                                     console.log(error);
                                 });
-                                    
+                    }
+                    
 
-                        this.submitStatus = 'PENDING';
+                    ///////////////////Pedido sem Alteracao da Pass/////////////////////////////////
+                    if(this.change === false){
+                    axios.put('/api/users/'+this.userLogin.id,  this.$store.state.user)
+                    .then(response => {   
+                        let tokenType = response.data.token_type;
+                        let token = response.data.access_token;
+                        let expiration = response.data.expires_in + Date.now();
+                        this.$store.commit('setToken', {token, tokenType, expiration});
+                        console.log(response)
+                        this.messageType = "alert-success"
+                        this.showMessage = true;
+                        this.message = 'Success, please login again!!';
+                        setTimeout(() => {
+                                this.$router.push("login")
+                        }, 1500);
+                        }).catch(error=>{
+                          this.messageType = "alert-danger";
+                            this.message = "";
+                            this.showMessage = true;
+                                    console.log(error);
+                                });
+                    }
+
+                    
+
+                    this.submitStatus = 'PENDING';
                     setTimeout(() => {
                         this.submitStatus = 'OK'
                     }, 500)
                 }
-            //  if(this.userLogin.password===this.repeatPassword && this.newPassword===this.confirmPassword){
-
-
-            //             this.newPassword = this.userLogin.password;
-                         
-            //             this.userLogin.active=1;
-            //             console.log(this.currentUser);
-            //             axios.put('/api/users/' + this.userLogin.id, this.userLogin)
-            //                 .then(response => {
-                                
-            //                     Object.assign(this.currentUser, response.data);
-            //                     this.showMessage = true;
-            //                     this.message = 'Edit completed with success';
-
-            //                 }).catch(error=>{
-            //                     console.log(error);
-            //                 });
-            //                     setTimeout(() => {
-            //                 this.$router.push("/")
-            //             }, 1000);                
-
-            //  }
-
+    
         },
          cancelEdit(){
           this.user = null; 

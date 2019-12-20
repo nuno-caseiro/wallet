@@ -79,10 +79,13 @@ class UserControllerApi extends Controller
         //TODO validacoes
         $user= User::findOrFail($id);
         $data = $request->all();
+        if(strlen($request->password) != 0){
         if(Hash::check($data['old_password'], $user->password)){
         $request->merge(['password' => Hash::make($request->get('password'))]);
         $user->update($request->all());
-         
+        }
+        }else{
+            $user->update($request->all()->except('password'));
         }
         //else{
         //     $user->delete();
@@ -91,6 +94,18 @@ class UserControllerApi extends Controller
         $user->save();
         return (new UserResource($user))->response()->setStatusCode(200);
     }
+
+
+    public function updateWithoutPass(Request $request, $id){
+        //TODO validacoes
+        $user= User::findOrFail($id);
+        //$data = $request->all();
+        $user->fill($request->all());
+        $user->save();
+        return (new UserResource($user))->response()->setStatusCode(200);
+    }
+
+    
 
     public function destroy($id){
         $user= User::findOrFail($id);

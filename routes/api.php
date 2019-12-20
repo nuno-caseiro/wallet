@@ -32,7 +32,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('users/{id}', 'UserControllerAPI@show');
 
     //TODO apenas o proprio user
-    //Route::put('users/{id}', 'UserControllerAPI@update');
+    Route::put('users/{id}', 'UserControllerAPI@updateWithoutPass');
     Route::patch('users/{id}', 'UserControllerAPI@update');
 
     //unactivate User
