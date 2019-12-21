@@ -46,6 +46,12 @@ let loggedUsers = new LoggedUsers();
 
 io.on('connection', function (socket) {
 
+    socket.on('disconnect', () => {
+
+        socket.leave('type'+loggedUsers.userInfoBySocketID(socket.id).type);
+        loggedUsers.removeUserInfoBySocketID(socket.id);
+    });
+
     socket.on('user_enter', function (user) {
        if(user!==undefined && user !==null){
            socket.join('type_'+ user.type);

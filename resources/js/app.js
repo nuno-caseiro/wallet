@@ -186,7 +186,6 @@ const app = new Vue({
     router,
     store,
 
-    //global messages - To listen to the message (on the client - Vue.js application) from the server (message sent from the server to the client)
     sockets:{
       connect(){
           console.log(`Socket connected with ID: ${this.$socket.id}`);
@@ -201,7 +200,6 @@ const app = new Vue({
 
         },
         message_unavailable(dataFromServer){
-          //TODO enviar mail
             let content ={
                 msg:dataFromServer[0],
                 sourceUser:dataFromServer[1],
@@ -210,7 +208,7 @@ const app = new Vue({
             axios.post('api/email', content).then(response => {
                 console.log(response);
             });
-            this.$toasted.error('User"'+dataFromServer[1].name+ '"is not available so email was sent');
+            this.$toasted.error('User "'+dataFromServer[1].name+ '" is not available so email was sent');
         },
         message_sent(dataFromServer){
          //this.$toasted.success(dataFromServer[0]+ " to "+dataFromServer[1].name);
