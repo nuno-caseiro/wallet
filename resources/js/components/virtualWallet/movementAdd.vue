@@ -247,10 +247,8 @@
                     Object.assign(userDest, response.data.data);
                     console.log(userDest);
 
-                    //let msg=window.prompt('What do you want to say to"'+userDest.name+'"');
                     let msg = ('Income of ' + this.movement.value + ' euros was sent to your wallet');
                     this.$socket.emit('message_from_user_income',msg,this.$store.state.user,userDest);
-                    //TODO ALTERAR MENSAGENS - CASEIRO DISSE
 
                 });
 
