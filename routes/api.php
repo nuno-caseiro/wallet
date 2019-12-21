@@ -49,7 +49,7 @@ Route::middleware('auth:api')->group(function () {
     Route::put('wallets/{id}', 'WalletControllerAPI@update');
 
     Route::post('movements', 'MovementControllerAPI@store');
-    
+
     Route::put('movements/{id}', 'MovementControllerAPI@update');
 
     Route::put('movements/id/{id}', 'MovementControllerAPI@updateEdit');
@@ -91,3 +91,6 @@ Route::get('wallets', 'WalletControllerAPI@index');
 Route::post('wallets', 'WalletControllerAPI@store');
 
 Route::get('user/email/{email}','UserControllerAPI@showByEmail');
+
+Route::post('email', 'EmailAPI@sendEmail');
+

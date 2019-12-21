@@ -15,9 +15,9 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
-        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
+        'domain' => 'virtualwallet.mail.com',
+        'secret' => '22551239d307a58223a857bdb6223a9e-f8b3d330-b0735f6f',
+        'endpoint' => 'api.eu.mailgun.net',
     ],
 
     'postmark' => [
