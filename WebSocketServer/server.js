@@ -66,12 +66,13 @@ io.on('connection', function (socket) {
         });
 
     socket.on('message_from_user_income',function (msg,sourceUser, destUser) {
-        console.log(destUser.id);
+        //console.log(destUser.id);
         let userInfo=loggedUsers.userInfoByID(destUser.id);
        console.log("AQUI");
         let socket_id= userInfo!==undefined?userInfo.socketID:null;
-        if(socket_id===undefined){
-            socket.emit("message_unavailable",destUser);
+       //console.log(socket_id);
+        if(socket_id==undefined){
+            socket.emit("message_unavailable",msg,sourceUser,destUser);
         }else{
             io.sockets.to(socket_id).emit("message_from_user",msg,sourceUser,destUser);
             socket.emit("message_sent",msg,destUser);

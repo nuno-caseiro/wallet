@@ -197,15 +197,24 @@ const app = new Vue({
         message_from_user(dataFromServer){
         console.log('Receiving this message from Server: "'+dataFromServer+'"');
         let name=dataFromServer[1]===null? 'Unknown':dataFromServer[1].name;
-        this.$toasted.show('Message "'+dataFromServer[0]+ '"sent from"'+name+'"');
+        this.$toasted.show(dataFromServer[0]+" by " +name);
 
         },
-        message_unavailable(destUser){
+        message_unavailable(dataFromServer){
           //TODO enviar mail
-          this.$toasted.error('User"'+destUser.name+ '"is not available');
+            let content ={
+                msg:dataFromServer[0],
+                sourceUser:dataFromServer[1],
+                destUser:dataFromServer[2],
+            };
+            axios.post('api/email', content).then(response => {
+                console.log(response);
+            });
+            this.$toasted.error('User"'+dataFromServer[1].name+ '"is not available so email was sent');
         },
         message_sent(dataFromServer){
-          this.$toasted.success('Message"'+dataFromServer[0]+'"was sent to"'+dataFromServer[1].name+'"');
+         //this.$toasted.success(dataFromServer[0]+ " to "+dataFromServer[1].name);
+         this.$toasted.success("Income was sent to "+dataFromServer[1].name);
         }
     },
     components:{

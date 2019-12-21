@@ -15,9 +15,9 @@ return [
     */
 
     'mailgun' => [
-        'domain' => 'virtualwallet.mail.com',
+        'domain' => 'sandbox5e1b4e99bcfe4029b79cfe107e136f1b.mailgun.org',
         'secret' => '22551239d307a58223a857bdb6223a9e-f8b3d330-b0735f6f',
-        'endpoint' => 'api.eu.mailgun.net',
+        'endpoint' => 'api.mailgun.net',
     ],
 
     'postmark' => [
