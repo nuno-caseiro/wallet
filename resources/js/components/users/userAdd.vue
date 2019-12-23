@@ -43,7 +43,7 @@
 	        <input type="password" class="form-control" id="inputPassword" name="nif" v-model="$v.user.password.$model"/>
             <div v-if="$v.user.password.$error">
                 <div class="error" v-if="!$v.user.password.required">Field is required</div>
-                <div class="error" v-if="!$v.user.password.minLength">Name must have at least {{$v.user.password.$params.minLength.min}} letters.</div> 
+                <div class="error" v-if="!$v.user.password.minLength">Password must have at least {{$v.user.password.$params.minLength.min}} letters.</div> 
             </div>
         </div>
         <b-button-group>

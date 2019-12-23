@@ -111,7 +111,15 @@ export default {
         }
         /// quando se apaga ou reativa um user, para atualizar o estado ou a lista, faz um get filtrado outra vez
         if(this.filters!=''){
-            this.applyFilter(this.filters);
+            let page_url = url || 'api/users/';
+            axios.get(page_url)
+            .then(response=>{
+                console.log(response);
+                this.users=response.data.data;
+                this.makePagination(response.data.meta, response.data.links);
+            }).catch(function(err){
+                console.log(err);
+            });
         }
 
         },
