@@ -37,12 +37,12 @@ class UserControllerApi extends Controller
     }
 
     public function store(Request $request){
-        // $request->validate([
-        //     'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
-        //     'email' => 'required|email|unique:users,email,',
-        //     'nif'=> 'required|min:9|unique|regex:/^[0-9]+$/',
-        //     'password' => 'required|min:3|confirmed',
-        // ]);
+        $request->validate([
+            'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
+            'email' => 'required|email|unique:users,email,',
+            'nif'=> 'required|min:9|unique|regex:/^[0-9]+$/',
+            'password' => 'required|min:3|confirmed',
+        ]);
 
       
 
