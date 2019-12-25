@@ -25,74 +25,72 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', 'LoginControllerAPI@logout');
 
     //TODO proteger para apenas administrador
-    Route::get('users','UserControllerAPI@index');
-    Route::delete('users/{id}','UserControllerAPI@destroy');
+    Route::get('users','UserControllerAPI@index')->middleware(['admin','user','operator']);
+    Route::delete('users/{id}','UserControllerAPI@destroy')->middleware('admin');
 
-    //TODO apenas proprio user ou admin
     Route::get('users/{id}', 'UserControllerAPI@show');
 
     //TODO apenas o proprio user
-    Route::put('users/{id}', 'UserControllerAPI@updateWithoutPass');
-    Route::patch('users/{id}', 'UserControllerAPI@update');
+    Route::put('users/{id}', 'UserControllerAPI@updateWithoutPass')->middleware('user');
+    Route::patch('users/{id}', 'UserControllerAPI@update')->middleware('user');
 
     //unactivate User
-    Route::patch('user/unactivate/{id}', 'UserControllerAPI@unactivate');
+    Route::patch('user/unactivate/{id}', 'UserControllerAPI@unactivate')->middleware('admin');
     //activate User
-    Route::patch('user/activate/{id}', 'UserControllerAPI@activate');
+    Route::patch('user/activate/{id}', 'UserControllerAPI@activate')->middleware('admin');
 
     Route::get('oauth_access_tokens','UserControllerAPI@show');
 
     Route::delete('wallets/{id}', 'WalletControllerAPI@delete');
 
-    Route::get('wallets/{id}', 'WalletControllerAPI@show');
+    Route::get('wallets/{id}', 'WalletControllerAPI@show')->middleware('user');
 
-    Route::put('wallets/{id}', 'WalletControllerAPI@update');
+    Route::put('wallets/{id}', 'WalletControllerAPI@update')->middleware('user');
 
-    Route::post('movements', 'MovementControllerAPI@store');
+    Route::post('movements', 'MovementControllerAPI@store')->middleware(['user','operator']);
 
-    Route::put('movements/{id}', 'MovementControllerAPI@update');
+    Route::put('movements/{id}', 'MovementControllerAPI@update')->middleware('user');
 
-    Route::put('movements/id/{id}', 'MovementControllerAPI@updateEdit');
+    Route::put('movements/id/{id}', 'MovementControllerAPI@updateEdit')->middleware('user');
 
-    Route::get('movements','MovementControllerAPI@index');
-    Route::get('movements/{id}','MovementControllerAPI@show');
+    Route::get('movements','MovementControllerAPI@index')->middleware('user');
+    Route::get('movements/{id}','MovementControllerAPI@show')->middleware('user');
 
-    Route::get('movements/id/{wallet_id}','MovementControllerAPI@showMovementsOfWallet');
+    Route::get('movements/id/{wallet_id}','MovementControllerAPI@showMovementsOfWallet')->middleware('user');
 
-    Route::delete('movements/{id}', 'MovementControllerAPI@delete');
+   // Route::delete('movements/{id}', 'MovementControllerAPI@delete');
 
-    Route::get('categories','CategoryControllerAPI@index');
-    Route::get('categories/{id}','CategoryControllerAPI@show');
-    Route::post('categories', 'CategoryControllerAPI@store');
-    Route::delete('categories/{id}', 'CategoryControllerAPI@delete');
+    Route::get('categories','CategoryControllerAPI@index')->middleware(['user','operator']);
 
-    Route::get('categories/type/{type}','CategoryControllerAPI@getCategoriesByType');
+    Route::get('categories/{id}','CategoryControllerAPI@show')->middleware(['user','operator']);
+
+    Route::post('categories', 'CategoryControllerAPI@store')->middleware(['user','operator']);
+
+    Route::delete('categories/{id}', 'CategoryControllerAPI@delete')->middleware(['user','operator']);
+
+    Route::get('categories/type/{type}','CategoryControllerAPI@getCategoriesByType')->middleware(['user','operator']);
 
 
     ///////////////////////////////////STATISTICS//////////////////////////////////////////////////////////
     Route::get('/movements/totalMovements/{dates}', 'Statistics@getTotalMovsFromGivenMonth');
 
+Route::get('movements/1/filter','MovementControllerAPI@filter')->middleware('user');
+
+Route::get('users/1/filter','UserControllerAPI@filter')->middleware('admin');
+
+
+Route::post('email', 'EmailAPI@sendEmail')->middleware(['user','operator']);
 });
-////Movement filter
-Route::get('movements/1/filter','MovementControllerAPI@filter'); //TODO para mudar de local e de rota
 
-///User filter
-Route::get('users/1/filter','UserControllerAPI@filter'); //TODO mudar de local
-
-//TODO policies
-
+Route::get('wallets', 'WalletControllerAPI@index');
 
 Route::post('login', 'LoginControllerAPI@login')->name('login');
 
 Route::post('users','UserControllerAPI@store');
 
-//Route::post('users/email','UserControllerAPI@showByEmail');
-
-Route::get('wallets', 'WalletControllerAPI@index');
 
 Route::post('wallets', 'WalletControllerAPI@store');
 
 Route::get('user/email/{email}','UserControllerAPI@showByEmail');
 
-Route::post('email', 'EmailAPI@sendEmail');
 
