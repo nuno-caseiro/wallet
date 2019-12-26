@@ -15,6 +15,14 @@ class OperatorMiddleware
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        if(auth()->guard('api')->user()!=null){
+            if(auth()->guard('api')->user()->type=='o'){
+                return $next($request);
+            }else{
+                return redirect('/#/');
+            }
+        }else{
+            return redirect('/#/');
+        }
     }
 }

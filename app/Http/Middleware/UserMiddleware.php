@@ -15,6 +15,14 @@ class UserMiddleware
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        if(auth()->guard('api')->user()!=null){
+            if(auth()->guard('api')->user()->type=='u'){
+                return $next($request);
+            }else{
+                return redirect('/#/');
+            }
+        }else{
+            return redirect('/#/');
+        }
     }
 }

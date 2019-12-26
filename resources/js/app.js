@@ -147,8 +147,7 @@ const routes = [
         name: "movementAdd",
         component: movementAdd,
         meta:{
-            forOperator: true,
-            forUser:true,
+            forOperatorAndUser: true,
         }
     },
 
@@ -189,7 +188,11 @@ const routes = [
     {
         path:"/statistics",
         name: "statistics",
-        component: statistics
+        component: statistics,
+        meta:{
+            forAdminAndUser:true,
+
+        }
     },
 
     {
@@ -235,6 +238,18 @@ router.beforeEach((to,from,next)=>{
         } else next()
     }else if(to.matched.some(record=>record.meta.forAdmin)) {
         if (!store.getters.isAdmin) {
+            next({
+                path: '/'
+            })
+        } else next()
+    }else if(to.matched.some(record=>record.meta.forOperatorAndUser)) {
+        if (!(store.getters.isOperator||store.getters.isUser)) {
+            next({
+                path: '/'
+            })
+        } else next()
+    }else if(to.matched.some(record=>record.meta.forAdminAndUser)) {
+        if (!(store.getters.isAdmin||store.getters.isUser)) {
             next({
                 path: '/'
             })
