@@ -93,10 +93,6 @@ const routes = [
         path: "/",
         name:"Home",
         component : welcome,
-        meta: {
-            forAuth:true,
-            forVisitors:true,
-        }
     },
 
     {
