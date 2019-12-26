@@ -92,25 +92,38 @@ const routes = [
     {
         path: "/",
         name:"Home",
-        component : welcome
+        component : welcome,
+        meta: {
+            forAuth:true,
+            forVisitors:true,
+        }
     },
 
     {
         path: "/login",
         name:"Login",
-        component : login
+        component : login,
+        meta:{
+            forVisitors:true,
+        }
     },
 
     {
         path: "/logout",
         name:"Logout",
-        component : logout
+        component : logout,
+        meta: {
+            forAuth:true
+        }
     },
 
     {
         path: "/register",
         name:"Register",
-        component : register
+        component : register,
+        meta: {
+            forVisitors:true
+        }
     },
 
     {
@@ -121,7 +134,10 @@ const routes = [
     {
         path:"/edit",
         name:"Edit",
-        component:editProfile
+        component:editProfile,
+        meta: {
+            forUser: true
+        }
     },
 
     {
@@ -133,30 +149,46 @@ const routes = [
     {
         path:"/movementAdd",
         name: "movementAdd",
-        component: movementAdd
+        component: movementAdd,
+        meta:{
+            forOperator: true,
+            forUser:true,
+        }
     },
 
     {
         path:"/movementList",
         name:"MovementList",
-        component:movementList
+        component:movementList,
+        meta:{
+            forUser:true
+        }
     },
 
     {
         path:"/users",
         name: "users",
-        component: users
+        component: users,
+        meta:{
+            forAdmin: true,
+        }
     },
     {
         path:"/filter",
         name: "movementFilter",
-        component: movementFilter
+        component: movementFilter,
+        meta:{
+            forUser:true
+        }
     },
 
     {
         path:"/userAdd",
         name: "userAdd",
-        component: userAdd
+        component: userAdd,
+        meta:{
+            forAdmin:true,
+        }
     },
     {
         path:"/statistics",
@@ -167,7 +199,10 @@ const routes = [
     {
         path:"/adminStatistics",
         name: "adminStatistics",
-        component: adminStatistics
+        component: adminStatistics,
+        meta:{
+            forUser:true
+        }
     },
 
 
@@ -182,8 +217,43 @@ const router = new VueRouter({
 
  });
 
+
+router.beforeEach((to,from,next)=>{
+    if(to.matched.some(record=>record.meta.forVisitors)){
+        if(store.getters.isAuthenticated){
+            next({
+                path: '/'
+            })
+        }else next()
+    }else if(to.matched.some(record=>record.meta.forAuth)) {
+        if (!store.getters.isAuthenticated) {
+            next({
+                path: '/'
+            })
+        } else next()
+    }else if(to.matched.some(record=>record.meta.forOperator)) {
+        if (!store.getters.isOperator) {
+            next({
+                path: '/'
+            })
+        } else next()
+    }else if(to.matched.some(record=>record.meta.forAdmin)) {
+        if (!store.getters.isAdmin) {
+            next({
+                path: '/'
+            })
+        } else next()
+    }else if(to.matched.some(record=>record.meta.forUser)) {
+        if (!store.getters.isUser) {
+            next({
+                path: '/'
+            })
+        } else next()
+    }else next()
+});
+
 const app = new Vue({
-    router,
+    router:router,
     store,
 
     sockets:{
