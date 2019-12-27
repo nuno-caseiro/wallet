@@ -25,14 +25,17 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', 'LoginControllerAPI@logout');
 
     //TODO proteger para apenas administrador
-    Route::get('users','UserControllerAPI@index')->middleware(['admin','user','operator']);
+    Route::get('users','UserControllerAPI@index')->middleware('forAll');
     Route::delete('users/{id}','UserControllerAPI@destroy')->middleware('admin');
 
     Route::get('users/{id}', 'UserControllerAPI@show');
 
     //TODO apenas o proprio user
     Route::put('users/{id}', 'UserControllerAPI@updateWithoutPass')->middleware('user');
+    
     Route::patch('users/{id}', 'UserControllerAPI@update')->middleware('user');
+
+    
 
     //unactivate User
     Route::patch('user/unactivate/{id}', 'UserControllerAPI@unactivate')->middleware('admin');
@@ -47,7 +50,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::put('wallets/{id}', 'WalletControllerAPI@update')->middleware('user');
 
-    Route::post('movements', 'MovementControllerAPI@store')->middleware(['user','operator']);
+    Route::post('movements', 'MovementControllerAPI@store')->middleware('userAndOperator');
 
     Route::put('movements/{id}', 'MovementControllerAPI@update')->middleware('user');
 
@@ -60,15 +63,15 @@ Route::middleware('auth:api')->group(function () {
 
    // Route::delete('movements/{id}', 'MovementControllerAPI@delete');
 
-    Route::get('categories','CategoryControllerAPI@index')->middleware(['user','operator']);
+    Route::get('categories','CategoryControllerAPI@index')->middleware('userAndOperator');
 
-    Route::get('categories/{id}','CategoryControllerAPI@show')->middleware(['user','operator']);
+    Route::get('categories/{id}','CategoryControllerAPI@show')->middleware('userAndOperator');
 
-    Route::post('categories', 'CategoryControllerAPI@store')->middleware(['user','operator']);
+    Route::post('categories', 'CategoryControllerAPI@store')->middleware('userAndOperator');
 
-    Route::delete('categories/{id}', 'CategoryControllerAPI@delete')->middleware(['user','operator']);
+    Route::delete('categories/{id}', 'CategoryControllerAPI@delete')->middleware('userAndOperator');
 
-    Route::get('categories/type/{type}','CategoryControllerAPI@getCategoriesByType')->middleware(['user','operator']);
+    Route::get('categories/type/{type}','CategoryControllerAPI@getCategoriesByType')->middleware('userAndOperator');
 
 
     ///////////////////////////////////STATISTICS//////////////////////////////////////////////////////////
@@ -79,15 +82,14 @@ Route::get('movements/1/filter','MovementControllerAPI@filter')->middleware('use
 Route::get('users/1/filter','UserControllerAPI@filter')->middleware('admin');
 
 
-Route::post('email', 'EmailAPI@sendEmail')->middleware(['user','operator']);
+Route::post('email', 'EmailAPI@sendEmail')->middleware('userAndOperator');
 });
 
 Route::get('wallets', 'WalletControllerAPI@index');
 
-Route::post('login', 'LoginControllerAPI@login')->name('login');
+Route::post('login', 'LoginControllerAPI@login');
 
 Route::post('users','UserControllerAPI@store');
-
 
 Route::post('wallets', 'WalletControllerAPI@store');
 

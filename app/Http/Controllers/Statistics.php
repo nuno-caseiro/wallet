@@ -29,4 +29,9 @@ class Statistics extends Controller
         }
         return response()->json($arrayOfDatesAndAVG, 200);
     }
+
+
+    public function getTotalMovsFromGivenMonth(Request $request){
+        
+    }
 }
