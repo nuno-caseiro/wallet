@@ -16,29 +16,12 @@ class CheckMiddleware
     public function handle($request, Closure $next)
     {
         if(auth()->guard('api')->user()!=null){
-            if(auth()->guard('api')->user()->type=='a'){
-                return $next($request);
-            }else{
-                return redirect('/#/');
-            }
-        }
-        else if(auth()->guard('api')->user()!=null){
-            if(auth()->guard('api')->user()->type=='o'){
+            if(auth()->guard('api')->user()->type=='a' || auth()->guard('api')->user()->type=='o' || auth()->guard('api')->user()->type=='u'){
                 return $next($request);
             }else{
                 return redirect('/#/');
             }
         }
 
-        else if(auth()->guard('api')->user()!=null){
-            if(auth()->guard('api')->user()->type=='u'){
-                return $next($request);
-            }else{
-                return redirect('/#/');
-            }
-        }
-        else{
-            return redirect('/#/');
-        }
     }
 }

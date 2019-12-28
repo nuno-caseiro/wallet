@@ -31,7 +31,7 @@ Route::middleware('auth:api')->group(function () {
 
     //TODO para operador admin e user
     Route::put('users/{id}', 'UserControllerAPI@updateWithoutPass')->middleware('forAll');
-    
+
     Route::patch('users/{id}', 'UserControllerAPI@update')->middleware('forAll');
 
     Route::get('users/{id}', 'UserControllerAPI@show')->middleware('forAll');
@@ -47,7 +47,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('wallets/{id}', 'WalletControllerAPI@show')->middleware('user');
 
-    Route::put('wallets/{id}', 'WalletControllerAPI@update')->middleware('user');
+    Route::put('wallets/{id}', 'WalletControllerAPI@update')->middleware('userAndOperator');
 
     Route::post('movements', 'MovementControllerAPI@store')->middleware('userAndOperator');
 
