@@ -44,6 +44,7 @@ class UserControllerApi extends Controller
                 'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
                 'email' => 'required|email|unique:users,email,',
                 'nif'=> 'required|min:9|unique:users|regex:/^[0-9]+$/',
+                'photo'=> 'nullable',
                 'password' => 'required|min:3',
             ]);
         }
@@ -52,6 +53,7 @@ class UserControllerApi extends Controller
                 'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
                 'email' => 'required|email|unique:users,email,',
                 'nif'=> 'nullable|min:9|unique:users|regex:/^[0-9]+$/',
+                'photo'=> 'nullable',
                 'password' => 'required|min:3',
             ]);
         }
@@ -88,6 +90,27 @@ class UserControllerApi extends Controller
     }
 
     public function update(Request $request, $id){
+        
+        $data = $request->all();
+        if(($request['type']) == 'u'){
+            $request->validate([
+                'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
+                'email' => 'required|email|unique:users,email,',
+                'nif'=> 'required|min:9|unique:users|regex:/^[0-9]+$/',
+                'photo'=> 'nullable',
+                'password' => 'required|min:3',
+            ]);
+        }
+        else{
+            $request->validate([
+                'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
+                'email' => 'required|email|unique:users,email,',
+                'nif'=> 'nullable|min:9|unique:users|regex:/^[0-9]+$/',
+                'photo'=> 'nullable',
+                'password' => 'required|min:3',
+            ]);
+        }
+
         //TODO validacoes
         $user= User::findOrFail($id);
         $data = $request->all();

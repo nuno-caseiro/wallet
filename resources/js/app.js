@@ -131,9 +131,9 @@ const routes = [
         path:"/edit",
         name:"Edit",
         component:editProfile,
-        meta: {
-            forUser: true
-        }
+        // meta: {
+        //     forAuth: true,
+        // }
     },
 
     {

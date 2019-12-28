@@ -28,14 +28,13 @@ Route::middleware('auth:api')->group(function () {
     Route::get('users','UserControllerAPI@index')->middleware('forAll');
     Route::delete('users/{id}','UserControllerAPI@destroy')->middleware('admin');
 
-    Route::get('users/{id}', 'UserControllerAPI@show');
 
-    //TODO apenas o proprio user
-    Route::put('users/{id}', 'UserControllerAPI@updateWithoutPass')->middleware('user');
+    //TODO para operador admin e user
+    Route::put('users/{id}', 'UserControllerAPI@updateWithoutPass')->middleware('forAll');
     
-    Route::patch('users/{id}', 'UserControllerAPI@update')->middleware('user');
+    Route::patch('users/{id}', 'UserControllerAPI@update')->middleware('forAll');
 
-    
+    Route::get('users/{id}', 'UserControllerAPI@show')->middleware('forAll');
 
     //unactivate User
     Route::patch('user/unactivate/{id}', 'UserControllerAPI@unactivate')->middleware('admin');
