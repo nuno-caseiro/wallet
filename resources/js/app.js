@@ -289,7 +289,7 @@ const app = new Vue({
             axios.post('api/email', content).then(response => {
                 console.log(response);
             });
-            this.$toasted.error('User "'+dataFromServer[1].name+ '" is not available so email was sent');
+            this.$toasted.error('User "'+dataFromServer[2].name+ '" is not available so email was sent');
         },
         message_sent(dataFromServer){
          //this.$toasted.success(dataFromServer[0]+ " to "+dataFromServer[1].name);
