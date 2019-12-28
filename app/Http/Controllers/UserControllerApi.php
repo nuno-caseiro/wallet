@@ -37,19 +37,21 @@ class UserControllerApi extends Controller
     }
 
     public function store(Request $request){
-        $user= new User();
-        if($user->type == 'u'){
+        
+        $data = $request->all();
+        if(($request['type']) == 'u'){
             $request->validate([
                 'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
                 'email' => 'required|email|unique:users,email,',
-                'nif'=> 'required|min:9|unique|regex:/^[0-9]+$/',
-                'password' => 'required|min:3|confirmed',
+                'nif'=> 'required|min:9|unique:users|regex:/^[0-9]+$/',
+                'password' => 'required|min:3',
             ]);
         }
         else{
             $request->validate([
                 'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
                 'email' => 'required|email|unique:users,email,',
+                'nif'=> 'nullable|min:9|unique:users|regex:/^[0-9]+$/',
                 'password' => 'required|min:3',
             ]);
         }
@@ -57,7 +59,7 @@ class UserControllerApi extends Controller
       
 
         //TODO validacoes
-        // $user= new User();
+        $user= new User();
         $user->fill($request->all()+['remember_token'=> Str::random(10)]);
 
         if(strpos($request->input('photo'),'data:image/')!==false){
