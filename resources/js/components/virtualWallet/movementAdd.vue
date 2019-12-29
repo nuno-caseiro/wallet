@@ -37,6 +37,7 @@
                     <input type="number" class="form-control" v-model="$v.movement.value.$model" name="value" id="value" step="0.01" @input="setFinalBalance()">
                     <div v-if="$v.movement.value.$error">
                     <div class="error" v-if="!$v.movement.value.required">Field is required</div>
+                    <div class="error" v-if="!$v.movement.value.maxLength">Exceed max value of amount of money. Max: 9999€.</div>
                     </div>
                 </div>
 
@@ -53,6 +54,9 @@
                 <div class="form-group">
                     <label for="description">Description</label>
                     <input type="text" class="form-control" id="description" name="description" v-model="movement.description" >
+                    <div v-if="$v.movement.description.$error">
+                        <div class="error" v-if="!$v.movement.description.maxLength">Exceed maximum number of characters.</div>
+                    </div>
                 </div>
 
                 <div v-if="movement.transfer===true" class="form-group">
@@ -106,7 +110,7 @@
 </template>
 
 <script>
-    import { helpers,required, minLength, between, requiredIf } from 'vuelidate/lib/validators'
+    import { helpers,required, maxLength, between, requiredIf } from 'vuelidate/lib/validators'
     const regexEntityCode = /^[0-9]{5}$/g
     const regexPaymentReference = /^[0-9]{9}$/g
     const regexIban = /^[a-zA-Z]{2}[0-9]{2} [0-9]{4} [0-9]{4} [0-9]{11} [0-9]{2}$/g
@@ -174,9 +178,13 @@
             movement:{
                 value:{
                     required,
+                    maxLength: maxLength(4)
                 },
                 type:{
                     required,
+                },
+                description:{
+                    maxLength: maxLength(50)
                 },
                 iban:{
                     required: requiredIf(function(movement){
