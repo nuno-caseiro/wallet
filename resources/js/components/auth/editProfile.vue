@@ -90,6 +90,7 @@ export default {
     data() {
       return {
         change: false,
+        nifRequired: false,
         user: {
           name: '',
           email:'',
@@ -114,7 +115,9 @@ export default {
                 },
 
                 nif: {
-                    required,
+                    required: requiredIf(function(nifRequired){
+                      return this.nifRequired === true;
+                    }),
                     minLength: minLength(9),
                 },
                 old_password: {                       
@@ -170,7 +173,7 @@ export default {
               if (this.$v.$invalid) {
                   this.submitStatus = 'ERROR';
               } else {
-
+                    
                     console.log(this.user)
                     this.$store.state.user.name = this.user.name;
                     this.$store.state.user.nif=this.user.nif;
@@ -259,6 +262,11 @@ export default {
           this.user.name = this.$store.state.user.name;
           this.user.nif= this.$store.state.user.nif;
           this.user.email = this.$store.state.user.email;
+          if(this.$store.state.user.type === 'u'){
+            this.nifRequired = true;
+          }else{
+            this.nifRequired = false;
+          }
         }
 }
 </script>

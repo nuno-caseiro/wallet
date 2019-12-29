@@ -55,7 +55,7 @@ class Kernel extends HttpKernel
         'admin'=> \App\Http\Middleware\AdminMiddleware::class,
         'operator'=> \App\Http\Middleware\OperatorMiddleware::class,
         'user'=>\App\Http\Middleware\UserMiddleware::class,
-        'forAll'=>\App\Http\Middleware\CheckMiddleware::class,
+        'forAll'=>\App\Http\Middleware\ForAll::class,
         'userAndOperator'=>\App\Http\Middleware\UserOperatorMiddleware::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,

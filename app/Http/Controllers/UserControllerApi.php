@@ -91,7 +91,7 @@ class UserControllerApi extends Controller
 
     public function update(Request $request, $id){
         
-        $data = $request->all();
+        
         if(($request['type']) == 'u'){
             $request->validate([
                 'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',

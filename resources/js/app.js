@@ -131,9 +131,9 @@ const routes = [
         path:"/edit",
         name:"Edit",
         component:editProfile,
-        // meta: {
-        //     forAuth: true,
-        // }
+        meta: {
+            forAuth: true,
+        }
     },
 
     {
@@ -146,9 +146,9 @@ const routes = [
         path:"/movementAdd",
         name: "movementAdd",
         component: movementAdd,
-        meta:{
-            forOperatorAndUser: true,
-        }
+        // meta:{
+        //     forOperatorAndUser: true,
+        // }
     },
 
     {

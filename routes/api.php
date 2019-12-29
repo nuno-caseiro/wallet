@@ -49,13 +49,14 @@ Route::middleware('auth:api')->group(function () {
 
     Route::put('wallets/{id}', 'WalletControllerAPI@update')->middleware('userAndOperator');
 
-    Route::post('movements', 'MovementControllerAPI@store')->middleware('userAndOperator');
+    Route::post('movements', 'MovementControllerAPI@store');
 
     Route::put('movements/{id}', 'MovementControllerAPI@update')->middleware('user');
 
     Route::put('movements/id/{id}', 'MovementControllerAPI@updateEdit')->middleware('user');
 
-    Route::get('movements','MovementControllerAPI@index')->middleware('user');
+    Route::get('movements','MovementControllerAPI@index');
+    
     Route::get('movements/{id}','MovementControllerAPI@show')->middleware('user');
 
     Route::get('movements/id/{wallet_id}','MovementControllerAPI@showMovementsOfWallet')->middleware('user');
