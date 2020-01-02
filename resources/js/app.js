@@ -139,16 +139,19 @@ const routes = [
     {
         path:"/virtualWallet",
         name: "virtualWallet",
-        component: virtualWallet
+        component: virtualWallet,
+        meta: {
+            forUser: true,
+        }
     },
 
     {
         path:"/movementAdd",
         name: "movementAdd",
         component: movementAdd,
-        // meta:{
-        //     forOperatorAndUser: true,
-        // }
+        meta:{
+            forOperatorAndUser: true,
+        }
     },
 
     {
@@ -200,7 +203,7 @@ const routes = [
         name: "adminStatistics",
         component: adminStatistics,
         meta:{
-            forUser:true
+            forAdmin:true
         }
     },
 

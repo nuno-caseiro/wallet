@@ -62,7 +62,7 @@
             .then(response => {
                 console.log(response.data);
                 this.linedata.labels = ['date', 'Total Movs'];
-                this.linedata.datasets = response.data;
+                this.linedata.datasets = response.data.data;
                 this.show=true;
 
             })
