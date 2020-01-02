@@ -85,7 +85,7 @@ class MovementControllerAPI extends Controller
 
     public function store(Request $request){
         //TODO validacoes e deve ser preciso fazer mais alguma coisa
-        $data = $request->all();
+  /*      $data = $request->all();
         if(($data['type']) == 'i'){
                 if(($data['type_payment'])=='mb'){
 
@@ -96,7 +96,7 @@ class MovementControllerAPI extends Controller
                         'source_description' => 'nullable',
                         'value'=> 'nullable',
                     ]);
-                
+
                 }else{
                     if(($data['type_payment'])=='c'){
                     $request->validate([
@@ -111,8 +111,8 @@ class MovementControllerAPI extends Controller
         }
 
         if(($data['type']) == 'e'){
-            if(($data['transfer']) === true){                
-                $request->validate([  
+            if(($data['transfer']) === true){
+                $request->validate([
                     'transfer_movement_id' => 'required',
                     'transfer_wallet_id' => 'required',
                     'value'=>'required | max:4',
@@ -121,7 +121,7 @@ class MovementControllerAPI extends Controller
                     'mb_entity_code'=> 'nullable',
                     'mb_payment_reference'=> 'nullable',
                     'description' => 'nullable | max:50',
-                    
+
                 ]);
             }else{
                 if(($data['type_payment']) == 'mb'){
@@ -133,7 +133,7 @@ class MovementControllerAPI extends Controller
                         'mb_payment_reference'=> 'required | regex:/^[0-9]{9}$/g',
                         'description' => 'nullable | max:50',
                         'iban'=>'nullable',
-                        
+
                     ]);
                 }elseif(($data['type_payment']) == 'bt'){
                     $request->validate([
@@ -147,7 +147,7 @@ class MovementControllerAPI extends Controller
                     ]);
                 }
             }
-        }
+        }*/
 
             $now= new DateTime();
             $movement= new Movement();

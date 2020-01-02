@@ -36,7 +36,7 @@
                 <td>{{ movement.id }}</td>
                 <td v-if="movement.type ==='e'">{{ movement.type ==='e'? 'Expense': '' }}</td>
                 <td v-if="movement.type ==='i'">{{ movement.type ==='i'? 'Income': '' }}</td>
-                <td>{{ movement.transfer===1 ? movement.wallet_email : ''}}</td>
+                <td>{{  movement.wallet_email_source }}</td>
                 <td v-if="movement.type_payment==='c' && movement.transfer===0">{{movement.type_payment==='c'? 'Cash' : ''}}</td>
                 <td v-if="movement.type_payment==='mb'&& movement.transfer===0">{{movement.type_payment==='mb'? 'MB payment' : ''}}</td>
                 <td v-if="movement.type_payment==='bt'&& movement.transfer===0">{{movement.type_payment==='bt'? 'Bank Transfer' : ''}}</td>
@@ -215,6 +215,7 @@ export default {
                     this.makePagination(response.data.meta, response.data.links);
                 })
              }
+             console.log(this.movements);
         },
         makePagination(meta, links) {
             let pagination = {

@@ -19,6 +19,8 @@ class Movement extends JsonResource
             //acho que é $this->wallet->id
             'wallet_id'=> $this->wallet_id,
             'wallet_email'=>$this->wallet->email,
+            'wallet_email_source'=>$this->transfer_wallet ? $this->transfer_wallet->user->email: $this->wallet->email,
+
             //'wallet'=>$this->wallet,
             //'wallet'=>new WalletResource($this->wallet),
             'type'=>$this->type,
