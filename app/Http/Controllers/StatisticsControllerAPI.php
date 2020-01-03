@@ -81,73 +81,82 @@ class StatisticsControllerAPI extends Controller
         return response()->json($arrayMoney, 200);
     }
 
-    public function getTotalMoneyFromExternalIncomesByAllDaysOfMonth(Request $request){
+    public function getTotalMovementsFromExternalIncomesByAllDaysOfMonth(Request $request){
         try{
             $date=$request->date;
 
             $daysOfMonth=Carbon::parse($date)->daysInMonth;
-            $arrayMoney= array();
+            $arrayMovs= array();
             for($j=1;$j<=$daysOfMonth;$j++){
                 $totalMovements= DB::table('movements')->where('type','=','i')
                     ->where('transfer','=','0')->whereYear('date', '=', Carbon::parse($date)->format('Y'))->
-                    whereMonth('date','=',Carbon::parse($date)->format('m'))->whereDay('date','=',$j)->get();
-                $totalMoney=0;
+                    whereMonth('date','=',Carbon::parse($date)->format('m'))->whereDay('date','=',$j)->count();
 
-                foreach ($totalMovements as $movement ){
-                    $totalMoney+=$movement->value;
-                }
-                array_push($arrayMoney, ['day_month' => $j."-".Carbon::parse($date)->format('m').'-'.Carbon::parse($date)->format('Y'), 'total_money' => round($totalMoney,2)]);
+                array_push($arrayMovs, ['day_month' => $j."-".Carbon::parse($date)->format('m').'-'.Carbon::parse($date)->format('Y'), 'total_money' => $totalMovements]);
             }
         }catch (\Exception $e){
             return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
         }
-        return response()->json($arrayMoney, 200);
+        return response()->json($arrayMovs, 200);
     }
 
-    public function getTotalMoneyFromExternalIncomesBetweenYears(Request $request){
+    public function getTotalMovementsFromExternalIncomesBetweenYears(Request $request){
+        try{
+            $startYear=$request->startYear;
+            $stopYear=$request->stopYear;
+            $arrayMovs= array();
+            for ($i=$startYear;$i<=$stopYear;$i++){
+                for($j=1;$j<=12;$j++){
+                    $totalMovements= DB::table('movements')->where('type','=','i')
+                        ->where('transfer','=','0')->whereYear('date', '=', $i)->whereMonth('date','=',$j)->count();
+                    array_push($arrayMovs, ['year_month' => $j."-".$i, 'total_money' => round($totalMovements,2)]);
+                }
+            }
+        }catch (\Exception $e){
+            return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
+        }
+        return response()->json($arrayMovs, 200);
+    }
+
+    public function getTotalInternalTransfersAllDaysOfMonth(Request $request){
+        try{
+            $date=$request->date;
+
+            $daysOfMonth=Carbon::parse($date)->daysInMonth;
+            $arrayMovs= array();
+            for($j=1;$j<=$daysOfMonth;$j++){
+                $totalMovements=0;
+                $totalMovements= DB::table('movements')->where('type','=','e')
+                    ->where('transfer','=','1')->whereYear('date', '=', Carbon::parse($date)->format('Y'))->
+                    whereMonth('date','=',Carbon::parse($date)->format('m'))->whereDay('date','=',$j)->count();
+
+                array_push($arrayMovs, ['day_month' => $j."-".Carbon::parse($date)->format('m').'-'.Carbon::parse($date)->format('Y'), 'total_movs' => $totalMovements]);
+            }
+        }catch (\Exception $e){
+            return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
+        }
+        return response()->json($arrayMovs, 200);
+
+    }
+
+    public function getTotalInternalTransfersBetweenYears(Request $request){
         try{
             $startYear=$request->startYear;
             $stopYear=$request->stopYear;
             $totalMoney=0;
-            $arrayMoney= array();
+            $arrayMovs= array();
             for ($i=$startYear;$i<=$stopYear;$i++){
                 for($j=1;$j<=12;$j++){
+                    $totalMovements= DB::table('movements')->where('type','=','e')
+                        ->where('transfer','=','1')->whereYear('date', '=', $i)->whereMonth('date','=',$j)->count();
 
-                    $totalMovements= DB::table('movements')->where('type','=','i')
-                        ->where('transfer','=','0')->whereYear('date', '=', $i)->whereMonth('date','=',$j)->get();
-                    $totalMoney=0;
-
-                    foreach ($totalMovements as $movement ){
-                        $totalMoney+=$movement->value;
-                    }
-                    array_push($arrayMoney, ['year_month' => $i."-".$j, 'total_money' => round($totalMoney,2)]);
+                    array_push($arrayMovs, ['year_month' => $j."-".$i, 'total_movs' => $totalMovements]);
                 }
-
             }
         }catch (\Exception $e){
             return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
         }
-        return response()->json($arrayMoney, 200);
-    }
-
-    public function getInternalTransfersByUsersAllDaysOfMonth(Request $request, $dates){
-        try{
-            $year=$request->year;
-            $totalMoney=0;
-            $arrayMoney= array();
-            for($j=1;$j<=12;$j++){
-                $totalMovements= DB::table('movements')->where('type','!=','i')
-                    ->where('transfer','=','1')->whereYear('date', '=', $year)->whereMonth('date','=',$j)
-                    ->count();
-
-                array_push($totalMovements, ['year_month' => $year."-".$j, 'total_money' => $totalMovements]);
-            }
-        }catch (\Exception $e){
-            return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
-
-        }
-        return response()->json($arrayMoney, 200);
-
+        return response()->json($arrayMovs, 200);
     }
 
     // USER

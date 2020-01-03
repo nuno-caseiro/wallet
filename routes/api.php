@@ -77,11 +77,16 @@ Route::middleware('auth:api')->group(function () {
     ///////////////////////////////////STATISTICS//////////////////////////////////////////////////////////
     Route::get('/movements/totalMovements/{dates}', 'StatisticsControllerAPI@getTotalMovsFromGivenMonth');
 
+    Route::get('/movements/all/totalMoneyMovedByUsersBetweenYears', 'StatisticsControllerAPI@getTotalMoneyMovedByUsersBetweenYears')->middleware('admin');
+    Route::get('/movements/all/totalMoneyMovedByUsersAllDaysOfMonth', 'StatisticsControllerAPI@getTotalMoneyMovedByUsersAllDaysOfMonth')->middleware('admin');
+    Route::get('/movements/all/totalMovementsFromExternalIncomesByAllDaysOfMonth', 'StatisticsControllerAPI@getTotalMovementsFromExternalIncomesByAllDaysOfMonth')->middleware('admin');
+    Route::get('/movements/all/totalMovementsFromExternalIncomesBetweenYears', 'StatisticsControllerAPI@getTotalMovementsFromExternalIncomesBetweenYears')->middleware('admin');
+    Route::get('/movements/all/totalInternalTransfersAllDaysOfMonth', 'StatisticsControllerAPI@getTotalInternalTransfersAllDaysOfMonth')->middleware('admin');
+    Route::get('/movements/all/totalInternalTransfersBetweenYears', 'StatisticsControllerAPI@getTotalInternalTransfersBetweenYears')->middleware('admin');
+
 
 Route::get('movements/1/filter','MovementControllerAPI@filter')->middleware('user');
-
 Route::get('users/1/filter','UserControllerAPI@filter')->middleware('admin');
-
 
 Route::post('email', 'EmailAPI@sendEmail')->middleware('userAndOperator');
 });
@@ -97,6 +102,4 @@ Route::post('wallets', 'WalletControllerAPI@store');
 Route::get('user/email/{email}','UserControllerAPI@showByEmail');
 
 
-Route::get('/movements/all/totalMoneyMovedByUsersBetweenYears', 'StatisticsControllerAPI@getTotalMoneyMovedByUsersBetweenYears');
-Route::get('/movements/all/totalMoneyMovedByUsersAllDaysOfMonth', 'StatisticsControllerAPI@getTotalMoneyMovedByUsersAllDaysOfMonth');
-Route::get('/movements/all/totalMoneyFromExternalIncomesByAllDaysOfMonth', 'StatisticsControllerAPI@getTotalMoneyFromExternalIncomesByAllDaysOfMonth');
+

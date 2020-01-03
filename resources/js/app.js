@@ -47,8 +47,8 @@ import UsersListComponent from "./components/users/usersList.vue";
 import UserAddComponent from "./components/users/userAdd.vue";
 import MovementFilterComponent from "./components/virtualWallet/movementsFilter.vue"
 import StatisticsComponent from "./components/statistics/statistics.vue"
-import AdminStatisticsComponent from "./components/statistics/adminStats.vue"
 import UsersFilterComponent from "./components/users/usersFilter.vue"
+import StatisticsUserComponent from "./components/statistics/statisticsUser"
 
 
 
@@ -70,7 +70,7 @@ const movementFilter= Vue.component('movementsFilter',MovementFilterComponent);
 const userAdd= Vue.component('movementsFilter',UserAddComponent);
 const statistics = Vue.component('statistics',StatisticsComponent);
 const usersFilter = Vue.component('usersFilter',UsersFilterComponent);
-const adminStatistics = Vue.component('statistics',AdminStatisticsComponent);
+const userStatistics= Vue.component('userStatistics',StatisticsUserComponent);
 
 
 
@@ -193,19 +193,21 @@ const routes = [
         name: "statistics",
         component: statistics,
         meta:{
-            forAdminAndUser:true,
+            forAdmin:true,
 
         }
     },
-
     {
-        path:"/adminStatistics",
-        name: "adminStatistics",
-        component: adminStatistics,
+        path:"/userStatistics",
+        name: "userStatistics",
+        component: userStatistics,
         meta:{
-            forAdmin:true
+            forUser:true,
+
         }
     },
+
+
 
 
 
