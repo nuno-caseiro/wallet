@@ -19,7 +19,7 @@ class StatisticsControllerAPI extends Controller
             try {
                 $totalMovsFromGivenMonth =
                     DB::table('movements')
-                        ->whereYear('date', '=', Carbon::parse($date)->format('Y'))
+                        ->whereDate('date', '=', Carbon::parse($date)->format('Y'))
                         ->whereMonth('date', '=', Carbon::parse($date)->format('m'))
                         ->count();
                 array_push($arrayOfDatesAndAVG, ['date' => $date, 'total_movements' => $totalMovsFromGivenMonth]);
@@ -31,7 +31,7 @@ class StatisticsControllerAPI extends Controller
     }
 
 
-    public function getTotalMoneyMovedByUsersByMonth(Request $request){
+    public function getTotalMoneyMovedByUsersBetweenYears(Request $request){
         try{
             $startYear=$request->startYear;
             $stopYear=$request->stopYear;
@@ -81,28 +81,7 @@ class StatisticsControllerAPI extends Controller
         return response()->json($arrayMoney, 200);
     }
 
-    public function getTotalMoneyMovedByUsersByMonthOfYear(Request $request){
-        try{
-            $year=$request->year;
-            $totalMoney=0;
-            $arrayMoney= array();
-                for($j=1;$j<=12;$j++){
-                    $totalMovements= DB::table('movements')->where('type','!=','i')
-                        ->where('transfer','!=','0')->whereYear('date', '=', $year)->whereMonth('date','=',$j)
-                        ->get();
-                    $totalMoney=0;
-                    foreach ($totalMovements as $movement ){
-                        $totalMoney+=$movement->value;
-                    }
-                    array_push($arrayMoney, ['year_month' => $year."-".$j, 'total_money' => round($totalMoney,2)]);
-                }
-        }catch (\Exception $e){
-            return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
-        }
-        return response()->json($arrayMoney, 200);
-    }
-
-    public function getTotalMoneyFromExternalIncomesByMonthOfYear(Request $request){
+    public function getTotalMoneyFromExternalIncomesByAllDaysOfMonth(Request $request){
         try{
             $year=$request->year;
             $totalMoney=0;
@@ -122,10 +101,9 @@ class StatisticsControllerAPI extends Controller
 
         }
         return response()->json($arrayMoney, 200);
-
     }
 
-    public function getTotalTransfersByUsersByMonthOfYear(Request $request){
+    public function getInternalTransfersByUsersAllDaysOfMonth(Request $request, $dates){
         try{
             $year=$request->year;
             $totalMoney=0;
