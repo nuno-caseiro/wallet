@@ -11,24 +11,7 @@ use App\Movement;
 
 class StatisticsControllerAPI extends Controller
 {
-    // public function getTotalMovsFromGivenMonth(Request $request, $dates) {
-    //     $arrayOfDatesAndAVG = array();
-    //     $datesToCompare = explode(',', $dates);
-
-    //     foreach ($datesToCompare as $date) {
-    //         try {
-    //             $totalMovsFromGivenMonth =
-    //                 DB::table('movements')
-    //                     ->whereDate('date', '=', Carbon::parse($date)->format('Y'))
-    //                     ->whereMonth('date', '=', Carbon::parse($date)->format('m'))
-    //                     ->count();
-    //             array_push($arrayOfDatesAndAVG, ['date' => $date, 'total_movements' => $totalMovsFromGivenMonth]);
-    //         }catch (\Exception $e){
-    //             return response()->json(['error' => 'Invalid date format.'], 500);
-    //         }
-    //     }
-    //     return response()->json($arrayOfDatesAndAVG, 200);
-    // }
+   
 
 
     public function getTotalMoneyMovedByUsersBetweenYears(Request $request){
@@ -86,7 +69,6 @@ class StatisticsControllerAPI extends Controller
             $date=$request->date;
 
             $daysOfMonth=Carbon::parse($date)->daysInMonth;
-<<<<<<< Updated upstream
             $arrayMovs= array();
             for($j=1;$j<=$daysOfMonth;$j++){
                 $totalMovements= DB::table('movements')->where('type','=','i')
@@ -94,7 +76,6 @@ class StatisticsControllerAPI extends Controller
                     whereMonth('date','=',Carbon::parse($date)->format('m'))->whereDay('date','=',$j)->count();
 
                 array_push($arrayMovs, ['day_month' => $j."-".Carbon::parse($date)->format('m').'-'.Carbon::parse($date)->format('Y'), 'total_money' => $totalMovements]);
-=======
             $arrayMoney= array();
             for($j=1;$j<=$daysOfMonth;$j++){
                 $totalMovements= DB::table('movements')->where('type','=','i')
@@ -106,12 +87,10 @@ class StatisticsControllerAPI extends Controller
                     $totalMoney+=$movement->value;
                 }
                 array_push($arrayMoney, ['day_month' => $j."-".Carbon::parse($date)->format('m').'-'.Carbon::parse($date)->format('Y'), 'total_money' => round($totalMoney,2)]);
->>>>>>> Stashed changes
             }
         }catch (\Exception $e){
             return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
         }
-<<<<<<< Updated upstream
         return response()->json($arrayMovs, 200);
     }
 
@@ -126,7 +105,6 @@ class StatisticsControllerAPI extends Controller
                         ->where('transfer','=','0')->whereYear('date', '=', $i)->whereMonth('date','=',$j)->count();
                     array_push($arrayMovs, ['year_month' => $j."-".$i, 'total_money' => round($totalMovements,2)]);
                 }
-=======
         return response()->json($arrayMoney, 200);
     }
 
@@ -149,7 +127,6 @@ class StatisticsControllerAPI extends Controller
                     array_push($arrayMoney, ['year_month' => $i."-".$j, 'total_money' => round($totalMoney,2)]);
                 }
 
->>>>>>> Stashed changes
             }
         }catch (\Exception $e){
             return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
@@ -218,7 +195,6 @@ class StatisticsControllerAPI extends Controller
     }
 
 
-<<<<<<< Updated upstream
     public function getTotalMoneyExpensesAllDaysOfMonth(Request $request){
         try{
             $date=$request->date;
@@ -377,7 +353,6 @@ class StatisticsControllerAPI extends Controller
 
 
 
-=======
     public function getTotalAccesses(Request $request){
         $totalAccessesArray = array();
         try{
@@ -435,7 +410,6 @@ class StatisticsControllerAPI extends Controller
         return response()->json($totalMoneyArray, 200);
 
     }
->>>>>>> Stashed changes
 
 
 

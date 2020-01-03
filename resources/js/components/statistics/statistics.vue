@@ -1,8 +1,6 @@
 <template>
     <div>
-<<<<<<< Updated upstream
         <b-button v-b-toggle.getTotalMovsBetweenDates>Total movements between dates</b-button>
-=======
 
         <table class="table table-striped" >
         <thead>
@@ -67,38 +65,6 @@
             </b-card>
   </div>
 
-        <!-- <b-button v-b-toggle.getTotalMovsBetweenDates>Total movements between dates</b-button>
-        <b-button v-b-toggle.getTotalMoneyMovedByUsersByMonthYear>Total money moved by users between years </b-button>
-        <b-button v-b-toggle.getTotalMoneyMovedByUsersAllDaysOfMonth>Total money moved by users on one month </b-button>
->>>>>>> Stashed changes
-
-        <b-button v-b-toggle.getTotalMoneyMovedByUsersBetweenYears @click="showInputYears=!showInputYears">Total money moved by users between years </b-button>
-        <b-button v-b-toggle.getTotalMoneyMovedByUsersAllDaysOfMonth @click="showInputDate=!showInputDate">Total money moved by users on one month </b-button>
-
-<<<<<<< Updated upstream
-        <b-button v-b-toggle.getTotalInternalTransfersBetweenYears @click="showInputYears=!showInputYears">Total internal movements between years </b-button>
-        <b-button v-b-toggle.getTotalInternalTransfersAllDaysOfMonth @click="showInputDate=!showInputDate">Total internal movements of one month </b-button>
-=======
-
-        <b-collapse id="getTotalMovsBetweenDates">
-                <label>Date (yyyy-mm-dd,yyyy-mm-dd)</label>
-                <input class="form-control" type="text" v-model="data.dates" >
-                <button @click.prevent="getTotalMovsBetweenDates(data.dates)" class="btn btn-info">Get</button>
-            </b-collapse>
->>>>>>> Stashed changes
-
-        <b-button v-b-toggle.getTotalMoneyExternalAllDaysOfMonth @click="showInputYears=!showInputYears">Total external income one month </b-button>
-        <b-button v-b-toggle.getTotalMoneyExternalBetweenYears @click="showInputDate=!showInputDate">Total external income between years </b-button>
-
-
-
-        <b-collapse id="getTotalMoneyMovedByUsersBetweenYears">
-            <button @click.prevent="totalMoneyMovedByUsersByMonthYear()" class="btn btn-info">Get</button>
-        </b-collapse>
-
-        <b-collapse id="getTotalMoneyMovedByUsersAllDaysOfMonth">
-            <button @click.prevent="totalMoneyMovedByUsersAllDaysOfMonth()" class="btn btn-info">Get</button>
-        </b-collapse> -->
 
         <b-collapse id="getTotalMoneyExternalAllDaysOfMonth">
             <button @click.prevent="totalMovementsFromExternalIncomesByAllDaysOfMonth()" class="btn btn-info">Get</button>
@@ -391,6 +357,7 @@
             this.totalOfAccesses();
             this.totalOfMovements();
             this.totalMoneyOfPlatform();
+            /////
         }
 
 
