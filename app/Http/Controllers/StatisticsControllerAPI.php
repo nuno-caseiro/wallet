@@ -47,7 +47,7 @@ class StatisticsControllerAPI extends Controller
                     foreach ($totalMovements as $movement ){
                     $totalMoney+=$movement->value;
                 }
-                array_push($arrayMoney, ['year_month' => $i."-".$j, 'total_money' => round($totalMoney,2)]);
+                array_push($arrayMoney, ['day_month' => $i."-".$j, 'total_money' => round($totalMoney,2)]);
                 }
 
             }
@@ -143,7 +143,6 @@ class StatisticsControllerAPI extends Controller
         try{
             $startYear=$request->startYear;
             $stopYear=$request->stopYear;
-            $totalMoney=0;
             $arrayMovs= array();
             for ($i=$startYear;$i<=$stopYear;$i++){
                 for($j=1;$j<=12;$j++){
@@ -164,9 +163,10 @@ class StatisticsControllerAPI extends Controller
 
     public function getTotalExpensesByUser(Request $request){
         try{
+            $userId=$request->wallet_id;
 
-                $totalExpenses= DB::table('movements')->where('type','!=','i')
-                    ->where('transfer','=','1')->where('wallet_id','=','userId')->count();
+                $totalExpenses= DB::table('movements')->where('type','=','e')
+                    ->where('transfer','=','0')->where('wallet_id','=',$userId)->count();
 
                 array_push($totalExpensesArray, ['total_expenses' => $totalExpenses]);
 
@@ -177,6 +177,56 @@ class StatisticsControllerAPI extends Controller
         return response()->json($totalExpensesArray, 200);
 
     }
+
+
+    public function getTotalMoneyExpensesAllDaysOfMonth(Request $request){
+        try{
+            $date=$request->date;
+            $userId=$request->wallet_id;
+            $daysOfMonth=Carbon::parse($date)->daysInMonth;
+            $arrayMoney= array();
+                $totalMoney=0;
+            for($j=1;$j<=$daysOfMonth;$j++){
+                $totalMovements= DB::table('movements')->where('type','=','e')->where('wallet_id','=',$userId)
+                    ->whereYear('date', '=', Carbon::parse($date)->format('Y'))->
+                    whereMonth('date','=',Carbon::parse($date)->format('m'))->whereDay('date','=',$j)->get();
+                $totalMoney=0;
+                foreach ($totalMovements as $movement ){
+                    $totalMoney+=$movement->value;
+                }
+                array_push($arrayMoney, ['day_month' => $j."-".Carbon::parse($date)->format('m').'-'.Carbon::parse($date)->format('Y'), 'total_money' => $totalMoney]);
+            }
+        }catch (\Exception $e){
+            return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
+        }
+        return response()->json($arrayMoney, 200);
+
+    }
+
+    public function getTotalMoneyExpensesOfUserBetweenYears(Request $request){
+        try{
+            $startYear=$request->startYear;
+            $stopYear=$request->stopYear;
+            $userId=$request->wallet_id;
+            $arrayMoney= array();
+            for ($i=$startYear;$i<=$stopYear;$i++){
+                for($j=1;$j<=12;$j++) {
+                    $totalMovements= DB::table('movements')->where('type','!=','i')->where('wallet_id','=',$userId)
+                        ->where('transfer','!=','0')->whereYear('date', '=', $i)->whereMonth('date','=',$j)->get();
+                    $totalMoney=0;
+                    foreach ($totalMovements as $movement ){
+                        $totalMoney+=$movement->value;
+                    }
+                    array_push($arrayMoney, ['year_month' => $i."-".$j, 'total_money' => round($totalMoney,2)]);
+                }
+            }
+        }catch (\Exception $e){
+            return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
+        }
+        return response()->json($arrayMoney, 200);
+
+    }
+
 
 
 

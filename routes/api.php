@@ -101,5 +101,7 @@ Route::post('wallets', 'WalletControllerAPI@store');
 
 Route::get('user/email/{email}','UserControllerAPI@showByEmail');
 
+    Route::get('/movements/all/totalMoneyExpensesAllDaysOfMonth', 'StatisticsControllerAPI@getTotalMoneyExpensesAllDaysOfMonth');
+    Route::get('/movements/all/totalMoneyExpensesOfUserBetweenYears', 'StatisticsControllerAPI@getTotalMoneyExpensesOfUserBetweenYears');
 
 

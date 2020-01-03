@@ -10,11 +10,13 @@
                 Virtual Wallet</b-button></a>
             <a><b-button size="lg" variant="secondary" to="users"  v-if="isAuthenticated && isAdmin">Users</b-button></a>
             <a><b-button size="lg" variant="secondary" to="movementAdd"  v-if="isAuthenticated && isOperator">Add Movements</b-button></a>
-            <a id="statistics"><b-button size="lg" variant="secondary" to="statistics"  v-if="isAuthenticated &&(this.$store.state.user.active)===1">
-                Statistics</b-button></a> 
+            <a id="statistics"><b-button size="lg" variant="secondary" to="statistics"  v-if="isAuthenticated &&(this.$store.state.user.active)===1 && isAdmin">
+                Statistics</b-button></a>
+            <a id="userStatistics"><b-button size="lg" variant="secondary" to="userStatistics"  v-if="isAuthenticated &&(this.$store.state.user.active)===1 && isUser">
+                Statistics</b-button></a>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
-                
+
                 </ul>
                      <ul class="navbar-nav">
                          <a  v-if="isAuthenticated" class="navbar-brand" href="#">
@@ -95,4 +97,6 @@
     #statistics{
         margin-left: 10px;
     }
+
+
      </style>

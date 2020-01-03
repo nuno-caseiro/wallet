@@ -12,11 +12,6 @@
         <b-button v-b-toggle.getTotalMoneyExternalBetweenYears @click="showInputDate=!showInputDate">Total external income between years </b-button>
 
 
-      <!--  <b-collapse id="getTotalMovsBetweenDates">
-                <label>Date (yyyy-mm-dd,yyyy-mm-dd)</label>
-                <input class="form-control" type="text" v-model="data.dates" >
-                <button @click.prevent="getTotalMovsBetweenDates(data.dates)" class="btn btn-info">Get</button>
-            </b-collapse>-->
 
         <b-collapse id="getTotalMoneyMovedByUsersBetweenYears">
             <button @click.prevent="totalMoneyMovedByUsersByMonthYear()" class="btn btn-info">Get</button>
@@ -92,33 +87,6 @@
             }
         },
         methods: {
-            getTotalMovsBetweenDates(dates) {
-                if(this.show==true){
-                    this.show=false;
-                }
-            axios.get('/api/movements/totalMovements/' + dates).then(response => {
-                console.log(response);
-                this.linedata.labels=[];
-                this.linedata.datasets=[];
-                let data=[];
-                let dates=[];
-                for(let i=0;i<response.data.length;i++){
-                    data.push(response.data[i].total_movements);
-                }
-                for(let i=0;i<response.data.length;i++){
-                    dates.push(response.data[i].date);
-                }
-               this.linedata.labels=dates;
-                this.linedata.datasets.push({
-                    label: 'Total movements',
-                    data:data
-                });
-
-                this.show=true;
-
-                });
-            },
-
             totalMoneyMovedByUsersByMonthYear(){
 
                 if(this.show==true){
