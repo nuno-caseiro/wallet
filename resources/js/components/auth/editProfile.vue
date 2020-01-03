@@ -23,7 +23,8 @@
                     <input type="number" placeholder="NIF" v-model="$v.user.nif.$model"> 
                     <div v-if="$v.user.nif.$error">
                       <div class="error" v-if="!$v.user.nif.required">Field is required</div>
-                      <div class="error" v-if="!$v.user.nif.minLength">NIF must have at least {{$v.user.nif.$params.minLength.min}} numbers.</div> 
+                      <div class="error" v-if="!$v.user.nif.minLength">NIF must have 9 digits.</div> 
+                      <div class="error" v-if="!$v.user.nif.maxLength">NIF must have 9 digits.</div> 
                     </div>
                 </div>
 
@@ -31,7 +32,7 @@
                     <label>NIF</label>
                     <input type="number" placeholder="NIF" v-model="$v.user.nif.$model"> 
                     <div v-if="$v.user.nif.$error">
-                      <div class="error" v-if="!$v.user.nif.minLength">NIF must have at least {{$v.user.nif.$params.minLength.min}} numbers.</div> 
+                      <div class="error" v-if="!$v.user.nif.nifValid">NIF must have 9 digits.</div> 
                     </div>
                 </div>
 
@@ -85,6 +86,7 @@
 <script type="text/javascript">
 import axios from 'axios';
 import {maxLength, email, required, minLength, sameAs, requiredIf } from 'vuelidate/lib/validators'
+
 export default {
     name : 'Edit',
     data() {
@@ -119,6 +121,9 @@ export default {
                       return this.nifRequired === true;
                     }),
                     minLength: minLength(9),
+                    maxLength: maxLength(9),
+                    
+                    
                 },
                 old_password: {                       
                         

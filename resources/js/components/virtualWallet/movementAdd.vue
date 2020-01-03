@@ -42,7 +42,7 @@
                 </div>
 
 
-                <div v-if="movement.transfer===false" class="form-group">
+                <div v-if="movement.transfer===false " class="form-group">
                     <label for="typePayment">Payment type</label>
                     <select class="form-control" id="typePayment" name="typePayment" v-model="movement.type_payment">
                         <option value="c" v-if="isOperator">Cash</option>
@@ -59,9 +59,12 @@
                     </div>-->
                 </div>
 
-                <div v-if="movement.transfer===true" class="form-group">
-                    <label for="descriptionSource">Description</label>
-                    <input type="text" class="form-control" id="descriptionSource" name="descriptionSource" v-model="movement.source_description" >
+                <div v-if="movement.type==='i'" class="form-group">
+                    <label for="descriptionSource">Source Description</label>
+                    <input type="text" class="form-control" id="descriptionSource" name="descriptionSource" v-model="$v.movement.source_description.$model" >
+                    <div v-if="$v.movement.source_description.$error">
+                        <div class="error" v-if="!$v.movement.source_description.maxLength">Exceed maximum number of characters.</div>
+                    </div>
                 </div>
 
                 <div v-if="movement.type_payment==='bt'" class="form-group">
@@ -81,7 +84,7 @@
                         <div class="error" v-if="!$v.movement.mb_entity_code.mb_ec_valid">12345</div>
                     </div>-->
                 </div>
-                <div v-if="movement.type_payment==='mb'" class="form-group">
+                <div v-if="movement.type_payment==='mb' && movement.transfer===false" class="form-group">
                     <label for="mbPaymentReference">MB payment Reference </label>
                     <input type="number" class="form-control" v-model="movement.mb_payment_reference" name="mbPaymentReference" id="mbPaymentReference">
                 <!--    <div v-if="$v.movement.mb_payment_reference.$error">
@@ -187,6 +190,11 @@
                 description:{
                     maxLength: maxLength(50)
                 },
+
+                source_description:{
+                    maxLength: maxLength(50)
+                },
+
                 iban:{
 
                     ibanValid:(iban)=>{
@@ -197,9 +205,8 @@
 
 
                     mb_ec_valid:(mb_entity_code)=>{
-                        return(
-                            regexEntityCode.test(mb_entity_code)
-                        );
+                        return regexEntityCode.test(mb_entity_code);
+                        
                     }
                 },
 
@@ -208,7 +215,7 @@
 
 
                     mb_pr_valid:(mb_payment_reference)=>{
-                        return regexPaymentReference.test(mb_payment_reference)
+                        return regexPaymentReference.test(mb_payment_reference);
 
                     }
                 }
@@ -303,7 +310,7 @@
                                     this.showSuccess = true;
                                     ///redireciona para a pagina movements
                                     setTimeout(() => {
-                                        this.$router.push("/")}, 1000);
+                                        this.$router.push("/virtualWallet")}, 1000);
                                 }).catch(error => {
                                     console.log(error);
                                 });
