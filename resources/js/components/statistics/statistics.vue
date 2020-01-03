@@ -1,11 +1,14 @@
 <template>
     <div>
         <div>
-            <label for="Date">Date (yyyy-mm-dd,yyyy-mm-dd)</label>
-            <input class="form-control" type="text" v-model="data.dates">
+            <label>Date (yyyy-mm-dd,yyyy-mm-dd)</label>
+            <input class="form-control" type="text" v-model="data.dates" >
         </div>
-        <a @click.prevent="getTotalMovsFromGivenMonth(data.dates)" class="btn btn-info"></a>
-        <line-chart v-if="this.show===true" :chartdata="linedata" :options="options" ></line-chart>
+        <a @click.prevent="getTotalMovsBetweenDates(data.dates)" class="btn btn-info"/>
+        <div id="chart">
+
+        <line-chart ref="canvas"  v-if="this.show===true" :chartdata="linedata" :options="options" ></line-chart>
+        </div>
     </div>
 </template>
 
@@ -14,7 +17,7 @@
     export default {
         components:{
             lineChart,
-           
+
         },
         name: "statistics",
         data() {
@@ -26,11 +29,13 @@
                 },
                 options:{
                     responsive: true,
-                    maintainAspectRation: false,
+                    maintainAspectRatio:false,
+
                 },
                 data: {
                     dates: ""
                 },
+
             }
         },
         methods: {
@@ -57,21 +62,49 @@
                         this.show=true;
                     })
             },
-            getTotalMovsFromGivenMonth(dates) {
+            getTotalMovsBetweenDates(dates) {
+                if(this.show==true){
+                    this.show=false;
+                }
             axios.get('/api/movements/totalMovements/' + dates)
             .then(response => {
-                console.log(response.data);
-                this.linedata.labels = ['date', 'Total Movs'];
-                this.linedata.datasets = response.data;
+                this.linedata.labels=[];
+                this.linedata.datasets=[];
+                let data=[];
+                let dates=[];
+
+                for(let i=0;i<response.data.length;i++){
+                    data.push(response.data[i].total_movements);
+                }
+
+                for(let i=0;i<response.data.length;i++){
+                    dates.push(response.data[i].date);
+                }
+
+               this.linedata.labels=dates;
+                this.linedata.datasets.push({
+                    label: 'Total movements',
+                    data:data
+                });
+
+                console.log(this.linedata);
                 this.show=true;
 
             })
         },
-        }
+        },
+
+
 
     }
 </script>
 
 <style scoped>
+#chart {
+    max-width: 1000px;
+    max-height: 1000px;
 
+
+
+}
 </style>

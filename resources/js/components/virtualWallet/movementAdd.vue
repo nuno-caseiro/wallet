@@ -9,7 +9,7 @@
 
                 <div class="form-group">
                     <label for="movementType">Movement type</label>
-                    <select class="form-control" id="movementType" name="movementType" v-model="movement.type" @change="getCategories()"  >
+                    <select class="form-control" id="movementType" name="movementType" v-model="movement.type" @change="getCategories()"   >
                         <option v-if="isOperator"  value="i">Income</option>
                         <option v-if="isUser" value="e">Expense</option>
                     </select>
@@ -51,7 +51,7 @@
                     </select>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" v-if="movement.transfer===false">
                     <label for="description">Description</label>
                     <input type="text" class="form-control" id="description" name="description" v-model="movement.description" >
                   <!--  <div v-if="$v.movement.description.$error">
@@ -350,13 +350,13 @@
                 //console.log(this.movement.date);
                 //onsole.log(this.movement_dest.date);
                     this.movement_dest.type = 'i';
-                    this.movement_dest.description = '';
+                    this.movement_dest.description = this.movement.source_description;
                     this.movement_dest.category_id = null;
                     this.movement_dest.wallet_id = this.wallet_source.id;
                     this.movement_dest.transfer_wallet_id = this.wallet_source.id;
                     this.movement_dest.transfer_movement_id = this.movement.id;
                     this.movement_dest.start_balance = this.wallet_dest.balance;
-                    this.movement_dest.source_description = this.movement.source_description;
+                    this.movement_dest.source_description = '';
                     this.movement_dest.value=this.movement.value;
                     this.movement_dest.end_balance = parseFloat(this.movement_dest.start_balance) + parseFloat(this.movement_dest.value);
                     this.wallet_dest.balance = this.movement_dest.end_balance;

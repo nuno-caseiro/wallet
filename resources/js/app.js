@@ -5,7 +5,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import VueSocketIO from "vue-socket.io";
 import VueRouter from 'vue-router';
 import Toasted from 'vue-toasted';
-import Vuelidate from 'vuelidate'
+import Vuelidate from 'vuelidate';
+
 
 
 
@@ -26,7 +27,6 @@ Vue.use(Toasted,{
 });
 
 Vue.use(Vuelidate);
-
 
 
 import store from '../store/store.js';

@@ -56,7 +56,7 @@ Route::middleware('auth:api')->group(function () {
     Route::put('movements/id/{id}', 'MovementControllerAPI@updateEdit')->middleware('user');
 
     Route::get('movements','MovementControllerAPI@index');
-    
+
     Route::get('movements/{id}','MovementControllerAPI@show')->middleware('user');
 
     Route::get('movements/id/{wallet_id}','MovementControllerAPI@showMovementsOfWallet')->middleware('user');
@@ -75,7 +75,8 @@ Route::middleware('auth:api')->group(function () {
 
 
     ///////////////////////////////////STATISTICS//////////////////////////////////////////////////////////
-    Route::get('/movements/totalMovements/{dates}', 'Statistics@getTotalMovsFromGivenMonth');
+    Route::get('/movements/totalMovements/{dates}', 'StatisticsControllerAPI@getTotalMovsFromGivenMonth');
+
 
 Route::get('movements/1/filter','MovementControllerAPI@filter')->middleware('user');
 
@@ -96,3 +97,6 @@ Route::post('wallets', 'WalletControllerAPI@store');
 Route::get('user/email/{email}','UserControllerAPI@showByEmail');
 
 
+Route::get('/movements/all/totalMoneyMovedByUsersByYear', 'StatisticsControllerAPI@getTotalMoneyMovedByUsersByYear');
+Route::get('/movements/all/totalMoneyMovedByUsersByMonth', 'StatisticsControllerAPI@getTotalMoneyMovedByUsersByMonth');
+Route::get('/movements/all/totalMoneyMovedByUsersByMonthOfYear', 'StatisticsControllerAPI@getTotalMoneyMovedByUsersByMonthOfYear');
