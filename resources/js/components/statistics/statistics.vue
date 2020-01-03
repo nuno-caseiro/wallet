@@ -2,7 +2,8 @@
     <div>
         <b-button v-b-toggle.getTotalMovsBetweenDates>Total movements between dates</b-button>
         <b-button v-b-toggle.getTotalMoneyMovedByUsersByYear>Total money moved by users per year </b-button>
-        <b-button v-b-toggle.getTotalMoneyMovedByUsersByMonthYear>Total money moved by users per month and year </b-button>
+        <b-button v-b-toggle.getTotalMoneyMovedByUsersByMonthYear>Total money moved by users between years </b-button>
+        <b-button v-b-toggle.getTotalMoneyMovedByUsersAllDaysOfMonth>Total money moved by users on one month </b-button>
 
 
         <b-collapse id="getTotalMovsBetweenDates">
@@ -27,8 +28,14 @@
 
 
 
+        <b-collapse id="getTotalMoneyMovedByUsersAllDaysOfMonth">
+            <label>Year (yyyy)</label>
+            <input id="date" type="date" v-model="date">
+            <button @click.prevent="totalMoneyMovedByUsersAllDaysOfMonth()" class="btn btn-info">Get</button>
+        </b-collapse>
+
         <div id="chart">
-        <line-chart  v-if="this.showTotalMovementsBetweenDates===true" :chartdata="linedata" :options="options" ></line-chart>
+        <line-chart v-if="this.show===true" :chartdata="linedata" :options="options" ></line-chart>
         </div>
 
     </div>
@@ -44,7 +51,7 @@
         name: "statistics",
         data() {
             return {
-                showTotalMovementsBetweenDates: false,
+                show: false,
                 linedata:{
                     labels:[],
                     datasets:[]
@@ -59,6 +66,7 @@
                 },
                 year:"",
                 stopYear:"",
+                date:"",
 
             }
         },
@@ -87,8 +95,8 @@
                     })
             },
             getTotalMovsBetweenDates(dates) {
-                if(this.showTotalMovementsBetweenDates==true){
-                    this.showTotalMovementsBetweenDates=false;
+                if(this.show==true){
+                    this.show=false;
                 }
             axios.get('/api/movements/totalMovements/' + dates).then(response => {
                 console.log(response);
@@ -111,15 +119,15 @@
                     data:data
                 });
 
-                this.showTotalMovementsBetweenDates=true;
+                this.show=true;
 
                 });
             },
 
             totalMoneyMovedByUsersByYear(){
 
-                if(this.showTotalMovementsBetweenDates==true){
-                    this.showTotalMovementsBetweenDates=false;
+                if(this.show==true){
+                    this.show=false;
                 }
                 axios.get('/api/movements/all/totalMoneyMovedByUsersByMonthOfYear?year='+this.year).then(response => {
                     console.log(response);
@@ -142,14 +150,14 @@
                         data:data
                     });
 
-                    this.showTotalMovementsBetweenDates=true;
+                    this.show=true;
                 });
             },
 
             totalMoneyMovedByUsersByMonthYear(){
 
-                if(this.showTotalMovementsBetweenDates==true){
-                    this.showTotalMovementsBetweenDates=false;
+                if(this.show==true){
+                    this.show=false;
                 }
                 axios.get('/api/movements/all/totalMoneyMovedByUsersByMonth?startYear=' + this.year+'&stopYear='+this.stopYear).then(response => {
                     console.log(response);
@@ -172,9 +180,39 @@
                         data:data
                     });
 
-                    this.showTotalMovementsBetweenDates=true;
+                    this.show=true;
                 });
+            },
+
+        totalMoneyMovedByUsersAllDaysOfMonth() {
+            if (this.show == true) {
+                this.show = false;
             }
+            axios.get('/api/movements/all/totalMoneyMovedByUsersAllDaysOfMonth?date=' +this.date ).then(response => {
+                console.log(response);
+                this.linedata.labels = [];
+                this.linedata.datasets = [];
+                let data = [];
+                let dates = [];
+
+                for (let i = 0; i < response.data.length; i++) {
+                    data.push(response.data[i].total_money);
+                }
+
+                for (let i = 0; i < response.data.length; i++) {
+                    dates.push(response.data[i].day_month);
+                }
+
+                this.linedata.labels = dates;
+                this.linedata.datasets.push({
+                    label: 'Total money',
+                    data: data
+                });
+
+                this.show = true;
+
+            });
+        },
         },
 
 

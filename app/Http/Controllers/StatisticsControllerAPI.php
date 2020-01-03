@@ -57,6 +57,30 @@ class StatisticsControllerAPI extends Controller
         return response()->json($arrayMoney, 200);
     }
 
+
+    public function getTotalMoneyMovedByUsersAllDaysOfMonth(Request $request){
+        try{
+            $date=$request->date;
+
+            $daysOfMonth=Carbon::parse($date)->daysInMonth;
+            $arrayMoney= array();
+                for($j=1;$j<=$daysOfMonth;$j++){
+                    $totalMovements= DB::table('movements')->where('type','!=','i')
+                        ->where('transfer','!=','0')->whereYear('date', '=', Carbon::parse($date)->format('Y'))->
+                        whereMonth('date','=',Carbon::parse($date)->format('m'))->whereDay('date','=',$j)->get();
+                    $totalMoney=0;
+
+                    foreach ($totalMovements as $movement ){
+                        $totalMoney+=$movement->value;
+                    }
+                    array_push($arrayMoney, ['day_month' => $j."-".Carbon::parse($date)->format('m').'-'.Carbon::parse($date)->format('Y'), 'total_money' => round($totalMoney,2)]);
+                }
+        }catch (\Exception $e){
+            return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
+        }
+        return response()->json($arrayMoney, 200);
+    }
+
     public function getTotalMoneyMovedByUsersByMonthOfYear(Request $request){
         try{
             $year=$request->year;
@@ -74,21 +98,20 @@ class StatisticsControllerAPI extends Controller
                 }
         }catch (\Exception $e){
             return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
-
         }
         return response()->json($arrayMoney, 200);
-
     }
 
     public function getTotalMoneyFromExternalIncomesByMonthOfYear(Request $request){
         try{
-            $year=2019; //TODO Mudar
+            $year=$request->year;
             $totalMoney=0;
             $arrayMoney= array();
             for($j=1;$j<=12;$j++){
                 $totalMovements= DB::table('movements')->where('type','=','i')
                     ->where('transfer','=','0')->whereYear('date', '=', $year)->whereMonth('date','=',$j)
                     ->get();
+                $totalMoney=0;
                 foreach ($totalMovements as $movement ){
                     $totalMoney+=$movement->value;
                 }
@@ -104,17 +127,15 @@ class StatisticsControllerAPI extends Controller
 
     public function getTotalTransfersByUsersByMonthOfYear(Request $request){
         try{
-            $year=2019; //TODO Mudar
+            $year=$request->year;
             $totalMoney=0;
             $arrayMoney= array();
             for($j=1;$j<=12;$j++){
                 $totalMovements= DB::table('movements')->where('type','!=','i')
                     ->where('transfer','=','1')->whereYear('date', '=', $year)->whereMonth('date','=',$j)
-                    ->get();
-                foreach ($totalMovements as $movement ){
-                    $totalMoney+=$movement->value;
-                }
-                array_push($arrayMoney, ['year_month' => $year."-".$j, 'total_money' => round($totalMoney,2)]);
+                    ->count();
+
+                array_push($totalMovements, ['year_month' => $year."-".$j, 'total_money' => $totalMovements]);
             }
         }catch (\Exception $e){
             return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
