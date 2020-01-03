@@ -310,11 +310,11 @@ class StatisticsControllerAPI extends Controller
             $stopYear=$request->stopYear;
             $userId=$request->wallet_id;
             $arrayMoney= array();
+            $totalMoney=0;
             for ($i=$startYear;$i<=$stopYear;$i++) {
                 for ($j = 1; $j <= 12; $j++) {
                     $totalMovements = DB::table('movements')->where('wallet_id', '=', $userId)
                         ->whereYear('date', '=', $i)->whereMonth('date', '=', $j)->get();
-                    $totalMoney = 0;
 
                     foreach ($totalMovements as $movement) {
                         if ($movement->type == 'i') {
