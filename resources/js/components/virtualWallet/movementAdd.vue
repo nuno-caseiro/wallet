@@ -298,7 +298,7 @@
             saveMovement: function () {
                 this.movement.iban=this.movement.iban.trim();
                         if(this.movement.type==='i' && this.isOperator){
-                            axios.post('api/movements/', this.movement).then(response => {
+                            axios.post('api/movements', this.movement).then(response => {
                                 console.log(response.data);
                             }).then(response => {
                                 this.wallet_dest.id = this.movement.wallet_id;
@@ -321,7 +321,7 @@
                         }
 
                         if(this.movement.type==='e' && this.isUser){
-                            axios.post('api/movements/', this.movement).then(response => {
+                            axios.post('api/movements', this.movement).then(response => {
                                 console.log(response.data);
                                 Object.assign(this.movement, response.data);
                                 console.log(this.movement.id);
@@ -370,7 +370,7 @@
                     console.log("so p ver");
                     console.log(this.movement);
                     console.log(this.movement_dest);
-                axios.post('api/movements/', this.movement_dest).then(response => {
+                axios.post('api/movements', this.movement_dest).then(response => {
                     Object.assign(this.movement_dest, response.data);
                     this.movement.transfer_movement_id=this.movement_dest.id;
                     return axios.put('api/movements/'+this.movement.id,this.movement);
