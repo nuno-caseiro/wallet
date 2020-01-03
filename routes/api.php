@@ -99,3 +99,4 @@ Route::get('user/email/{email}','UserControllerAPI@showByEmail');
 
 Route::get('/movements/all/totalMoneyMovedByUsersBetweenYears', 'StatisticsControllerAPI@getTotalMoneyMovedByUsersBetweenYears');
 Route::get('/movements/all/totalMoneyMovedByUsersAllDaysOfMonth', 'StatisticsControllerAPI@getTotalMoneyMovedByUsersAllDaysOfMonth');
+Route::get('/movements/all/totalMoneyFromExternalIncomesByAllDaysOfMonth', 'StatisticsControllerAPI@getTotalMoneyFromExternalIncomesByAllDaysOfMonth');

@@ -3,6 +3,7 @@
         <b-button v-b-toggle.getTotalMovsBetweenDates>Total movements between dates</b-button>
         <b-button v-b-toggle.getTotalMoneyMovedByUsersByMonthYear>Total money moved by users between years </b-button>
         <b-button v-b-toggle.getTotalMoneyMovedByUsersAllDaysOfMonth>Total money moved by users on one month </b-button>
+        <b-button v-b-toggle.getTotalMoneyExternalAllDaysOfMonth>Total external income one month </b-button>
 
 
         <b-collapse id="getTotalMovsBetweenDates">
@@ -24,6 +25,14 @@
             <input id="date" type="date" v-model="date">
             <button @click.prevent="totalMoneyMovedByUsersAllDaysOfMonth()" class="btn btn-info">Get</button>
         </b-collapse>
+
+        <b-collapse id="getTotalMoneyExternalAllDaysOfMonth">
+            <label>Date:</label>
+            <input type="date" v-model="date">
+            <button @click.prevent="totalMoneyMovedByUsersAllDaysOfMonth()" class="btn btn-info">Get</button>
+        </b-collapse>
+
+
 
         <line-chart id="chart" v-if="this.show===true" :chartdata="linedata" :options="options" ></line-chart>
 
@@ -109,14 +118,42 @@
 
                     this.linedata.labels=dates;
                     this.linedata.datasets.push({
-                        label: 'Total money',
+                        label: 'Total money moved by users between year '+this.year+' and '+this.stopYear,
                         data:data
                     });
 
                     this.show=true;
                 });
             },
+            totalMoneyExternalAllDaysOfMonth() {
+                if (this.show == true) {
+                    this.show = false;
+                }
+                axios.get('/api/movements/all/totalMoneyFromExternalIncomesByAllDaysOfMonth?date=' +this.date ).then(response => {
+                    console.log(response);
+                    this.linedata.labels = [];
+                    this.linedata.datasets = [];
+                    let data = [];
+                    let dates = [];
 
+                    for (let i = 0; i < response.data.length; i++) {
+                        data.push(response.data[i].total_money);
+                    }
+
+                    for (let i = 0; i < response.data.length; i++) {
+                        dates.push(response.data[i].day_month);
+                    }
+
+                    this.linedata.labels = dates;
+                    this.linedata.datasets.push({
+                        label: 'Total money moved by users of month:'+this.date ,
+                        data: data
+                    });
+
+                    this.show = true;
+
+                });
+            },
         totalMoneyMovedByUsersAllDaysOfMonth() {
             if (this.show == true) {
                 this.show = false;

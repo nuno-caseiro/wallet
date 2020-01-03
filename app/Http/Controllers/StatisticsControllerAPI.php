@@ -83,22 +83,49 @@ class StatisticsControllerAPI extends Controller
 
     public function getTotalMoneyFromExternalIncomesByAllDaysOfMonth(Request $request){
         try{
-            $year=$request->year;
-            $totalMoney=0;
+            $date=$request->date;
+
+            $daysOfMonth=Carbon::parse($date)->daysInMonth;
             $arrayMoney= array();
-            for($j=1;$j<=12;$j++){
+            for($j=1;$j<=$daysOfMonth;$j++){
                 $totalMovements= DB::table('movements')->where('type','=','i')
-                    ->where('transfer','=','0')->whereYear('date', '=', $year)->whereMonth('date','=',$j)
-                    ->get();
+                    ->where('transfer','=','0')->whereYear('date', '=', Carbon::parse($date)->format('Y'))->
+                    whereMonth('date','=',Carbon::parse($date)->format('m'))->whereDay('date','=',$j)->get();
                 $totalMoney=0;
+
                 foreach ($totalMovements as $movement ){
                     $totalMoney+=$movement->value;
                 }
-                array_push($arrayMoney, ['year_month' => $year."-".$j, 'total_money' => round($totalMoney,2)]);
+                array_push($arrayMoney, ['day_month' => $j."-".Carbon::parse($date)->format('m').'-'.Carbon::parse($date)->format('Y'), 'total_money' => round($totalMoney,2)]);
             }
         }catch (\Exception $e){
             return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
+        }
+        return response()->json($arrayMoney, 200);
+    }
 
+    public function getTotalMoneyFromExternalIncomesBetweenYears(Request $request){
+        try{
+            $startYear=$request->startYear;
+            $stopYear=$request->stopYear;
+            $totalMoney=0;
+            $arrayMoney= array();
+            for ($i=$startYear;$i<=$stopYear;$i++){
+                for($j=1;$j<=12;$j++){
+
+                    $totalMovements= DB::table('movements')->where('type','=','i')
+                        ->where('transfer','=','0')->whereYear('date', '=', $i)->whereMonth('date','=',$j)->get();
+                    $totalMoney=0;
+
+                    foreach ($totalMovements as $movement ){
+                        $totalMoney+=$movement->value;
+                    }
+                    array_push($arrayMoney, ['year_month' => $i."-".$j, 'total_money' => round($totalMoney,2)]);
+                }
+
+            }
+        }catch (\Exception $e){
+            return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
         }
         return response()->json($arrayMoney, 200);
     }
