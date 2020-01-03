@@ -211,13 +211,121 @@ class StatisticsControllerAPI extends Controller
             $arrayMoney= array();
             for ($i=$startYear;$i<=$stopYear;$i++){
                 for($j=1;$j<=12;$j++) {
-                    $totalMovements= DB::table('movements')->where('type','!=','i')->where('wallet_id','=',$userId)
+                    $totalMovements= DB::table('movements')->where('type','=','e')->where('wallet_id','=',$userId)
                         ->where('transfer','!=','0')->whereYear('date', '=', $i)->whereMonth('date','=',$j)->get();
                     $totalMoney=0;
                     foreach ($totalMovements as $movement ){
                         $totalMoney+=$movement->value;
                     }
                     array_push($arrayMoney, ['year_month' => $i."-".$j, 'total_money' => round($totalMoney,2)]);
+                }
+            }
+        }catch (\Exception $e){
+            return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
+        }
+        return response()->json($arrayMoney, 200);
+
+    }
+
+    public function getTotalMoneyIncomesAllDaysOfMonth(Request $request){
+        try{
+            $date=$request->date;
+            $userId=$request->wallet_id;
+            $daysOfMonth=Carbon::parse($date)->daysInMonth;
+            $arrayMoney= array();
+            $totalMoney=0;
+            for($j=1;$j<=$daysOfMonth;$j++){
+                $totalMovements= DB::table('movements')->where('type','=','i')->where('wallet_id','=',$userId)
+                    ->whereYear('date', '=', Carbon::parse($date)->format('Y'))->
+                    whereMonth('date','=',Carbon::parse($date)->format('m'))->whereDay('date','=',$j)->get();
+                $totalMoney=0;
+                foreach ($totalMovements as $movement ){
+                    $totalMoney+=$movement->value;
+                }
+                array_push($arrayMoney, ['day_month' => $j."-".Carbon::parse($date)->format('m').'-'.Carbon::parse($date)->format('Y'), 'total_money' => $totalMoney]);
+            }
+        }catch (\Exception $e){
+            return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
+        }
+        return response()->json($arrayMoney, 200);
+
+    }
+
+    public function getTotalMoneyIncomessOfUserBetweenYears(Request $request){
+        try{
+            $startYear=$request->startYear;
+            $stopYear=$request->stopYear;
+            $userId=$request->wallet_id;
+            $arrayMoney= array();
+            for ($i=$startYear;$i<=$stopYear;$i++){
+                for($j=1;$j<=12;$j++) {
+                    $totalMovements= DB::table('movements')->where('type','=','i')->where('wallet_id','=',$userId)
+                        ->where('transfer','!=','0')->whereYear('date', '=', $i)->whereMonth('date','=',$j)->get();
+                    $totalMoney=0;
+                    foreach ($totalMovements as $movement ){
+                        $totalMoney+=$movement->value;
+                    }
+                    array_push($arrayMoney, ['year_month' => $i."-".$j, 'total_money' => round($totalMoney,2)]);
+                }
+            }
+        }catch (\Exception $e){
+            return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
+        }
+        return response()->json($arrayMoney, 200);
+
+    }
+
+    public function getBalanceThroughTimeAllDaysOfMonth(Request $request){
+        try{
+            $date=$request->date;
+            $userId=$request->wallet_id;
+            $daysOfMonth=Carbon::parse($date)->daysInMonth;
+            $arrayMoney= array();
+            $totalMoney=0;
+            for($j=1;$j<=$daysOfMonth;$j++){
+                $totalMovements= DB::table('movements')->where('wallet_id','=',$userId)
+                    ->whereYear('date', '=', Carbon::parse($date)->format('Y'))->
+                    whereMonth('date','=',Carbon::parse($date)->format('m'))->whereDay('date','=',$j)->get();
+                foreach ($totalMovements as $movement ){
+                    if($movement->type=='i'){
+
+                    $totalMoney+=$movement->value;
+                    }else{
+                        $totalMoney-=$movement->value;
+
+                    }
+                }
+                array_push($arrayMoney, ['day_month' => $j."-".Carbon::parse($date)->format('m').'-'.Carbon::parse($date)->format('Y'), 'total_money' => $totalMoney]);
+            }
+        }catch (\Exception $e){
+            return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
+        }
+        return response()->json($arrayMoney, 200);
+
+    }
+
+    public function getBalanceThroughTimeBetweenYears(Request $request){
+        try{
+            $startYear=$request->startYear;
+            $stopYear=$request->stopYear;
+            $userId=$request->wallet_id;
+            $arrayMoney= array();
+            for ($i=$startYear;$i<=$stopYear;$i++) {
+                for ($j = 1; $j <= 12; $j++) {
+                    $totalMovements = DB::table('movements')->where('wallet_id', '=', $userId)
+                        ->whereYear('date', '=', $i)->whereMonth('date', '=', $j)->get();
+                    $totalMoney = 0;
+
+                    foreach ($totalMovements as $movement) {
+                        if ($movement->type == 'i') {
+
+                            $totalMoney += $movement->value;
+                        } else {
+                            $totalMoney -= $movement->value;
+
+                        }
+                    }
+                    array_push($arrayMoney, ['year_month' => $i . "-" . $j, 'total_money' => round($totalMoney, 2)]);
                 }
             }
         }catch (\Exception $e){
