@@ -30,31 +30,11 @@ class StatisticsControllerAPI extends Controller
         return response()->json($arrayOfDatesAndAVG, 200);
     }
 
-    public function getTotalMoneyMovedByUsersByYear(Request $request){
-        try{
-            $startYear=2014;
-            $stopYear=2020; //TODO mudar anos
-            $totalMoney=0;
-            $arrayMoney= array();
-            for ($i=$startYear;$i<=$stopYear;$i++){
-                $totalMovements= DB::table('movements')->where('type','!=','i')
-                    ->where('transfer','!=','0')->whereYear('date', '=', $i)->get();
-                foreach ($totalMovements as $movement ){
-                    $totalMoney+=$movement->value;
-                }
-                array_push($arrayMoney, ['year' => $i, 'total_money' => round($totalMoney,2)]);
-            }
-        }catch (\Exception $e){
-            return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
-
-        }
-        return response()->json($arrayMoney, 200);
-    }
 
     public function getTotalMoneyMovedByUsersByMonth(Request $request){
         try{
-            $startYear=2014;
-            $stopYear=2020; //TODO mudar anos
+            $startYear=$request->startYear;
+            $stopYear=$request->stopYear;
             $totalMoney=0;
             $arrayMoney= array();
             for ($i=$startYear;$i<=$stopYear;$i++){
@@ -62,7 +42,9 @@ class StatisticsControllerAPI extends Controller
 
                 $totalMovements= DB::table('movements')->where('type','!=','i')
                     ->where('transfer','!=','0')->whereYear('date', '=', $i)->whereMonth('date','=',$j)->get();
-                foreach ($totalMovements as $movement ){
+                    $totalMoney=0;
+
+                    foreach ($totalMovements as $movement ){
                     $totalMoney+=$movement->value;
                 }
                 array_push($arrayMoney, ['year_month' => $i."-".$j, 'total_money' => round($totalMoney,2)]);
@@ -77,13 +59,14 @@ class StatisticsControllerAPI extends Controller
 
     public function getTotalMoneyMovedByUsersByMonthOfYear(Request $request){
         try{
-            $year=2019; //TODO Mudar
+            $year=$request->year;
             $totalMoney=0;
             $arrayMoney= array();
                 for($j=1;$j<=12;$j++){
                     $totalMovements= DB::table('movements')->where('type','!=','i')
                         ->where('transfer','!=','0')->whereYear('date', '=', $year)->whereMonth('date','=',$j)
                         ->get();
+                    $totalMoney=0;
                     foreach ($totalMovements as $movement ){
                         $totalMoney+=$movement->value;
                     }
