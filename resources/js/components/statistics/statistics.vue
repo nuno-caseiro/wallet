@@ -68,7 +68,6 @@
                 }
             axios.get('/api/movements/totalMovements/' + dates)
             .then(response => {
-<<<<<<< HEAD
                 this.linedata.labels=[];
                 this.linedata.datasets=[];
                 let data=[];
@@ -89,11 +88,9 @@
                 });
 
                 console.log(this.linedata);
-=======
                 console.log(response.data);
                 this.linedata.labels = ['date', 'Total Movs'];
                 this.linedata.datasets = response.data.data;
->>>>>>> 65b33bfffe6215bb9f7d95cd5bbe7eae0038bdc0
                 this.show=true;
 
             })
