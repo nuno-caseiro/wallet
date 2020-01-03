@@ -206,7 +206,7 @@
 
                     mb_ec_valid:(mb_entity_code)=>{
                         return regexEntityCode.test(mb_entity_code);
-                        
+
                     }
                 },
 
@@ -322,31 +322,19 @@
 
                         if(this.movement.type==='e' && this.isUser){
                             axios.post('api/movements', this.movement).then(response => {
-                                console.log(response.data);
                                 Object.assign(this.movement, response.data);
-                                console.log(this.movement.id);
                                 this.wallet_source.balance = this.movement.end_balance;
                                 return axios.put('api/wallets/' + this.wallet_source.id, this.wallet_source);
                             }).then(response => {
-                                console.log(response.data);
                                 if(this.movement.transfer===true){
                                 this.saveMovimentPair();
                                 }
                                 this.successMessage = "Movement saved with success";
                                 this.showSuccess = true;
-                                ///redireciona para a pagina movements
-                                setTimeout(() => {
-                                    this.$router.push("/virtualWallet")}, 400);
                             }).catch(error=>{
                                 console.log(error);
                             });
-
-
-                        this.submitStatus = 'PENDING';
-                    setTimeout(() => {
-                        this.submitStatus = 'OK'
-                    }, 500)
-                }
+                        }
 
 
             } ,
@@ -354,8 +342,6 @@
                     this.movement_dest.transfer=true;
                     this.movement_dest.id = '';
                     this.movement_dest.date = this.movement.date;
-                //console.log(this.movement.date);
-                //onsole.log(this.movement_dest.date);
                     this.movement_dest.type = 'i';
                     this.movement_dest.description = this.movement.source_description;
                     this.movement_dest.category_id = null;
@@ -367,9 +353,6 @@
                     this.movement_dest.value=this.movement.value;
                     this.movement_dest.end_balance = parseFloat(this.movement_dest.start_balance) + parseFloat(this.movement_dest.value);
                     this.wallet_dest.balance = this.movement_dest.end_balance;
-                    console.log("so p ver");
-                    console.log(this.movement);
-                    console.log(this.movement_dest);
                 axios.post('api/movements', this.movement_dest).then(response => {
                     Object.assign(this.movement_dest, response.data);
                     this.movement.transfer_movement_id=this.movement_dest.id;
@@ -380,6 +363,8 @@
                     }).then(response=>{
                     this.sendMessageTo(this.movement.transfer_wallet_id);
                     console.log(response.data);
+                    setTimeout(() => {
+                        this.$router.push("/virtualWallet")}, 400);
                 }).catch(error=>{
                     console.log(error);
                 });
