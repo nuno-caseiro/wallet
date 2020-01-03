@@ -39,7 +39,7 @@ class UserControllerApi extends Controller
     public function store(Request $request){
         
         $data = $request->all();
-        if(($request['type']) == 'u'){
+        if(($data['type']) == 'u'){
             $request->validate([
                 'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
                 'email' => 'required|email|unique:users,email,',
@@ -90,34 +90,38 @@ class UserControllerApi extends Controller
     }
 
     public function update(Request $request, $id){
+    
         
-        
-        if(($request['type']) == 'u'){
+        if(($request['type']) == 'u'){     
             $request->validate([
-                'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
-                'email' => 'required|email|unique:users,email,',
+                'name' => 'min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
                 'nif'=> 'required|min:9|unique:users|regex:/^[0-9]+$/',
                 'photo'=> 'nullable',
-                'password' => 'required|min:3',
+                'password' => 'min:3',
             ]);
         }
-        else{
+
+         if(($request['type']) == 'a' || ($request['type']) == 'o'){
             $request->validate([
-                'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
-                'email' => 'required|email|unique:users,email,',
+                'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ0-9 ]+$/',
                 'nif'=> 'nullable|min:9|unique:users|regex:/^[0-9]+$/',
                 'photo'=> 'nullable',
-                'password' => 'required|min:3',
+                'password' => 'min:3',
             ]);
         }
 
         //TODO validacoes
+
         $user= User::findOrFail($id);
         $data = $request->all();
         
         if(Hash::check($data['old_password'], $user->password)){
         $request->merge(['password' => Hash::make($request->get('password'))]);
-        $user->fill($request->all());
+        if($user->nif === $request->nif){
+                $user->fill($request->except('nif'));
+        }else{
+            $user->fill($request->all());
+        }
         }
         
         //else{

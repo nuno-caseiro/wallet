@@ -30,9 +30,9 @@ Route::middleware('auth:api')->group(function () {
 
 
     //TODO para operador admin e user
-    Route::put('users/{id}', 'UserControllerAPI@updateWithoutPass')->middleware('forAll');
+    Route::put('users/{id}', 'UserControllerAPI@updateWithoutPass');
 
-    Route::patch('users/{id}', 'UserControllerAPI@update')->middleware('forAll');
+    Route::patch('users/{id}', 'UserControllerAPI@update');
 
     Route::get('users/{id}', 'UserControllerAPI@show')->middleware('forAll');
 
@@ -41,7 +41,7 @@ Route::middleware('auth:api')->group(function () {
     //activate User
     Route::patch('user/activate/{id}', 'UserControllerAPI@activate')->middleware('admin');
 
-    Route::get('oauth_access_tokens','UserControllerAPI@show');
+    // Route::get('oauth_access_tokens','UserControllerAPI@show');
 
     Route::delete('wallets/{id}', 'WalletControllerAPI@delete');
 
@@ -107,3 +107,12 @@ Route::get('user/email/{email}','UserControllerAPI@showByEmail');
     Route::get('/movements/all/totalMoneyIncomessOfUserBetweenYears', 'StatisticsControllerAPI@getTotalMoneyIncomessOfUserBetweenYears');
 
 
+<<<<<<< Updated upstream
+=======
+Route::get('/movements/all/totalMoneyMovedByUsersBetweenYears', 'StatisticsControllerAPI@getTotalMoneyMovedByUsersBetweenYears');
+Route::get('/movements/all/totalMoneyMovedByUsersAllDaysOfMonth', 'StatisticsControllerAPI@getTotalMoneyMovedByUsersAllDaysOfMonth');
+Route::get('/movements/all/totalActiveUsers', 'StatisticsControllerAPI@getTotalActiveUsers');
+Route::get('/oauth_access_tokens/all/totalAccesses', 'StatisticsControllerAPI@getTotalAccesses');
+Route::get('/movements/all/totalMovements', 'StatisticsControllerAPI@getTotalMovements');
+Route::get('/wallets/all/totalMoneyOnPlatform', 'StatisticsControllerAPI@getTotalMoneyOnPlatform');
+>>>>>>> Stashed changes

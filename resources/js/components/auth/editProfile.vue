@@ -15,6 +15,7 @@
                     <div v-if="$v.user.name.$error">                   
                       <div class="error" v-if="!$v.user.name.required">Field is required</div>
                       <div class="error" v-if="!$v.user.name.minLength">Name must have at least {{$v.user.name.$params.minLength.min}} letters.</div>
+                      <div class="error" v-if="!$v.user.name.nameValid">If you are user, name cannot haver numbers.</div>
                     </div>
                 </div>
 
@@ -85,7 +86,10 @@
 </template>
 <script type="text/javascript">
 import axios from 'axios';
-import {maxLength, email, required, minLength, sameAs, requiredIf } from 'vuelidate/lib/validators'
+import {helpers, maxLength, email, required, minLength, sameAs, requiredIf } from 'vuelidate/lib/validators'
+const userRegex = /^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ]+$/
+const regex = /^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ0-9 ]+$/
+const alpha = helpers.regex('alpha', /^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ0-9 ]*$/)
 
 export default {
     name : 'Edit',
@@ -107,6 +111,7 @@ export default {
         showMessage: false,
         message: "",
         submitStatus: null,
+        userType: "",
       }
       },
       validations:{
@@ -114,6 +119,15 @@ export default {
             name: {
                     required,
                     minLength: minLength(4),
+                    
+                    nameValid(name,userType){
+                        if(this.userType === 'u'){
+                          return alpha.test(name);
+                        }
+                        else{
+                          return alpha.test(name);
+                        }
+                    }
                 },
 
                 nif: {
@@ -267,6 +281,7 @@ export default {
           this.user.name = this.$store.state.user.name;
           this.user.nif= this.$store.state.user.nif;
           this.user.email = this.$store.state.user.email;
+          this.userType = this.$store.state.user.type;
           if(this.$store.state.user.type === 'u'){
             this.nifRequired = true;
           }else{
