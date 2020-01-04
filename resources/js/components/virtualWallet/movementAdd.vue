@@ -13,9 +13,9 @@
                         <option v-if="isOperator"  value="i">Income</option>
                         <option v-if="isUser" value="e">Expense</option>
                     </select>
-                  <!--  <div v-if="$v.movement.type.$error">
+                   <div v-if="$v.movement.type.$error">
                         <div class="error" v-if="!$v.movement.type.required">Field is required</div>
-                    </div>-->
+                    </div>
 
                 </div>
 
@@ -35,10 +35,10 @@
                 <div class="form-group">
                     <label for="value">Value</label>
                     <input type="number" class="form-control" v-model="movement.value" name="value" id="value" step="0.01" @input="setFinalBalance()">
-                    <!--<div v-if="$v.movement.value.$error">
+                    <div v-if="$v.movement.value.$error">
                     <div class="error" v-if="!$v.movement.value.required">Field is required</div>
                     <div class="error" v-if="!$v.movement.value.maxLength">Exceed max value of amount of money. Max: 9999€.</div>
-                    </div>-->
+                    </div>
                 </div>
 
 
@@ -54,43 +54,43 @@
                 <div class="form-group">
                     <label for="description">Description</label>
                     <input type="text" class="form-control" id="description" name="description" v-model="movement.description" >
-                  <!--  <div v-if="$v.movement.description.$error">
+                   <div v-if="$v.movement.description.$error">
                         <div class="error" v-if="!$v.movement.description.maxLength">Exceed maximum number of characters.</div>
-                    </div>-->
+                    </div>
                 </div>
 
                 <div v-if="movement.transfer===true" class="form-group">
                     <label for="descriptionSource">Source Description</label>
                     <input type="text" class="form-control" id="descriptionSource" name="descriptionSource" v-model="movement.source_description" >
-                  <!--  <div v-if="$v.movement.source_description.$error">
+                   <div v-if="$v.movement.source_description.$error">
                         <div class="error" v-if="!$v.movement.source_description.maxLength">Exceed maximum number of characters.</div>
-                    </div>-->
+                    </div>
                 </div>
 
                 <div v-if="movement.type_payment==='bt'" class="form-group">
                     <label for="iban">IBAN</label>
                     <input type="text" class="form-control" v-model="movement.iban" name="iban" id="iban">
-                   <!-- <div v-if="$v.movement.iban.$error">
+                   <div v-if="$v.movement.iban.$error">
                        <div class="error" v-if="!$v.movement.iban.required">Field is required</div>
                         <div class="error" v-if="!$v.movement.iban.ibanValid">EX: PT50 1234 4321 12345678901 72</div>
-                    </div>-->
+                    </div>
                 </div>
 
                 <div v-if="movement.type_payment==='mb'" class="form-group">
                     <label for="mbCode">MB entity code</label>
                     <input type="number" class="form-control" v-model="movement.mb_entity_code" name="mbCode" id="mbCode">
-                  <!--  <div v-if="$v.movement.mb_entity_code.$error">
+                   <div v-if="$v.movement.mb_entity_code.$error">
                      <div class="error" v-if="!$v.movement.mb_entity_code.required">Field is required</div>
                         <div class="error" v-if="!$v.movement.mb_entity_code.mb_ec_valid">12345</div>
-                    </div>-->
+                    </div>
                 </div>
                 <div v-if="movement.type_payment==='mb' && movement.transfer===false" class="form-group">
                     <label for="mbPaymentReference">MB payment Reference </label>
                     <input type="number" class="form-control" v-model="movement.mb_payment_reference" name="mbPaymentReference" id="mbPaymentReference">
-                <!--    <div v-if="$v.movement.mb_payment_reference.$error">
+                   <div v-if="$v.movement.mb_payment_reference.$error">
                     <div class="error" v-if="!$v.movement.mb_payment_reference.required">Field is required</div>
                        <div class="error" v-if="!$v.movement.mb_payment_reference.mb_pr_valid">123456789</div>
-                    </div>-->
+                    </div>
                 </div>
 
 
