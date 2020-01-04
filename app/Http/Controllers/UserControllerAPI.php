@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 
 
 
-class UserControllerApi extends Controller
+class UserControllerAPI extends Controller
 {
 
     public function index(Request $request){
@@ -37,7 +37,7 @@ class UserControllerApi extends Controller
     }
 
     public function store(Request $request){
-        
+
         $data = $request->all();
         if(($data['type']) == 'u'){
             $request->validate([
@@ -58,7 +58,7 @@ class UserControllerApi extends Controller
             ]);
         }
 
-      
+
 
         //TODO validacoes
         $user= new User();
@@ -90,9 +90,9 @@ class UserControllerApi extends Controller
     }
 
     public function update(Request $request, $id){
-    
-        
-        if(($request['type']) == 'u'){     
+
+
+        if(($request['type']) == 'u'){
             $request->validate([
                 'name' => 'min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ0-9 ]+$/',
                 'nif'=> 'required|min:9|unique:users|regex:/^[0-9]+$/',
@@ -114,7 +114,7 @@ class UserControllerApi extends Controller
 
         $user= User::findOrFail($id);
         $data = $request->all();
-        
+
         if(Hash::check($data['old_password'], $user->password)){
         $request->merge(['password' => Hash::make($request->get('password'))]);
         if($user->nif === $request->nif){
@@ -123,10 +123,10 @@ class UserControllerApi extends Controller
             $user->fill($request->all());
         }
         }
-        
+
         //else{
         //     $user->delete();
-        //     return response()->json(null,204); 
+        //     return response()->json(null,204);
         // }
         $user->save();
         return (new UserResource($user))->response()->setStatusCode(200);
@@ -142,7 +142,7 @@ class UserControllerApi extends Controller
         return (new UserResource($user))->response()->setStatusCode(200);
     }
 
-    
+
 
     public function destroy($id){
         $user= User::findOrFail($id);
@@ -176,7 +176,7 @@ class UserControllerApi extends Controller
     public function showUserWithEmail($email){
         return new UserResource(User::find($email));
     }
-    
+
     public function filter(Request $request){
         $query=null;
         $query= User::where('id', '>',0);
@@ -186,7 +186,7 @@ class UserControllerApi extends Controller
         }
 
         if($request->has('name')){
-            $query=$query->where('name','=',$request->name); 
+            $query=$query->where('name','=',$request->name);
         }
 
         if($request->has('email')){
@@ -203,6 +203,6 @@ class UserControllerApi extends Controller
     }
 
 
-    
+
 
 }
