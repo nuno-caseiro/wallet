@@ -23,7 +23,7 @@
 
             <b-card no-body class="mb-1">
             <b-card-header header-tag="header" class="p-1" role="tab">
-                <b-button block href="#" v-b-toggle.getTotalMoneyExpensesOfUserBetweenYears variant="info">Total money moved by users between years</b-button>
+                <b-button block href="#" v-b-toggle.getTotalMoneyExpensesOfUserBetweenYears variant="info">Total Money of Expenses Between Years</b-button>
             </b-card-header>
             <b-collapse id="getTotalMoneyExpensesOfUserBetweenYears" accordion="my-accordion" role="tabpanel">
                 <b-card-body>
@@ -31,6 +31,19 @@
                 <input type="number" min="2014" max="2020" step="1" value="2020" v-model="year" />
                 <input type="number" min="2014" max="2020" step="1" value="2020" v-model="stopYear" />
                 <button @click.prevent="totalMoneyExpensesOfUserBetweenYears()" class="btn btn-info">Get</button>
+                </b-card-body>
+            </b-collapse>
+            </b-card>
+
+            <b-card no-body class="mb-1">
+            <b-card-header header-tag="header" class="p-1" role="tab">
+                <b-button block href="#" v-b-toggle.getTotalMoneyExpensesAllDaysOfMonth variant="info">total Money Expenses All Days Of Month</b-button>
+            </b-card-header>
+            <b-collapse id="getTotalMoneyExpensesAllDaysOfMonth" accordion="my-accordion" role="tabpanel">
+                <b-card-body>
+               <label>Date:</label>
+                <input id="date" type="date" v-model="date">
+                <button @click.prevent="totalMoneyExpensesAllDaysOfMonth()" class="btn btn-info">Get</button>
                 </b-card-body>
             </b-collapse>
             </b-card>
@@ -103,7 +116,7 @@
                 if (this.show == true) {
                     this.show = false;
                 }
-                axios.get('/api/movements/all/totalMoneyExpensesAllDaysOfMonth?date=' +this.date ).then(response => {
+                axios.get('/api/movements/all/totalMoneyExpensesAllDaysOfMonth?date=' +this.date +'&wallet_id='+ this.$store.state.user.id ).then(response => {
                     console.log(response);
                     this.linedata.labels = [];
                     this.linedata.datasets = [];
@@ -133,7 +146,7 @@
                 if(this.show==true){
                     this.show=false;
                 }
-                axios.get('/api/movements/all/totalMoneyExpensesOfUserBetweenYears?startYear=' + this.year+'&stopYear='+this.stopYear).then(response => {
+                axios.get('/api/movements/all/totalMoneyExpensesOfUserBetweenYears?startYear=' + this.year+'&stopYear='+this.stopYear +'&wallet_id='+ this.$store.state.user.id).then(response => {
                     console.log(response);
                     this.linedata.labels=[];
                     this.linedata.datasets=[];
