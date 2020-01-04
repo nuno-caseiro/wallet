@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -345,9 +346,83 @@ class StatisticsControllerAPI extends Controller
 
     }
 
+    public function getExpensesByCategory(Request $request)
+    {
+        try{
+            $userId=$request->wallet_id;
+            $categories= Category::all();
+            $arrayCategories= array();
+            foreach ($categories as $category){
+
+                $totalMovements = DB::table('movements')->where('wallet_id', '=', $userId)->where('type','=','e')->where('category_id','=',$category->id)->count();
+
+                array_push($arrayCategories, ['category_name' => $category->name, 'total_movs' => $totalMovements]);
+            }
+
+        }catch (\Exception $e){
+            return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
+        }
+        return response()->json($arrayCategories, 200);
+    }
+
+    public function getExpensesByCategoryBetweenYears(Request $request)
+    {
+        //TODO TABLE
+        try{
+            $startYear=$request->startYear;
+            $stopYear=$request->stopYear;
+            $userId=$request->wallet_id;
+            $categories= Category::all();
+            $arrayCategories= array();
+            $arrayPerCategory=array();
+            foreach ($categories as $category) {
+                array_push($arrayCategories,  $category->name);
+                for ($i = $startYear; $i <= $stopYear; $i++) {
+                        $arrayPerCategory= array();
+                    for ($j = 1; $j <= 12; $j++) {
+                        $totalMovements = DB::table('movements')->where('wallet_id', '=', $userId)->where('type', '=', 'e')
+                            ->where('category_id', '=', $category->id)->whereYear('date', '=', $i)->whereMonth('date', '=', $j)->count();
+                        array_push( $arrayPerCategory,['year_month' => $i."-".$j, 'total_money' => $totalMovements]);
+                    }
+                }
+                $arrayCategories[$category->name]=$arrayPerCategory;
+            }
+        }catch (\Exception $e){
+            return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
+        }
+        return response()->json($arrayCategories, 200);
+    }
+
+   /* public function getExpensesByCategoryAllDaysOfMonth(Request $request){
+        try{
+            $date=$request->date;
+            $userId=$request->wallet_id;
+            $categories= Category::all();
+            $daysOfMonth=Carbon::parse($date)->daysInMonth;
+            $arrayMovs= array();
+            foreach ($categories as $category) {
+                array_push($arrayCategories, $category->name);
+                for ($j = 1; $j <= $daysOfMonth; $j++) {
+                    $totalMovements = 0;
+                    $totalMovements = DB::table('movements')->where('type', '=', 'e')
+                        ->whereYear('date', '=', Carbon::parse($date)->format('Y'))->where('wallet_id', '=', $userId)->
+                    whereMonth('date', '=', Carbon::parse($date)->format('m'))->whereDay('date', '=', $j)->count();
+
+                array_push($arrayMovs, ['day_month' => $j . "-" . Carbon::parse($date)->format('m') . '-' . Carbon::parse($date)->format('Y'), 'total_movs' => $totalMovements]);
+                }
+            }
+        }catch (\Exception $e){
+            return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
+        }
+        return response()->json($arrayMovs, 200);
+
+    }*/
 
 
-    public function getTotalAccesses(Request $request){
+
+
+
+        public function getTotalAccesses(Request $request){
         $totalAccessesArray = array();
         try{
             $accesses = DB::table('oauth_access_tokens')->count();

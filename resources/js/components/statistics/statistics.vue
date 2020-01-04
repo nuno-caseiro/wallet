@@ -1,6 +1,5 @@
 <template>
     <div>
-        <b-button v-b-toggle.getTotalMovsBetweenDates>Total movements between dates</b-button>
 
         <table class="table table-striped" >
         <thead>
@@ -56,7 +55,7 @@
 
             <b-card no-body class="mb-1">
             <b-card-header header-tag="header" class="p-1" role="tab">
-                <b-button block href="#" v-b-toggle.getTotalInternalTransfersBetweenYears variant="info">total Internal Transfers Between Years</b-button>
+                <b-button block href="#" v-b-toggle.getTotalInternalTransfersBetweenYears variant="info">Total Internal Transfers Between Years</b-button>
             </b-card-header>
             <b-collapse id="getTotalInternalTransfersBetweenYears" accordion="my-accordion" role="tabpanel">
                 <b-card-body>
@@ -70,7 +69,7 @@
 
             <b-card no-body class="mb-1">
             <b-card-header header-tag="header" class="p-1" role="tab">
-                <b-button block href="#" v-b-toggle.getTotalInternalTransfersAllDaysOfMonth variant="info">total Internal Transfers AllDays Of Month</b-button>
+                <b-button block href="#" v-b-toggle.getTotalInternalTransfersAllDaysOfMonth variant="info">Total Internal Transfers AllDays Of Month</b-button>
             </b-card-header>
             <b-collapse id="getTotalInternalTransfersAllDaysOfMonth" accordion="my-accordion" role="tabpanel">
                 <b-card-body>
@@ -84,7 +83,7 @@
 
             <b-card no-body class="mb-1">
             <b-card-header header-tag="header" class="p-1" role="tab">
-                <b-button block href="#" v-b-toggle.getTotalMoneyExternalBetweenYears variant="info">total Movements From External Incomes Between Years</b-button>
+                <b-button block href="#" v-b-toggle.getTotalMoneyExternalBetweenYears variant="info">Total Movements From External Incomes Between Years</b-button>
             </b-card-header>
             <b-collapse id="getTotalMoneyExternalBetweenYears" accordion="my-accordion" role="tabpanel">
                 <b-card-body>
@@ -98,7 +97,7 @@
 
             <b-card no-body class="mb-1">
             <b-card-header header-tag="header" class="p-1" role="tab">
-                <b-button block href="#" v-b-toggle.getTotalMoneyExternalAllDaysOfMonth variant="info">total Movements From External Incomes By All Days OfMonth</b-button>
+                <b-button block href="#" v-b-toggle.getTotalMoneyExternalAllDaysOfMonth variant="info">Total Movements From External Incomes By All Days OfMonth</b-button>
             </b-card-header>
             <b-collapse id="getTotalMoneyExternalAllDaysOfMonth" accordion="my-accordion" role="tabpanel">
                 <b-card-body>
