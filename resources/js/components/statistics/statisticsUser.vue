@@ -19,6 +19,41 @@
         </tbody>
         </table>
 
+        <div role="tablist">
+
+            <b-card no-body class="mb-1">
+            <b-card-header header-tag="header" class="p-1" role="tab">
+                <b-button block href="#" v-b-toggle.getTotalMoneyExpensesOfUserBetweenYears variant="info">Total money moved by users between years</b-button>
+            </b-card-header>
+            <b-collapse id="getTotalMoneyExpensesOfUserBetweenYears" accordion="my-accordion" role="tabpanel">
+                <b-card-body>
+                <label>Years: </label>
+                <input type="number" min="2014" max="2020" step="1" value="2020" v-model="year" />
+                <input type="number" min="2014" max="2020" step="1" value="2020" v-model="stopYear" />
+                <button @click.prevent="totalMoneyExpensesOfUserBetweenYears()" class="btn btn-info">Get</button>
+                </b-card-body>
+            </b-collapse>
+            </b-card>
+        </div>
+
+        <table class="table table-striped" v-if="visibleTable" >
+        <thead>
+            <tr>
+                <th></th>
+                <th>Expenses</th>
+                <th>Incomes</th>
+            </tr>
+        </thead>
+        <tbody >
+            <tr>
+                <td>Total</td>
+                <td></td>
+                <td></td>
+
+            </tr>
+        </tbody>
+        </table>
+
 
 
         <line-chart id="chart" v-if="this.show===true" :chartdata="linedata" :options="options" ></line-chart>
@@ -36,6 +71,7 @@
         name: "statistics",
         data() {
             return {
+                visibleTable:false,
                 toggleExpensesAllDaysMonth:false,
                 toggleExpensesBetweenYears:false,
 
@@ -92,12 +128,12 @@
 
                 });
             },
-            totalMoneyExpensesByUserBetweenYears(){
+            totalMoneyExpensesOfUserBetweenYears(){
 
                 if(this.show==true){
                     this.show=false;
                 }
-                axios.get('/api/movements/all/totalMoneyMovedByUsersBetweenYears?startYear=' + this.year+'&stopYear='+this.stopYear).then(response => {
+                axios.get('/api/movements/all/totalMoneyExpensesOfUserBetweenYears?startYear=' + this.year+'&stopYear='+this.stopYear).then(response => {
                     console.log(response);
                     this.linedata.labels=[];
                     this.linedata.datasets=[];
