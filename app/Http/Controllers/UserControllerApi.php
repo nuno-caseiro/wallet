@@ -94,7 +94,7 @@ class UserControllerApi extends Controller
         
         if(($request['type']) == 'u'){     
             $request->validate([
-                'name' => 'min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
+                'name' => 'min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ0-9 ]+$/',
                 'nif'=> 'required|min:9|unique:users|regex:/^[0-9]+$/',
                 'photo'=> 'nullable',
                 'password' => 'min:3',

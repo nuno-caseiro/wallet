@@ -87,7 +87,6 @@
 <script type="text/javascript">
 import axios from 'axios';
 import {helpers, maxLength, email, required, minLength, sameAs, requiredIf } from 'vuelidate/lib/validators'
-const userRegex = /^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ]+$/
 const regex = /^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ0-9 ]+$/
 
 export default {
@@ -110,7 +109,6 @@ export default {
         showMessage: false,
         message: "",
         submitStatus: null,
-        userType: "",
       }
       },
       validations:{
@@ -119,6 +117,9 @@ export default {
                     required,
                     minLength: minLength(4),
                     
+                    nameValid(name) {
+                      return regex.test(name);
+                    },
                   
                 },
 
@@ -273,7 +274,6 @@ export default {
           this.user.name = this.$store.state.user.name;
           this.user.nif= this.$store.state.user.nif;
           this.user.email = this.$store.state.user.email;
-          this.userType = this.$store.state.user.type;
           if(this.$store.state.user.type === 'u'){
             this.nifRequired = true;
           }else{
