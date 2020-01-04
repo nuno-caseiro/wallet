@@ -376,7 +376,6 @@ class StatisticsControllerAPI extends Controller
             $arrayCategories= array();
             $arrayPerCategory=array();
             foreach ($categories as $category) {
-                array_push($arrayCategories,  $category->name);
                 for ($i = $startYear; $i <= $stopYear; $i++) {
                         $arrayPerCategory= array();
                     for ($j = 1; $j <= 12; $j++) {
@@ -386,6 +385,7 @@ class StatisticsControllerAPI extends Controller
                     }
                 }
                 $arrayCategories[$category->name]=$arrayPerCategory;
+
             }
         }catch (\Exception $e){
             return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
@@ -466,7 +466,7 @@ class StatisticsControllerAPI extends Controller
     public function getTotalMoneyOnPlatform(Request $request){
         $totalMoneyArray = array();
         $totalMoney=0;
-        
+
         try{
             $wallets = DB::table('wallets')->get();
             foreach ($wallets as $wallet ){
@@ -488,7 +488,7 @@ class StatisticsControllerAPI extends Controller
         $exp = 'e';
         try{
             $expenses = DB::table('movements')->where('wallet_id', '=', $userId)->where('type','=', $exp)->count();
-            
+
             array_push($totalExpensesArray, ['total_expenses' => $expenses]);
         }catch (\Exception $e){
             return response()->json(['error' => 'ERROR getting total movements.'], 500);
@@ -504,7 +504,7 @@ class StatisticsControllerAPI extends Controller
         $inc = 'i';
         try{
             $incomes = DB::table('movements')->where('wallet_id', '=', $userId)->where('type','=', $inc)->count();
-            
+
             array_push($totalIncomesArray, ['total_incomes' => $incomes]);
         }catch (\Exception $e){
             return response()->json(['error' => 'ERROR getting total movements.'], 500);
@@ -514,7 +514,7 @@ class StatisticsControllerAPI extends Controller
 
     }
 
-    
+
 
 
 

@@ -75,14 +75,17 @@ Route::middleware('auth:api')->group(function () {
 
 
     ///////////////////////////////////STATISTICS//////////////////////////////////////////////////////////
-    Route::get('/movements/totalMovements/{dates}', 'StatisticsControllerAPI@getTotalMovsFromGivenMonth');
-
     Route::get('/movements/all/totalMoneyMovedByUsersBetweenYears', 'StatisticsControllerAPI@getTotalMoneyMovedByUsersBetweenYears')->middleware('admin');
     Route::get('/movements/all/totalMoneyMovedByUsersAllDaysOfMonth', 'StatisticsControllerAPI@getTotalMoneyMovedByUsersAllDaysOfMonth')->middleware('admin');
     Route::get('/movements/all/totalMovementsFromExternalIncomesByAllDaysOfMonth', 'StatisticsControllerAPI@getTotalMovementsFromExternalIncomesByAllDaysOfMonth')->middleware('admin');
     Route::get('/movements/all/totalMovementsFromExternalIncomesBetweenYears', 'StatisticsControllerAPI@getTotalMovementsFromExternalIncomesBetweenYears')->middleware('admin');
     Route::get('/movements/all/totalInternalTransfersAllDaysOfMonth', 'StatisticsControllerAPI@getTotalInternalTransfersAllDaysOfMonth')->middleware('admin');
     Route::get('/movements/all/totalInternalTransfersBetweenYears', 'StatisticsControllerAPI@getTotalInternalTransfersBetweenYears')->middleware('admin');
+
+    Route::get('/movements/all/totalActiveUsers', 'StatisticsControllerAPI@getTotalActiveUsers')->middleware('admin');
+    Route::get('/oauth_access_tokens/all/totalAccesses', 'StatisticsControllerAPI@getTotalAccesses')->middleware('admin');
+    Route::get('/movements/all/totalMovements', 'StatisticsControllerAPI@getTotalMovements')->middleware('admin');
+    Route::get('/wallets/all/totalMoneyOnPlatform', 'StatisticsControllerAPI@getTotalMoneyOnPlatform')->middleware('admin');
 
 
 Route::get('movements/1/filter','MovementControllerAPI@filter')->middleware('user');
@@ -108,15 +111,16 @@ Route::get('user/email/{email}','UserControllerAPI@showByEmail');
     Route::get('/movements/all/totalMoneyIncomesAllDaysOfMonth', 'StatisticsControllerAPI@getTotalMoneyIncomesAllDaysOfMonth');
     Route::get('/movements/all/totalMoneyIncomessOfUserBetweenYears', 'StatisticsControllerAPI@getTotalMoneyIncomessOfUserBetweenYears');
 
+Route::get('/statistics/all/totalExpensesOfUser/{wallet_id}', 'StatisticsControllerAPI@getTotalExpensesOfUser');
+Route::get('/statistics/all/totalIncomesOfUser/{wallet_id}', 'StatisticsControllerAPI@getTotalIncomesOfUser');
+
+
+
     Route::get('/movements/all/expensesByCategoryBetweenYears', 'StatisticsControllerAPI@getExpensesByCategoryBetweenYears');
 
 
 
-Route::get('/movements/all/totalActiveUsers', 'StatisticsControllerAPI@getTotalActiveUsers');
-Route::get('/oauth_access_tokens/all/totalAccesses', 'StatisticsControllerAPI@getTotalAccesses');
-Route::get('/movements/all/totalMovements', 'StatisticsControllerAPI@getTotalMovements');
-Route::get('/wallets/all/totalMoneyOnPlatform', 'StatisticsControllerAPI@getTotalMoneyOnPlatform');
 
 
-Route::get('/statistics/all/totalExpensesOfUser/{wallet_id}', 'StatisticsControllerAPI@getTotalExpensesOfUser');
-Route::get('/statistics/all/totalIncomesOfUser/{wallet_id}', 'StatisticsControllerAPI@getTotalIncomesOfUser');
+
+
