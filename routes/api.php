@@ -86,7 +86,9 @@ Route::middleware('auth:api')->group(function () {
 
 
 Route::get('movements/1/filter','MovementControllerAPI@filter')->middleware('user');
+
 Route::get('users/1/filter','UserControllerAPI@filter')->middleware('admin');
+
 
 Route::post('email', 'EmailAPI@sendEmail')->middleware('userAndOperator');
 });

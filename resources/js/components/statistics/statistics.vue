@@ -24,29 +24,17 @@
 
 
         <div role="tablist">
-            <b-card no-body class="mb-1">
-            <b-card-header header-tag="header" class="p-1" role="tab">
-                <b-button block href="#" v-b-toggle.getTotalMovsBetweenDates variant="info">Total movements between dates</b-button>
-            </b-card-header>
-            <b-collapse id="getTotalMovsBetweenDates" visible accordion="my-accordion" role="tabpanel">
-                <b-card-body>
-                <label>Date (yyyy-mm-dd,yyyy-mm-dd)</label>
-                <input class="form-control" type="text" v-model="data.dates" >
-                <button @click.prevent="getTotalMovsBetweenDates(data.dates)" class="btn btn-info">Get</button>
-                </b-card-body>
-            </b-collapse>
-            </b-card>
 
             <b-card no-body class="mb-1">
             <b-card-header header-tag="header" class="p-1" role="tab">
-                <b-button block href="#" v-b-toggle.getTotalMoneyMovedByUsersByMonthYear variant="info">Total money moved by users between years</b-button>
+                <b-button block href="#" v-b-toggle.getTotalMoneyMovedByUsersBetweenYears variant="info">Total money moved by users between years</b-button>
             </b-card-header>
-            <b-collapse id="getTotalMoneyMovedByUsersByMonthYear" accordion="my-accordion" role="tabpanel">
+            <b-collapse id="getTotalMoneyMovedByUsersBetweenYears" accordion="my-accordion" role="tabpanel">
                 <b-card-body>
                 <label>Years: </label>
                 <input type="number" min="2014" max="2020" step="1" value="2020" v-model="year" />
                 <input type="number" min="2014" max="2020" step="1" value="2020" v-model="stopYear" />
-                <button @click.prevent="totalMoneyMovedByUsersByMonthYear()" class="btn btn-info">Get</button>
+                <button @click.prevent="totalMoneyMovedByUsersBetweenYears()" class="btn btn-info">Get</button>
                 </b-card-body>
             </b-collapse>
             </b-card>
@@ -63,36 +51,70 @@
                 </b-card-body>
             </b-collapse>
             </b-card>
+
+
+
+            <b-card no-body class="mb-1">
+            <b-card-header header-tag="header" class="p-1" role="tab">
+                <b-button block href="#" v-b-toggle.getTotalInternalTransfersBetweenYears variant="info">total Internal Transfers Between Years</b-button>
+            </b-card-header>
+            <b-collapse id="getTotalInternalTransfersBetweenYears" accordion="my-accordion" role="tabpanel">
+                <b-card-body>
+                <label>Years: </label>
+                <input type="number" min="2014" max="2020" step="1" value="2020" v-model="year" />
+                <input type="number" min="2014" max="2020" step="1" value="2020" v-model="stopYear" />
+                <button @click.prevent="totalInternalTransfersBetweenYears()" class="btn btn-info">Get</button>
+                </b-card-body>
+            </b-collapse>
+            </b-card>
+
+            <b-card no-body class="mb-1">
+            <b-card-header header-tag="header" class="p-1" role="tab">
+                <b-button block href="#" v-b-toggle.getTotalInternalTransfersAllDaysOfMonth variant="info">total Internal Transfers AllDays Of Month</b-button>
+            </b-card-header>
+            <b-collapse id="getTotalInternalTransfersAllDaysOfMonth" accordion="my-accordion" role="tabpanel">
+                <b-card-body>
+                <label>Date:</label>
+                <input id="date" type="date" v-model="date">
+                <button @click.prevent="totalInternalTransfersAllDaysOfMonth()" class="btn btn-info">Get</button>
+                </b-card-body>
+            </b-collapse>
+            </b-card>
+
+
+            <b-card no-body class="mb-1">
+            <b-card-header header-tag="header" class="p-1" role="tab">
+                <b-button block href="#" v-b-toggle.getTotalMoneyExternalBetweenYears variant="info">total Movements From External Incomes Between Years</b-button>
+            </b-card-header>
+            <b-collapse id="getTotalMoneyExternalBetweenYears" accordion="my-accordion" role="tabpanel">
+                <b-card-body>
+                <label>Years: </label>
+                <input type="number" min="2014" max="2020" step="1" value="2020" v-model="year" />
+                <input type="number" min="2014" max="2020" step="1" value="2020" v-model="stopYear" />
+                <button @click.prevent="totalMovementsFromExternalIncomesBetweenYears()" class="btn btn-info">Get</button>
+                </b-card-body>
+            </b-collapse>
+            </b-card>
+
+            <b-card no-body class="mb-1">
+            <b-card-header header-tag="header" class="p-1" role="tab">
+                <b-button block href="#" v-b-toggle.getTotalMoneyExternalAllDaysOfMonth variant="info">total Movements From External Incomes By All Days OfMonth</b-button>
+            </b-card-header>
+            <b-collapse id="getTotalMoneyExternalAllDaysOfMonth" accordion="my-accordion" role="tabpanel">
+                <b-card-body>
+                <label>Date:</label>
+                <input id="date" type="date" v-model="date">
+                <button @click.prevent="totalMovementsFromExternalIncomesByAllDaysOfMonth()" class="btn btn-info">Get</button>
+                </b-card-body>
+            </b-collapse>
+            </b-card>
+
+
   </div>
 
+    
 
-        <b-collapse id="getTotalMoneyExternalAllDaysOfMonth">
-            <button @click.prevent="totalMovementsFromExternalIncomesByAllDaysOfMonth()" class="btn btn-info">Get</button>
-        </b-collapse>
-
-        <b-collapse id="getTotalMoneyExternalBetweenYears">
-            <button @click.prevent="totalMovementsFromExternalIncomesBetweenYears()" class="btn btn-info">Get</button>
-        </b-collapse>
-
-        <b-collapse id="getTotalInternalTransfersAllDaysOfMonth">
-            <button @click.prevent="totalInternalTransfersAllDaysOfMonth()" class="btn btn-info">Get</button>
-        </b-collapse>
-
-        <b-collapse id="getTotalInternalTransfersBetweenYears">
-            <button @click.prevent="totalInternalTransfersBetweenYears()" class="btn btn-info">Get</button>
-        </b-collapse>
-
-        <div v-if="showInputDate" >
-        <label>Date:</label>
-        <input type="date" v-model="date">
-        </div>
-
-        <div v-if="showInputYears">
-            <label>Years: </label>
-            <input type="number" min="2014" max="2020" step="1" value="2020" v-model="year" />
-            <input type="number" min="2014" max="2020" step="1" value="2020" v-model="stopYear" />
-        </div>
-
+        
 
 
         <line-chart id="chart" v-if="this.show===true" :chartdata="linedata" :options="options" ></line-chart>
@@ -135,7 +157,7 @@
             }
         },
         methods: {
-            totalMoneyMovedByUsersByMonthYear(){
+            totalMoneyMovedByUsersBetweenYears(){
 
                 if(this.show==true){
                     this.show=false;
@@ -169,7 +191,7 @@
                 if (this.show == true) {
                     this.show = false;
                 }
-                axios.get('/api/movements/all/totalMoneyFromExternalIncomesBetweenYears?startYear=' + this.year + '&stopYear=' + this.stopYear).then(response => {
+                axios.get('/api/movements/all/totalMovementsFromExternalIncomesBetweenYears?startYear=' + this.year + '&stopYear=' + this.stopYear).then(response => {
                     console.log(response);
                     this.linedata.labels = [];
                     this.linedata.datasets = [];
