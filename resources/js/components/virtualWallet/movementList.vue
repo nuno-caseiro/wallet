@@ -36,7 +36,8 @@
                 <td>{{ movement.id }}</td>
                 <td v-if="movement.type ==='e'">{{ movement.type ==='e'? 'Expense': '' }}</td>
                 <td v-if="movement.type ==='i'">{{ movement.type ==='i'? 'Income': '' }}</td>
-                <td>{{  movement.wallet_email_source }}</td>
+                <td v-if="movement.type ==='i'">{{  movement.wallet_email_source }}</td>
+                <td v-if="movement.type ==='e'">{{  movement.wallet_email }}</td>
                 <td v-if="movement.type_payment==='c' && movement.transfer===0">{{movement.type_payment==='c'? 'Cash' : ''}}</td>
                 <td v-if="movement.type_payment==='mb'&& movement.transfer===0">{{movement.type_payment==='mb'? 'MB payment' : ''}}</td>
                 <td v-if="movement.type_payment==='bt'&& movement.transfer===0">{{movement.type_payment==='bt'? 'Bank Transfer' : ''}}</td>
