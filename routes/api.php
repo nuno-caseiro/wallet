@@ -86,7 +86,9 @@ Route::middleware('auth:api')->group(function () {
 
 
 Route::get('movements/1/filter','MovementControllerAPI@filter')->middleware('user');
+
 Route::get('users/1/filter','UserControllerAPI@filter')->middleware('admin');
+
 
 Route::post('email', 'EmailAPI@sendEmail')->middleware('userAndOperator');
 });
@@ -107,8 +109,6 @@ Route::get('user/email/{email}','UserControllerAPI@showByEmail');
     Route::get('/movements/all/totalMoneyIncomessOfUserBetweenYears', 'StatisticsControllerAPI@getTotalMoneyIncomessOfUserBetweenYears');
 
 
-Route::get('/movements/all/totalMoneyMovedByUsersBetweenYears', 'StatisticsControllerAPI@getTotalMoneyMovedByUsersBetweenYears');
-Route::get('/movements/all/totalMoneyMovedByUsersAllDaysOfMonth', 'StatisticsControllerAPI@getTotalMoneyMovedByUsersAllDaysOfMonth');
 Route::get('/movements/all/totalActiveUsers', 'StatisticsControllerAPI@getTotalActiveUsers');
 Route::get('/oauth_access_tokens/all/totalAccesses', 'StatisticsControllerAPI@getTotalAccesses');
 Route::get('/movements/all/totalMovements', 'StatisticsControllerAPI@getTotalMovements');
