@@ -51,7 +51,7 @@
                     </select>
                 </div>
 
-                <div class="form-group" v-if="movement.transfer===false">
+                <div class="form-group">
                     <label for="description">Description</label>
                     <input type="text" class="form-control" id="description" name="description" v-model="movement.description" >
                   <!--  <div v-if="$v.movement.description.$error">
@@ -59,12 +59,12 @@
                     </div>-->
                 </div>
 
-                <div v-if="movement.type==='i'" class="form-group">
+                <div v-if="movement.transfer===true" class="form-group">
                     <label for="descriptionSource">Source Description</label>
-                    <input type="text" class="form-control" id="descriptionSource" name="descriptionSource" v-model="$v.movement.source_description.$model" >
-                    <div v-if="$v.movement.source_description.$error">
+                    <input type="text" class="form-control" id="descriptionSource" name="descriptionSource" v-model="movement.source_description" >
+                  <!--  <div v-if="$v.movement.source_description.$error">
                         <div class="error" v-if="!$v.movement.source_description.maxLength">Exceed maximum number of characters.</div>
-                    </div>
+                    </div>-->
                 </div>
 
                 <div v-if="movement.type_payment==='bt'" class="form-group">
@@ -298,7 +298,7 @@
             saveMovement: function () {
                 this.movement.iban=this.movement.iban.trim();
                         if(this.movement.type==='i' && this.isOperator){
-                            axios.post('api/movements', this.movement).then(response => {
+                            axios.post('api/movements/', this.movement).then(response => {
                                 console.log(response.data);
                             }).then(response => {
                                 this.wallet_dest.id = this.movement.wallet_id;
@@ -321,13 +321,16 @@
                         }
 
                         if(this.movement.type==='e' && this.isUser){
-                            axios.post('api/movements', this.movement).then(response => {
+                            axios.post('api/movements/', this.movement).then(response => {
                                 Object.assign(this.movement, response.data);
                                 this.wallet_source.balance = this.movement.end_balance;
                                 return axios.put('api/wallets/' + this.wallet_source.id, this.wallet_source);
                             }).then(response => {
                                 if(this.movement.transfer===true){
                                 this.saveMovimentPair();
+                                }else{
+                                    setTimeout(() => {
+                                        this.$router.push("/virtualWallet")}, 1000);
                                 }
                                 this.successMessage = "Movement saved with success";
                                 this.showSuccess = true;
@@ -343,17 +346,17 @@
                     this.movement_dest.id = '';
                     this.movement_dest.date = this.movement.date;
                     this.movement_dest.type = 'i';
-                    this.movement_dest.description = this.movement.source_description;
+                    this.movement_dest.description = '';
                     this.movement_dest.category_id = null;
-                    this.movement_dest.wallet_id = this.wallet_source.id;
+                    this.movement_dest.wallet_id = this.wallet_dest.id;
                     this.movement_dest.transfer_wallet_id = this.wallet_source.id;
                     this.movement_dest.transfer_movement_id = this.movement.id;
                     this.movement_dest.start_balance = this.wallet_dest.balance;
-                    this.movement_dest.source_description = '';
+                    this.movement_dest.source_description = this.movement.source_description;
                     this.movement_dest.value=this.movement.value;
                     this.movement_dest.end_balance = parseFloat(this.movement_dest.start_balance) + parseFloat(this.movement_dest.value);
                     this.wallet_dest.balance = this.movement_dest.end_balance;
-                axios.post('api/movements', this.movement_dest).then(response => {
+                axios.post('api/movements/', this.movement_dest).then(response => {
                     Object.assign(this.movement_dest, response.data);
                     this.movement.transfer_movement_id=this.movement_dest.id;
                     return axios.put('api/movements/'+this.movement.id,this.movement);
@@ -368,11 +371,6 @@
                 }).catch(error=>{
                     console.log(error);
                 });
-                /////////////redireciona para a pagina movement
-             /*   this.successMessage = "Movement saved with success";
-                this.showSuccess = true;
-                setTimeout(() => {
-                        this.$router.push("/")}, 1000);*/
 
             },
             cancelAdd(){
