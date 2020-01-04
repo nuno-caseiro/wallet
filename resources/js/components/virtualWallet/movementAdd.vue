@@ -259,7 +259,9 @@
                     }
 
                 }
-                console.log(this.movement);
+                if(this.movement.transfer_wallet_id==this.movement.wallet_id&&this.movement.transfer==true){
+                    this.movement.transfer_wallet_id='';
+                }
             },
             setTransfer: function(){
                 this.movement.transfer=1;
@@ -298,6 +300,8 @@
             saveMovement: function () {
                 this.movement.iban=this.movement.iban.trim();
                         if(this.movement.type==='i' && this.isOperator){
+                            this.movement.source_description=this.movement.description;
+                            this.movement.description='';
                             axios.post('api/movements/', this.movement).then(response => {
                                 console.log(response.data);
                             }).then(response => {
