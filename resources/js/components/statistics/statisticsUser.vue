@@ -1,20 +1,7 @@
 <template>
     <div>
 
-        <b-button  @click="showInputYears=!showInputYears,toggleExpensesAllDaysMonth=!toggleExpensesAllDaysMonth">Total money moved by users between years </b-button>
-        <b-button  @click="showInputYears=!showInputYears,toggleExpensesBetweenYears=!toggleExpensesBetweenYears">Total money moved by users between years </b-button>
 
-
-        <div v-if="showInputDate" >
-            <label>Date:</label>
-            <input type="date" v-model="date">
-        </div>
-
-        <div v-if="showInputYears">
-            <label>Years: </label>
-            <input type="number" min="2014" max="2020" step="1" value="2020" v-model="year" />
-            <input type="number" min="2014" max="2020" step="1" value="2020" v-model="stopYear" />
-        </div>
 
         <line-chart id="chart" v-if="this.show===true" :chartdata="linedata" :options="options" ></line-chart>
 

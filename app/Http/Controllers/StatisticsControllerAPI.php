@@ -268,7 +268,7 @@ class StatisticsControllerAPI extends Controller
 
     }
 
-    public function getTotalMoneyIncomessOfUserBetweenYears(Request $request){
+    public function getTotalMoneyIncomesOfUserBetweenYears(Request $request){
         try{
             $startYear=$request->startYear;
             $stopYear=$request->stopYear;
