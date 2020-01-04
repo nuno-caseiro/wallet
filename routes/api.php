@@ -116,3 +116,7 @@ Route::get('/movements/all/totalActiveUsers', 'StatisticsControllerAPI@getTotalA
 Route::get('/oauth_access_tokens/all/totalAccesses', 'StatisticsControllerAPI@getTotalAccesses');
 Route::get('/movements/all/totalMovements', 'StatisticsControllerAPI@getTotalMovements');
 Route::get('/wallets/all/totalMoneyOnPlatform', 'StatisticsControllerAPI@getTotalMoneyOnPlatform');
+
+
+Route::get('/statistics/all/totalExpensesOfUser/{wallet_id}', 'StatisticsControllerAPI@getTotalExpensesOfUser');
+Route::get('/statistics/all/totalIncomesOfUser/{wallet_id}', 'StatisticsControllerAPI@getTotalIncomesOfUser');
