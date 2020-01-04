@@ -259,9 +259,9 @@
                     }
 
                 }
-                if(this.movement.transfer_wallet_id==this.movement.wallet_id&&this.movement.transfer==true){
+               /* if(this.movement.transfer_wallet_id==this.movement.wallet_id&&this.movement.transfer==true){
                     this.movement.transfer_wallet_id='';
-                }
+                }*/
             },
             setTransfer: function(){
                 this.movement.transfer=1;

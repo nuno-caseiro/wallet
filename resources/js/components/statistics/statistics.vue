@@ -112,9 +112,9 @@
 
   </div>
 
-    
 
-        
+
+
 
 
         <line-chart id="chart" v-if="this.show===true" :chartdata="linedata" :options="options" ></line-chart>
@@ -231,7 +231,7 @@
                     }
 
                     for (let i = 0; i < response.data.length; i++) {
-                        dates.push(response.data[i].day_month);
+                        dates.push(response.data[i].year_month);
                     }
 
                     this.linedata.labels = dates;
@@ -337,7 +337,7 @@
             .then(response => {
                 console.log(response);
                 this.totalActiveUsers = response.data[0].total_users;
-            
+
 
             });
         },
@@ -347,7 +347,7 @@
             .then(response => {
                 console.log(response);
                 this.totalAccesses = response.data[0].total_accesses;
-            
+
 
             });
         },
@@ -357,17 +357,17 @@
             .then(response => {
                 console.log(response);
                 this.totalMovements = response.data[0].total_movs;
-            
+
 
             });
         },
-        
+
         totalMoneyOfPlatform() {
             axios.get('/api/wallets/all/totalMoneyOnPlatform')
             .then(response => {
                 console.log(response);
                 this.totalMoney = response.data[0].total_money;
-            
+
 
             });
         },
