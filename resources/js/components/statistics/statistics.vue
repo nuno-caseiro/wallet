@@ -379,7 +379,7 @@
             this.totalOfAccesses();
             this.totalOfMovements();
             this.totalMoneyOfPlatform();
-            /////
+
         }
 
 

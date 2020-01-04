@@ -391,6 +391,7 @@ class StatisticsControllerAPI extends Controller
     public function getTotalMoneyOnPlatform(Request $request){
         $totalMoneyArray = array();
         $totalMoney=0;
+        
         try{
             $wallets = DB::table('wallets')->get();
             foreach ($wallets as $wallet ){
@@ -404,6 +405,41 @@ class StatisticsControllerAPI extends Controller
         return response()->json($totalMoneyArray, 200);
 
     }
+
+
+    public function getTotalExpensesOfUser(Request $request){
+        $totalExpensesArray = array();
+        $userId=$request->wallet_id;
+        $exp = 'e';
+        try{
+            $expenses = DB::table('movements')->where('wallet_id', '=', $userId)->where('type','=', $exp)->count();
+            
+            array_push($totalExpensesArray, ['total_expenses' => $expenses]);
+        }catch (\Exception $e){
+            return response()->json(['error' => 'ERROR getting total movements.'], 500);
+
+        }
+        return response()->json($totalExpensesArray, 200);
+
+    }
+
+    public function getTotalIncomesOfUser(Request $request){
+        $totalIncomesArray = array();
+        $userId=$request->wallet_id;
+        $inc = 'i';
+        try{
+            $incomes = DB::table('movements')->where('wallet_id', '=', $userId)->where('type','=', $inc)->count();
+            
+            array_push($totalIncomesArray, ['total_incomes' => $incomes]);
+        }catch (\Exception $e){
+            return response()->json(['error' => 'ERROR getting total movements.'], 500);
+
+        }
+        return response()->json($totalIncomesArray, 200);
+
+    }
+
+    
 
 
 

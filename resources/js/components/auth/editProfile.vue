@@ -89,7 +89,6 @@ import axios from 'axios';
 import {helpers, maxLength, email, required, minLength, sameAs, requiredIf } from 'vuelidate/lib/validators'
 const userRegex = /^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ]+$/
 const regex = /^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ0-9 ]+$/
-const alpha = helpers.regex('alpha', /^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ0-9 ]*$/)
 
 export default {
     name : 'Edit',
@@ -120,14 +119,7 @@ export default {
                     required,
                     minLength: minLength(4),
                     
-                    nameValid(name,userType){
-                        if(this.userType === 'u'){
-                          return alpha.test(name);
-                        }
-                        else{
-                          return alpha.test(name);
-                        }
-                    }
+                  
                 },
 
                 nif: {

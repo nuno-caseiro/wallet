@@ -1,6 +1,24 @@
 <template>
     <div>
 
+        <table class="table table-striped" >
+        <thead>
+            <tr>
+                <th></th>
+                <th>Expenses</th>
+                <th>Incomes</th>
+            </tr>
+        </thead>
+        <tbody >
+            <tr>
+                <td>Total</td>
+                <td>{{expenses}}</td>
+                <td>{{incomes}}</td>
+
+            </tr>
+        </tbody>
+        </table>
+
 
 
         <line-chart id="chart" v-if="this.show===true" :chartdata="linedata" :options="options" ></line-chart>
@@ -38,6 +56,8 @@
                 year:"",
                 stopYear:"",
                 date:"",
+                expenses:"",
+                incomes:"",
 
             }
         },
@@ -103,7 +123,35 @@
             },
 
 
+            totalExpenses() {
+            axios.get('/api/statistics/all/totalExpensesOfUser/' + this.$store.state.user.id)
+            .then(response => {
+                console.log(response);
+                this.expenses = response.data[0].total_expenses;
+
+
+            });
+            },
+
+            totalIncomes() {
+            axios.get('/api/statistics/all/totalIncomesOfUser/' + this.$store.state.user.id)
+            .then(response => {
+                console.log(response);
+                this.incomes = response.data[0].total_incomes;
+
+
+            });
+            },
+
+
+        },
+        mounted(){
+            this.totalExpenses();
+            this.totalIncomes();
         }
+
+
+        
     }
 </script>
 
