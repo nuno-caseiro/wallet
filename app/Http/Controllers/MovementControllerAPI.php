@@ -93,7 +93,7 @@ class MovementControllerAPI extends Controller
                 $data['mb_payment_reference']=null;
             }else{
                 $data['wallet_email_source']=null;
-               // $data['transfer_wallet_id']=null;
+                $data['transfer_wallet_id']=null;
                 $data['source_description']=null; 
             }
 
@@ -155,7 +155,7 @@ class MovementControllerAPI extends Controller
 
             if(($data['transfer']) === true){
                 $request->validate([
-                    'transfer_movement_id' => 'required', //TODO : ESTE VALOR ESTA A NULL 
+                    //'transfer_movement_id' => 'required', //TODO : ESTE VALOR ESTA A NULL 
                     'transfer_wallet_id' => 'required',
 
                 ]);
