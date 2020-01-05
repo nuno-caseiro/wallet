@@ -101,7 +101,6 @@ class MovementControllerAPI extends Controller
                 $data['iban']=null;   
             }
             if($data['type_payment'] === 'bt'){
-                $data['iban'] = null; 
                 $data['mb_entity_code']= null;
                 $data['mb_payment_reference']=null;  
             }
@@ -153,29 +152,32 @@ class MovementControllerAPI extends Controller
                 'category_id'=> 'nullable', ///TODO: colcolar in: groceries,restaurant ????
                 'description' => 'nullable|string|max:200',
             ]);
+
             if(($data['transfer']) === true){
                 $request->validate([
                     //'transfer_movement_id' => 'required', TODO : ESTE VALOR ESTA A NULL 
                     'transfer_wallet_id' => 'required',
 
                 ]);
-            }
-             else{
+            }else{
                 
                 $request->validate([
                     'type_payment'=> 'required|in:mb,bt',
 
                 ]);
-                if(($data['type_payment']) == 'mb'){
+            
+                
+                if(($data['type_payment']) === 'mb'){
                     $request->validate([
-                        'mb_entity_code'=> 'required | regex:/^[0-9]{5}$/g',
-                        'mb_payment_reference'=> 'required | regex:/^[0-9]{9}$/g',
+                        'mb_entity_code'=> 'required | regex:/^[0-9]{5}$/',
+                        'mb_payment_reference'=> 'required | regex:/^[0-9]{9}$/',
 
-                ]);
+                    ]);
                 }
-                if(($data['type_payment']) == 'bt'){
+
+                if(($data['type_payment']) === 'bt'){
                     $request->validate([
-                        'iban'=> 'required | regex:/^[a-zA-Z]{2}[0-9]{2}[0-9]{4}[0-9]{4}[0-9]{11}[0-9]{2}$/g',
+                        'iban' => 'required | regex:/^[a-zA-Z]{2}[0-9]{2}[0-9]{4}[0-9]{4}[0-9]{11}[0-9]{2}$/',
                     ]);
                 }
             }
