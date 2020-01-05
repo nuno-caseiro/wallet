@@ -84,70 +84,103 @@ class MovementControllerAPI extends Controller
 
 
     public function store(Request $request){
+
+        $data = $request;
+        if($data['type'] === 'e'){
+            if($data['transfer'] === true){
+                $data['iban']=null;
+                $data['mb_entity_code']=null;
+                $data['mb_payment_reference']=null;
+            }else{
+                $data['wallet_email_source']=null;
+                $data['transfer_wallet_id']=null;
+                $data['source_description']=null; 
+            }
+
+            if($data['type_payment'] === 'mb'){
+                $data['iban']=null;   
+            }
+            if($data['type_payment'] === 'bt'){
+                $data['iban'] = null; 
+                $data['mb_entity_code']= null;
+                $data['mb_payment_reference']=null;  
+            }
+        }
+        
+
+        if($data['type'] === 'i'){
+
+            if($data['type_payment'] === 'c'){
+                $data['iban']=null;   
+            }
+
+        }
+        
+        
+
         //TODO validacoes e deve ser preciso fazer mais alguma coisa
-  /*      $data = $request->all();
         if(($data['type']) == 'i'){
-                if(($data['type_payment'])=='mb'){
+            $request->validate([
+                'wallet_id'=>'required',
+                'start_balance'=>'required',
+                'category_id'=> 'nullable',
+                'description' => 'nullable|string|max:200',
+                'source_description' => 'nullable|string|max:200',
+                'value'=> 'nullable | max:4',
+                'type_payment'=> 'required|in:bt,c',
+                
+            ]);
+
+
+                if(($data['type_payment'])=='bt'){
 
                     $request->validate([
-                        'category_id'=> 'nullable',
-                        'iban'=> 'required | regex:/^[a-zA-Z]{2}[0-9]{2}[0-9]{4}[0-9]{4}[0-9]{11}[0-9]{2}$/g',
-                        'description' => 'nullable',
-                        'source_description' => 'nullable',
-                        'value'=> 'nullable',
+                        'iban'=> 'required | regex:/^[a-zA-Z]{2}[0-9]{2}[0-9]{4}[0-9]{4}[0-9]{11}[0-9]{2}$/',
                     ]);
 
                 }else{
                     if(($data['type_payment'])=='c'){
-                    $request->validate([
-                        'category_id'=> 'nullable',
-                        'iban'=> 'nullable',
-                        'description' => 'nullable',
-                        'source_description' => 'nullable',
-                        'value'=> 'nullable',
-                    ]);
+                        $request->validate([
+                            'iban'=> 'nullable',
+                        ]);
                 }
             }
         }
 
         if(($data['type']) == 'e'){
+            $request->validate([
+                'value'=>'required | max:4',
+                'category_id'=> 'nullable', ///TODO: colcolar in: groceries,restaurant ????
+                'description' => 'nullable|string|max:200',
+            ]);
             if(($data['transfer']) === true){
                 $request->validate([
-                    'transfer_movement_id' => 'required',
+                    //'transfer_movement_id' => 'required', TODO : ESTE VALOR ESTA A NULL 
                     'transfer_wallet_id' => 'required',
-                    'value'=>'required | max:4',
-                    'type_payment' => 'nullable',
-                    'category_id'=> 'nullable',
-                    'mb_entity_code'=> 'nullable',
-                    'mb_payment_reference'=> 'nullable',
-                    'description' => 'nullable | max:50',
 
                 ]);
-            }else{
+            }
+             else{
+                
+                $request->validate([
+                    'type_payment'=> 'required|in:mb,bt',
+
+                ]);
                 if(($data['type_payment']) == 'mb'){
                     $request->validate([
-                        'category_id'=> 'nullable',
-                        'transfer_movement_id' => 'nullable',
-                        'type_payment' => 'required',
                         'mb_entity_code'=> 'required | regex:/^[0-9]{5}$/g',
                         'mb_payment_reference'=> 'required | regex:/^[0-9]{9}$/g',
-                        'description' => 'nullable | max:50',
-                        'iban'=>'nullable',
 
-                    ]);
-                }elseif(($data['type_payment']) == 'bt'){
+                ]);
+                }
+                if(($data['type_payment']) == 'bt'){
                     $request->validate([
-                        'category_id'=> 'nullable',
-                        'transfer_movement_id' => 'nullable',
-                        'type_payment' => 'required',
-                        'mb_entity_code'=> 'nullable',
-                        'mb_payment_reference'=> 'nullable',
-                        'description' => 'nullable | max:50',
                         'iban'=> 'required | regex:/^[a-zA-Z]{2}[0-9]{2}[0-9]{4}[0-9]{4}[0-9]{11}[0-9]{2}$/g',
                     ]);
                 }
             }
-        }*/
+        }
+        
 
             $now= new DateTime();
             $movement= new Movement();

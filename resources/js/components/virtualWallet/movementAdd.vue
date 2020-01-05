@@ -1,15 +1,15 @@
 <template>
     <div class="login-page">
         <div class="form">
-            <div class="alert" :class="messageType" v-if="showSuccess">
-                <strong>{{ successMessage }}</strong>
+            <div class="alert" :class="typeOfMessage" v-if="showMessage">
+                <strong>{{ message }}</strong>
             </div>
             <div class="jumbotron">
                 <h2>Movement</h2>
 
                 <div class="form-group">
                     <label for="movementType">Movement type</label>
-                    <select class="form-control" id="movementType" name="movementType" v-model="movement.type" @change="getCategories()"   >
+                    <select class="form-control" id="movementType" name="movementType" v-model="$v.movement.type.$model" @change="getCategories()"   >
                         <option v-if="isOperator"  value="i">Income</option>
                         <option v-if="isUser" value="e">Expense</option>
                     </select>
@@ -34,7 +34,7 @@
 
                 <div class="form-group">
                     <label for="value">Value</label>
-                    <input type="number" class="form-control" v-model="movement.value" name="value" id="value" step="0.01" @input="setFinalBalance()">
+                    <input type="number" class="form-control" v-model="$v.movement.value.$model" name="value" id="value" step="0.01" @input="setFinalBalance()">
                     <div v-if="$v.movement.value.$error">
                     <div class="error" v-if="!$v.movement.value.required">Field is required</div>
                     <div class="error" v-if="!$v.movement.value.maxLength">Exceed max value of amount of money. Max: 9999€.</div>
@@ -45,15 +45,15 @@
                 <div v-if="movement.transfer===false " class="form-group">
                     <label for="typePayment">Payment type</label>
                     <select class="form-control" id="typePayment" name="typePayment" v-model="movement.type_payment">
-                        <option value="c" v-if="isOperator">Cash</option>
-                        <option value="bt">Bank Transfer</option>
-                        <option value="mb" v-if="isUser">MB</option>
+                        <option value='c' v-if="isOperator">Cash</option>
+                        <option value='bt'>Bank Transfer</option>
+                        <option value='mb' v-if="isUser">MB</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <input type="text" class="form-control" id="description" name="description" v-model="movement.description" >
+                    <input type="text" class="form-control" id="description" name="description" v-model="$v.movement.description.$model" >
                    <div v-if="$v.movement.description.$error">
                         <div class="error" v-if="!$v.movement.description.maxLength">Exceed maximum number of characters.</div>
                     </div>
@@ -61,35 +61,35 @@
 
                 <div v-if="movement.transfer===true" class="form-group">
                     <label for="descriptionSource">Source Description</label>
-                    <input type="text" class="form-control" id="descriptionSource" name="descriptionSource" v-model="movement.source_description" >
+                    <input type="text" class="form-control" id="descriptionSource" name="descriptionSource" v-model="$v.movement.source_description.$model" >
                    <div v-if="$v.movement.source_description.$error">
                         <div class="error" v-if="!$v.movement.source_description.maxLength">Exceed maximum number of characters.</div>
                     </div>
                 </div>
 
-                <div v-if="movement.type_payment==='bt'" class="form-group">
+                <div v-if="movement.type_payment==='bt' && movement.transfer===false" class="form-group">
                     <label for="iban">IBAN</label>
-                    <input type="text" class="form-control" v-model="movement.iban" name="iban" id="iban">
+                    <input type="text" class="form-control" v-model="$v.movement.iban.$model" name="iban" id="iban">
                    <div v-if="$v.movement.iban.$error">
                        <div class="error" v-if="!$v.movement.iban.required">Field is required</div>
-                        <div class="error" v-if="!$v.movement.iban.ibanValid">EX: PT50 1234 4321 12345678901 72</div>
+                        <div class="error" v-if="!$v.movement.iban.ibanValid">EX: PT50123443211234567890172</div>
                     </div>
                 </div>
 
-                <div v-if="movement.type_payment==='mb'" class="form-group">
+                <div v-if="movement.type_payment==='mb' && movement.transfer===false" class="form-group">
                     <label for="mbCode">MB entity code</label>
-                    <input type="number" class="form-control" v-model="movement.mb_entity_code" name="mbCode" id="mbCode">
+                    <input type="number" class="form-control" v-model="$v.movement.mb_entity_code.$model" name="mbCode" id="mbCode">
                    <div v-if="$v.movement.mb_entity_code.$error">
                      <div class="error" v-if="!$v.movement.mb_entity_code.required">Field is required</div>
-                        <div class="error" v-if="!$v.movement.mb_entity_code.mb_ec_valid">12345</div>
+                        <div class="error" v-if="!$v.movement.mb_entity_code.mb_ec_valid">EX: 12345</div>
                     </div>
                 </div>
                 <div v-if="movement.type_payment==='mb' && movement.transfer===false" class="form-group">
                     <label for="mbPaymentReference">MB payment Reference </label>
-                    <input type="number" class="form-control" v-model="movement.mb_payment_reference" name="mbPaymentReference" id="mbPaymentReference">
+                    <input type="number" class="form-control" v-model="$v.movement.mb_payment_reference.$model" name="mbPaymentReference" id="mbPaymentReference">
                    <div v-if="$v.movement.mb_payment_reference.$error">
                     <div class="error" v-if="!$v.movement.mb_payment_reference.required">Field is required</div>
-                       <div class="error" v-if="!$v.movement.mb_payment_reference.mb_pr_valid">123456789</div>
+                       <div class="error" v-if="!$v.movement.mb_payment_reference.mb_pr_valid">EX: 123456789</div>
                     </div>
                 </div>
 
@@ -117,7 +117,7 @@
 
     const regexEntityCode = /^[0-9]{5}$/g
     const regexPaymentReference = /^[0-9]{9}$/g
-    const regexIban = /^[a-zA-Z]{2}[0-9]{2} [0-9]{4} [0-9]{4} [0-9]{11} [0-9]{2}$/g
+    const regexIban = /^[a-zA-Z]{2}[0-9]{2}[0-9]{4}[0-9]{4}[0-9]{11}[0-9]{2}$/g
     export default {
         data(){
             return{
@@ -138,7 +138,7 @@
                     transfer:false,
                     transfer_movement_id:'',
                     transfer_wallet_id:'',
-                    type_payment:null,
+                    type_payment:'',
                     category_id:null,
                     iban:'',
                     mb_entity_code:'',
@@ -170,10 +170,10 @@
                     value:'',
                 },
                 categories:[],
-                showSuccess: false,
-                successMessage: '',
-                messageType: "alert-success",
                 submitStatus: null,
+                typeOfMessage: "",
+                showMessage: false,
+                message: ""
             }
 
         },
@@ -188,34 +188,39 @@
                     required,
                 },
                 description:{
-                    maxLength: maxLength(50)
+                    maxLength: maxLength(200)
                 },
-
                 source_description:{
-                    maxLength: maxLength(50)
+                    maxLength: maxLength(200)
                 },
-
                 iban:{
-
+                    required: requiredIf(function(movement){
+                        return this.movement.type_payment === 'bt';
+                    }),
                     ibanValid:(iban)=>{
-                        return regexIban.test(iban);
+                        return regexIban.test(iban)
                         }
                 },
                 mb_entity_code:{
 
-
+                    required: requiredIf(function(movement){
+                        return this.movement.type_payment === 'mb';
+                    }),
                     mb_ec_valid:(mb_entity_code)=>{
-                        return regexEntityCode.test(mb_entity_code);
-
+                        return(
+                            regexEntityCode.test(mb_entity_code)
+                        );
                     }
                 },
 
 
                 mb_payment_reference:{
-
+                    required: requiredIf(function(movement){
+                        return this.movement.type_payment==='mb';
+                    }),
 
                     mb_pr_valid:(mb_payment_reference)=>{
-                        return regexPaymentReference.test(mb_payment_reference);
+                        return regexPaymentReference.test(mb_payment_reference)
 
                     }
                 }
@@ -298,6 +303,19 @@
 
             },
             saveMovement: function () {
+            //     if(this.movement.type_payment==='bt'){
+            //         this.movement.iban === '';
+            //     }
+            //     if(this.movement.type_payment==='mb'){
+            //         this.movement.mb_entity_code === '';
+            //         this.movement.mb_payment_reference === '';
+            //     }
+
+            //     console.log('submit!');
+            //   this.$v.$touch();
+            //   if (this.$v.$invalid) {
+            //       this.submitStatus = 'ERROR';
+            //   } else {
                 this.movement.iban=this.movement.iban.trim();
                         if(this.movement.type==='i' && this.isOperator){
                             this.movement.source_description=this.movement.description;
@@ -317,14 +335,21 @@
                                         this.$router.push("/virtualWallet")}, 1000);
                                 }).catch(error => {
                                     console.log(error);
+                                    this.typeOfMessage = "alert-danger";
+                                    this.message = error.response.data.errors;
+                                    this.showMessage = true;
                                 });
                             })
                                 .catch(error => {
                                     console.log(error);
+                                    this.typeOfMessage = "alert-danger";
+                                    this.message = error.response.data.errors;
+                                    this.showMessage = true;
                                 });
                         }
 
                         if(this.movement.type==='e' && this.isUser){
+                            
                             axios.post('api/movements', this.movement).then(response => {
                                 Object.assign(this.movement, response.data);
                                 this.wallet_source.balance = this.movement.end_balance;
@@ -340,8 +365,18 @@
                                 this.showSuccess = true;
                             }).catch(error=>{
                                 console.log(error);
+                                this.typeOfMessage = "alert-danger";
+                                    this.message = error.response.data.errors;
+                                    this.showMessage = true;
                             });
                         }
+
+                //            this.submitStatus = 'PENDING';
+                //                             setTimeout(() => {
+                //                                 this.submitStatus = 'OK'
+                //                             }, 500)
+                // }
+               
 
 
             } ,
@@ -374,6 +409,9 @@
                         this.$router.push("/virtualWallet")}, 400);
                 }).catch(error=>{
                     console.log(error);
+                    this.typeOfMessage = "alert-danger";
+                                    this.message = error.response.data.errors;
+                                    this.showMessage = true;
                 });
 
             },
