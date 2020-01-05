@@ -125,8 +125,8 @@ class MovementControllerAPI extends Controller
                 'category_id'=> 'nullable | numeric | in: 20,21,22,23,24,25,26,27,28,29',
                 'description' => 'nullable|string|max:200',
                 'source_description' => 'nullable|string|max:200',
-                'value'=> 'nullable | numeric | max:4',
-                'type_payment'=> 'required|in:bt,c',
+                'value'=> 'nullable | numeric | max:9999',
+                //'type_payment'=> 'required|in:bt,c',
                 
             ]);
 
@@ -148,7 +148,7 @@ class MovementControllerAPI extends Controller
 
         if(($data['type']) == 'e'){
             $request->validate([
-                'value'=>'required | max:4',
+                'value'=>'required | max:9999',
                 'category_id'=> 'nullable | numeric | in: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19', 
                 'description' => 'nullable|string|max:200',
             ]);
