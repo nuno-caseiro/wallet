@@ -120,12 +120,12 @@ class MovementControllerAPI extends Controller
         //TODO validacoes e deve ser preciso fazer mais alguma coisa
         if(($data['type']) == 'i'){
             $request->validate([
-                'wallet_id'=>'required',
+                'wallet_id'=>'required | numeric',
                 'start_balance'=>'required',
-                'category_id'=> 'nullable | in: 20,21,22,23,24,25,26,27,28,29',
+                'category_id'=> 'nullable | numeric | in: 20,21,22,23,24,25,26,27,28,29',
                 'description' => 'nullable|string|max:200',
                 'source_description' => 'nullable|string|max:200',
-                'value'=> 'nullable | max:4',
+                'value'=> 'nullable | numeric | digits:4',
                 'type_payment'=> 'required|in:bt,c',
                 
             ]);
@@ -148,8 +148,8 @@ class MovementControllerAPI extends Controller
 
         if(($data['type']) == 'e'){
             $request->validate([
-                'value'=>'required | max:4',
-                'category_id'=> 'nullable | in: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19', 
+                'value'=>'required | digits:4',
+                'category_id'=> 'nullable | numeric | in: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19', 
                 'description' => 'nullable|string|max:200',
             ]);
 
