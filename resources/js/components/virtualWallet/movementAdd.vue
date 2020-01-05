@@ -24,7 +24,7 @@
                     <input type="checkbox" id="transfer" v-model="movement.transfer">
                 </div>
 
-                <div v-if="this.isToShowDestination" class="form-group">
+                <div v-if="isToShowDestination" class="form-group">
                     <label for="wallets_email">Choose email of account</label>
                     <select class="form-control" id="wallets_email" name="wallets_email" @change="getWalletInfo($event)">
                         <option></option>
@@ -37,6 +37,7 @@
                     <input type="number" class="form-control" v-model="$v.movement.value.$model" name="value" id="value" step="0.01" @input="setFinalBalance()">
                     <div v-if="$v.movement.value.$error">
                     <div class="error" v-if="!$v.movement.value.required">Field is required</div>
+                    <div class="error" v-if="!$v.movement.value.lowValue">You dont have money </div>
                     <div class="error" v-if="!$v.movement.value.maxLength">Exceed max value of amount of money. Max: 9999€.</div>
                     </div>
                 </div>
@@ -69,7 +70,7 @@
 
                 <div v-if="movement.type_payment==='bt' && movement.transfer===false" class="form-group">
                     <label for="iban">IBAN</label>
-                    <input type="text" class="form-control" v-model="$v.movement.iban.$model" name="iban" id="iban">
+                    <input type="text" class="form-control" v-model="$v.movement.iban.$model" name="iban" id="iban"  >
                    <div v-if="$v.movement.iban.$error">
                        <div class="error" v-if="!$v.movement.iban.required">Field is required</div>
                         <div class="error" v-if="!$v.movement.iban.ibanValid">EX: PT50123443211234567890172</div>
@@ -96,10 +97,13 @@
 
                 <div class="form-group">
                     <label for="categoryId">Choose category</label>
-                    <select class="form-control" id="categoryId" name="categoryId" v-model="movement.category_id">
+                    <select class="form-control" id="categoryId" name="categoryId" v-model="$v.movement.category_id.$model">
                         <option></option>
                         <option v-for="category in this.categories"  v-bind:value="category.id" >{{category.name}}</option>
                     </select>
+                    <div v-if="$v.movement.category_id.$error">
+                        <div class="error" v-if="!$v.movement.category_id.required">Field is required</div>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -180,9 +184,17 @@
         validations:{
 
             movement:{
+                category_id:{
+                  required,
+                },
                 value:{
                     required,
-                    maxLength: maxLength(4)
+                    maxLength: maxLength(4),
+                    lowValue: function(){
+                        if(this.wallet_source.balance-this.movement.value<0 && this.movement.type=='e'){
+                            return false;
+                        }else{return true}
+                    }
                 },
                 type:{
                     required,
@@ -197,19 +209,28 @@
                     required: requiredIf(function(movement){
                         return this.movement.type_payment === 'bt';
                     }),
-                    ibanValid:(iban)=>{
+                    ibanValid: function(iban){
+                        if( this.movement.type_payment === 'bt'){
                         return regexIban.test(iban)
+                        }else{
+                            return true;
                         }
+                    }
                 },
                 mb_entity_code:{
 
                     required: requiredIf(function(movement){
                         return this.movement.type_payment === 'mb';
                     }),
-                    mb_ec_valid:(mb_entity_code)=>{
-                        return(
-                            regexEntityCode.test(mb_entity_code)
-                        );
+                    mb_ec_valid: function(mb_entity_code){
+                        if(this.movement.type_payment === 'mb'){
+                            return(
+                                regexEntityCode.test(mb_entity_code)
+                            );
+                        }else{
+                            return true;
+                        }
+
                     }
                 },
 
@@ -218,9 +239,11 @@
                     required: requiredIf(function(movement){
                         return this.movement.type_payment==='mb';
                     }),
+                    mb_pr_valid: function(mb_payment_reference){
+                        if(this.movement.type_payment==='mb'){
 
-                    mb_pr_valid:(mb_payment_reference)=>{
                         return regexPaymentReference.test(mb_payment_reference)
+                        }else{return true;}
 
                     }
                 }
@@ -303,82 +326,70 @@
 
             },
             saveMovement: function () {
-            //     if(this.movement.type_payment==='bt'){
-            //         this.movement.iban === '';
-            //     }
-            //     if(this.movement.type_payment==='mb'){
-            //         this.movement.mb_entity_code === '';
-            //         this.movement.mb_payment_reference === '';
-            //     }
-
-            //     console.log('submit!');
-            //   this.$v.$touch();
-            //   if (this.$v.$invalid) {
-            //       this.submitStatus = 'ERROR';
-            //   } else {
-                this.movement.iban=this.movement.iban.trim();
-                        if(this.movement.type==='i' && this.isOperator){
-                            this.movement.source_description=this.movement.description;
-                            this.movement.description='';
-                            axios.post('api/movements', this.movement).then(response => {
-                                console.log(response.data);
-                            }).then(response => {
-                                this.wallet_dest.id = this.movement.wallet_id;
-                                this.wallet_dest.balance = this.movement.end_balance;
-                                axios.put('api/wallets/' + this.wallet_dest.id, this.wallet_dest).then(response => {
-                                    console.log(response.data);
-                                    this.sendMessageTo(this.movement.wallet_id);
-                                    this.successMessage = "Movement saved with success";
-                                    this.showSuccess = true;
-                                    ///redireciona para a pagina movements
-                                    setTimeout(() => {
-                                        this.$router.push("/virtualWallet")}, 1000);
-                                }).catch(error => {
-                                    console.log(error);
-                                    this.typeOfMessage = "alert-danger";
-                                    this.message = error.response.data.errors;
-                                    this.showMessage = true;
-                                });
-                            })
-                                .catch(error => {
-                                    console.log(error);
-                                    this.typeOfMessage = "alert-danger";
-                                    this.message = error.response.data.errors;
-                                    this.showMessage = true;
-                                });
-                        }
-
-                        if(this.movement.type==='e' && this.isUser){
-                            
-                            axios.post('api/movements', this.movement).then(response => {
-                                Object.assign(this.movement, response.data);
-                                this.wallet_source.balance = this.movement.end_balance;
-                                return axios.put('api/wallets/' + this.wallet_source.id, this.wallet_source);
-                            }).then(response => {
-                                if(this.movement.transfer===true){
-                                this.saveMovimentPair();
-                                }else{
-                                    setTimeout(() => {
-                                        this.$router.push("/virtualWallet")}, 1000);
-                                }
-                                this.successMessage = "Movement saved with success";
-                                this.showSuccess = true;
-                            }).catch(error=>{
-                                console.log(error);
-                                this.typeOfMessage = "alert-danger";
-                                    this.message = error.response.data.errors;
-                                    this.showMessage = true;
-                            });
-                        }
-
-                //            this.submitStatus = 'PENDING';
-                //                             setTimeout(() => {
-                //                                 this.submitStatus = 'OK'
-                //                             }, 500)
-                // }
-               
 
 
+               this.$v.$touch();
+               if (this.$v.$invalid) {
+                   console.log(this.$v);
+                   this.submitStatus = 'ERROR';
+               } else {
+                   this.movement.iban = this.movement.iban.trim();
+                   if (this.movement.type === 'i' && this.isOperator) {
+                       this.movement.source_description = this.movement.description;
+                       this.movement.description = '';
+                       axios.post('api/movements', this.movement).then(response => {
+                           console.log(response.data);
+                       }).then(response => {
+                           this.wallet_dest.id = this.movement.wallet_id;
+                           this.wallet_dest.balance = this.movement.end_balance;
+                           axios.put('api/wallets/' + this.wallet_dest.id, this.wallet_dest).then(response => {
+                               console.log(response.data);
+                               this.sendMessageTo(this.movement.wallet_id);
+                               this.successMessage = "Movement saved with success";
+                               this.showSuccess = true;
+                               ///redireciona para a pagina movements
+                               setTimeout(() => {
+                                   this.$router.push("/")
+                               }, 1000);
+                           }).catch(error => {
+                               console.log(error);
+                               this.typeOfMessage = "alert-danger";
+                               this.message = error.response.data.errors;
+                               this.showMessage = true;
+                           });
+                       })
+                           .catch(error => {
+                               console.log(error);
+                               this.typeOfMessage = "alert-danger";
+                               this.message = error.response.data.errors;
+                               this.showMessage = true;
+                           });
+                   }
+
+                   if (this.movement.type === 'e' && this.isUser) {
+
+                       axios.post('api/movements', this.movement).then(response => {
+                           Object.assign(this.movement, response.data);
+                           this.wallet_source.balance = this.movement.end_balance;
+                           return axios.put('api/wallets/' + this.wallet_source.id, this.wallet_source);
+                       }).then(response => {
+                           if (this.movement.transfer === true) {
+                               this.saveMovimentPair();
+                           } else {
+                               setTimeout(() => {
+                                   this.$router.push("/virtualWallet")
+                               }, 1000);
+                           }
+                           this.successMessage = "Movement saved with success";
+                           this.showSuccess = true;
+                       }).catch(error => {
+                           console.log(error);
+                           this.typeOfMessage = "alert-danger";
+                           this.message = error.response.data.errors;
+                           this.showMessage = true;
+                       });
+                   }
+               }
             } ,
             saveMovimentPair: function () {
                     this.movement_dest.transfer=true;

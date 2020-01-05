@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Support\CollectionHelper;
+use App\Wallet;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
@@ -94,28 +95,28 @@ class MovementControllerAPI extends Controller
             }else{
                 $data['wallet_email_source']=null;
                 $data['transfer_wallet_id']=null;
-                $data['source_description']=null; 
+                $data['source_description']=null;
             }
 
             if($data['type_payment'] === 'mb'){
-                $data['iban']=null;   
+                $data['iban']=null;
             }
             if($data['type_payment'] === 'bt'){
                 $data['mb_entity_code']= null;
-                $data['mb_payment_reference']=null;  
+                $data['mb_payment_reference']=null;
             }
         }
-        
+
 
         if($data['type'] === 'i'){
 
             if($data['type_payment'] === 'c'){
-                $data['iban']=null;   
+                $data['iban']=null;
             }
 
         }
-        
-        
+
+
 
         //TODO validacoes e deve ser preciso fazer mais alguma coisa
         if(($data['type']) == 'i'){
@@ -125,10 +126,15 @@ class MovementControllerAPI extends Controller
                 'category_id'=> 'nullable | numeric | in: 20,21,22,23,24,25,26,27,28,29',
                 'description' => 'nullable|string|max:200',
                 'source_description' => 'nullable|string|max:200',
-                'value'=> 'nullable | numeric | max:9999',
-                //'type_payment'=> 'required|in:bt,c',
-                
+                'value'=> 'required|numeric | max:9999',
+
             ]);
+
+            if(($data['transfer'])==false){
+                $request->validate([
+                    'type_payment'=> 'required|in:bt,c',
+                ]);
+            }
 
 
                 if(($data['type_payment'])=='bt'){
@@ -149,24 +155,24 @@ class MovementControllerAPI extends Controller
         if(($data['type']) == 'e'){
             $request->validate([
                 'value'=>'required | max:9999',
-                'category_id'=> 'nullable | numeric | in: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19', 
+                'category_id'=> 'nullable | numeric | in: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19',
                 'description' => 'nullable|string|max:200',
             ]);
 
-            if(($data['transfer']) === true){
+            if(($data['transfer']) == true){
                 $request->validate([
-                    //'transfer_movement_id' => 'required', //TODO : ESTE VALOR ESTA A NULL 
+                    //'transfer_movement_id' => 'required', //TODO : ESTE VALOR ESTA A NULL
                     'transfer_wallet_id' => 'required',
 
                 ]);
             }else{
-                
+
                 $request->validate([
                     'type_payment'=> 'required|in:mb,bt',
 
                 ]);
-            
-                
+
+
                 if(($data['type_payment']) === 'mb'){
                     $request->validate([
                         'mb_entity_code'=> 'required | regex:/^[0-9]{5}$/',
@@ -182,7 +188,14 @@ class MovementControllerAPI extends Controller
                 }
             }
         }
-        
+
+
+        $wallet= Wallet::findOrFail($request->wallet_id);
+        if($wallet->balance-$request->value<0 && $data['type']=='e'){
+            return response()->json("You dont have money",400);
+
+        }else{
+
 
             $now= new DateTime();
             $movement= new Movement();
@@ -191,6 +204,7 @@ class MovementControllerAPI extends Controller
             $movement->save();
 
             return response()->json(new MovementResource($movement),201);
+        }
     }
 
     public function update(Request $request, $id){
