@@ -189,23 +189,22 @@
                             }).catch(error=>{
                                 console.log(error.response);
                                 if(error.response.data.errors.email && error.response.data.errors.nif){
-                                    this.$emit('user-saved', this.user);
+                                    //this.$emit('user-saved', this.user);
                                     this.showMessage = true;
                                     this.messageType = "alert-danger"
                                     this.message = 'Email and NIF already exists';
                                 }else{
                                     if(error.response.data.errors.email){
-                                        this.$emit('user-saved', this.user);
+                                        //this.$emit('user-saved', this.user);
                                         this.showMessage = true;
                                         this.messageType = "alert-danger"
                                         this.message = 'Email already exists';
                                 }else{
                                     if(error.response.data.errors.nif){
-                                        this.$emit('user-saved', this.user);
+                                        //this.$emit('user-saved', this.user);
                                         this.showMessage = true;
                                         this.messageType = "alert-danger"
                                         this.message = 'NIF already exists';
-                                        console.log(this.user.id);
                                     }
                                 }
                                 } 
