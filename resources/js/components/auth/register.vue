@@ -33,10 +33,11 @@
 
                 <div  class="div">
                     <label>NIF</label>
-                    <input type="number" placeholder="NIF" v-model="$v.user.nif.$model"> 
+                    <input type="number" placeholder="NIF" v-model="$v.user.nif.$model">
                     <div v-if="$v.user.nif.$error">
                         <div class="error" v-if="!$v.user.nif.required">Field is required</div>
-                        <div class="error" v-if="!$v.user.nif.minLength">NIF must have at least {{$v.user.nif.$params.minLength.min}} numbers.</div>
+                        <div class="error" v-if="!$v.user.nif.minLength">NIF must have 9 numbers.</div>
+                        <div class="error" v-if="!$v.user.nif.maxLength">NIF must have 9 numbers.</div>
                     </div>
                 </div>
 
@@ -54,7 +55,7 @@
                     </div>
                 </div>
 
-                <div class="div"> 
+                <div class="div">
                     <label>Password Confirmation</label>
                     <input type="password" placeholder="confirm password" v-model="$v.password_confirmation.$model">
                     <div v-if="$v.password_confirmation.$error">
@@ -73,7 +74,7 @@
 
 <script type="text/javascript">
     import axios from 'axios';
-    import { numeric,email, required, minLength, sameAs } from 'vuelidate/lib/validators';
+    import { numeric,email, required, minLength, sameAs, maxLength } from 'vuelidate/lib/validators';
     export default {
         name : 'Register',
         data() {
@@ -86,11 +87,11 @@
                     active:'',
                     nif: '',
                     photo: null,
-                    password: '',               
-                   
+                    password: '',
 
-                    
-                }, 
+
+
+                },
                 password_confirmation: '',
                 wallet:{
                     id:'',
@@ -121,7 +122,8 @@
                 nif: {
                     required,
                     numeric,
-                    minLength: minLength(9)
+                    minLength: minLength(9),
+                    maxLength: maxLength(9)
                 },
 
 
@@ -131,7 +133,7 @@
                 },
 
             },
-            password_confirmation: { 
+            password_confirmation: {
                     required,
                     sameAsPassword: sameAs(function(password){
                       return this.user.password;

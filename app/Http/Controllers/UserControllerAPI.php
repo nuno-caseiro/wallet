@@ -124,10 +124,24 @@ class UserControllerAPI extends Controller
         }
         }
 
-        //else{
-        //     $user->delete();
-        //     return response()->json(null,204);
-        // }
+        if(strpos($request->input('photo'),'data:image/')!==false){
+            $exploded=explode(',', $request->photo);
+            $decoded= base64_decode($exploded[1]);
+            if(Str::contains($exploded[0],'jpeg')|| Str::contains($exploded[0],'jpg')){
+                $extension='jpg';
+            }else{
+                $extension='png';
+            }
+            $fileName= Str::random().'.'.$extension;
+
+            $path=storage_path('app/public/fotos/').$fileName;
+            file_put_contents($path,$decoded);
+
+            $user->photo=$fileName;
+        }else{
+            $user->photo=null;
+        }
+
         $user->save();
         return (new UserResource($user))->response()->setStatusCode(200);
     }
