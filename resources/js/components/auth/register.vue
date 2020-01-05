@@ -100,7 +100,7 @@
 
                 },
                 submitStatus: null,
-                messageType: "alert-success",
+                messageType: "",
                 showMessage: false,
                 showMessageDanger: false,
                 message: "",
@@ -165,6 +165,7 @@
                                     Object.assign(this.user, response.data);
                                     this.$emit('user-saved', this.user);
                                     this.showMessage = true;
+                                    this.messageType= "alert-success",
                                     this.message = 'Register completed with success';
                                     console.log(this.user.id);
 
@@ -186,7 +187,28 @@
                                 });
 
                             }).catch(error=>{
-                                console.log(error);
+                                console.log(error.response);
+                                if(error.response.data.errors.email && error.response.data.errors.nif){
+                                    this.$emit('user-saved', this.user);
+                                    this.showMessage = true;
+                                    this.messageType = "alert-danger"
+                                    this.message = 'Email and NIF already exists';
+                                }else{
+                                    if(error.response.data.errors.email){
+                                        this.$emit('user-saved', this.user);
+                                        this.showMessage = true;
+                                        this.messageType = "alert-danger"
+                                        this.message = 'Email already exists';
+                                }else{
+                                    if(error.response.data.errors.nif){
+                                        this.$emit('user-saved', this.user);
+                                        this.showMessage = true;
+                                        this.messageType = "alert-danger"
+                                        this.message = 'NIF already exists';
+                                        console.log(this.user.id);
+                                    }
+                                }
+                                } 
                             });
                             this.submitStatus = 'PENDING';
                     setTimeout(() => {
