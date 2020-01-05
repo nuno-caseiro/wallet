@@ -93,7 +93,7 @@ class MovementControllerAPI extends Controller
                 $data['mb_payment_reference']=null;
             }else{
                 $data['wallet_email_source']=null;
-                $data['transfer_wallet_id']=null;
+               // $data['transfer_wallet_id']=null;
                 $data['source_description']=null; 
             }
 
@@ -125,7 +125,7 @@ class MovementControllerAPI extends Controller
                 'category_id'=> 'nullable | numeric | in: 20,21,22,23,24,25,26,27,28,29',
                 'description' => 'nullable|string|max:200',
                 'source_description' => 'nullable|string|max:200',
-                'value'=> 'nullable | numeric | digits:4',
+                'value'=> 'nullable | numeric | max:4',
                 'type_payment'=> 'required|in:bt,c',
                 
             ]);
@@ -148,14 +148,14 @@ class MovementControllerAPI extends Controller
 
         if(($data['type']) == 'e'){
             $request->validate([
-                'value'=>'required | digits:4',
+                'value'=>'required | max:4',
                 'category_id'=> 'nullable | numeric | in: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19', 
                 'description' => 'nullable|string|max:200',
             ]);
 
             if(($data['transfer']) === true){
                 $request->validate([
-                    //'transfer_movement_id' => 'required', TODO : ESTE VALOR ESTA A NULL 
+                    'transfer_movement_id' => 'required', //TODO : ESTE VALOR ESTA A NULL 
                     'transfer_wallet_id' => 'required',
 
                 ]);
