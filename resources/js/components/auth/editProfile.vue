@@ -102,6 +102,7 @@ export default {
           old_password: '',   
           password: '',
           password_confirmation: '',
+          photo: '',
                
         },
         currentUser:"",
@@ -172,6 +173,7 @@ export default {
                 fileReader.readAsDataURL(event.target.files[0]);
                 fileReader.onload=(event)=>{
                     this.userLogin.photo=event.target.result;
+                    this.user.photo = event.target.result;
                 }
 
             },
@@ -186,32 +188,28 @@ export default {
                   this.submitStatus = 'ERROR';
               } else {
                     
-                    console.log(this.user)
+                   
                     this.$store.state.user.name = this.user.name;
                     this.$store.state.user.nif=this.user.nif;
-                    //this.$store.state.user.email = this.user.email;
-                    
+                   
+
                     ///////////////////Pedido com Alteracao da Pass/////////////////////////////////
                     if(this.change === true){
                     axios.patch('/api/users/'+this.userLogin.id, this.user)
                     .then(response => {   
-                        let tokenType = response.data.token_type;
-                        let token = response.data.access_token;
-                        let expiration = response.data.expires_in + Date.now();
-                        this.$store.commit('setToken', {token, tokenType, expiration});
-                        console.log(response)
                         this.messageType = "alert-success"
                         this.showMessage = true;
-                        this.message = 'Success, please login again!!';
+                        this.message = 'Success, please login AGAIN!!';
                         setTimeout(() => {
-                                this.$router.push("login")
+                                // this.$router.push("login")
+                                this.logout();
                         }, 1500);
                         }).catch(error=>{
                           this.messageType = "alert-danger";
                             this.message = "";
                             this.showMessage = true;
                                     console.log(error);
-                                });
+                        });
                     }
                     
 
@@ -226,9 +224,10 @@ export default {
                         console.log(response)
                         this.messageType = "alert-success"
                         this.showMessage = true;
-                        this.message = 'Success, please login again!!';
+                        this.message = 'Success, please login AGAIN!!';
                         setTimeout(() => {
-                                this.$router.push("login")
+                                //this.$router.push("login")
+                                this.logout();
                         }, 1500);
                         }).catch(error=>{
                           this.messageType = "alert-danger";
@@ -247,6 +246,29 @@ export default {
                 }
     
         },
+
+        logout() {
+                this.showMessage = false;
+                axios.post('api/logout')
+                    .then(response => {
+                        this.$socket.emit('user_exit', this.$store.state.user);
+                        this.$store.commit('clearUserAndToken');
+                        this.typeofmsg = "alert-success";
+                        this.message = "User has logged out correctly";
+                        this.showMessage = true;
+                        this.$router.push("/login")
+                        
+                    })
+                    .catch(error => {
+                        this.$store.commit('clearUserAndToken');
+                        this.typeofmsg = "alert-danger";
+                        this.message = "Logout incorrect. But local credentials were discarded";
+                        this.showMessage = true;
+                        console.log(error);
+                    })
+                },
+
+
          cancelEdit(){
           this.user = null; 
           axios.get('api/users/'+this.userLogin.id)
