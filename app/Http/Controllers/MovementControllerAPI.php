@@ -122,7 +122,7 @@ class MovementControllerAPI extends Controller
             $request->validate([
                 'wallet_id'=>'required',
                 'start_balance'=>'required',
-                'category_id'=> 'nullable',
+                'category_id'=> 'nullable | in: 20,21,22,23,24,25,26,27,28,29',
                 'description' => 'nullable|string|max:200',
                 'source_description' => 'nullable|string|max:200',
                 'value'=> 'nullable | max:4',
@@ -149,7 +149,7 @@ class MovementControllerAPI extends Controller
         if(($data['type']) == 'e'){
             $request->validate([
                 'value'=>'required | max:4',
-                'category_id'=> 'nullable', ///TODO: colcolar in: groceries,restaurant ????
+                'category_id'=> 'nullable | in: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19', 
                 'description' => 'nullable|string|max:200',
             ]);
 
