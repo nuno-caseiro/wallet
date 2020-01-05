@@ -235,7 +235,7 @@
                 if (this.show == true) {
                     this.show = false;
                 }
-                axios.get('/api/movements/all/totalMoneyExpensesAllDaysOfMonth?date=' +this.date +'&wallet_id='+ this.$store.state.user.id ).then(response => {
+                axios.get('/api/movements/all/totalMoneyIncomesAllDaysOfMonth?date=' +this.date +'&wallet_id='+ this.$store.state.user.id ).then(response => {
                     console.log(response);
                     this.linedata.labels = [];
                     this.linedata.datasets = [];
@@ -290,7 +290,7 @@
         }
 
 
-        
+
     }
 </script>
 
