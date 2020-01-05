@@ -292,24 +292,31 @@ class StatisticsControllerAPI extends Controller
             $userId=$request->wallet_id;
             $daysOfMonth=Carbon::parse($date)->daysInMonth;
             $arrayMoney= array();
-            $totalMoney=0;
+
+
             for($j=1;$j<=$daysOfMonth;$j++){
+                $totalMovements=null;
+                $nrMovements=null;
+
                 $totalMovements= DB::table('movements')->where('wallet_id','=',$userId)
                     ->whereYear('date', '=', Carbon::parse($date)->format('Y'))->
                     whereMonth('date','=',Carbon::parse($date)->format('m'))->whereDay('date','=',$j)->get();
-                foreach ($totalMovements as $movement ){
-                    if($movement->type=='i'){
 
-                    $totalMoney+=$movement->value;
-                    }else{
-                        $totalMoney-=$movement->value;
+                $nrMovements= DB::table('movements')->where('wallet_id','=',$userId)
+                    ->whereYear('date', '=', Carbon::parse($date)->format('Y'))->
+                    whereMonth('date','=',Carbon::parse($date)->format('m'))->whereDay('date','=',$j)->count();
 
-                    }
-                }
-                array_push($arrayMoney, ['day_month' => $j."-".Carbon::parse($date)->format('m').'-'.Carbon::parse($date)->format('Y'), 'total_money' => $totalMoney]);
+    if($nrMovements!=0){
+
+                $totalMoney1=$totalMovements->get($nrMovements-1);
+                $totalMoney= (array)$totalMoney1;
+                $totalMoneyF=$totalMoney['end_balance'];
+        }
+
+                array_push($arrayMoney, ['day_month' => $j."-".Carbon::parse($date)->format('m').'-'.Carbon::parse($date)->format('Y'), 'total_money' => $totalMoneyF]);
             }
         }catch (\Exception $e){
-            return response()->json(['error' => 'ERROR getting total money moved by users.'], 500);
+            return response()->json(['error' => $e], 500);
         }
         return response()->json($arrayMoney, 200);
 
@@ -321,22 +328,23 @@ class StatisticsControllerAPI extends Controller
             $stopYear=$request->stopYear;
             $userId=$request->wallet_id;
             $arrayMoney= array();
-            $totalMoney=0;
+
+
             for ($i=$startYear;$i<=$stopYear;$i++) {
                 for ($j = 1; $j <= 12; $j++) {
                     $totalMovements = DB::table('movements')->where('wallet_id', '=', $userId)
                         ->whereYear('date', '=', $i)->whereMonth('date', '=', $j)->get();
 
-                    foreach ($totalMovements as $movement) {
-                        if ($movement->type == 'i') {
+                    $nrMovements = DB::table('movements')->where('wallet_id', '=', $userId)
+                        ->whereYear('date', '=', $i)->whereMonth('date', '=', $j)->count();
 
-                            $totalMoney += $movement->value;
-                        } else {
-                            $totalMoney -= $movement->value;
+                    if($nrMovements!=0){
 
-                        }
+                        $totalMoney1=$totalMovements->get($nrMovements-1);
+                        $totalMoney= (array)$totalMoney1;
+                        $totalMoneyF=$totalMoney['end_balance'];
                     }
-                    array_push($arrayMoney, ['year_month' => $i . "-" . $j, 'total_money' => round($totalMoney, 2)]);
+                    array_push($arrayMoney, ['year_month' => $i . "-" . $j, 'total_money' => round($totalMoneyF, 2)]);
                 }
             }
         }catch (\Exception $e){

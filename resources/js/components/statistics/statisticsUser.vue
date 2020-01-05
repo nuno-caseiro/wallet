@@ -75,6 +75,33 @@
             </b-collapse>
             </b-card>
 
+            <b-card no-body class="mb-1">
+                <b-card-header header-tag="header" class="p-1" role="tab">
+                    <b-button block href="#" v-b-toggle.balanceThroughTimeBetweenYears variant="info">Balance over years</b-button>
+                </b-card-header>
+                <b-collapse id="balanceThroughTimeBetweenYears" accordion="my-accordion" role="tabpanel">
+                    <b-card-body>
+                        <label>Years: </label>
+                        <input type="number" min="2014" max="2020" step="1" value="2020" v-model="year" />
+                        <input type="number" min="2014" max="2020" step="1" value="2020" v-model="stopYear" />
+                        <button @click.prevent="balanceThroughTimeBetweenYears()" class="btn btn-info">Get</button>
+                    </b-card-body>
+                </b-collapse>
+            </b-card>
+
+            <b-card no-body class="mb-1">
+                <b-card-header header-tag="header" class="p-1" role="tab">
+                    <b-button block href="#" v-b-toggle.balanceThroughTimeAllDaysOfMonth variant="info">Balance over all days Of Month</b-button>
+                </b-card-header>
+                <b-collapse id="balanceThroughTimeAllDaysOfMonth" accordion="my-accordion" role="tabpanel">
+                    <b-card-body>
+                        <label>Date:</label>
+                        <input id="date" type="date" v-model="date">
+                        <button @click.prevent="balanceThroughTimeAllDaysOfMonth()" class="btn btn-info">Get</button>
+                    </b-card-body>
+                </b-collapse>
+            </b-card>
+
         </div>
 
         <table class="table table-striped" v-if="visibleTable" >
@@ -261,6 +288,65 @@
                 });
             },
 
+            balanceThroughTimeAllDaysOfMonth(){
+
+                if (this.show == true) {
+                    this.show = false;
+                }
+                axios.get('/api/movements/all/balanceThroughTimeAllDaysOfMonth?date=' +this.date +'&wallet_id='+ this.$store.state.user.id ).then(response => {
+                    console.log(response);
+                    this.linedata.labels = [];
+                    this.linedata.datasets = [];
+                    let data = [];
+                    let dates = [];
+
+                    for (let i = 0; i < response.data.length; i++) {
+                        data.push(response.data[i].total_money);
+                    }
+
+                    for (let i = 0; i < response.data.length; i++) {
+                        dates.push(response.data[i].day_month);
+                    }
+
+                    this.linedata.labels = dates;
+                    this.linedata.datasets.push({
+                        label: 'Balance of wallet over all days of month',
+                        data: data
+                    });
+
+                    this.show = true;
+
+                });
+            },
+            balanceThroughTimeBetweenYears(){
+
+                if(this.show==true){
+                    this.show=false;
+                }
+                axios.get('/api/movements/all/balanceThroughTimeBetweenYears?startYear=' + this.year+'&stopYear='+this.stopYear +'&wallet_id='+ this.$store.state.user.id).then(response => {
+                    console.log(response);
+                    this.linedata.labels=[];
+                    this.linedata.datasets=[];
+                    let data=[];
+                    let dates=[];
+
+                    for(let i=0;i<response.data.length;i++){
+                        data.push(response.data[i].total_money);
+                    }
+
+                    for(let i=0;i<response.data.length;i++){
+                        dates.push(response.data[i].year_month);
+                    }
+
+                    this.linedata.labels=dates;
+                    this.linedata.datasets.push({
+                        label: 'Balance of wallet between'+this.year+' and '+this.stopYear,
+                        data:data
+                    });
+
+                    this.show=true;
+                });
+            },
 
             totalExpenses() {
             axios.get('/api/statistics/all/totalExpensesOfUser/' + this.$store.state.user.id)
