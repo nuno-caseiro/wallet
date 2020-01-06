@@ -140,10 +140,6 @@ export default {
                     return this.change === true;
                     }),
 
-                    //     sameAsPass: sameAs(function(userLogin){
-                    //   return this.userLogin.password;
-                    // }),
-
                     minLength: minLength(3),
                 },
 
