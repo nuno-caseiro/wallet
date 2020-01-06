@@ -215,7 +215,7 @@
 
                     this.linedata.labels = dates;
                     this.linedata.datasets.push({
-                        label: 'Total money moved by users between year ' + this.year + ' and ' + this.stopYear,
+                        label: 'Total movements from external incomes between year ' + this.year + ' and ' + this.stopYear,
                         data: data
                     });
 
@@ -243,7 +243,7 @@
 
                     this.linedata.labels = dates;
                     this.linedata.datasets.push({
-                        label: 'Total movements of month by day'+this.date ,
+                        label: 'Total movements from external incomes by all days of month '+ this.date ,
                         data: data
                     });
 

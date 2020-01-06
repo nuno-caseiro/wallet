@@ -174,7 +174,7 @@
 
                     this.linedata.labels = dates;
                     this.linedata.datasets.push({
-                        label: 'Total money in expense movements you made',
+                        label: 'Total money expent by you over all days of month'+ this.date,
                         data: data
                     });
 
@@ -204,7 +204,7 @@
 
                     this.linedata.labels=dates;
                     this.linedata.datasets.push({
-                        label: 'Total money moved by you between year '+this.year+' and '+this.stopYear,
+                        label: 'Total money expent by you between year '+this.year+' and '+this.stopYear,
                         data:data
                     });
 
@@ -235,7 +235,7 @@
 
                     this.linedata.labels=dates;
                     this.linedata.datasets.push({
-                        label: 'Total money moved by you between year '+this.year+' and '+this.stopYear,
+                        label: 'Total money that you received between year '+this.year+' and '+this.stopYear,
                         data:data
                     });
 
@@ -265,7 +265,7 @@
 
                     this.linedata.labels = dates;
                     this.linedata.datasets.push({
-                        label: 'Total money moved by you all days of month',
+                        label: 'Total money that you received over all days of month'+ this.date,
                         data: data
                     });
 
@@ -296,7 +296,7 @@
 
                     this.linedata.labels = dates;
                     this.linedata.datasets.push({
-                        label: 'Balance of your wallet over all days of month',
+                        label: 'Balance of your wallet over all days of month' + this.date,
                         data: data
                     });
 
