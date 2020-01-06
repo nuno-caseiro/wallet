@@ -207,7 +207,6 @@ export default {
                         }).catch(error=>{
                           console.log(error.response.data.error)
                             if(error.response.data.error){
-                                    //this.$emit('user-saved', this.user);
                                     this.showMessage = true;
                                     this.messageType = "alert-danger"
                                     this.message = 'Password Confirmation is not correct.';

@@ -16,9 +16,8 @@
                 <th>Admin Actions</th>
             </tr>
         </thead>
-        <tbody >
+        <tbody  v-for="user in users" :key="user.id" >
 
-            <tr v-for="user in users" :key="user.id" >
             <td v-if="user.type==='a'">{{"Admin"}}</td>
             <td v-if="user.type==='o'">{{"Operator"}}</td>
             <td v-if="user.type==='u'">{{"User"}}</td> 
@@ -52,7 +51,6 @@
             <td v-if="user.type==='o'"> <b-button  variant="danger" @click.prevent="deleteUser(user)">Delete  </b-button></td>
             <td v-if="isAuthUser(user)">Your Account</td>
 
-            </tr>
         </tbody>
         </table>
 
@@ -110,7 +108,7 @@ export default {
             });
         }
         /// quando se apaga ou reativa um user, para atualizar o estado ou a lista, faz um get filtrado outra vez
-        if(this.filters!=''){
+        if(this.filters!==''){
             let page_url = url || 'api/users/';
             axios.get(page_url)
             .then(response=>{
@@ -129,7 +127,7 @@ export default {
              },
 
         isAuthUser(user) {
-            return user.email == this.$store.getters.getAuthUser.email ? true : false
+            return user.email === this.$store.state.user.email ? true : false
         },
 
         deactivateUser(user) {
@@ -238,6 +236,7 @@ export default {
 
    mounted(){
        this.getUsers();
+       
 
    },
 
