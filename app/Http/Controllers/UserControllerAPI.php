@@ -176,7 +176,7 @@ class UserControllerAPI extends Controller
         if($user['nif'] !== $request['nif']){
             $user->fill($request->all());
         }
-        if($user['nif'] !== $request['nif']){
+        if($user['nif'] === $request['nif']){
             $user->fill($request->except('nif'));
         }
 
