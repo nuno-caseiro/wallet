@@ -38,7 +38,7 @@
                     <div v-if="$v.movement.value.$error">
                     <div class="error" v-if="!$v.movement.value.required">Field is required</div>
                     <div class="error" v-if="!$v.movement.value.lowValue">You dont have money </div>
-                    <div class="error" v-if="!$v.movement.value.maxLength">Exceed max value of amount of money. Max: 9999€.</div>
+                    <div class="error" v-if="!$v.movement.value.between">Exceed max value of amount of money. Max: 5000€.</div>
                     </div>
                 </div>
 
@@ -189,7 +189,7 @@
                 },
                 value:{
                     required,
-                    maxLength: maxLength(4),
+                    between: between(0, 5000),
                     lowValue: function(){
                         if(this.wallet_source.balance-this.movement.value<0 && this.movement.type=='e'){
                             return false;

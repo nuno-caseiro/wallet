@@ -171,6 +171,15 @@ class UserControllerAPI extends Controller
             ]);
         }
 
+        //TODO validacoes
+        $user= User::findOrFail($id);
+        if($user['nif'] !== $request['nif']){
+            $user->fill($request->all());
+        }
+        if($user['nif'] !== $request['nif']){
+            $user->fill($request->except('nif'));
+        }
+
         
         if(strpos($request->input('photo'),'data:image/')!==false){
             $exploded=explode(',', $request->photo);

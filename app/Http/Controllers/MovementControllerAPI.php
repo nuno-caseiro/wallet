@@ -128,7 +128,7 @@ class MovementControllerAPI extends Controller
                 'category_id'=> 'nullable | numeric ',
                 'description' => 'nullable|string|max:200',
                 'source_description' => 'nullable|string|max:200',
-                'value'=> 'required|numeric | max:9999',
+                'value'=> 'required|numeric | max:5000 | min:0',
 
             ]);
 
@@ -137,7 +137,6 @@ class MovementControllerAPI extends Controller
                     'type_payment'=> 'required|in:bt,c',
                 ]);
             }
-
 
                 if(($data['type_payment']) =='bt'){
 
@@ -156,7 +155,7 @@ class MovementControllerAPI extends Controller
 
         if(($data['type']) == 'e'){
             $request->validate([
-                'value'=>'required | max:9999',
+                'value'=> 'required| numeric | max:5000 | min:0',
                 'category_id'=> 'nullable | numeric',
                 'description' => 'nullable|string|max:200',
             ]);
