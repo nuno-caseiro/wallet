@@ -47,7 +47,7 @@
                     </select>
                 </div>
             </div>
-                   
+
             <div>
                     <b-button-group id="b">
                         <b-button size="sm" variant="outline-primary" v-on:click="applyFilter()">Apply filters</b-button>
@@ -79,7 +79,7 @@
         }
     },
         methods: {
-        
+
         cleanFilter: function () {
             this.filters.id = '';
             this.filters.type = '';
@@ -94,7 +94,6 @@
         applyFilter: function () {
             this.$emit('apply-Filter', this.filters);
             },
-//TODO v-if type income mostra categorias, else expense categories
             getCategories: function () {
                 axios.get('api/categories').then(response => {
                     this.categories = response.data.data;
@@ -124,7 +123,7 @@
 
 <style scoped>
 #row1{
-    margin-top:30px; 
+    margin-top:30px;
     display: flex; /* or inline-flex */
     justify-content: space-evenly;
     flex-wrap: wrap;

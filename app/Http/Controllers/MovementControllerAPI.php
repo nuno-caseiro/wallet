@@ -50,6 +50,10 @@ class MovementControllerAPI extends Controller
             $query=$query->where('wallet_id','=',$request->wallet_id);
         }
 
+        if($request->has('transfer_wallet_id')){
+            $query=$query->where('transfer_wallet_id','=',$request->transfer_wallet_id);
+        }
+
         if($request->has('type')){
             $query=  $query->where('type','=', $request->type);
         }

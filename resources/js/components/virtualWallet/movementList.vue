@@ -138,7 +138,7 @@ export default {
                 if(stringFilter!='?'){
                     stringFilter+='&';
                 }
-                stringFilter+='wallet_id='+filters.source_email+'&transfer=1';
+                stringFilter+='wallet_id='+this.$store.state.user.id+ '&transfer_wallet_id='+filters.source_email+'&transfer=1'+'&type=i'; //
             }
 
 
@@ -146,7 +146,7 @@ export default {
                 if(stringFilter!='?'){
                     stringFilter+='&';
                 }
-                stringFilter+='transfer_wallet_id='+filters.dest_email+'&transfer=1';
+                stringFilter+='wallet_id='+this.$store.state.user.id+ '&transfer_wallet_id='+filters.dest_email+'&transfer=1'+'&type=e'; //
             }
 
             if(move==="next"){
