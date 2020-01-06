@@ -36,7 +36,8 @@
                     <label for="sourceEmail">Choose source email</label>
                     <select id="sourceEmail" name="sourceEmail" v-model="filters.source_email">
                         <option></option>
-                        <option v-for="wallet in this.wallets"  v-bind:value="wallet.id" >{{wallet.email}}</option>
+                        <!--<option v-for="wallet in this.wallets"  v-bind:value="wallet.id" >{{wallet.email}}</option>-->
+                        <option v-bind:value="this.$store.state.user.id">{{this.$store.state.user.email}}</option>
                     </select>
                 </div>
                 <div>
@@ -47,7 +48,7 @@
                     </select>
                 </div>
             </div>
-                   
+
             <div>
                     <b-button-group id="b">
                         <b-button size="sm" variant="outline-primary" v-on:click="applyFilter()">Apply filters</b-button>
@@ -76,10 +77,11 @@
             },
             categories:[],
             wallets:[],
+            user:[],
         }
     },
         methods: {
-        
+
         cleanFilter: function () {
             this.filters.id = '';
             this.filters.type = '';
@@ -112,6 +114,7 @@
 
             },
 
+
         },
         mounted() {
         this.getCategories();
@@ -124,7 +127,7 @@
 
 <style scoped>
 #row1{
-    margin-top:30px; 
+    margin-top:30px;
     display: flex; /* or inline-flex */
     justify-content: space-evenly;
     flex-wrap: wrap;
