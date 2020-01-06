@@ -20,7 +20,7 @@
 	    <div class="form-group">
 	        <label for="inputEmail">Email</label>
 	        <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" v-model="$v.user.email.$model"/>
-            <div v-if="$v.user.name.$error">
+            <div v-if="$v.user.email.$error">
                 <div class="error" v-if="!$v.user.email.required">Field is required</div>
                 <div class="error" v-if="!$v.user.email.email">E-mail must be valid</div>
             </div>
@@ -93,7 +93,7 @@ export default {
              console.log('submit!');
                 this.$v.$touch();
                 if (this.$v.$invalid) {
-                    this.submitStatus = 'ERROR';
+                    
                 } else {
                     this.user.active=1;
                     axios.post('api/users', this.user)
@@ -115,10 +115,10 @@ export default {
                                 }
                         });
 
-                        this.submitStatus = 'PENDING';
-                        setTimeout(() => {
-                            this.submitStatus = 'OK'
-                            }, 500)
+                        // this.submitStatus = 'PENDING';
+                        // setTimeout(() => {
+                        //     this.submitStatus = 'OK'
+                        //     }, 500)
                 }
         },
         cancelEdit() {
