@@ -25,21 +25,22 @@
                     <label>Date2 :</label>
                     <input id="date2" v-model="filters.date2" type="date">
                 </div>
-                <div>
+                <div v-if="filters.source_email == '' && filters.dest_email==''">
                     <label>Type: </label>
                     <select v-model="filters.type" >
+                        <option value=""></option>
                         <option value="e">Expense</option>
                         <option value="i">Income</option>
                     </select>
                 </div>
-                <div>
+                <div v-if="filters.dest_email=='' && filters.type==''">
                     <label for="sourceEmail">Choose source email</label>
                     <select id="sourceEmail" name="sourceEmail" v-model="filters.source_email">
                         <option></option>
                         <option v-for="wallet in this.wallets"  v-bind:value="wallet.id" >{{wallet.email}}</option>
                     </select>
                 </div>
-                <div>
+                <div v-if="filters.source_email=='' && filters.type==''">
                     <label id = "e" for="destEmail">Choose destination email</label>
                     <select id="destEmail" name="destEmail" v-model="filters.dest_email">
                         <option></option>
