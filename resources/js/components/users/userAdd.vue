@@ -1,8 +1,10 @@
 <template>
 <div>
-    <div class="alert alert-success" v-if="showSuccess">			 
-        <strong>{{ successMessage }}</strong>
-    </div>
+    
+            <div class="alert" :class="messageType" v-if="showMessage">
+                <strong>{{ message }}</strong>
+            </div>
+
     <div class="jumbotron">
 	    <h2>Add User</h2>
 	    <div class="form-group">
@@ -11,6 +13,7 @@
             <div v-if="$v.user.name.$error">
                 <div class="error" v-if="!$v.user.name.required">Field is required</div>
                 <div class="error" v-if="!$v.user.name.minLength">Name must have at least {{$v.user.name.$params.minLength.min}} letters.</div> 
+                <div class="error" v-if="!$v.user.name.nameValid">Name have only have letters.</div>
             </div>
         </div>
         
@@ -56,12 +59,16 @@
 
 <script>
 import { email, required, minLength, between } from 'vuelidate/lib/validators'
+const regex = /^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/
 export default {
     data() {
         return {
             submitStatus: null,
-            showSuccess: false,
-            successMessage: '',
+            messageType: "",
+            showMessage: false,
+            showMessageDanger: false,
+            message: "",
+            messageDanger: "",
             user:{
                     name: '',
                     email: '',
@@ -93,12 +100,21 @@ export default {
                         .then(response => {
                             Object.assign(this.user, response.data.data);
                             this.$emit('user-created', this.user)
-                            this.showSuccess = true;
-                            this.successMessage = 'User created with success';
+                            this.showMessage = true;
+                            this.messageType = "alert-success"
+                            this.message = 'User created with success.';
                             setTimeout(() => {
                                 this.$router.push("/users")
                             }, 1000);
+                        }).catch(error=>{
+                                console.log(error.response);
+                                if(error.response.data.errors.email){
+                                    this.showMessage = true;
+                                    this.messageType = "alert-danger"
+                                    this.message = 'Email already exists.';
+                                }
                         });
+
                         this.submitStatus = 'PENDING';
                         setTimeout(() => {
                             this.submitStatus = 'OK'
@@ -116,7 +132,10 @@ export default {
         user:{
             name: {
             required,
-            minLength: minLength(4)
+            minLength: minLength(4),
+            nameValid(name) {
+                return regex.test(name);
+                }
             },
 
             email: {
