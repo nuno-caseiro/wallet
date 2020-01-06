@@ -20,7 +20,8 @@
             <tr>
                 <th>ID</th>
                 <th>Type</th>
-                <!-- <th>Source Email</th> -->
+                <th>Source Email</th>
+                <th>Destination Email</th>
                 <th>Payment Type</th>
                 <th>Category</th>
                 <th>Date</th>
@@ -36,11 +37,12 @@
                 <td>{{ movement.id }}</td>
                 <td v-if="movement.type ==='e'">{{ movement.type ==='e'? 'Expense': '' }}</td>
                 <td v-if="movement.type ==='i'">{{ movement.type ==='i'? 'Income': '' }}</td>
-                <!-- <td>{{  movement.wallet_email_source }}</td> -->
-                <td v-if="movement.type_payment==='c' && movement.transfer===0">{{movement.type_payment==='c'? 'Cash' : ''}}</td>
-                <td v-if="movement.type_payment==='mb'&& movement.transfer===0">{{movement.type_payment==='mb'? 'MB payment' : ''}}</td>
-                <td v-if="movement.type_payment==='bt'&& movement.transfer===0">{{movement.type_payment==='bt'? 'Bank Transfer' : ''}}</td>
-                <td v-if="movement.type_payment===null">{{movement.type_payment===null? '':''}}</td>
+                <td>{{  movement.transfer===1 && movement.type=='i'?movement.wallet_email_source : ' - ' }}</td>
+                <td>{{  movement.transfer===1 && movement.type=='e'?movement.wallet_email_source : ' - ' }}</td>
+                <td v-if="movement.type_payment==='c' && movement.transfer===0">{{movement.type_payment==='c'? 'Cash' : ' - '}}</td>
+                <td v-if="movement.type_payment==='mb'&& movement.transfer===0">{{movement.type_payment==='mb'? 'MB payment' : ' - '}}</td>
+                <td v-if="movement.type_payment==='bt'&& movement.transfer===0">{{movement.type_payment==='bt'? 'Bank Transfer' : ' - '}}</td>
+                <td v-if="movement.type_payment===null">{{movement.type_payment===null? ' - ':''}}</td>
                 <td>{{ movement.category_name}}</td>
                 <td>{{ movement.date }}</td>
                 <td>{{ movement.start_balance}}</td>

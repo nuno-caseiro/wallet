@@ -8,11 +8,11 @@
     <form class="login-form">
       <img  v-bind:src="itemImageURL(userLogin.photo)" width="110" height="110" alt="" >
       <h3>Edit Profile</h3><label v-text="userLogin.email"></label>
-                
+
                 <div class="div">
                     <label>Name</label>
                     <input type="text" placeholder="name" v-model="$v.user.name.$model" >
-                    <div v-if="$v.user.name.$error">                   
+                    <div v-if="$v.user.name.$error">
                       <div class="error" v-if="!$v.user.name.required">Field is required</div>
                       <div class="error" v-if="!$v.user.name.minLength">Name must have at least {{$v.user.name.$params.minLength.min}} letters.</div>
                       <div class="error" v-if="!$v.user.name.nameValid">Name have only have letters.</div>
@@ -21,24 +21,24 @@
 
                 <div  class="div" v-if="userLogin.type =='u'">
                     <label>NIF</label>
-                    <input type="number" placeholder="NIF" v-model="$v.user.nif.$model"> 
+                    <input type="number" placeholder="NIF" v-model="$v.user.nif.$model">
                     <div v-if="$v.user.nif.$error">
                       <div class="error" v-if="!$v.user.nif.required">Field is required</div>
-                      <div class="error" v-if="!$v.user.nif.minLength">NIF must have 9 digits.</div> 
-                      <div class="error" v-if="!$v.user.nif.maxLength">NIF must have 9 digits.</div> 
+                      <div class="error" v-if="!$v.user.nif.minLength">NIF must have 9 digits.</div>
+                      <div class="error" v-if="!$v.user.nif.maxLength">NIF must have 9 digits.</div>
                     </div>
                 </div>
 
                 <div  class="div" v-if="userLogin.type =='a' || userLogin.type =='o'">
                     <label>NIF</label>
-                    <input type="number" placeholder="NIF" v-model="$v.user.nif.$model"> 
+                    <input type="number" placeholder="NIF" v-model="$v.user.nif.$model">
                     <div v-if="$v.user.nif.$error">
-                      <div class="error" v-if="!$v.user.nif.nifValid">NIF must have 9 digits.</div> 
+                      <div class="error" v-if="!$v.user.nif.nifValid">NIF must have 9 digits.</div>
                     </div>
                 </div>
 
                 <div class="div">
-                    <label>Select a photo from your computer storage</label>                   
+                    <label>Select a photo from your computer storage</label>
                     <input class="form-data" name="photo" accept="image/*" type="file" @change="onFileSelected">
                 </div>
 
@@ -52,7 +52,7 @@
                     <input type="password" placeholder="old password" v-model="$v.user.old_password.$model">
                     <div v-if="$v.user.old_password.$error">
                       <div class="error" v-if="!$v.user.old_password.required ">Field is required</div>
-                      <div class="error" v-if="!$v.user.old_password.minLength">Password must have at least {{$v.user.password.$params.minLength.min}} digits.</div> 
+                      <div class="error" v-if="!$v.user.old_password.minLength">Password must have at least {{$v.user.password.$params.minLength.min}} digits.</div>
                     </div>
                 </div>
                 <div class="div" v-if='change === true'>
@@ -60,7 +60,7 @@
                     <input type="password" placeholder="new password" v-model="$v.user.password.$model">
                     <div v-if="$v.user.password.$error">
                       <div class="error" v-if="!$v.user.password.required ">Field is required</div>
-                      <div class="error" v-if="!$v.user.password.minLength">Password must have at least {{$v.user.password.$params.minLength.min}} digits.</div> 
+                      <div class="error" v-if="!$v.user.password.minLength">Password must have at least {{$v.user.password.$params.minLength.min}} digits.</div>
                     </div>
                 </div>
                 <div class="div" v-if='change === true'>
@@ -99,11 +99,11 @@ export default {
           name: '',
           email:'',
           nif:'',
-          old_password: '',   
+          old_password: '',
           password: '',
           password_confirmation: '',
           photo: '',
-               
+
         },
         currentUser:"",
         messageType: "",
@@ -117,11 +117,11 @@ export default {
             name: {
                     required,
                     minLength: minLength(4),
-                    
+
                     nameValid(name) {
                       return regex.test(name);
                     },
-                  
+
                 },
 
                 nif: {
@@ -130,11 +130,11 @@ export default {
                     }),
                     minLength: minLength(9),
                     maxLength: maxLength(9),
-                    
-                    
+
+
                 },
-                old_password: {                       
-                        
+                old_password: {
+
 
                     required: requiredIf(function(change){
                     return this.change === true;
@@ -154,18 +154,18 @@ export default {
 
                     minLength: minLength(3)
                 },
-                
+
                 password_confirmation: {
                     required: requiredIf(function(change){
                       return this.change === true;
                     }),
-                    
+
                     sameAsPassword: sameAs('password')
                 }
       },
-                
+
       },
-                
+
       methods:{
 
          onFileSelected(event){
@@ -187,16 +187,16 @@ export default {
               if (this.$v.$invalid) {
                   this.submitStatus = 'ERROR';
               } else {
-                    
-                   
+
+
                     this.$store.state.user.name = this.user.name;
                     this.$store.state.user.nif=this.user.nif;
-                   
+
 
                     ///////////////////Pedido com Alteracao da Pass/////////////////////////////////
                     if(this.change === true){
                     axios.patch('/api/users/'+this.userLogin.id, this.user)
-                    .then(response => {   
+                    .then(response => {
                         this.messageType = "alert-success"
                         this.showMessage = true;
                         this.message = 'Success, please login AGAIN!!';
@@ -213,13 +213,13 @@ export default {
                                 }
                         });
                     }
-                    
+
 
                     ///////////////////Pedido sem Alteracao da Pass/////////////////////////////////
                     if(this.change === false){
-      
+
                     axios.put('/api/withoutPass/users/'+this.userLogin.id,  this.$store.state.user)
-                    .then(response => {   
+                    .then(response => {
                         this.messageType = "alert-success"
                         this.showMessage = true;
                         this.message = 'Success, please login AGAIN!!';
@@ -235,14 +235,14 @@ export default {
                                 });
                     }
 
-                    
+
 
                     this.submitStatus = 'PENDING';
                     setTimeout(() => {
                         this.submitStatus = 'OK'
                     }, 500)
                 }
-    
+
         },
 
         logout() {
@@ -255,7 +255,7 @@ export default {
                         this.message = "User has logged out correctly";
                         this.showMessage = true;
                         this.$router.push("/login")
-                        
+
                     })
                     .catch(error => {
                         this.$store.commit('clearUserAndToken');
@@ -268,16 +268,10 @@ export default {
 
 
          cancelEdit(){
-          this.user = null; 
-          axios.get('api/users/'+this.userLogin.id)
-                .then(response=>{
-                     Object.assign(this.user, response.data.data);
-                     console.dir (this.user);
-                     this.user = null;
-                 });
+          this.user = null;
                   setTimeout(() => {
                              this.$router.push("/")
-                  }, 100); 
+                  }, 100);
          },
 },
       computed: {
@@ -288,7 +282,7 @@ export default {
             return this.$store.getters.getAuthUser
         },
 
-        
+
       },
       mounted(){
           this.user.name = this.$store.state.user.name;

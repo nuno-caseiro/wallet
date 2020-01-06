@@ -12,10 +12,6 @@ use App\Http\Resources\Movement as MovementResource;
 
 class MovementControllerAPI extends Controller
 {
-    // $comment = App\Movement::find(1);
-
-    // echo $comment->category->name;
-
 
     public function index(Request $request){
         if($request->has('page')){
@@ -27,11 +23,18 @@ class MovementControllerAPI extends Controller
     }
 
     public function show($id){
-        return new MovementResource(Movement::find($id));
+        $movement= Movement::find($id);
+        if(auth()->guard('api')->user()->id==$movement->wallet_id||auth()->guard('api')->user()->id==$movement->transfer_wallet_id ) {
+
+            return new MovementResource($movement);
+        }
     }
 
     public function showMovementsOfWallet($wallet_id){
+        if(auth()->guard('api')->user()->id==$wallet_id){
+
         return (MovementResource::collection(Movement::where('wallet_id',$wallet_id)->orderBy('date', 'desc')->paginate(5)))->response()->setStatusCode(200);
+        }
     }
 
     public function filter(Request $request){
@@ -40,11 +43,11 @@ class MovementControllerAPI extends Controller
         $query= Movement::where('id', '>',0);
 
        if($request->has('id')){
-            $query=$query->where('id','=',$request->id); //todo paginate
+            $query=$query->where('id','=',$request->id);
         }
 
         if($request->has('wallet_id')){
-            $query=$query->where('wallet_id','=',$request->wallet_id); //todo paginate
+            $query=$query->where('wallet_id','=',$request->wallet_id);
         }
 
         if($request->has('type')){
@@ -118,7 +121,6 @@ class MovementControllerAPI extends Controller
 
 
 
-        //TODO validacoes e deve ser preciso fazer mais alguma coisa
         if(($data['type']) == 'i'){
             $request->validate([
                 'wallet_id'=>'required | numeric',
@@ -161,7 +163,6 @@ class MovementControllerAPI extends Controller
 
             if(($data['transfer']) == true){
                 $request->validate([
-                    //'transfer_movement_id' => 'required', //TODO : ESTE VALOR ESTA A NULL
                     'transfer_wallet_id' => 'required',
 
                 ]);
@@ -208,29 +209,25 @@ class MovementControllerAPI extends Controller
     }
 
     public function update(Request $request, $id){
-        //TODO validacoes
         $movement= Movement::findOrFail($id);
+        if(auth()->guard('api')->user()->id==$movement->wallet_id || auth()->guard('api')->user()->id==$movement->transfer_wallet_id){
         $movement->fill($request->all());
         $movement->date=Carbon::parse($request->date['date']);
         $movement->save();
         return new MovementResource($movement);
+        }
     }
 
-    public function destroy($id){
-        $movement= Movement::findOrFail($id);
-        $movement->delete();
-        return response()->json(null,204);
 
-    }
 
     public function updateEdit(Request $request, $id){
-        
+
         $request->validate([
                 'category_id'=> 'nullable | numeric',
                 'source_description' => 'nullable|string|max:200',
          ]);
 
- 
+
         $movement= Movement::findOrFail($id);
         $movement->update($request->all());
         return new MovementResource($movement);
