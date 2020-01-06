@@ -36,8 +36,7 @@
                     <label for="sourceEmail">Choose source email</label>
                     <select id="sourceEmail" name="sourceEmail" v-model="filters.source_email">
                         <option></option>
-                        <!--<option v-for="wallet in this.wallets"  v-bind:value="wallet.id" >{{wallet.email}}</option>-->
-                        <option v-bind:value="this.$store.state.user.id">{{this.$store.state.user.email}}</option>
+                        <option v-for="wallet in this.wallets"  v-bind:value="wallet.id" >{{wallet.email}}</option>
                     </select>
                 </div>
                 <div>
@@ -77,7 +76,6 @@
             },
             categories:[],
             wallets:[],
-            user:[],
         }
     },
         methods: {
@@ -96,7 +94,6 @@
         applyFilter: function () {
             this.$emit('apply-Filter', this.filters);
             },
-//TODO v-if type income mostra categorias, else expense categories
             getCategories: function () {
                 axios.get('api/categories').then(response => {
                     this.categories = response.data.data;
@@ -113,7 +110,6 @@
                 });
 
             },
-
 
         },
         mounted() {
