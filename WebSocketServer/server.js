@@ -48,7 +48,7 @@ io.on('connection', function (socket) {
 
     socket.on('disconnect', () => {
 
-        //socket.leave('type'+loggedUsers.userInfoBySocketID(socket.id).type);
+        socket.leave('type'+loggedUsers.userInfoBySocketID(socket.id).type);
         loggedUsers.removeUserInfoBySocketID(socket.id);
     });
 

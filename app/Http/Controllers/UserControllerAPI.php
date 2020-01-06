@@ -123,6 +123,36 @@ class UserControllerAPI extends Controller
             $user->fill($request->all());
         }
         }
+        
+        if(strpos($request->input('photo'),'data:image/')!==false){
+            $exploded=explode(',', $request->photo);
+            $decoded= base64_decode($exploded[1]);
+            if(Str::contains($exploded[0],'jpeg')|| Str::contains($exploded[0],'jpg')){
+                $extension='jpg';
+            }else{
+                $extension='png';
+            }
+            $fileName= Str::random().'.'.$extension;
+
+            $path=storage_path('app/public/fotos/').$fileName;
+            file_put_contents($path,$decoded);
+
+            $user->photo=$fileName;
+        }
+        // else{
+        //     $user->photo=null;
+        // }
+
+        $user->save();
+        return (new UserResource($user))->response()->setStatusCode(200);
+    }
+
+
+    public function updateWithoutPass(Request $request, $id){
+        //TODO validacoes
+        $user= User::findOrFail($id);
+        //$data = $request->all();
+        $user->fill($request->all());
 
         if(strpos($request->input('photo'),'data:image/')!==false){
             $exploded=explode(',', $request->photo);
@@ -138,20 +168,12 @@ class UserControllerAPI extends Controller
             file_put_contents($path,$decoded);
 
             $user->photo=$fileName;
-        }else{
-            $user->photo=null;
         }
+        // else{
+        //     $user->photo=null;
+        // }
 
-        $user->save();
-        return (new UserResource($user))->response()->setStatusCode(200);
-    }
 
-
-    public function updateWithoutPass(Request $request, $id){
-        //TODO validacoes
-        $user= User::findOrFail($id);
-        //$data = $request->all();
-        $user->fill($request->all());
         $user->save();
         return (new UserResource($user))->response()->setStatusCode(200);
     }
