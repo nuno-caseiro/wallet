@@ -123,7 +123,7 @@ class MovementControllerAPI extends Controller
             $request->validate([
                 'wallet_id'=>'required | numeric',
                 'start_balance'=>'required',
-                'category_id'=> 'nullable | numeric | in: 20,21,22,23,24,25,26,27,28,29',
+                'category_id'=> 'nullable | numeric ',
                 'description' => 'nullable|string|max:200',
                 'source_description' => 'nullable|string|max:200',
                 'value'=> 'required|numeric | max:9999',
@@ -137,7 +137,7 @@ class MovementControllerAPI extends Controller
             }
 
 
-                if(($data['type_payment'])=='bt'){
+                if(($data['type_payment']) =='bt'){
 
                     $request->validate([
                         'iban'=> 'required | regex:/^[a-zA-Z]{2}[0-9]{2}[0-9]{4}[0-9]{4}[0-9]{11}[0-9]{2}$/',
@@ -155,7 +155,7 @@ class MovementControllerAPI extends Controller
         if(($data['type']) == 'e'){
             $request->validate([
                 'value'=>'required | max:9999',
-                'category_id'=> 'nullable | numeric | in: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19',
+                'category_id'=> 'nullable | numeric',
                 'description' => 'nullable|string|max:200',
             ]);
 
@@ -224,33 +224,13 @@ class MovementControllerAPI extends Controller
     }
 
     public function updateEdit(Request $request, $id){
-        //TODO validacoes
-        // if(($data['type']) == 'i'){
-        //     if(($data['transfer']) === true){
-        //     $request->validate([
-        //         'category_id'=> 'nullable | numeric | in: 20,21,22,23,24,25,26,27,28,29',
-        //         'source_description' => 'nullable|string|max:200',
-        //     ]);
+        
+        $request->validate([
+                'category_id'=> 'nullable | numeric',
+                'source_description' => 'nullable|string|max:200',
+         ]);
 
-        // }else{
-        //         'category_id'=> 'nullable | numeric | in: 20,21,22,23,24,25,26,27,28,29',
-        //         'description' => 'nullable|string|max:200',
-        // }
-
-        // if(($data['type']) == 'e'){
-        //     if(($data['transfer']) === true){
-        //     $request->validate([
-        //         'category_id'=> 'nullable | numeric | in: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19',
-        //         'source_description' => 'nullable|string|max:200',
-        //     ]);
-
-        // }else{
-        //         'category_id'=> 'nullable | numeric | in: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19',
-        //         'description' => 'nullable|string|max:200',
-        // }
-
-
-
+ 
         $movement= Movement::findOrFail($id);
         $movement->update($request->all());
         return new MovementResource($movement);

@@ -104,26 +104,6 @@
 
         </div>
 
-        <table class="table table-striped" v-if="visibleTable" >
-        <thead>
-            <tr>
-                <th></th>
-                <th>Expenses</th>
-                <th>Incomes</th>
-            </tr>
-        </thead>
-        <tbody >
-            <tr>
-                <td>Total</td>
-                <td></td>
-                <td></td>
-
-            </tr>
-        </tbody>
-        </table>
-
-
-
         <line-chart id="chart" v-if="this.show===true" :chartdata="linedata" :options="options" ></line-chart>
 
     </div>
@@ -310,7 +290,7 @@
 
                     this.linedata.labels = dates;
                     this.linedata.datasets.push({
-                        label: 'Balance of wallet over all days of month',
+                        label: 'Balance of your wallet over all days of month',
                         data: data
                     });
 
@@ -340,7 +320,7 @@
 
                     this.linedata.labels=dates;
                     this.linedata.datasets.push({
-                        label: 'Balance of wallet between'+this.year+' and '+this.stopYear,
+                        label: 'Balance of your wallet between'+this.year+' and '+this.stopYear,
                         data:data
                     });
 
