@@ -154,14 +154,6 @@ const routes = [
         }
     },
 
-    // {
-    //     path:"/movementList",
-    //     name:"MovementList",
-    //     component:movementList,
-    //     meta:{
-    //         forUser:true
-    //     }
-    // },
 
     {
         path:"/users",
@@ -171,14 +163,6 @@ const routes = [
             forAdmin: true,
         }
     },
-    // {
-    //     path:"/filter",
-    //     name: "movementFilter",
-    //     component: movementFilter,
-    //     meta:{
-    //         forUser:true
-    //     }
-    // },
 
     {
         path:"/userAdd",
@@ -235,12 +219,7 @@ router.beforeEach((to,from,next)=>{
                 path: '/'
             })
         } else next()
-    }else if(to.matched.some(record=>record.meta.forOperator)) {
-        if (!store.getters.isOperator) {
-            next({
-                path: '/'
-            })
-        } else next()
+    
     }else if(to.matched.some(record=>record.meta.forAdmin)) {
         if (!store.getters.isAdmin) {
             next({
@@ -249,12 +228,6 @@ router.beforeEach((to,from,next)=>{
         } else next()
     }else if(to.matched.some(record=>record.meta.forOperatorAndUser)) {
         if (!(store.getters.isOperator||store.getters.isUser)) {
-            next({
-                path: '/'
-            })
-        } else next()
-    }else if(to.matched.some(record=>record.meta.forAdminAndUser)) {
-        if (!(store.getters.isAdmin||store.getters.isUser)) {
             next({
                 path: '/'
             })

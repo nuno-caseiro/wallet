@@ -235,7 +235,7 @@
 
                     this.linedata.labels = dates;
                     this.linedata.datasets.push({
-                        label: 'Total movements of month by day:'+this.date ,
+                        label: 'Total movements of month by day'+this.date ,
                         data: data
                     });
 
@@ -264,7 +264,7 @@
 
                     this.linedata.labels = dates;
                     this.linedata.datasets.push({
-                        label: 'Total internal transfers of all days of month:'+this.date ,
+                        label: 'Total internal transfers of all days of month'+this.date ,
                         data: data
                     });
 
@@ -322,7 +322,7 @@
 
                 this.linedata.labels = dates;
                 this.linedata.datasets.push({
-                    label: 'Total money',
+                    label: 'Total money moved by users of all days of month',
                     data: data
                 });
 
