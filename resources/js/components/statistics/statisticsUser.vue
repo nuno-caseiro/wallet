@@ -23,7 +23,7 @@
 
             <b-card no-body class="mb-1">
             <b-card-header header-tag="header" class="p-1" role="tab">
-                <b-button block href="#" v-b-toggle.getTotalMoneyExpensesOfUserBetweenYears variant="info">Total Money of Expenses Between Years</b-button>
+                <b-button block href="#" v-b-toggle.getTotalMoneyExpensesOfUserBetweenYears variant="info">Total Money Of Expenses Between Years</b-button>
             </b-card-header>
             <b-collapse id="getTotalMoneyExpensesOfUserBetweenYears" accordion="my-accordion" role="tabpanel">
                 <b-card-body>
@@ -51,7 +51,7 @@
 
             <b-card no-body class="mb-1">
             <b-card-header header-tag="header" class="p-1" role="tab">
-                <b-button block href="#" v-b-toggle.getTotalMoneyIncomesOfUserBetweenYears variant="info">Total Money of Incomes Between Years</b-button>
+                <b-button block href="#" v-b-toggle.getTotalMoneyIncomesOfUserBetweenYears variant="info">Total Money Of Incomes Between Years</b-button>
             </b-card-header>
             <b-collapse id="getTotalMoneyIncomesOfUserBetweenYears" accordion="my-accordion" role="tabpanel">
                 <b-card-body>
@@ -79,7 +79,7 @@
 
             <b-card no-body class="mb-1">
                 <b-card-header header-tag="header" class="p-1" role="tab">
-                    <b-button block href="#" v-b-toggle.balanceThroughTimeBetweenYears variant="info">Balance over years</b-button>
+                    <b-button block href="#" v-b-toggle.balanceThroughTimeBetweenYears variant="info">Balance Over Years</b-button>
                 </b-card-header>
                 <b-collapse id="balanceThroughTimeBetweenYears" accordion="my-accordion" role="tabpanel">
                     <b-card-body>
@@ -95,7 +95,7 @@
 
             <b-card no-body class="mb-1">
                 <b-card-header header-tag="header" class="p-1" role="tab">
-                    <b-button block href="#" v-b-toggle.balanceThroughTimeAllDaysOfMonth variant="info">Balance over all days Of Month</b-button>
+                    <b-button block href="#" v-b-toggle.balanceThroughTimeAllDaysOfMonth variant="info">Balance Over All Days Of Month</b-button>
                 </b-card-header>
                 <b-collapse id="balanceThroughTimeAllDaysOfMonth" accordion="my-accordion" role="tabpanel">
                     <b-card-body>
@@ -235,7 +235,7 @@
 
                     this.linedata.labels=dates;
                     this.linedata.datasets.push({
-                        label: 'Total money that you received between year '+this.year+' and '+this.stopYear,
+                        label: 'Total money that you received between year '+ this.year+' and '+this.stopYear,
                         data:data
                     });
 
@@ -248,7 +248,7 @@
                 if (this.show == true) {
                     this.show = false;
                 }
-                axios.get('/api/movements/all/totalMoneyIncomesAllDaysOfMonth?date=' +this.date +'&wallet_id='+ this.$store.state.user.id ).then(response => {
+                axios.get('/api/movements/all/totalMoneyIncomesAllDaysOfMonth?date=' + this.date +'&wallet_id='+ this.$store.state.user.id ).then(response => {
                     console.log(response);
                     this.linedata.labels = [];
                     this.linedata.datasets = [];
@@ -279,7 +279,7 @@
                 if (this.show == true) {
                     this.show = false;
                 }
-                axios.get('/api/movements/all/balanceThroughTimeAllDaysOfMonth?date=' +this.date +'&wallet_id='+ this.$store.state.user.id ).then(response => {
+                axios.get('/api/movements/all/balanceThroughTimeAllDaysOfMonth?date=' + this.date +'&wallet_id='+ this.$store.state.user.id ).then(response => {
                     console.log(response);
                     this.linedata.labels = [];
                     this.linedata.datasets = [];
@@ -326,7 +326,7 @@
 
                     this.linedata.labels=dates;
                     this.linedata.datasets.push({
-                        label: 'Balance of your wallet between'+this.year+' and '+this.stopYear,
+                        label: 'Balance of your wallet between'+ this.year+' and '+ this.stopYear,
                         data:data
                     });
 

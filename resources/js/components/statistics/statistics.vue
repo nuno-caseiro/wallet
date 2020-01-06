@@ -26,7 +26,7 @@
 
             <b-card no-body class="mb-1">
             <b-card-header header-tag="header" class="p-1" role="tab">
-                <b-button block href="#" v-b-toggle.getTotalMoneyMovedByUsersBetweenYears variant="info">Total money moved by users between years</b-button>
+                <b-button block href="#" v-b-toggle.getTotalMoneyMovedByUsersBetweenYears variant="info">Total Money Moved By Users Between Years</b-button>
             </b-card-header>
             <b-collapse id="getTotalMoneyMovedByUsersBetweenYears" accordion="my-accordion" role="tabpanel">
                 <b-card-body>
@@ -41,7 +41,7 @@
 
             <b-card no-body class="mb-1">
             <b-card-header header-tag="header" class="p-1" role="tab">
-                <b-button block href="#" v-b-toggle.getTotalMoneyMovedByUsersAllDaysOfMonth variant="info">Total money moved by users on one month</b-button>
+                <b-button block href="#" v-b-toggle.getTotalMoneyMovedByUsersAllDaysOfMonth variant="info">Total Money Moved By Users On One Month</b-button>
             </b-card-header>
             <b-collapse id="getTotalMoneyMovedByUsersAllDaysOfMonth" accordion="my-accordion" role="tabpanel">
                 <b-card-body>
@@ -71,7 +71,7 @@
 
             <b-card no-body class="mb-1">
             <b-card-header header-tag="header" class="p-1" role="tab">
-                <b-button block href="#" v-b-toggle.getTotalInternalTransfersAllDaysOfMonth variant="info">Total Internal Transfers AllDays Of Month</b-button>
+                <b-button block href="#" v-b-toggle.getTotalInternalTransfersAllDaysOfMonth variant="info">Total Internal Transfers All Days Of Month</b-button>
             </b-card-header>
             <b-collapse id="getTotalInternalTransfersAllDaysOfMonth" accordion="my-accordion" role="tabpanel">
                 <b-card-body>
@@ -255,7 +255,7 @@
                 if (this.show == true) {
                     this.show = false;
                 }
-                axios.get('/api/movements/all/totalInternalTransfersAllDaysOfMonth?date=' +this.date ).then(response => {
+                axios.get('/api/movements/all/totalInternalTransfersAllDaysOfMonth?date=' + this.date ).then(response => {
                     console.log(response);
                     this.linedata.labels = [];
                     this.linedata.datasets = [];
@@ -272,7 +272,7 @@
 
                     this.linedata.labels = dates;
                     this.linedata.datasets.push({
-                        label: 'Total internal transfers of all days of month'+this.date ,
+                        label: 'Total internal transfers of all days of month'+ this.date ,
                         data: data
                     });
 
@@ -313,7 +313,7 @@
             if (this.show == true) {
                 this.show = false;
             }
-            axios.get('/api/movements/all/totalMoneyMovedByUsersAllDaysOfMonth?date=' +this.date ).then(response => {
+            axios.get('/api/movements/all/totalMoneyMovedByUsersAllDaysOfMonth?date=' + this.date ).then(response => {
                 console.log(response);
                 this.linedata.labels = [];
                 this.linedata.datasets = [];
