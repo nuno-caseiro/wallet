@@ -34,15 +34,7 @@ class LoginControllerAPI extends Controller
             return response()->json(
                 ['msg'=>'User credentials are invalid'], $errorCode);
         }
-        // return response($response->getBody(), 200);
-    // } catch (\GuzzleHttp\Exception\BadResponseException $e) {
-    //     if ($e->getCode() === 400) {
-    //         return response()->json(['error' => 'Invalid Request. Please enter a username or a password.'], $e->getCode());
-    //     } else if ($e->getCode() === 401) {
-    //         return response()->json(['error' => 'Your credentials are incorrect. Please try again.'], $e->getCode());
-    //     }
-    //     return response()->json(['error' => 'Something went wrong on the server.'], $e->getCode());
-    // }
+     
     }else{
         return response()->json(['error' => 'You are currently deactivated.'], 401);
     }
