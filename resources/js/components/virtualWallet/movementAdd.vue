@@ -189,9 +189,9 @@
                 },
                 value:{
                     required,
-                    between: between(0, 5000),
+                    between: between(0.01, 5000),
                     lowValue: function(){
-                        if(this.wallet_source.balance-this.movement.value<0 && this.movement.type=='e'){
+                        if(this.wallet_source.balance-this.movement.value<0.00 && this.movement.type=='e'){
                             return false;
                         }else{return true}
                     }

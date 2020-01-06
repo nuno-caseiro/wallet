@@ -31,6 +31,7 @@
                 <input type="number" min="2014" max="2020" step="1" value="2020" v-model="year" />
                 <input type="number" min="2014" max="2020" step="1" value="2020" v-model="stopYear" />
                 <button @click.prevent="totalMoneyExpensesOfUserBetweenYears()" class="btn btn-info">Get</button>
+                    <a class="alert-danger">You need to fill both years ex: 2018 2018, 2018 2020 </a>
                 </b-card-body>
             </b-collapse>
             </b-card>
@@ -57,7 +58,8 @@
                 <label>Years: </label>
                 <input type="number" min="2014" max="2020" step="1" value="2020" v-model="year" />
                 <input type="number" min="2014" max="2020" step="1" value="2020" v-model="stopYear" />
-                <button @click.prevent="totalMoneyIncomesOfUserBetweenYears()" class="btn btn-info">Get</button>
+                    <button @click.prevent="totalMoneyIncomesOfUserBetweenYears()" class="btn btn-info">Get</button>
+                    <a class="alert-danger">You need to fill both years ex: 2018 2018, 2018 2020 </a>
                 </b-card-body>
             </b-collapse>
             </b-card>
@@ -85,6 +87,8 @@
                         <input type="number" min="2014" max="2020" step="1" value="2020" v-model="year" />
                         <input type="number" min="2014" max="2020" step="1" value="2020" v-model="stopYear" />
                         <button @click.prevent="balanceThroughTimeBetweenYears()" class="btn btn-info">Get</button>
+                        <a class="alert-danger">You need to fill both years ex: 2018 2018, 2018 2020 </a>
+
                     </b-card-body>
                 </b-collapse>
             </b-card>
@@ -101,6 +105,8 @@
                     </b-card-body>
                 </b-collapse>
             </b-card>
+
+            <a class="alert-danger" v-if="show!=true">Could take a while to get charts </a>
 
         </div>
 

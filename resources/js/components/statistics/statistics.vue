@@ -34,6 +34,7 @@
                 <input type="number" min="2014" max="2020" step="1" value="2020" v-model="year" />
                 <input type="number" min="2014" max="2020" step="1" value="2020" v-model="stopYear" />
                 <button @click.prevent="totalMoneyMovedByUsersBetweenYears()" class="btn btn-info">Get</button>
+                    <a class="alert-danger">You need to fill both years ex: 2018 2018, 2018 2020 </a>
                 </b-card-body>
             </b-collapse>
             </b-card>
@@ -63,6 +64,7 @@
                 <input type="number" min="2014" max="2020" step="1" value="2020" v-model="year" />
                 <input type="number" min="2014" max="2020" step="1" value="2020" v-model="stopYear" />
                 <button @click.prevent="totalInternalTransfersBetweenYears()" class="btn btn-info">Get</button>
+                    <a class="alert-danger">You need to fill both years ex: 2018 2018, 2018 2020 </a>
                 </b-card-body>
             </b-collapse>
             </b-card>
@@ -91,6 +93,7 @@
                 <input type="number" min="2014" max="2020" step="1" value="2020" v-model="year" />
                 <input type="number" min="2014" max="2020" step="1" value="2020" v-model="stopYear" />
                 <button @click.prevent="totalMovementsFromExternalIncomesBetweenYears()" class="btn btn-info">Get</button>
+                    <a class="alert-danger">You need to fill both years ex: 2018 2018, 2018 2020 </a>
                 </b-card-body>
             </b-collapse>
             </b-card>
@@ -109,8 +112,8 @@
             </b-card>
 
 
+        <a class="alert-danger" v-if="show!=true">Could take a while to get charts </a>
   </div>
-
 
 
 
@@ -154,6 +157,11 @@
                 totalMovements:"",
                 totalMoney:"",
             }
+        },
+        validations:{
+            year:'',
+            stopYear:'',
+            date:'',
         },
         methods: {
             totalMoneyMovedByUsersBetweenYears(){

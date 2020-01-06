@@ -127,12 +127,12 @@ class MovementControllerAPI extends Controller
 
         if(($data['type']) == 'i'){
             $request->validate([
-                'wallet_id'=>'required | numeric',
+                'wallet_id'=>'required|numeric',
                 'start_balance'=>'required',
-                'category_id'=> 'nullable | numeric ',
+                'category_id'=> 'nullable|numeric ',
                 'description' => 'nullable|string|max:200',
                 'source_description' => 'nullable|string|max:200',
-                'value'=> 'required|numeric | max:5000 | min:0',
+                'value'=> 'required|numeric|max:5000|min:0',
 
             ]);
 
@@ -145,7 +145,7 @@ class MovementControllerAPI extends Controller
                 if(($data['type_payment']) =='bt'){
 
                     $request->validate([
-                        'iban'=> 'required | regex:/^[a-zA-Z]{2}[0-9]{2}[0-9]{4}[0-9]{4}[0-9]{11}[0-9]{2}$/',
+                        'iban'=> 'required|regex:/^[a-zA-Z]{2}[0-9]{2}[0-9]{4}[0-9]{4}[0-9]{11}[0-9]{2}$/',
                     ]);
 
                 }else{
@@ -159,8 +159,8 @@ class MovementControllerAPI extends Controller
 
         if(($data['type']) == 'e'){
             $request->validate([
-                'value'=> 'required| numeric | max:5000 | min:0',
-                'category_id'=> 'nullable | numeric',
+                'value'=> 'required|numeric|max:5000|min:0',
+                'category_id'=> 'nullable|numeric',
                 'description' => 'nullable|string|max:200',
             ]);
 
@@ -179,15 +179,15 @@ class MovementControllerAPI extends Controller
 
                 if(($data['type_payment']) === 'mb'){
                     $request->validate([
-                        'mb_entity_code'=> 'required | regex:/^[0-9]{5}$/',
-                        'mb_payment_reference'=> 'required | regex:/^[0-9]{9}$/',
+                        'mb_entity_code'=> 'required|regex:/^[0-9]{5}$/',
+                        'mb_payment_reference'=> 'required|regex:/^[0-9]{9}$/',
 
                     ]);
                 }
 
                 if(($data['type_payment']) === 'bt'){
                     $request->validate([
-                        'iban' => 'required | regex:/^[a-zA-Z]{2}[0-9]{2}[0-9]{4}[0-9]{4}[0-9]{11}[0-9]{2}$/',
+                        'iban' => 'required|regex:/^[a-zA-Z]{2}[0-9]{2}[0-9]{4}[0-9]{4}[0-9]{11}[0-9]{2}$/',
                     ]);
                 }
             }
