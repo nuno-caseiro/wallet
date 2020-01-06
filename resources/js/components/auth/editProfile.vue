@@ -189,9 +189,7 @@ export default {
               } else {
 
 
-                    this.$store.state.user.name = this.user.name;
-                    this.$store.state.user.nif=this.user.nif;
-
+                    
 
                     ///////////////////Pedido com Alteracao da Pass/////////////////////////////////
                     if(this.change === true){
@@ -217,10 +215,13 @@ export default {
 
                     ///////////////////Pedido sem Alteracao da Pass/////////////////////////////////
                     if(this.change === false){
+                    this.$store.state.user.name = this.user.name;
+                    this.$store.state.user.nif=this.user.nif;
 
                     axios.put('/api/withoutPass/users/'+this.userLogin.id,  this.$store.state.user)
                     .then(response => {
-                        this.messageType = "alert-success"
+                        console.log(response);
+                        this.messageType = "alert-success";
                         this.showMessage = true;
                         this.message = 'Success, please login AGAIN!!';
                         setTimeout(() => {
