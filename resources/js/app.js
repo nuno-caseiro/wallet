@@ -154,14 +154,14 @@ const routes = [
         }
     },
 
-    {
-        path:"/movementList",
-        name:"MovementList",
-        component:movementList,
-        meta:{
-            forUser:true
-        }
-    },
+    // {
+    //     path:"/movementList",
+    //     name:"MovementList",
+    //     component:movementList,
+    //     meta:{
+    //         forUser:true
+    //     }
+    // },
 
     {
         path:"/users",
@@ -171,14 +171,14 @@ const routes = [
             forAdmin: true,
         }
     },
-    {
-        path:"/filter",
-        name: "movementFilter",
-        component: movementFilter,
-        meta:{
-            forUser:true
-        }
-    },
+    // {
+    //     path:"/filter",
+    //     name: "movementFilter",
+    //     component: movementFilter,
+    //     meta:{
+    //         forUser:true
+    //     }
+    // },
 
     {
         path:"/userAdd",
