@@ -18,7 +18,8 @@
                     <input type="text" placeholder="name" v-model="$v.user.name.$model" >
                     <div v-if="$v.user.name.$error">
                         <div class="error" v-if="!$v.user.name.required">Field is required</div>
-                        <div class="error" v-if="!$v.user.name.minLength">Name must have at least {{$v.user.name.$params.minLength.min}} letters.</div>
+                        <div class="error" v-if="!$v.user.name.minLength">Name must have at least. {{$v.user.name.$params.minLength.min}} letters.</div>
+                        <div class="error" v-if="!$v.user.name.nameValid">Name have only have letters.</div>
                     </div>
                 </div>
 
@@ -75,6 +76,7 @@
 <script type="text/javascript">
     import axios from 'axios';
     import { numeric,email, required, minLength, sameAs, maxLength } from 'vuelidate/lib/validators';
+    const regex = /^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/
     export default {
         name : 'Register',
         data() {
@@ -111,7 +113,10 @@
             user:{
                 name: {
                     required,
-                    minLength: minLength(4)
+                    minLength: minLength(4),
+                    nameValid(name) {
+                      return regex.test(name);
+                    },
                 },
 
                 email: {

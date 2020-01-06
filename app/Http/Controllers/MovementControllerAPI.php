@@ -225,6 +225,32 @@ class MovementControllerAPI extends Controller
 
     public function updateEdit(Request $request, $id){
         //TODO validacoes
+        // if(($data['type']) == 'i'){
+        //     if(($data['transfer']) === true){
+        //     $request->validate([
+        //         'category_id'=> 'nullable | numeric | in: 20,21,22,23,24,25,26,27,28,29',
+        //         'source_description' => 'nullable|string|max:200',
+        //     ]);
+
+        // }else{
+        //         'category_id'=> 'nullable | numeric | in: 20,21,22,23,24,25,26,27,28,29',
+        //         'description' => 'nullable|string|max:200',
+        // }
+
+        // if(($data['type']) == 'e'){
+        //     if(($data['transfer']) === true){
+        //     $request->validate([
+        //         'category_id'=> 'nullable | numeric | in: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19',
+        //         'source_description' => 'nullable|string|max:200',
+        //     ]);
+
+        // }else{
+        //         'category_id'=> 'nullable | numeric | in: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19',
+        //         'description' => 'nullable|string|max:200',
+        // }
+
+
+
         $movement= Movement::findOrFail($id);
         $movement->update($request->all());
         return new MovementResource($movement);

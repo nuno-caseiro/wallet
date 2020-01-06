@@ -15,7 +15,7 @@
                     <div v-if="$v.user.name.$error">                   
                       <div class="error" v-if="!$v.user.name.required">Field is required</div>
                       <div class="error" v-if="!$v.user.name.minLength">Name must have at least {{$v.user.name.$params.minLength.min}} letters.</div>
-                      <div class="error" v-if="!$v.user.name.nameValid">If you are user, name cannot haver numbers.</div>
+                      <div class="error" v-if="!$v.user.name.nameValid">Name have only have letters.</div>
                     </div>
                 </div>
 
@@ -87,7 +87,7 @@
 <script type="text/javascript">
 import axios from 'axios';
 import {helpers, maxLength, email, required, minLength, sameAs, requiredIf } from 'vuelidate/lib/validators'
-const regex = /^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ0-9 ]+$/
+const regex = /^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/
 
 export default {
     name : 'Edit',
@@ -205,23 +205,22 @@ export default {
                                 this.logout();
                         }, 1500);
                         }).catch(error=>{
-                          this.messageType = "alert-danger";
-                            this.message = "";
-                            this.showMessage = true;
-                                    console.log(error);
+                          console.log(error.response.data.error)
+                            if(error.response.data.error){
+                                    //this.$emit('user-saved', this.user);
+                                    this.showMessage = true;
+                                    this.messageType = "alert-danger"
+                                    this.message = 'Password Confirmation is not correct.';
+                                }
                         });
                     }
                     
 
                     ///////////////////Pedido sem Alteracao da Pass/////////////////////////////////
                     if(this.change === false){
-                    axios.put('/api/users/'+this.userLogin.id,  this.$store.state.user)
+      
+                    axios.put('/api/withoutPass/users/'+this.userLogin.id,  this.$store.state.user)
                     .then(response => {   
-                        let tokenType = response.data.token_type;
-                        let token = response.data.access_token;
-                        let expiration = response.data.expires_in + Date.now();
-                        this.$store.commit('setToken', {token, tokenType, expiration});
-                        console.log(response)
                         this.messageType = "alert-success"
                         this.showMessage = true;
                         this.message = 'Success, please login AGAIN!!';

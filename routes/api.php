@@ -30,7 +30,7 @@ Route::middleware('auth:api')->group(function () {
 
 
     //TODO para operador admin e user
-    Route::put('users/{id}', 'UserControllerAPI@updateWithoutPass');
+    Route::put('/withoutPass/users/{id}', 'UserControllerAPI@updateWithoutPass');
 
     Route::patch('users/{id}', 'UserControllerAPI@update');
 

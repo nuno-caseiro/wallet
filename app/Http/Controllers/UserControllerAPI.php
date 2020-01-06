@@ -103,7 +103,7 @@ class UserControllerAPI extends Controller
 
          if(($request['type']) == 'a' || ($request['type']) == 'o'){
             $request->validate([
-                'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ0-9 ]+$/',
+                'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
                 'nif'=> 'nullable|min:9|unique:users|regex:/^[0-9]+$/',
                 'photo'=> 'nullable',
                 'password' => 'min:3',
@@ -122,6 +122,8 @@ class UserControllerAPI extends Controller
         }else{
             $user->fill($request->all());
         }
+        }else{
+            return response()->json(['error' => 'Password Confirmation Wrong.'], 401);
         }
         
         if(strpos($request->input('photo'),'data:image/')!==false){
@@ -149,11 +151,36 @@ class UserControllerAPI extends Controller
 
 
     public function updateWithoutPass(Request $request, $id){
+        
+        
+        if(($request['type']) == 'u'){
+            $request->validate([
+                'name' => 'min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
+                'nif'=> 'required|min:9|regex:/^[0-9]+$/',
+                'photo'=> 'nullable',
+                'password' => 'min:3',
+            ]);
+        }
+
+         if(($request['type']) == 'a' || ($request['type']) == 'o'){
+            $request->validate([
+                'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
+                'nif'=> 'nullable|min:9|regex:/^[0-9]+$/',
+                'photo'=> 'nullable',
+                'password' => 'min:3',
+            ]);
+        }
+
         //TODO validacoes
         $user= User::findOrFail($id);
-        //$data = $request->all();
-        $user->fill($request->all());
+        if($user['nif'] !== $request['nif']){
+            $user->fill($request->all());
+        }
+        if($user['nif'] !== $request['nif']){
+            $user->fill($request->except('nif'));
+        }
 
+        
         if(strpos($request->input('photo'),'data:image/')!==false){
             $exploded=explode(',', $request->photo);
             $decoded= base64_decode($exploded[1]);
@@ -172,7 +199,7 @@ class UserControllerAPI extends Controller
         // else{
         //     $user->photo=null;
         // }
-
+        
 
         $user->save();
         return (new UserResource($user))->response()->setStatusCode(200);
