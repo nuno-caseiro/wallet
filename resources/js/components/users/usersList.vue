@@ -107,19 +107,18 @@ export default {
                 console.log(err);
             });
         }
-        /// quando se apaga ou reativa um user, para atualizar o estado ou a lista, faz um get filtrado outra vez
-        if(this.filters!==''){
-            let page_url = url || 'api/users/';
-            axios.get(page_url)
-            .then(response=>{
-                console.log(response);
-                this.users=response.data.data;
-                this.makePagination(response.data.meta, response.data.links);
-            }).catch(function(err){
-                console.log(err);
-            });
-        }
-
+        /// este foi o erro apagado
+        // if(this.filters!=''){
+        //     let page_url = url || 'api/users/';
+        //     axios.get(page_url)
+        //     .then(response=>{
+        //         console.log(response);
+        //         this.users=response.data.data;
+        //         this.makePagination(response.data.meta, response.data.links);
+        //     }).catch(function(err){
+        //         console.log(err);
+        //     });
+        // }
         },
         itemImageURL(photo){
                 return "storage/fotos/"+String(photo);
