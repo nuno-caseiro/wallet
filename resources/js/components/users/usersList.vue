@@ -39,9 +39,10 @@
            
             <td v-if="user.type==='u' ">
                 <b-button-group >
-                <b-button v-if="user.active==1 && user.balance_status === '0.00' " variant="danger" @click.prevent="deactivateUser(user)" >Deactivate </b-button>
+                <b-button v-if="user.active == 1 && user.balance_status === '0.00' " variant="danger" @click.prevent="deactivateUser(user)" >Deactivate </b-button>
                 <b-button v-if="user.active == 0 && user.balance_status === '0.00' " variant="success" @click.prevent="activateUser(user)" >Reactivate</b-button>
-                <b-button v-if="user.type==='u' && !(user.balance_status == '0.00') " variant="danger" disabled >Deactivate </b-button>
+                <b-button v-if="user.active == 1 && !(user.balance_status == '0.00') " variant="danger" disabled >Deactivate </b-button>
+                <b-button v-if="user.active == 0 && !(user.balance_status == '0.00') " variant="success" @click.prevent="activateUser(user)" >Reactivate</b-button>
                 </b-button-group>
             </td>  
 

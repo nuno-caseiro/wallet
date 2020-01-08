@@ -21,7 +21,7 @@
                <input id="email" v-model="filters.email" type="email">
            </div>
 
-            <div v-if = "filters.type === 'u'">
+            <div v-if = "filters.type == 'u'">
                <label id="s">  Status : </label>
                <select  v-model="filters.active" >
                    <option value="1">Active</option>
@@ -63,7 +63,11 @@
        methods: {
 
         applyFilter: function () {
+            if(this.filters.type == 'a' || this.filters.type == 'o'){
+                this.filters.active = '';
+            }
             this.$emit('apply-Filter', this.filters);
+
             },
 
         cleanFilter: function () {
